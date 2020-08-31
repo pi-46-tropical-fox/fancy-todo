@@ -1,6 +1,6 @@
 const {User} = require("../models")
 const bcrypt = require('bcryptjs');
-const {generateToken, verifyToken} = require("../helpers/jwtGenerate");
+const {generateToken, verifyToken} = require("../helpers/generateUserToken");
 class UserController{
   static async register(req, res){
     const {username, email, password} = req.body
