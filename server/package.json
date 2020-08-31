@@ -1,0 +1,27 @@
+{
+  "name": "fancy-todo",
+  "version": "1.0.0",
+  "description": "Membuat sebuah website untuk me-manage hal - hal menarik untuk dilakukan",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4",
+    "pg": "^8.3.3",
+    "sequelize": "^6.3.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vikryprakasa/fancy-todo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vikryprakasa/fancy-todo/issues"
+  },
+  "homepage": "https://github.com/vikryprakasa/fancy-todo#readme"
+}
