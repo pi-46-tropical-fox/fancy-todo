@@ -1,8 +1,10 @@
 const {User} = require('../models/index')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+// const dotenv = require('dotenv')
+require('dotenv').config()
 
-const secret = 'todo-porto-rizky'
+const secret = process.env.SECRET
 
 class UserController {
     static async register(req,res) {

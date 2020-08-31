@@ -1,4 +1,5 @@
 const {Todo} = require('../models/index')
+const tokenAuth = require('../middleware/tokenAuth')
 
 class TodoController {
     static async getTodoList(req,res) {
