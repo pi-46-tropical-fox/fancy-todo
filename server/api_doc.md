@@ -13,6 +13,8 @@ Make a website to manage interesting things to do. This app has :
  - GET /todos/:id
  - PUT /todos/:id
  - DELETE /todos/:id
+ - POST /user/register
+ - POST /user/login
 ```
 
 ### POST /todos
@@ -235,6 +237,88 @@ _Response (404 - Not found)_
 ```
 
 _Response (500 - Internal Server Error)_
+```
+{
+  "message": "Internal Server Error"
+}
+```
+---
+### POST /user/register
+
+> Create new user
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+{
+  "username": "<username to get insert into>",
+  "email": "<email to get insert into>",
+  "password": "<password to get insert into>"
+}
+```
+
+_Response (201 - Created)_
+```
+{
+  "username": "<posted username>",
+  "email": "<posted email>"
+}
+```
+
+_Response (400 - Bad Request)_
+```
+{
+  "message": "Bad Request"
+}
+```
+
+_Response(500 - Internal Server Error)_
+```
+{
+  "message": "Internal Server Error"
+}
+```
+---
+### POST /user/login
+
+> Create new todo
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+{
+  "username": "<username to get insert into>",
+  "email": "<email to get insert into>",
+}
+```
+
+_Response (201 - Created)_
+```
+{
+  "accessToken": "<your access token>"
+}
+```
+
+_Response (400 - Bad Request)_
+```
+{
+  "message": "Bad Request"
+}
+```
+
+_Response(500 - Internal Server Error)_
 ```
 {
   "message": "Internal Server Error"
