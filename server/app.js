@@ -6,8 +6,13 @@ const app = express()
 const routes = require('./routes')
 
 //app.set('')
+app.use(express.json())
 app.use(express.urlencoded({extended:true}))
-//app.use(routes)
+
+app.get('/', (req, res)=>{
+    return res.status(200).json({msg:"Move On !"})
+})
+app.use('/', routes)
 
 app.listen(port, ()=>{
     console.log(`Sakit hati yang ke-${port}`);
