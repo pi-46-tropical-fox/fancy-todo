@@ -13,6 +13,7 @@ Todo List App is an application to manage your todo activity. This app has :
   - PUT /todos/:id
   - DELETE /todos/:id
 ```
+
 ### GET /todos
 
 > Get all todos
