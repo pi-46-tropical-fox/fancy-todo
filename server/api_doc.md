@@ -64,7 +64,9 @@ _Request Body_
 ```
 {
   "title": "<title to get insert into>",
-  "description": "<description to get insert into>"
+  "description": "<description to get insert into>",
+  "status": "<status to get insert into>",
+  "due_date": "<due_date to get insert into>"
 }
 ```
 
@@ -85,3 +87,146 @@ _Response (400 - Bad Request)_
   "message": "Invalid requests"
 }
 ```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "Internal Server Error"
+}
+```
+---
+### GET /todos/:id
+
+> Get specific todos (specified by :id)
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200)_
+```
+[
+  {
+    "id": 1,
+    "title": "Belajar REST API & JWT",
+    "description": "Menonton ulang lecture",
+    "createdAt": "2020-03-20T07:15:12.149Z",
+    "updatedAt": "2020-03-20T07:15:12.149Z",
+  },
+  {
+    "id": 2,
+    "name": "Menyicil porto Week 1",
+    "description": "Cicil challenge harian",
+    "createdAt": "2020-03-20T07:15:12.149Z",
+    "updatedAt": "2020-03-20T07:15:12.149Z",
+  }
+]
+```
+
+_Response (404 - Not Found)_
+```
+{
+  "message": "Error: Not Found"
+}
+```
+---
+### PUT /todos/:id
+
+> Get specific todos (specified by :id)
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+{
+    "title": "<title to get insert into>",
+    "description": "<description to get insert into>",
+    "status": "<status to get insert into>",
+    "due_date":"<due_date to get insert into>"
+}
+```
+
+_Response (200)_
+```
+[
+  {
+    "title":"Belajar method PUT",
+    "description":"Cari definisi, cari contoh, cari definisi dari sumber lain, cari contoh lain, coba soal",
+    "status": "unfinisihed",
+    "due_date":"2020-08-31"
+    "createdAt": "2020-08-31T07:15:12.149Z",
+    "updatedAt": "2020-08-31T07:15:12.149Z",
+  }
+]
+```
+
+_Response (400 - Bad Request)_
+```
+{
+  "message": "Validation Errors"
+}
+```
+
+_Response (404 - Not Found)_
+```
+{
+  "message": "Error: not Found"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "Internal Server Error"
+}
+```
+---
+### DELETE /todos/:id
+
+> Get all todos
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200)_
+```
+[
+  {
+    "id": 1,
+    "title": "Belajar REST API & JWT",
+    "description": "Menonton ulang lecture",
+    "createdAt": "2020-03-20T07:15:12.149Z",
+    "updatedAt": "2020-03-20T07:15:12.149Z",
+  }
+]
+```
+
+_Response (404 - Not Found)_
+```
+{
+  "message": "Error: Not Found"
+}
+```
+---
