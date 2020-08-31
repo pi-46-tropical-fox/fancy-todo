@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
     /**
@@ -14,10 +15,26 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Todo.init({
-    title: DataTypes.STRING,
+    title: {
+      type : DataTypes.STRING,
+      validate : { 
+        notEmpty : {
+          args : true,
+          msg : "title must not empty!"
+        }
+      }
+    },
     description: DataTypes.STRING,
     status: DataTypes.BOOLEAN,
-    due_date: DataTypes.DATE
+    due_date: {
+      type : DataTypes.DATE,
+      validate : {
+        isAfter : {
+          args : new Date().toLocaleDateString(),
+          msg : "Minimum due date is today!"
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Todo',
