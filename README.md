@@ -102,7 +102,7 @@ _Response (500 - Server Error)_
   "message": "Internal server error"
 }
 ```
----
+
 ### GET /todos/:id
 
 > Get fancy-todo based id
@@ -151,7 +151,7 @@ _Response (404 - Not Found)_
   "message": "Not Found"
 }
 ```
----
+
 
 ### PUT /todos/:id
 
@@ -255,5 +255,12 @@ _Response (404 - Not Found)_
 ```
 {
   "message": "Not Found"
+}
+```
+
+_Response (500 - Server Error)_
+```
+{
+  "message": "Internal server error"
 }
 ```
