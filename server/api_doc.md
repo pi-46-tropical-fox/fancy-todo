@@ -128,23 +128,21 @@ not needed
 
 _Response (200)_
 ```
-[
-  {
-    "id": <requested id>,
-    "title": "<posted title>",
-    "description": "<posted description>",
-    "status": "<posted status>",
-    "due_date": "<posted due_date>",
-    "createdAt": "2020-08-31T06:30:49.914Z",
-    "updatedAt": "2020-08-31T06:30:49.914Z",
-  }
-]
+{
+  "id": <requested id>,
+  "title": "<posted title>",
+  "description": "<posted description>",
+  "status": "<posted status>",
+  "due_date": "<posted due_date>",
+  "createdAt": "2020-08-31T06:30:49.914Z",
+  "updatedAt": "2020-08-31T06:30:49.914Z",
+}
 ```
 
 _Response (404 - Not found)_
 ```
 {
-  "message": "Error not found"
+  "message": "Not found"
 }
 ```
 ---
@@ -172,7 +170,9 @@ _Request Body_
 _Response (200)_
 ```
 [
-  {
+  1,
+  [
+    {
     "id": <requested id>,
     "title": "<posted title>",
     "description": "<posted description>",
@@ -181,6 +181,7 @@ _Response (200)_
     "createdAt": "2020-08-31T06:30:49.914Z",
     "updatedAt": "2020-08-31T06:30:49.914Z",
   }
+  ]
 ]
 ```
 
@@ -194,7 +195,7 @@ _Response (400 - Bad request)_
 _Response (404 - Not found)_
 ```
 {
-  "message": "Error not found"
+  "message": "Not found"
 }
 ```
 
@@ -223,23 +224,13 @@ not needed
 
 _Response (200)_
 ```
-[
-  {
-    "id": <requested id>,
-    "title": "<posted title>",
-    "description": "<posted description>",
-    "status": "<posted status>",
-    "due_date": "<posted due_date>",
-    "createdAt": "2020-08-31T06:30:49.914Z",
-    "updatedAt": "2020-08-31T06:30:49.914Z",
-  }
-]
+1
 ```
 
 _Response (404 - Not found)_
 ```
 {
-  "message": "Error not found"
+  "message": "Not found"
 }
 ```
 
