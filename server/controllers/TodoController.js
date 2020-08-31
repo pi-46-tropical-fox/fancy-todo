@@ -1,5 +1,4 @@
 const { Todo } = require("../models");
-const e = require("express");
 
 class TodoController {
 
@@ -9,7 +8,7 @@ class TodoController {
       description: req.body.description,
       status: req.body.status,
       due_date: req.body.due_date
-    }
+    };
     try {
       const createdTodo = await Todo.create(newTodo);
       return res.status(201).json(createdTodo);
@@ -19,7 +18,7 @@ class TodoController {
         err.errors.forEach((error) => {
           errors.push(error.message);
         });
-        return res.status(400).json({ message:"Validation Error", errors });
+        return res.status(400).json({ message:"Bad Request", errors });
       } else {
         return res.status(500).json({ message:"Internal Server Error", errors: [ err.message ] });
       }
@@ -52,7 +51,7 @@ class TodoController {
         description: req.body.description,
         status: req.body.status,
         due_date: req.body.due_date
-      }
+      };
       const todo = await Todo.update(updatedTodo, {
         where: {
           id: id
@@ -69,7 +68,7 @@ class TodoController {
         err.errors.forEach((error) => {
           errors.push(error);
         });
-        return res.status(400).json({ message: "Validation Error", errors: [ err.message ] });
+        return res.status(400).json({ message: "Bad Request", errors });
       }
       return res.status(500).json({ message: "Internal Server Error", errors: [ err.message ] });
     }

@@ -52,7 +52,7 @@ _Response (201 - Created)_
 _Response (400 - Bad Request)_
 ```
 {
-  "message": "Validation errors"
+  "message": "Bad Request"
 }
 ```
 
@@ -188,7 +188,7 @@ _Response (200)_
 _Response (400 - Bad request)_
 ```
 {
-  "message": "Validation errors"
+  "message": "Bad Request"
 }
 ```
 
