@@ -167,7 +167,7 @@ Response 400 - Bad Request(Failed)
 Request Header
 ```
 {
-  "access_token": "<your access token>"
+  "access_token": "<your access token>" 
 }
 ```
 
