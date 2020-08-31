@@ -1,5 +1,5 @@
 # fancy-todo
-Membuat sebuah website untuk me-manage hal - hal menarik untuk dilakukan
+A Todo-List App, Made With Express
 
 # POST /todos
 > Create A New Todo
