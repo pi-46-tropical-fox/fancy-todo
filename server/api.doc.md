@@ -59,18 +59,20 @@ II. LOGIN
 
   * Response (200)
     [
-      token,
       {
-        "id": 1,
-        "username": "<user.name>",
-        "email": "<user.email>",
-        "password": "<user.password>",
-        "createdAt": "2020-03-20T07:15:12.149Z",
-        "updatedAt": "2020-03-20T07:15:12.149Z"
+      token,
+        {
+          "id": 1,
+          "username": "<user.name>",
+          "email": "<user.email>",
+          "password": "<user.password>",
+          "createdAt": "2020-03-20T07:15:12.149Z",
+          "updatedAt": "2020-03-20T07:15:12.149Z"
+        }
       }
     ]
 
-  * Response (404 - Bad Request)
+  * Response (404 - No Found)
     {
       "message": "Ivalid Username or Password"
     }
@@ -126,7 +128,6 @@ IV. CREATE NEW TODO
     {
       "title": "Push Rank",
       "description": "Push rank bareng temen-temen jam 12 malem sampai jam 6 sore",
-      "status": "false",
       "due_date": "2020-10-7"
     }
 
@@ -136,6 +137,7 @@ IV. CREATE NEW TODO
         "title": "Push Rank",
         "description": "Push rank bareng temen-temen jam 6 sore sampai jam 12 malam",
         "status": "false",
+        "UserId": <user.id>,
         "due_date": "2020-10-7",
         "createdAt": "2020-03-20T07:15:12.149Z",
         "updatedAt": "2020-03-20T07:15:12.149Z"
@@ -173,7 +175,7 @@ V. UPDATE TODO
         "updatedAt": "2020-03-20T07:15:12.149Z"
     }
 
-  * Response (404 - Bad Request)
+  * Response (404 - No Found)
     {
       "message": "Todo not found"
     }
