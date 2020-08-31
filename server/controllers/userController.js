@@ -12,14 +12,12 @@ class UserController {
             let data = await User.create({email,password})
             res.status(201).json({id:data.id,email:data.email})
         } catch (err) {
-            if(err.name === "SequelizeValidationError") {
-               let errors = []
-               err.errors.forEach(er => {
-                   errors.push(er)
-               })
-                res.status(400).json({message: "Bad request", errors})
+            if(err.errors[0].path === "email") {
+                res.status(400).json({message: "Email telah digunakan"})
+            } else if(err.errors[0].type === 'Validation Error') {
+                res.status(400).json({message:err.errors[0].message})
             } else {
-                res.status(500).json({message: "Internal server error", errors: [err.message]})
+                res.status(500).json({message: err.message})
             }
         }
     }
