@@ -63,7 +63,7 @@ _Response (400 - Bad Request)_
 }
 ```
 ---
-### POST /todos
+### POST /todos/create
 
 > Create new todo
 
