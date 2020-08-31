@@ -9,8 +9,4 @@ router.put ("/:id", TodoController.updateTodos)
 router.delete ("/:id", TodoController.deleteTodos)
 
 
-
-
-
-
 module.exports = router

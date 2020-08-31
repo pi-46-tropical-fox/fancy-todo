@@ -18,6 +18,7 @@ class TodoController {
         })
 
         .catch (err => {
+            console.log (err, "--error create Todo")
             return res.status (500).json ({message : err.message})
 
         })
@@ -33,6 +34,7 @@ class TodoController {
         })
 
         .catch (err => {
+            console.log (err, "--error show Todo")
             return res.status (400).json ({message : err.message})
 
         })
@@ -46,6 +48,7 @@ class TodoController {
         })
 
         .catch (err => {
+            console.log (err, "--error show Todo by Id")
             return res.status (404).json ({message : err.message})
 
         })
@@ -71,6 +74,7 @@ class TodoController {
         })
 
         .catch (err => {
+            console.log (err, "--error update Todo")
             return res.status (404).json ({message : err.message})
 
         })
@@ -89,6 +93,7 @@ class TodoController {
         })
 
         .catch (err => {
+            console.log (err, "--error delete Todo")
             return res.status (400).json ({message : err.message})
 
         })
