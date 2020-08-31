@@ -23,7 +23,7 @@ _Response (201 - Created)_
 {
     "id": "<todo id>",
     "name": "<todo name>",
-    "description: "<todo description>",
+    "description": "<todo description>",
     "due_date": "<todo due date>",
     "createdAt": "<todo created at>",
     "updatedAt": "<todo created at>"
@@ -63,7 +63,7 @@ _Response (200 - OK)_
     {
         "id": "<todo id>",
         "name": "<todo name>",
-        "description: "<todo description>",
+        "description": "<todo description>",
         "due_date": "<todo due date>",
         "createdAt": "<todo created at>",
         "updatedAt": "<todo created at>"
@@ -92,7 +92,7 @@ _Response (200 - OK)_
     {
         "id": "<todo id>",
         "name": "<todo name>",
-        "description: "<todo description>",
+        "description": "<todo description>",
         "due_date": "<todo due date>",
         "createdAt": "<todo created at>",
         "updatedAt": "<todo created at>"
@@ -132,7 +132,7 @@ _Response (200 - OK)_
 {
     "id": "<todo id>",
     "name": "<todo name>",
-    "description: "<todo description>",
+    "description": "<todo description>",
     "due_date": "<todo due date>",
     "createdAt": "<todo created at>",
     "updatedAt": "<todo created at>"
@@ -178,7 +178,7 @@ _Response (200 - OK)_
 {
     "id": "<todo id>",
     "name": "<todo name>",
-    "description: "<todo description>",
+    "description": "<todo description>",
     "due_date": "<todo due date>",
     "createdAt": "<todo created at>",
     "updatedAt": "<todo created at>"
