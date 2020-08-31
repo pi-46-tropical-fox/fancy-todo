@@ -71,7 +71,7 @@ _Response (500 - Internal Server Error)_
 ### GET /todos/:id
 
 _Response (200 - OK)_
-```json
+```
   {
     "id": 1,
     "title": "makan",
@@ -97,7 +97,7 @@ _Response (500 - Internal Server Error)_
 ```
 ---
 ### POST /todos
-
+```
   {
     "title": "string",
     "description": "string",
@@ -106,8 +106,9 @@ _Response (500 - Internal Server Error)_
     "UsersId": "integer"
   }
 
-
-_Response (201 - Created)
+```
+_Response (201 - Created)_
+  ```
   {
     "id": "integer",
     "title": "string",
@@ -121,6 +122,7 @@ _Response (201 - Created)
 ```
 
 _Response (400 - Bad Request)
+```
 [
   {
     "message": "Title is empty"
@@ -137,11 +139,11 @@ _Response (400 - Bad Request)
     "message: "fill Empty slot"
   }
 ]
-
+```
 ### PUT /todos/:id
 
-Request Body
-
+_Request Body_
+```
   {
     "title": "string",
     "description": "string",
