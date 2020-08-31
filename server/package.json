@@ -1,0 +1,27 @@
+{
+  "name": "fancy-todo-server",
+  "version": "1.0.0",
+  "description": "Todo app written in jQuery",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reaganiwadha/fancy-todo.git"
+  },
+  "keywords": [
+    "todo"
+  ],
+  "author": "reaganiwadha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/reaganiwadha/fancy-todo/issues"
+  },
+  "homepage": "https://github.com/reaganiwadha/fancy-todo#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "sequelize": "^6.3.4"
+  }
+}
