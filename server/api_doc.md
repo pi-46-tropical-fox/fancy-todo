@@ -120,15 +120,7 @@ _Response (200)_
     "description": "Menonton ulang lecture",
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
-  },
-  {
-    "id": 2,
-    "name": "Menyicil porto Week 1",
-    "description": "Cicil challenge harian",
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
-  }
-]
+  }]
 ```
 
 _Response (404 - Not Found)_
@@ -161,7 +153,7 @@ _Request Body_
 
 _Response (200)_
 ```
-[
+
   {
     "title":"Belajar method PUT",
     "description":"Cari definisi, cari contoh, cari definisi dari sumber lain, cari contoh lain, coba soal",
@@ -170,7 +162,7 @@ _Response (200)_
     "createdAt": "2020-08-31T07:15:12.149Z",
     "updatedAt": "2020-08-31T07:15:12.149Z",
   }
-]
+
 ```
 
 _Response (400 - Bad Request)_
@@ -212,7 +204,6 @@ not needed
 
 _Response (200)_
 ```
-[
   {
     "id": 1,
     "title": "Belajar REST API & JWT",
@@ -220,7 +211,6 @@ _Response (200)_
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
   }
-]
 ```
 
 _Response (404 - Not Found)_
