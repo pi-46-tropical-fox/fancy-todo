@@ -2,9 +2,8 @@
 const {
   Model
 } = require('sequelize');
-const bcrypt = require('bcryptjs');
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
+  class Todo extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -14,19 +13,14 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   };
-  User.init({
-    name: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING
+  Todo.init({
+    title: DataTypes.STRING,
+    description: DataTypes.STRING,
+    status: DataTypes.BOOLEAN,
+    due_date: DataTypes.DATE
   }, {
     sequelize,
-    modelName: 'User',
-    hooks: {
-      beforeCreate(user) {
-        var salt = bcrypt.genSaltSync(10);
-        user.password = bcrypt.hashSync(user.password, salt);
-      }
-    }
+    modelName: 'Todo',
   });
-  return User;
+  return Todo;
 };
