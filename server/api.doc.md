@@ -6,78 +6,197 @@ Application to manage your Todo list. This app has :
  
 
 ## RESTful endpoints
+* POST/register         => Create account
+* POST/login            => Create login 
 * GET/todos             => Get all todos
 * POST/todos            => Create todo
 * PUT/todos/:id         => Edit one todo
 * DELETE/todos/:id      => Delete one todo
-* POST/register         => Create account
-* POST/login            => Create login 
 
 
-### RESTful endpoints 
+### RESTful endpoints
 
-* GET/todos
+I. REGISTER
+  * Route
+    POST/register
+
+  * Request Header
+    not needed
+
+  * Request Body
+      "username": "<name>",
+      "email": "<email>",
+      "password": "<password>"
+
+  * Response (201)
+    [
+      {
+        "id": 1,
+        "username": "<user.name>",
+        "email": "<user.email>",
+        "password": "<user.password>",
+        "createdAt": "2020-03-20T07:15:12.149Z",
+        "updatedAt": "2020-03-20T07:15:12.149Z"
+      }
+    ]
+
+  * Response (400 - Bad Request)
+    {
+      "message": "Invalid request"
+    }
 
 
-### Request Header
+II. LOGIN
+  * Route
+    POST/login
 
-{
-  "access_token": "<your access token>"
-}
+  * Request Header
+    not needed
 
-### Request Body
+  * Request Body
+      "username": "<name>",
+      "password": "<password>"
 
-not needed
-### Response (200)
+  * Response (200)
+    [
+      token,
+      {
+        "id": 1,
+        "username": "<user.name>",
+        "email": "<user.email>",
+        "password": "<user.password>",
+        "createdAt": "2020-03-20T07:15:12.149Z",
+        "updatedAt": "2020-03-20T07:15:12.149Z"
+      }
+    ]
 
-[
-  {
-    "id": 1,
-    "name": "<asset name>",
-    "description": "<asset description>",
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
-  },
-  {
-    "id": 2,
-    "name": "<asset name>",
-    "description": "<asset description>",
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
-  }
-]
+  * Response (404 - Bad Request)
+    {
+      "message": "Ivalid Username or Password"
+    }
 
-### Response (400 - Bad Request)
 
-{
-  "message": "Invalid request"
-}
+III. GET ALL TODOS
+  * Route
+    GET/todos
 
-### POST /assets
-Create new asset
+  * Request Header
+    not needed
 
-Request Header
+  * Request Body
+    not needed
 
-{
-  "access_token": "<your access token>"
-}
-Request Body
+  * Response (200)
 
-{
-  "name": "<name to get insert into>",
-  "description": "<description to get insert into>"
-}
-Response (201 - Created)
+    [
+      {
+        "id": 1,
+        "title": "<todo.title>",
+        "description": "<todo.description>",
+        "status": "false",
+        "due_date": "2020-10-7",
+        "createdAt": "2020-03-20T07:15:12.149Z",
+        "updatedAt": "2020-03-20T07:15:12.149Z"
+      },
+      {
+        "id": 2,
+        "title": "Push Rank",
+        "description": "Push rank bareng temen-temen jam 12 malem sampai jam 6 sore",
+        "status": "false",
+        "due_date": "2020-10-7",
+        "createdAt": "2020-03-20T07:15:12.149Z",
+        "updatedAt": "2020-03-20T07:15:12.149Z"
+      }
+    ]
 
-{
-  "id": <given id by system>,
-  "name": "<posted name>",
-  "description": "<posted description>",
-  "createdAt": "2020-03-20T07:15:12.149Z",
-  "updatedAt": "2020-03-20T07:15:12.149Z",
-}
-Response (400 - Bad Request)
+  * Response (400 - Bad Request)
+    {
+      "message": "Invalid request"
+    }
 
-{
-  "message": "Invalid requests"
-}
+
+IV. CREATE NEW TODO
+  * Route
+    POST/todos
+
+  * Request Header
+    not needed
+
+  * Request Body
+    {
+      "title": "Push Rank",
+      "description": "Push rank bareng temen-temen jam 12 malem sampai jam 6 sore",
+      "status": "false",
+      "due_date": "2020-10-7"
+    }
+
+  * Response (201)
+    {
+        "id": 1,
+        "title": "Push Rank",
+        "description": "Push rank bareng temen-temen jam 6 sore sampai jam 12 malam",
+        "status": "false",
+        "due_date": "2020-10-7",
+        "createdAt": "2020-03-20T07:15:12.149Z",
+        "updatedAt": "2020-03-20T07:15:12.149Z"
+      }
+
+  * Response (400 - Bad Request)
+    {
+      "message": "Invalid request"
+    }
+
+
+V. UPDATE TODO
+  * Route
+    PUT/todos/<id>
+
+  * Request Header
+    PUT/todos/<id>
+
+  * Request Body
+    {
+      "title": "Push Rank",
+      "description": "Push rank bareng temen-temen jam 12 malem sampai jam 6 sore",
+      "status": "false",
+      "due_date": "2020-10-7"
+    }
+
+  * Response (201)
+    {
+        "id": 1,
+        "title": "Push Rank",
+        "description": "Push rank bareng temen-temen jam 6 sore sampai jam 12 malam",
+        "status": "false",
+        "due_date": "2020-10-7",
+        "createdAt": "2020-03-20T07:15:12.149Z",
+        "updatedAt": "2020-03-20T07:15:12.149Z"
+    }
+
+  * Response (404 - Bad Request)
+    {
+      "message": "Todo not found"
+    }
+
+
+VI. DELETE TODO
+  * Route
+    DELETE/todos
+
+  * Request Header
+    PUT/todos/<id>
+
+  * Request Body
+    no needed
+
+  * Response (201)
+    {
+        "message": "Successfuly delete todo"
+    }
+
+  * Response (404 - Bad Request)
+    {
+      "message": "Todo not found"
+    }
+
+
