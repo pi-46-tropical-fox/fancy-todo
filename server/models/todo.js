@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Todo.init({
-    title: {
+   title: {
       type: DataTypes.STRING,
       validate: {
         notEmpty:{
@@ -47,6 +47,11 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   }, {
+    hooks: {
+      beforeCreate: (user, options) => {
+        user.status = false
+      }
+    },
     sequelize,
     modelName: 'Todo',
   });
