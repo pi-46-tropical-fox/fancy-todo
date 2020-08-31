@@ -14,7 +14,7 @@ class TodoController {
     }
 
     static add(req,res){
-        console.log(req.body)
+        // console.log(req.body)
         Todo.create({
             title: req.body.title,
             description: req.body.description,
@@ -28,6 +28,7 @@ class TodoController {
         })
         .catch(err =>{
             res.status(500).json({"message": "error create new todo"})
+            console.log(err)
         })
     }
 
