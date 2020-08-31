@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/rizkygustianto/fancy-todo/issues"
   },
-  "homepage": "https://github.com/rizkygustianto/fancy-todo#readme"
+  "homepage": "https://github.com/rizkygustianto/fancy-todo#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pg": "^8.3.3",
+    "sequelize": "^6.3.4"
+  }
 }

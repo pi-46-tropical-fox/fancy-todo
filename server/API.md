@@ -8,7 +8,7 @@ My TODO App is an application to manage your to-do lists. This app has :
 ## RESTful endpoints
 ### GET /todo
 
-> Get all assets
+> Get all todo list
 
 _Request Header_
 ```
@@ -55,7 +55,7 @@ _Response (400 - Bad Request)_
 ---
 ### POST /todo
 
-> Create new asset
+> Create new todo
 
 _Request Header_
 ```
@@ -96,7 +96,7 @@ _Response (400 - Bad Request)_
 
 ### GET /todo/:id
 
-> Get all assets
+> Get a todo by ID
 
 _Request Header_
 ```
@@ -107,9 +107,7 @@ _Request Header_
 
 _Request Body_
 ```
-{
-    "id": <id of the todo to get>
-}
+not needed
 ```
 
 _Response (200)_
@@ -125,17 +123,17 @@ _Response (200)_
 }
 ```
 
-_Response (400 - Bad Request)_
+_Response (404 - Not Found)_
 ```
 {
-  "message": "Invalid request"
+  "message": "Error Not Found"
 }
 ```
 ---
 
 ### PUT /todo/:id
 
-> Get all assets
+> Modify/Update a todo by ID
 
 _Request Header_
 ```
@@ -147,14 +145,17 @@ _Request Header_
 _Request Body_
 ```
 {
-    "id": <id of the todo to update>
+    "title": "<updated title>",
+    "description": "<updated description>",
+    "status": "<updated status>",
+    "due_date": "<updated due date>"
 }
 ```
 
 _Response (200)_
 ```
 {
-    "id": <id as requested>,
+    "id": <id>,
     "title": "<todo title>",
     "description": "<todo description>",
     "status": "<todo status>",
@@ -174,7 +175,7 @@ _Response (400 - Bad Request)_
 
 ### DELETE /todo/:id
 
-> Get all assets
+> Delete a todo by ID
 
 _Request Header_
 ```
@@ -185,15 +186,13 @@ _Request Header_
 
 _Request Body_
 ```
-{
-    "id": <id of the todo to delete>
-}
+not needed
 ```
 
 _Response (200)_
 ```
 {
-    "id": <id as requested>,
+    "id": <id>,
     "title": "<todo title>",
     "description": "<todo description>",
     "status": "<todo status>",
@@ -203,10 +202,17 @@ _Response (200)_
 }
 ```
 
-_Response (400 - Bad Request)_
+_Response (404 - Not Found)_
 ```
 {
   "message": "Invalid request"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "Internal Server Error"
 }
 ```
 ---
