@@ -22,30 +22,30 @@ My Fancy Todo App is an application to manage your activities. This app has :
 _Request Header_
 ```
 {
-  "access_token": "<your access token>"
+  "content_type": "application/json"
 }
 ```
 
 _Request Body_
 ```
 {
-  "title": "<todo title to get insert into>",
-  "description": "<todo description to get insert into>",
-  "status": "<todo status to get insert into>",
-  "due_date": "<todo due date to get insert into>"
+  "title": "Learn REST API",
+  "description": "Learn how to create RESTful API with Express and Sequelize",
+  "status": "ongoing",
+  "due_date": "2020-01-29"
 }
 ```
 
 _Response (201 - Created)_
 ```
 {
-  "id": <given id by system>,
-  "title": "<posted todo title>",
-  "description": "<posted todo description>",
-  "status": "<posted todo status>",
-  "due_date": "<posted todo due date>",
-  "createdAt": "2020-03-20T07:15:12.149Z",
-  "updatedAt": "2020-03-20T07:15:12.149Z",
+  "id": 1,
+  "title": "Learn REST API",
+  "description": "Learn how to create RESTful API with Express and Sequelize",
+  "status": "ongoing",
+  "due_date": "2020-01-29",
+  "createdAt": "2020-01-27T07:15:12.149Z",
+  "updatedAt": "2020-01-27T07:15:12.149Z",
 }
 ```
 
@@ -76,22 +76,22 @@ _Response (200 - OK)_
 ```
 [
   {
-    "id": <todo id>,
-    "title": "<todo title>",
-    "description": "<todo description>",
-    "status": "<todo status>",
-    "due_date": "<todo due date>",
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
+    "id": 1,
+    "title": "Learn REST API",
+    "description": "Learn how to create RESTful API with Express and Sequelize",
+    "status": "ongoing",
+    "due_date": "2020-01-29",
+    "createdAt": "2020-01-27T07:15:12.149Z",
+    "updatedAt": "2020-01-27T07:15:12.149Z",
   },
   {
-    "id": <todo id>,
-    "title": "<todo title>",
-    "description": "<todo description>",
-    "status": "<todo status>",
-    "due_date": "<todo due date>",
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
+    "id": 2,
+    "title": "Learn API Documentation",
+    "description": "Learn how to create API Documentation with REST standard",
+    "status": "done",
+    "due_date": "2020-01-29",
+    "createdAt": "2020-01-28T07:15:12.149Z",
+    "updatedAt": "2020-01-28T07:15:12.149Z",
   }
 ]
 ```
@@ -122,20 +122,20 @@ not needed
 _Request Params_
 ```
 {
-  "id": "<todo id>"
+  "id": "1"
 }
 ```
 
 _Response (200 - OK)_
 ```
 {
-  "id": <todo id>,
-  "title": "<todo title>",
-  "description": "<todo description>",
-  "status": "<todo status>",
-  "due_date": "<todo due date>",
-  "createdAt": "2020-03-20T07:15:12.149Z",
-  "updatedAt": "2020-03-20T07:15:12.149Z",
+  "id": 1,
+  "title": "Learn REST API",
+  "description": "Learn how to create RESTful API with Express and Sequelize",
+  "status": "ongoing",
+  "due_date": "2020-01-29",
+  "createdAt": "2020-01-27T07:15:12.149Z",
+  "updatedAt": "2020-01-27T07:15:12.149Z",
 }
 ```
 
@@ -160,30 +160,30 @@ _Request Header_
 _Request Body_
 ```
 {
-  "title": "<todo title to get insert into>",
-  "description": "<todo description to get insert into>",
-  "status": "<todo status to get insert into>",
-  "due_date": "<todo due date to get insert into>"
+  "title": "Learn Node",
+  "description": "Learn how to create app with Express and Sequelize",
+  "status": "ongoing",
+  "due_date": "2020-01-30",
 }
 ```
 
 _Request Params_
 ```
 {
-  "id": "<todo id>"
+  "id": "1"
 }
 ```
 
 _Response (200 - OK)_
 ```
 {
-  "id": <todo id>,
-  "title": "<updated todo title>",
-  "description": "<updated todo description>",
-  "status": "<updated todo status>",
-  "due_date": "<updated todo due date>",
-  "createdAt": "2020-03-20T07:15:12.149Z",
-  "updatedAt": "2020-03-20T07:15:12.149Z",
+  "id": 1,
+  "title": "Learn Node",
+  "description": "Learn how to create app with Express and Sequelize",
+  "status": "ongoing",
+  "due_date": "2020-01-30",
+  "createdAt": "2020-01-27T07:15:12.149Z",
+  "updatedAt": "2020-01-29T07:15:12.149Z",
 }
 ```
 
@@ -213,20 +213,20 @@ not needed
 _Request Params_
 ```
 {
-  "id": "<todo id>"
+  "id": "2"
 }
 ```
 
 _Response (200 - OK)_
 ```
 {
-  "id": <todo id>,
-  "title": "<deleted todo title>",
-  "description": "<deleted todo description>",
-  "status": "<deleted todo status>",
-  "due_date": "<deleted todo due date>",
-  "createdAt": "2020-03-20T07:15:12.149Z",
-  "updatedAt": "2020-03-20T07:15:12.149Z",
+  "id": 2,
+  "title": "Learn API Documentation",
+  "description": "Learn how to create API Documentation with REST standard",
+  "status": "done",
+  "due_date": "2020-01-29",
+  "createdAt": "2020-01-28T07:15:12.149Z",
+  "updatedAt": "2020-01-28T07:15:12.149Z",
 }
 ```
 
