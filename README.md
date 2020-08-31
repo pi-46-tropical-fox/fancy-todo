@@ -11,43 +11,40 @@ Application to manage your Todo list. This app has :
 ## RESTful endpoints
 List of available endpoint:
 
-  - `GET /todos` 
-  - `GET /todos/:id`
-  - `POST /todos`
-  - `PUT /todos/:id`
-  - `POST /login`
-  - `POST /register`
-  - `DELETE /todos/:id`
+  - `GET /todos` => Menampilkan seluruh data
+  - `GET /todos/:id`=> Menampilkan data berdasar id yang di input
+  - `POST /todos` => Menambah Daftar todos
+  - `PUT /todos/:id`=> Menupdate data todos
+  - `POST /login`=> Masuk kedalam todos dengan login
+  - `POST /register`=> Membuat data login
+  - `DELETE /todos/:id`=> Menghapus data todos berdasarkan id
 
 
 
 ```
-
 _Response (500 - Internal Server Error)
 {
   "message": "Internal Server Error"
 }
-
 ---
 ### GET /todos
-
 _Response (200 - OK)_
-```
+```json
 [
   {
     "id": 1,
     "title": "makan",
-    "description": "makan ayam",
+    "description": "makan Nasi",
     "status": "belum",
-    "Due_date": 2020-12-12,
+    "Due_date": 2020-11-30,
     "UsersId": 1
   },
   {
     "id": 2,
-    "title": "minum",
-    "description": "minum air",
+    "title": "belajar",
+    "description": "documentation",
     "status": "belum",
-    "Due_date": 2020-12-12,
+    "Due_date": 2020-11-30,
     "UsersId": 2
   },
   {
@@ -55,14 +52,14 @@ _Response (200 - OK)_
     "title": "makan",
     "description": "makan sosis",
     "status": "belum",
-    "Due_date": 2020-12,
+    "Due_date": 2020-11-30,
     "UsersId": 1
   }
 ]
 ```
 
 _Response (500 - Internal Server Error)_
-```
+```json
 {
   "message": "Internal Server Error"
 }
@@ -71,11 +68,11 @@ _Response (500 - Internal Server Error)_
 ### GET /todos/:id
 
 _Response (200 - OK)_
-```
+```json
   {
     "id": 1,
     "title": "makan",
-    "description": "makan ayam",
+    "description": "makan nasi",
     "status": "belum",
     "Due_date": 2020-12-12,
     "UsersId": 1
@@ -83,7 +80,7 @@ _Response (200 - OK)_
 ```
 
 _Response (404 - Not Found)_
-```
+```json
 {
   "message": "error Not Found"
 }
@@ -97,7 +94,7 @@ _Response (500 - Internal Server Error)_
 ```
 ---
 ### POST /todos
-```
+```json
   {
     "title": "string",
     "description": "string",
@@ -105,10 +102,9 @@ _Response (500 - Internal Server Error)_
     "due_date": "date",
     "UsersId": "integer"
   }
-
 ```
 _Response (201 - Created)_
-  ```
+  ```json
   {
     "id": "integer",
     "title": "string",
@@ -122,7 +118,7 @@ _Response (201 - Created)_
 ```
 
 _Response (400 - Bad Request)
-```
+```json
 [
   {
     "message": "Title is empty"
@@ -136,14 +132,13 @@ _Response (400 - Bad Request)
   {
     "message": "You don't pick a Due Date"
   },
-    "message: "fill Empty slot"
+    "message": "fill Empty slot"
   }
 ]
 ```
 ### PUT /todos/:id
-
 _Request Body_
-```
+```json
   {
     "title": "string",
     "description": "string",
@@ -151,11 +146,9 @@ _Request Body_
     "Due_date": "date",
     "UsersId": 1
   }
-
 ```
-
 _Response (200 - OK)
-```
+```json
   {
     "id": "integer",
     "title": "string",
@@ -167,9 +160,8 @@ _Response (200 - OK)
     "updatedAt": "date"
   }
 ```
-
 _Response (400 - Bad Request)_
-```
+```json
 [
   {
     "message": "Title is empty"
@@ -185,25 +177,22 @@ _Response (400 - Bad Request)_
   }
 ]
 ```
-
 _Response (404 - Not Found)_
-```
+```json
 {
   "message": "error Not Found"
 }
 ```
-
 _Response (500 - Internal Server Error)_
-```
+```json
 {
   "message": "Internal Server Error"
 }
 ```
 ---
 ### DELETE /todos/:id
-
 _Response (200 - OK)_
-```
+```json
   {
     "id": "integer",
     "title": "string",
@@ -215,43 +204,37 @@ _Response (200 - OK)_
     "updatedAt": "date"
   }
 ```
-
 _Response (404 - Not Found)_
-```
+```json
 {
   "message": "error Not Found"
 }
 ```
-
 _Response (500 - Internal Server Error)_
-```
+```json
 {
   "message": "Internal Server Error"
 }
 ```
 ---
 ### POST /register
-
 _Request Body_
-```
+```json
   {
     "email": "string",
     "password": "string"
   }
-
 ```
-
 _Response (201 - Created)_
-```
+```json
   {
     "id": "integer",
     "email": "string",
     "password": "string"
   }
 ```
-
 _Response (400 - Bad Request)_
-```
+```json
 [
   {
     "message": "You don't put any password"
@@ -261,9 +244,8 @@ _Response (400 - Bad Request)_
   }
 ]
 ```
-
 _Response (500 - Internal Server Error)_
-```
+```json
 {
   "message": "Internal Server Error"
 }
