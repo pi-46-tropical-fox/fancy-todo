@@ -1,6 +1,6 @@
 const { User } = require ('../models')
-const jwt = require('jsonwebtoken')
-const bcryptsjs = require('bcryptjs')
+const { generateToken } = require('../helpers/jwt')
+const validateUser = require('../helpers/validateUser')
 
 class UserController {
     static register (req,res) {
@@ -18,7 +18,28 @@ class UserController {
     }
 
     static login (req,res) {
-        
+        const {username, password} = req.body
+
+        User.findOne({where : { username }})
+            .then( user => {
+                if (!user) {
+                    res.status(400).json({ message : "Invalid username or password"})
+                }
+                return user
+            })
+            .then(user => {
+                const isValid = validateUser(password, user.password)
+
+                if (isValid) {
+                    const token = generateToken(user)
+                    return res.status(200).json({token})
+                } else {
+                    res.status(400).json({ message : "Invalid username or password"})
+                }
+            })
+            .catch( err => {
+                return res.status(500).json({message : "Internal server error"})
+            })
     }
 }
 

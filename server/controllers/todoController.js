@@ -2,7 +2,7 @@ const { Todo } = require('../models')
 
 class TodoController {
     static getTodos (req, res) {
-        Todo.findAll()
+        Todo.findAll({where : { UserId : req.userData.id}})
             .then(todos => {
                 return res.status(200).json(todos)
             })
@@ -12,8 +12,15 @@ class TodoController {
     }
 
     static createTodo (req, res) {
-        const { title, description, due_date } = req.body
-        Todo.create({title, description, due_date})
+        
+        const data = {
+            title : req.body.title,
+            description : req.body.description,
+            due_date : req.body.due_date,
+            UserId : req.userData.id
+        }
+
+        Todo.create(data)
             .then( todo => {
                 return res.status(201).json(todo)
             })
