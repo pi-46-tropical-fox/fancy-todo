@@ -19,7 +19,7 @@ My Assets App is an application to manage your assets. This app has :
 _Request Header_
 ```
 {
-  "access_token": "<your access token>"
+  "access_token": "<jwt_token>"
 }
 ```
 
@@ -72,7 +72,7 @@ _Response (500 - Server Error)_
 _Request Header_
 ```
 {
-  "access_token": "<your access token>"
+  "access_token": "<jwt_token>"
 }
 ```
 
@@ -90,15 +90,17 @@ _Request Body_
 
 _Response (201 - Created)_
 ```
-{
-  "id": <given id by system>,
-  "title": "<posted title>",
-  "description": "<posted description>",
-  "status": "<posted status>",
-  "due_date": "<posted due_date>",
-  "createdAt": "2020-03-20T07:15:12.149Z",
-  "updatedAt": "2020-03-20T07:15:12.149Z",
-}
+[
+  {
+    "id": 3,
+    "title": "Bangun",
+    "description": "Bangun Tidur",
+    "status": "false",
+    "due_date": "2020-09-02",
+    "createdAt": "2020-03-20T07:15:12.149Z",
+    "updatedAt": "2020-03-20T07:15:12.149Z",
+  }
+]
 ```
 
 _Response (400 - Bad Request)_
@@ -130,21 +132,23 @@ _Response (500 - Server Error)_
 _Request Header_
 ```
 {
-  "access_token": "<your access token>"
+  "access_token": "<jwt_token>"
 }
 ```
 
 _Response (200)_
 ```
-{
-  "id": <given id by request parameters>,
-  "title": "<given title by request id>",
-  "description": "<given description by request id>",
-  "status": "<given status by request id>",
-  "due_date": "<given due_date by request id>",
-  "createdAt": "2020-03-20T07:15:12.149Z",
-  "updatedAt": "2020-03-20T07:15:12.149Z",
-}
+[
+  {
+    "id": 1,
+    "title": "Coding",
+    "description": "Coding JavaScript",
+    "status": "true",
+    "due_date": "2020-09-01",
+    "createdAt": "2020-03-20T07:15:12.149Z",
+    "updatedAt": "2020-03-20T07:15:12.149Z",
+  }
+]
 ```
 _Response (404 - Not Found)_
 ```
@@ -166,7 +170,7 @@ _Response (500 - Server Error)_
 _Request Header_
 ```
 {
-  "access_token": "<your access token>"
+  "access_token": "<jwt_token>"
 }
 ```
 
@@ -184,15 +188,17 @@ _Request Body_
 
 _Response (200)_
 ```
-{
-  "id": <given id by request parameters>,
-  "title": "<posted title>",
-  "description": "<posted description>",
-  "status": "<posted status>",
-  "due_date": "<posted due_date>",
-  "createdAt": "2020-03-20T07:15:12.149Z",
-  "updatedAt": "2020-03-20T07:15:12.149Z",
-}
+[
+  {
+    "id": 1,
+    "title": "Olahraga",
+    "description": "Olahraga Sore",
+    "status": "false",
+    "due_date": "2020-09-01",
+    "createdAt": "2020-03-20T07:15:12.149Z",
+    "updatedAt": "2020-03-20T07:15:12.149Z",
+  }
+]
 ```
 
 _Response (400 - Bad Request)_
@@ -230,20 +236,22 @@ _Response (500 - Server Error)_
 _Request Header_
 ```
 {
-  "access_token": "<your access token>"
+  "access_token": "<jwt_token>"
 }
 ```
 _Response (200)_
 ```
-{
-  "id": <given id by request parameters>,
-  "title": "<given title by request id>",
-  "description": "<given description by request id>",
-  "status": "<given status by request id>",
-  "due_date": "<given due_date by request id>",
-  "createdAt": "2020-03-20T07:15:12.149Z",
-  "updatedAt": "2020-03-20T07:15:12.149Z",
-}
+[
+  {
+    "id": 3,
+    "title": "Bangun",
+    "description": "Bangun Tidur",
+    "status": "false",
+    "due_date": "2020-09-02",
+    "createdAt": "2020-03-20T07:15:12.149Z",
+    "updatedAt": "2020-03-20T07:15:12.149Z",
+  }
+]
 ```
 _Response (404 - Not Found)_
 ```
