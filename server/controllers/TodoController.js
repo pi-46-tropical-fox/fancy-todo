@@ -33,8 +33,9 @@ class TodoController {
 
 	static async create(req, res) {
 		const { title, description, status, due_date } = req.body;
+		const { id } = req.userData;
 		try {
-			const todo = await Todo.create({ title, description, status, due_date });
+			const todo = await Todo.create({ title, description, status, due_date, UserId: id });
 
 			return res.status(201).json(todo);
 		} catch (error) {
