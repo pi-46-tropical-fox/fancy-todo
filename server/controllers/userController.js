@@ -3,6 +3,7 @@ const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { generateToken } = require('../helpers/jwt.js')
 const user = require('../models/user')
+// const { noExtendLeft } = require('sequelize/types/lib/operators')
 
 class userController {
 
@@ -23,26 +24,28 @@ class userController {
     // }
 
     //ASYNC AWAIT 
-    static async register(req, res) {
+    static async register(req, res, next) {
         // console.log(User.create({ username, email, password }), '<==user.create')
         try {
             const { username, password, email } = req.body
             const user = await User.create({ username, email, password })
             return res.status(201).json({ username:user.username, email:user.email })
         } catch(err) {
-            console.log(err, ' <=== error register')
-            return res.status(500).json({ message: "internal error server" })
+            // console.log(err, ' <=== error register')
+            // return res.status(500).json({ message: "internal error server" })
+            return next(err)
         }
     }
 
-    static login(req, res) {
+    static login(req, res, next) {
         const { username, password } = req.body
 
         User.findOne({ where: { username } })
             .then(user => {
 
                 if (!user) {
-                    return res.status(400).json({ message: 'invalid username/password' })
+                    // return res.status(400).json({ message: 'invalid username/password' })
+                    throw {message:'invalid username/password', statusCode:400 }
                 }
                 return user
             })
@@ -51,18 +54,18 @@ class userController {
 
                 if (isValid) {
                     //generate jwt
-                    const secret = 'lalalalilili'
                     const access_token = generateToken(user)
 
                     return res.status(200).json({ access_token })
                 }
                 else {
-                    return res.status(400).json({ message: 'invalid username/password' })
+                    throw {message:'invalid username/password', statusCode:400 }
                 }
             })
             .catch(err => {
                 console.log(err, '<=== error login')
-                return res.status(500).json({ message: 'Internal error server' })
+                return next(err)
+                // return res.status(500).json({ message: 'Internal error server' })
             })
     }
 }
