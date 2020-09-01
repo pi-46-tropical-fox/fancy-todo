@@ -11,13 +11,38 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Todo.belongsTo(models.User)
     }
   };
   Todo.init({
-    title: DataTypes.STRING,
-    description: DataTypes.STRING,
+    title: { 
+      type : DataTypes.STRING,
+      validate:{
+        notEmpty:{
+          args:[10],
+          msg: 'please inser passrowd minimum ten characters'
+        }
+      }
+    },
+    description: { type : DataTypes.STRING,
+      validate:{
+        notEmpty:{
+          args:[10],
+          msg: 'please inser passrowd minimum ten characters'
+        }
+      }},
     status: DataTypes.BOOLEAN,
-    due_date: DataTypes.DATE
+    due_date:{
+      type: DataTypes.DATE,
+      validate:{
+        isPassed(value){
+          if(value.toISOString().split("T")[0] > new Date().toISOString().split("T")[0] || value.toISOString().split("T")[0] < new Date().toISOString().split("T")[0]){
+            throw new Error('Invalid date')
+          }
+        }
+      }
+    },
+    UserId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Todo',
