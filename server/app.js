@@ -4,7 +4,7 @@ const app = express()
 const port = 3000
 const router = require('./routes')
 
-console.log(process.env.SECRET)
+// console.log(process.env.SECRET)
 
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
