@@ -2,6 +2,7 @@ const route = require('express').Router();
 const todoRoute = require('./todoRoute');
 const userController = require('../controllers/userController');
 
+
 route.get("/", (req,res) => {
     res.send("HOME")
 })

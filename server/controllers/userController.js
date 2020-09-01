@@ -1,6 +1,6 @@
 const {User} = require('../models');
 const bcrypt = require('bcryptjs');
-const {generateToken,verifyToken} = require('../helpers/generateJWT');
+const {generateToken} = require('../helpers/generateJWT');
 
 
 class UserController {

@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
           isBefore: new Date().toISOString().split("T")[0]
         }
       },
+      UserId: DataTypes.INTEGER,
     },
     {
       sequelize,

@@ -4,10 +4,11 @@ class TodoController {
     
     static async create(req,res) {
         const {title,description,status,due_date} = req.body
-        
+        const UserId = req.userData.id // dari token di authentication
+
         try {
             let create = await Todo.create({
-                title,description,status,due_date
+                title,description,status,due_date,UserId
             })
             res.status(201).json(create)
         } catch (err) {
