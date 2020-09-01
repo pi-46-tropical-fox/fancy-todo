@@ -1,5 +1,6 @@
 const {User} = require ("../models")
-const jwt = require('jsonwebtoken')
+const {tokenGenerator} = require ("../helpers/jwt.js")
+
 const bcrypt = require ('bcrypt')
 
 class UserController {
@@ -32,19 +33,33 @@ class UserController {
         })
 
         .then (data => {
+            if (!data) {
+                return res.status (400).json ({message : "Email or Password is wrong"})
+            }
+
+            return data
+        })
+
+        
+
+        .then (data => {
             const compare = bcrypt.compareSync (password, data.password)
 
             if (compare) {
-                let secret = "secretpassword"
-                let token = jwt.sign({ email: data.email, id: data.id }, secret);
+                
+                let token = tokenGenerator (data)
 
                 return res.status (200).json ({token})
+            
+            } else {
+                // console.log (password, data.password)
+                return res.status (400).json ({message : "Email or Password is wrong"})
             }
 
         })
 
         .catch (err => {
-            console.log (err)
+            // console.log (err)
             return res.status (500).json ({message : err.message})
         })
 

@@ -19,7 +19,7 @@ class TodoController {
 
         .catch (err => {
             console.log (err, "--error create Todo")
-            return res.status (500).json ({message : err.message})
+            return res.status (400).json ({message : err.message})
 
         })
 
@@ -35,7 +35,7 @@ class TodoController {
 
         .catch (err => {
             console.log (err, "--error show Todo")
-            return res.status (400).json ({message : err.message})
+            return res.status (500).json ({message : err.message})
 
         })
     }
@@ -88,13 +88,13 @@ class TodoController {
 
         .then (data => {
             Todo.findAll ()
-            return res.status (200).json (data)
+            return res.status (200).json ({message : "Deleted data from specific id"})
 
         })
 
         .catch (err => {
             console.log (err, "--error delete Todo")
-            return res.status (400).json ({message : err.message})
+            return res.status (500).json ({message : err.message})
 
         })
 
