@@ -2,7 +2,7 @@
   "development": {
     "username": "samuelgirsang",
     "password": null,
-    "database": "todo-app",
+    "database": "todo_app",
     "host": "localhost",
     "dialect": "postgres"
   },

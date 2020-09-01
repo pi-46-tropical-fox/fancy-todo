@@ -1,7 +1,8 @@
 # My Todo App Server
-Todo List App is an application to manage your todo activity. This app has : 
+Todo App is an application to manage your todo activity. This app has : 
 * RESTful endpoint for todo's CRUD operation
 * JSON formatted response
+* JWT secret in .env is SECRET=thisismydeepestsecret
 
 &nbsp;
 
@@ -12,7 +13,51 @@ Todo List App is an application to manage your todo activity. This app has :
   - GET /todos/:id
   - PUT /todos/:id
   - DELETE /todos/:id
+  - POST /users/register
+  - POST /users/login
 ```
+### POST /todos
+
+> Create new todo
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+{
+  "title": "<todo title>",
+  "description": "<todo description>",
+  "status": "<todo status>",
+  "due_date": "<todo due date>"
+}
+```
+
+_Response (201 - Created)_
+```
+{
+  "id": <given id by auto-increment id system>,
+  "title": "<posted todo title>",
+  "description": "<posted todo description>",
+  "status": "<posted todo status>",
+  "due_date": "<posted todo due date>",
+  "UserId": <posted todo owner>
+  "createdAt": "2020-03-20T07:15:12.149Z",
+  "updatedAt": "2020-03-20T07:15:12.149Z",
+}
+```
+
+_Response (400 - Bad Request)_
+```
+{
+  "message": "Invalid requests"
+}
+```
+---
 
 ### GET /todos
 
@@ -30,7 +75,7 @@ _Request Body_
 not needed
 ```
 
-_Response (200)_
+_Response (200 - OK)_
 ```
 [
   {
@@ -39,6 +84,7 @@ _Response (200)_
     "description": "<todo description>",
     "status": "<todo status>",
     "due_date": "<todo due date>",
+    "UserId": <todo User ID>,
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
   },
@@ -48,23 +94,23 @@ _Response (200)_
     "description": "<todo description>",
     "status": "<todo status>",
     "due_date": "<todo due_date>",
+    "UserId": <todo User ID>,
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
   }
 ]
 ```
 
-_Response (400 - Bad Request)_
+_Response (500 - Internal Server Error)_
 ```
 {
-  "message": "Invalid request"
+  "message": "internal server errors"
 }
 ```
 ---
+### GET /todos/:id
 
-### POST /todos
-
-> Create new todo
+> Get one todo
 
 _Request Header_
 ```
@@ -75,31 +121,29 @@ _Request Header_
 
 _Request Body_
 ```
-{
-  "title": "<todo title>",
-  "description": "<todo description>",
-  "status": "<todo status>"
-  "due_date": "<todo due date>",
-}
+not needed
 ```
 
-_Response (201 - Created)_
+_Response (200 - OK)_
 ```
-{
-  "id": <given id by auto-increment id system>,
-  "title": "<posted todo title>",
-  "description": "<posted todo description>",
-  "status": "<posted todo status>",
-  "due_date": "<posted todo due date>",
-  "createdAt": "2020-03-20T07:15:12.149Z",
-  "updatedAt": "2020-03-20T07:15:12.149Z",
-}
+[
+  {
+    "id": 1,
+    "title": "<todo title>",
+    "description": "<todo description>",
+    "status": "<todo status>",
+    "due_date": "<todo due date>",
+    "UserId": <todo User ID>,
+    "createdAt": "2020-03-20T07:15:12.149Z",
+    "updatedAt": "2020-03-20T07:15:12.149Z",
+  },
+]
 ```
 
-_Response (400 - Bad Request)_
+_Response (404 - Not found)_
 ```
 {
-  "message": "Invalid requests"
+  "message": "todo not found"
 }
 ```
 ---
@@ -122,7 +166,7 @@ _Request Body_
 }
 ```
 
-_Response (200)_
+_Response (200 - OK)_
 ```
 [
   {
@@ -131,16 +175,17 @@ _Response (200)_
     "description": "<todo description>",
     "status": "<todo status>",
     "due_date": "<todo due date>",
+    "UserId": <todo User ID>,
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
   }
 ]
 ```
 
-_Response (400 - Bad Request)_
+_Response (404 - Not Found)_
 ```
 {
-  "message": "Invalid request"
+  "message": "todo not found"
 }
 ```
 ---
@@ -162,27 +207,86 @@ _Request Body_
 }
 ```
 
-_Response (200)_
+_Response (200 - OK)_
 ```
-[
-  {
-    "id": <id as requested>,
-    "title": "<todo title>",
-    "description": "<todo description>",
-    "status": "<todo status>",
-    "due_date": "<todo due date>",
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
-  }
-]
+not needed
+```
+
+_Response (404 - Not found)_
+```
+{
+  "message": "todo not found"
+}
+```
+---
+
+### POST /users/register
+
+> Register new user
+
+_Request Header_
+```
+not needed
+```
+
+_Request Body_
+```
+{
+  "username": <user todo app>,
+  "email": <email user todo app>,
+  "password": <password user todo app>
+}
+```
+
+_Response (201 - Created)_
+```
+{
+  "id": <given id by auto-increment id system>,
+  "username": <posted user todo app>,
+  "email": <posted email user todo app>,
+  "password": <posted password user>,
+  "createdAt": "2020-03-20T07:15:12.149Z",
+  "updatedAt": "2020-03-20T07:15:12.149Z",
+}
 ```
 
 _Response (400 - Bad Request)_
 ```
 {
-  "message": "Invalid request"
+  "message": "Invalid requests"
 }
 ```
 ---
+### POST /users/login
+
+> Login user
+
+_Request Header_
+```
+not needed
+```
+
+_Request Body_
+```
+{
+  "email": <email user todo app>,
+  "password": <password user todo app>
+}
+```
+
+_Response (200 - OK)_
+```
+not needed
+```
+
+_Response (400 - Bad Request)_
+```
+{
+  "message": "Invalid requests"
+}
+```
+---
+
+
 
 
