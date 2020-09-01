@@ -1,5 +1,6 @@
 const {User} = require ("../models")
 const {tokenGenerator} = require ("../helpers/jwt.js")
+const {compare} = require ("../helpers/bcrypt.js")
 
 const bcrypt = require ('bcrypt')
 
@@ -43,9 +44,9 @@ class UserController {
         
 
         .then (data => {
-            const compare = bcrypt.compareSync (password, data.password)
+            const comparePassword = compare (password, data.password)
 
-            if (compare) {
+            if (comparePassword) {
                 
                 let token = tokenGenerator (data)
 

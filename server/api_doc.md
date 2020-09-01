@@ -1,4 +1,4 @@
-# My Assets App Server
+# My Todos App Server
 fancy Todos App is an application to manage your assets. This app has : 
 * RESTful endpoint for asset's CRUD operation
 * JSON formatted response

@@ -17,11 +17,21 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.hasMany (models.Todo)
     }
   };
   User.init({
     username: DataTypes.STRING,
-    email: DataTypes.STRING,
+    email: {
+      type : DataTypes.STRING,
+      validate : {
+        isEmail : true
+      },
+      unique : {
+        args : true,
+        msg : "Please select another email address"
+      }
+    },
     password: DataTypes.STRING
   }, {
     sequelize,

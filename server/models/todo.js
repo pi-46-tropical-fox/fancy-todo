@@ -11,13 +11,28 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Todo.belongsTo (models.User)
     }
   };
   Todo.init({
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     status: DataTypes.STRING,
-    due_date: DataTypes.DATE
+    due_date: {
+      type : DataTypes.DATE,
+      validate : {
+        isNotLessThanToday (date) {
+          let today = new Date ()
+          let todoDate = new Date (date)
+          if (todoDate <= today || todoDate == today) {
+            throw new Error (`You can't set your todo list less than today's date`)
+
+          }
+
+        }
+      }
+    },
+    UserId : DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Todo',

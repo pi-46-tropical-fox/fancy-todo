@@ -7,7 +7,8 @@ class TodoController {
             title : req.body.title,
             description : req.body.description,
             status : req.body.status,
-            due_date : req.body.due_date
+            due_date : req.body.due_date,
+            UserId : req.body.UserId
         }
 
         Todo.create (params)
@@ -44,6 +45,7 @@ class TodoController {
         Todo.findByPk (req.params.id)
 
         .then (data => {
+            // console.log (data)
             return res.status (200).json (data)
         })
 
@@ -68,9 +70,14 @@ class TodoController {
         })
 
         .then (data => {
-            Todo.findByPk (req.params.id)
-            return res.status (200).json (data)
+            // console.log (data)
+            if (!data[0]) {
+                return res.status (400).json ({message : "Bad Request"})
 
+
+            } else {
+                return res.status (200).json ({message : "Successfully updating todo task"})
+            }
         })
 
         .catch (err => {
