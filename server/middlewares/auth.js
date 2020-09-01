@@ -1,14 +1,24 @@
 const { verifyToken } = require('../helpers/jwt')
 const { User, Todo } = require('../models')
 
-const authentication = (req, res, next) => {
+const authentication = async (req, res, next) => {
     const { access_token } = req.headers
     try {
         const userData = verifyToken(access_token)
-        req.userData = userData
-        next()
+        let user = await User.findOne({
+            where: {
+                email: userData.email
+            }
+        })
+        if (user) {
+            req.userData = userData
+            next()
+        } else {
+            throw { message: 'Doesnt recognize User!', statusCode: 401 }
+        }
+
     } catch(err) {
-       return res.status(401).json({message: 'Doesnt recognize User!'})
+       return next(err)
     }
 
 }
@@ -21,11 +31,11 @@ const authorization = async (req, res, next) => {
         if (todo && todo.UserId === req.userData.id) {
             next()
         } else {
-            return res.status(403).json({message: 'Forbidden Access'})
+            throw ({ message: `Forbidden Access`, statusCode: 403})
         }
 
     } catch(err) {
-        return res.status(403).json({message: 'Forbidden Access'})
+        return next(err)
 
     }
 

@@ -15,10 +15,36 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Todo.init({
-    title: DataTypes.STRING,
-    description: DataTypes.STRING,
+    title: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: `Input your todo title please!`
+        }
+      }
+    },
+    description: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: `Please input your todo description!`
+        }
+      }
+    },
     status: DataTypes.BOOLEAN,
-    due_date: DataTypes.DATE,
+    due_date: {
+      type: DataTypes.DATE,
+      validate: {
+        isDate(values) {
+          if (values.toISOString().split("T")[0] > new Date().toISOString().split("T")[0] || values.toISOString().split("T")[0] < new Date().toISOString().split("T")[0]) {
+            throw new Error(`Invalid date input`)
+          }
+        }
+       
+      }
+    },
     UserId: DataTypes.INTEGER
   }, {
     hooks: {

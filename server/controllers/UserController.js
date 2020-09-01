@@ -3,22 +3,21 @@ const { generateToken } = require('../helpers/jwt')
 const { comparePass } = require('../helpers/bycrpt')
 
 class UserController {
-    static register(req, res) {
-        let params = {
-            email: req.body.email,
-            password: req.body.password
-        }
-        User.create(params)
-        .then(data => {
-            const { email } = data
-            res.status(201).json(email)
-        })
-        .catch(err => {
-            res.status(500).json({message: `Internal Error Server`})
-        })
 
+    static async register(req, res, next) {
+        try {
+            const { email, password } = req.body
+            const newUser = await User.create({email, password})
+
+            return res.status(201).json({
+                email: newUser.email,
+            })
+        } catch(err) {
+            return next(err)
+        }
     }
-    static login(req, res) {
+   
+    static login(req, res, next) {
         let options = {
             where: {
                 email: req.body.email
@@ -33,15 +32,15 @@ class UserController {
                     const access_token = generateToken(data)
                    return res.status(200).json({ access_token })
                 } else {
-                    return res.status(400).json({message: `Invalid email/password!`})
+                    throw { message: 'Invalid username or password', statusCode: 400 }
                 }
             } else {
-                return res.status(400).json({message: `Invalid email/password!`})
+               throw { message: 'Invalid username or password', statusCode: 400 }
             }
         })
         .catch(err => {
             console.log(err);
-             return res.status(500).json({message: `Internal Error Server`})
+            return next(err)
         })
 
     }

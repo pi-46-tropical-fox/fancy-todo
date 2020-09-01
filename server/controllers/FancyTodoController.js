@@ -1,16 +1,17 @@
 const { Todo } = require('../models')
 
 class FancyTodoController {
-    static show(req, res) {
+    static show(req, res, next) {
         Todo.findAll()
         .then(data => {
             return res.status(200).json(data)
         })
         .catch(err => {
-            return res.status(500).json(err)
+            // return res.status(500).json(err)
+            return next(err)
         })
     }
-    static add(req, res) {
+    static add(req, res, next) {
         let params = {
             title: req.body.title,
             description: req.body.description,
@@ -23,19 +24,21 @@ class FancyTodoController {
             return res.status(201).json(data)
         })
         .catch(err => {
-            return res.status(400).json({message: `Invalid requests`})
+            // return res.status(400).json({message: `Invalid requests`})
+            return next(err)
         })
     }
-    static find(req, res) {
+    static find(req, res, next) {
         Todo.findByPk(req.params.id)
         .then(data => {
             return res.status(200).json(data)
         })
         .catch(err => {
-            return res.status(404).json(err)
+            // return res.status(404).json(err)
+            return next(err)
         })
     }
-    static edit(req, res) {
+    static edit(req, res, next) {
         let params = {
             title: req.body.title,
             description: req.body.description,
@@ -47,11 +50,12 @@ class FancyTodoController {
             return res.status(200).json(data)
         })
         .catch(err => {
-            return res.status(400).json(err)
+            // return res.status(400).json(err)
+            return next(err)
         })
 
     }
-    static delete(req, res){
+    static delete(req, res, next){
         let options = {
             where: {
                 id: req.params.id
@@ -63,7 +67,8 @@ class FancyTodoController {
             return res.status(200).json(data)
         })
         .catch(err => {
-            return res.status(404).json(err)
+            // return res.status(404).json(err)
+            return next(err)
         })
 
     }
