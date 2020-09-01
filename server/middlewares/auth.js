@@ -1,14 +1,23 @@
 const { verifyToken } = require('../helpers/token')
-const { Todo } = require('../models')
+const { Todo, User } = require('../models')
 
 const authentication = async (req, res, next) => {
     const { access_token } = req.headers
 
     try {
-        const userData = await verifyToken(access_token)
+        const userData = await verifyToken(access_token)        
+        const findUser = await User.findOne({
+            where: {
+                email : userData.email
+            }
+        })
 
-        req.userData = userData
-        next()
+        if(findUser) {
+            req.userData = userData
+            next()
+        } else {
+            throw { msg : 'User Not Authenticated'}
+        }
     } catch(err) {
         res.status(401).json({msg : 'User Not Authenticated'})
     }
