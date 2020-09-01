@@ -11,7 +11,7 @@ routes.get('/:id', Controller.findById)
 routes.post('/', authentication, Controller.add)
 //routes.put('/',)
 
-routes.delete('/delete/:id', Controller.delete)
+routes.delete('/:id', Controller.delete)
 
 
 module.exports = routes

@@ -1,7 +1,8 @@
 "use strict"
 
+
 const jwt = require('jsonwebtoken')
-const secret = process.env.SECRET
+const secret = process.env.secret
 
 
 function generateToken(user){

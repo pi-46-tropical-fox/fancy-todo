@@ -1,26 +1,54 @@
 'use strict'
+const {User}= require('../models')
 const { verifyToken } = require('../helper/jwt')
 const jwt = require('jsonwebtoken')
 
 
 const authentication = (req, res, next) =>{
-    console.log(req.headers, 'Ini HEADER');
-    const {access_token} = req.headers
-    
-    try{
-        const data = verifyToken(access_token)
-        console.log(data, 'ini data');
-        next()
+    try {
+        if (req.headers.access_token) {
+            let verify = verifyToken(req.headers.access_token)
+            console.log(verify);
+            User.findByPk(verify.id)
+                .then(user => {
+                    if(!user){
+                        throw  ({message:'User Not Found'});
+                    }else{
+                    req.UserId = user.id
+                    next()
+                    }
+                })
+                .catch (err =>{
+                   console.log(err);
+                    return res.status(404).json(err)
+                    //next(err)
+                  //console.log(err);
+                })
+        } else {
+           // console.log(err);
+            throw ({message:'Token Is Required'})
+        }
+    } 
+    catch (err) {
+      console.log(err);
+        next (err)
     }
-
-    catch(err){
-        return res.status(401).json({message: 'User not auth'})
-    }
-
 }
 
 const authoritzation = (req, res, next) =>{
-    
+    const id = req.params.id
+    Todo.findByPk(id)
+        .then(data => {
+            if (data.UserId === req.UserId) {
+                return next()
+            } else {
+                throw err
+            }
+        })
+        .catch(err => {
+            next (err)
+        })
+
 }
 
 

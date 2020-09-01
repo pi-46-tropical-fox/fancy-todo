@@ -1,4 +1,4 @@
-const {Todo} = require('../models')
+const {Todo, User} = require('../models')
 
 class TodoController{
 
@@ -19,7 +19,8 @@ class TodoController{
             title:req.body.title,
             description:req.body.description,
             status:req.body.status,
-            due_date:req.body.due_date
+            due_date:req.body.due_date,
+            UserId:req.UserId
         }
 
         Todo.create(query)
@@ -28,7 +29,7 @@ class TodoController{
         })
         .catch(err=>{
             console.log(err);
-            res.status(400).json(err)
+            return res.status(400).json(err)
         })
     }
 
@@ -47,17 +48,24 @@ class TodoController{
         })
     }
 
-    static delete(req, res){
-        let temp;
+    static delete(req, res, next){
+    let tempData;
 
-        Todo.findByPk(+req.params.id)
-        .then(data => {
-            res.status(200).json(data)
-        })
-        .catch(data => {
-            res.status(404).json(err)
-        })
-    }
+    Todo.findByPk(+req.params.id)
+      .then(data => {
+        if (!data)
+            return next(err);
+            tempData = data;
+            return Todo.destroy({where: {id: +req.params.id}})
+      })
+      .then(data => {
+        return res.status(200).json(tempData);
+      })
+      .catch(err => {
+         // console.log(err);
+        return next(err);
+      })
+  }
 
     static async updateTodo(req, res, next) {
         try {
@@ -66,7 +74,7 @@ class TodoController{
                 description: req.body.description,
                 status: req.body.status,
                 due_date: req.body.due_date,
-                UserId: req.body.UserId
+                UserId: req.userData.id
             }
 
             const result = await Todo.update(updateTodo, {

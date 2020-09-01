@@ -5,7 +5,7 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
-  ]
+  
     static associate(models) {
       User.hasMany(models.Todo, {foreignKey: "UserId", targetKey: "id"});
     }
@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
   User.init({
     email: {
       type : DataTypes.STRING,
-      unique:true,
     validate:{
       notEmpty:{
       args : true,

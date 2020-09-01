@@ -29,8 +29,9 @@ _Response (500 - Internal Server Error)
 ---
 ### GET /todos
 _Response (200 - OK)_
+
 ```json
-[
+
   {
     "id": 1,
     "title": "makan",
@@ -55,7 +56,7 @@ _Response (200 - OK)_
     "Due_date": 2020-11-30,
     "UsersId": 1
   }
-]
+
 ```
 
 _Response (500 - Internal Server Error)_
@@ -66,7 +67,14 @@ _Response (500 - Internal Server Error)_
 ```
 ---
 ### GET /todos/:id
-
+_Request Header_
+```json
+[
+{
+  user_token : access_token 
+}
+]
+```
 _Response (200 - OK)_
 ```json
   {
@@ -94,6 +102,16 @@ _Response (500 - Internal Server Error)_
 ```
 ---
 ### POST /todos
+
+_Request Header_
+```json
+[
+{
+  user_token : access_token 
+}
+]
+```
+_Request Body_
 ```json
   {
     "title": "string",
@@ -117,7 +135,7 @@ _Response (201 - Created)_
   }
 ```
 
-_Response (400 - Bad Request)
+_Response (401 - Validation Error)
 ```json
 [
   {
@@ -137,6 +155,14 @@ _Response (400 - Bad Request)
 ]
 ```
 ### PUT /todos/:id
+_Request Header_
+```json
+[
+{
+  user_token : access_token 
+}
+]
+```
 _Request Body_
 ```json
   {
@@ -160,7 +186,7 @@ _Response (200 - OK)
     "updatedAt": "date"
   }
 ```
-_Response (400 - Bad Request)_
+_Response (401 - Validation Error)_
 ```json
 [
   {
@@ -191,7 +217,7 @@ _Response (500 - Internal Server Error)_
 ```
 ---
 ### DELETE /todos/:id
-_Response (200 - OK)_
+_Response_ (200 - OK)_
 ```json
   {
     "id": "integer",
@@ -204,13 +230,13 @@ _Response (200 - OK)_
     "updatedAt": "date"
   }
 ```
-_Response (404 - Not Found)_
+_Response_ (404 - Not Found)_
 ```json
 {
   "message": "error Not Found"
 }
 ```
-_Response (500 - Internal Server Error)_
+_Response_ (500 - Internal Server Error)_
 ```json
 {
   "message": "Internal Server Error"
@@ -231,6 +257,38 @@ _Response (201 - Created)_
     "id": "integer",
     "email": "string",
     "password": "string"
+  }
+```
+_Response (401 - Validation Error)_
+```json
+[
+  {
+    "message": "You don't put any password"
+  },
+  {
+    "message": "You don't put any email"
+  }
+]
+```
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "Internal Server Error"
+}
+```
+
+### POST /login
+_Request Body_
+```json
+  {
+    "email": "string",
+    "password": "string"
+  }
+```
+_Response (201 - Created)_
+```json
+  {
+    acces_token = < Acces_token >
   }
 ```
 _Response (400 - Bad Request)_
