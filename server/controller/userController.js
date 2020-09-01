@@ -28,7 +28,7 @@ class UserController {
             if (user) {
                 let auth = bcrypt.compareSync(req.body.password, user.password)
                 if (auth) {
-                    const accessToken = jwt.sign({email: user.email}, secret)
+                    const accessToken = jwt.sign({email: user.email, id: user.id}, secret)
                     res.status(200).json(accessToken + '  << access token')
                 } else res.status(400).json('wrong username/password')
             } else {
