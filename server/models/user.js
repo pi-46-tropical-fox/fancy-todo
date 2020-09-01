@@ -12,19 +12,26 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.hasMany(models.Todo)
     }
   };
   User.init({
     username: {
       type : DataTypes.STRING,
-      unique: true
+      unique: true,
+      validate:{
+        len: {
+          args: [6],
+          msg: "username must contain at least 6 characters"
+        }
+      }
     },
     email: {
       type : DataTypes.STRING,
       validate:{
         isEmail: {
           args: true,
-          msg: "Email yang anda masukkan salah"
+          msg: "invalid email"
         },
       }
     },
@@ -34,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
         is: {
           args: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[-!@#$%^&*()_+=]).{8,}$/,
           msg:
-            'The password must contain at least 8 characters including at least a uppercase, a lowercase and a number.'
+            'the password must contain at least 8 characters including at least a uppercase, a lowercase and a number.'
         }
       }
     },

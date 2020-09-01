@@ -1,49 +1,49 @@
 const {User} = require("../models")
 const bcrypt = require('bcryptjs');
-const {generateToken, verifyToken} = require("../helpers/generateUserToken");
+const {generateToken, verifyToken} = require("../helpers/userToken");
 class UserController{
-  static async register(req, res){
-    const {username, email, password} = req.body
+  static async register(req, res, next){
     try{
+      const {username, email, password} = req.body
       
-      await User.create({username, email, password})
-      return res.status(201).json({username, email})
+      let userData = await User.create({username, email, password})
+      return res.status(201).json({
+        username: userData.username,
+        email: userData.email,
+      })
     } catch (err) {
 
-      if (err.errors[0].path === "username"){
-        return res.status(400).json({message: "Username telah digunakan"})
-      }else if(err.errors[0].path === "email"){
-        return res.status(400).json({message: "Email telah digunakan"})
-      }else if (err.errors[0].type === 'Validation error'){
-        return res.status(400).json({message: err.errors[0].message})
-      }else{
-        return res.status(500).json({message: err.message})
-
-      }
+      next(err)
 
     }
   }
 
-  static async login (req, res){
+  static async login (req, res, next){
     const {username, password} = req.body
 
     try {
       let userData = await User.findOne({where: {username}})
       if (!userData) {
-        return res.status(400).json({message: "username/password salah"})
+        let error = Error ()
+        error.name = "400"
+        error.message= "cannot find matches username/password on database"
+        throw error
       }else {
-        console.log(userData, password)
         let isValid = bcrypt.compareSync(password, userData.password)
         if (isValid){
           let access_token = generateToken(userData)
           return res.status(200).json({access_token})
         } else {
-          return res.status(400).json({message: "username/password salah"})
+          let error = Error ()
+          error.name = "400"
+          error.message= "cannot find matches username/password on database"
+          throw error
         }
       }
     } catch(err){
-      console.log(err)
-      return res.status(500).json({message: err.message})
+
+      next(err)
+
     } 
     
   }

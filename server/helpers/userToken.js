@@ -2,8 +2,8 @@ const jwt = require("jsonwebtoken")
 
 
 function generateToken (userData){
-  const {username, password} = userData
-  let access_token = jwt.sign({username, password}, process.env.SECRET)
+  const {id, username, email} = userData
+  let access_token = jwt.sign({id, username, email}, process.env.SECRET)
   return access_token
 }
 

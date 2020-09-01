@@ -1,5 +1,6 @@
 const TodoController = require("../controllers/todoController");
 const UserController = require("../controllers/userController");
+const {authentication, todoAuthorization} = require("../middlewares/auth")
 
 const router = require("express").Router()
 
@@ -7,5 +8,7 @@ const router = require("express").Router()
 router.post("/register", UserController.register)
 
 router.post("/login", UserController.login)
+
+
 
 module.exports = router;

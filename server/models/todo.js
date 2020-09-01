@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.User)
     }
   };
   Todo.init({
@@ -19,22 +20,33 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           isLength(value){
             if(value.length < 3){
-              throw new Error ("Title harus lebih dari 3 huruf/angka")
+              throw new Error ("title must contain more than 3 characters")
             }
           }
         } 
     },
     description: DataTypes.STRING,
-    status: DataTypes.STRING,
+    status: {
+      type: DataTypes.STRING,
+      validate: {
+        is: {
+          args: /(complete|uncomplete)/,
+          msg:
+            'invalid status, input must be complete or uncomplete'
+        }
+      }
+    },
     due_date: {
       type: DataTypes.STRING,
       validate: {
-          isDate : {
-            args : true,
-            msg : "Tanggal yang dimasukkan salah"
-          }
+        isDate : {
+          args : true,
+          msg : "invalid date format"
         }
-      } 
+      }
+    },
+    UserId: DataTypes.INTEGER
+     
   }, {
     sequelize,
     modelName: 'Todo',
