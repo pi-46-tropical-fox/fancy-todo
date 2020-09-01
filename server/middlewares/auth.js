@@ -11,32 +11,32 @@ const authentication = (req,res,next) =>{
                 req.userData = userData
                 next()
             }else{
-                throw {message: "User not authenticated"}
+                throw {message: "User not authenticated", statusCode: 400}
             }
         })
         .catch(err=>{
-            res.status(400).json(err)
+            err.message = "User not authenticated"
+            next(err)
         })
     } catch(err){
-        res.status(400).json(err)
+        err.message = "User not authenticated"
+        next(err)
+
     }
 }
 
 const authorization = (req,res,next) =>{
     const {id} = req.params
-    // res.send(id)
     Todo.findByPk(id)
     .then(todo=>{
-        console.log(req.userData.id, todo.UserId)
         if(todo.UserId === req.userData.id){
-            res.status(200).json(todo)
+            next()
         }else{
-            res.status(400).json({message: "User not authenticated"})
+            throw {message: 'User not authorize', statusCode: 400}
         }
-        
     })
     .catch(err=>{
-        res.status(404).json({'msg': 'Todo Not Found'})
+        next(err)
     })
 }
 

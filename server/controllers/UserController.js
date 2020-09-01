@@ -1,13 +1,13 @@
 const { User } = require('../models')
-const {hashPassword, checkPassword} = require('../helpers/password')
-const {generateToken, verifyToken} = require('../helpers/jwt')
+const {checkPassword} = require('../helpers/password')
+const {generateToken} = require('../helpers/jwt')
 
 class UserController { 
     static show(req,res){
         
     }
 
-    static register(req,res){
+    static register(req,res, next){
         User.create({
             firstname: req.body.firstname,
             lastname: req.body.lastname,
@@ -26,18 +26,11 @@ class UserController {
             res.status(201).json(result)
         })
         .catch(err=>{
-            if(err.errors[0].message === 'username must be unique'){
-                res.status(500).json({"msg": "Username Already Exists"})
-            }else if(err.errors[0].message === 'email must be unique'){
-                res.status(500).json({"msg": "Email Already Exists"})
-            }else{
-                let error = [err.errors[0].message]
-                res.status(400).json(error)
-            }
+            next(err)
         })
     }
 
-    static login(req,res){
+    static login(req,res, next){
         User.findOne({
             where: {
                 username: req.body.username
@@ -46,21 +39,18 @@ class UserController {
         .then(user=>{
             if(user){
                 let check = checkPassword(req.body.password,user.password)
-                console.log(check)
                 if(check){
                     let token = generateToken(user)
-                    // verifyToken(token)
                     res.status(200).json({token})
                 }else{
-                    res.status(400).json({"msg": "username or password is wrong"})
+                    throw {message: "Invalid Username or Password", statusCode: 400}
                 }
             }else{
-                res.status(400).json({"msg": "username or password is wrong"})
+                throw {message: "Invalid Username or Password", statusCode: 400}
             }
         })
         .catch(err=>{
-            res.status(500).json({"msg": "Server Error"})
-            console.log(err)
+            next(err)
         })
     }
 }

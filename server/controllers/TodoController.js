@@ -1,7 +1,7 @@
 const { Todo } = require("../models")
 
 class TodoController {
-    static show(req,res){
+    static show(req,res,next){
         Todo.findAll({
             order: [['id', 'ASC']]
         })
@@ -9,12 +9,14 @@ class TodoController {
             res.status(200).json(todos)
         })
         .catch(err=>{
-            res.status(500).json({"message": "cannot display todo's list"})
+            // res.status(500).json({"message":"Server Error"})
+            // err.message = "Server Error"
+            // err.statusCode = 500
+            next(err)
         })
     }
 
-    static add(req,res){
-        // console.log(req.body)
+    static add(req,res,next){
         Todo.create({
             title: req.body.title,
             description: req.body.description,
@@ -28,27 +30,28 @@ class TodoController {
             res.status(201).json(todo)
         })
         .catch(err =>{
-            res.status(500).json({"message": "error create new todo"})
-            console.log(err)
+            next(err)
         })
     }
 
-    static showById(req,res){
+    static showById(req,res,next){
         Todo.findByPk(req.params.id)
         .then(todo=>{
             if(todo === null){
-                res.status(404).json({"msg": "Todo Not Fund"})
+                // res.status(404).json({"msg": "Todo Not Fund"})
+                throw {message: 'Todo Not Found', statusCode: 404}
             }else{
                 res.status(200).json(todo)
             }
         })
         .catch(err=>{
-            res.status(500).json({"msg": "server error"})
-            console.log(err)
+            // res.status(500).json({"msg": "server error"})
+            // console.log(err)
+            next(err)
         })
     }
 
-    static update(req,res){
+    static update(req,res,next){
         Todo.update({
             title: req.body.title,
             description: req.body.description,
@@ -62,16 +65,18 @@ class TodoController {
         })
         .then(result =>{
             if(result[0] === 0){
-                res.status(404).json({"msg": "Todo Not Found"})
+                // res.status(404).json({"msg": "Todo Not Found"})
+                throw {message: 'Todo Not Found', statusCode: 404}
             }
             res.status(200).json(result[1][0])
         })
         .catch(err=>{
-            res.status(500).json(err)
+            // res.status(500).json(err)
+            next(err)
         })
     }
 
-    static delete(req,res){
+    static delete(req,res,next){
         Todo.destroy({
             where:{
                 id:req.params.id
@@ -81,12 +86,14 @@ class TodoController {
         .then(data=>{
             console.log(data)
             if(data === 0){
-                res.status(404).json({"msg": "Todo Not Found"})
+                // res.status(404).json({"msg": "Todo Not Found"})
+                throw {message: 'Todo Not Found', statusCode: 404}
             }
             res.status(200).json({"msg" : `Success Delete Todo With Id: ${req.params.id}`})
         })
         .catch(err=>{
-            res.status(500).json({"msg": "Server Error"})
+            // res.status(500).json({"msg": "Server Error"})
+            next(err)
         })
     }
 }
