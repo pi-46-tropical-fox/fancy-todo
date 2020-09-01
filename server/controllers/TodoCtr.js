@@ -2,7 +2,7 @@ const {Todo, User} = require(`../models`)
 const {verify_token} = require(`../helpers`)
 
 class Controller{
-    static create(req, res){
+    static create(req, res, next){
         let UserId = req.userData.UserId
         let data = {
             title: req.body.title,
@@ -10,7 +10,7 @@ class Controller{
             due_date: req.body.due_date,
             UserId
         }
-
+        console.log(data)
         Todo.create(data)
             .then(data => {
                 return res.status(201).json({
@@ -20,13 +20,11 @@ class Controller{
             })
             .catch(err => {
                 console.log(err)
-                return res.status(400).json({
-                    message: "Error create new todo"
-                })
+                return next(err)
             })
     }
 
-    static getAll(req, res){
+    static getAll(req, res, next){
         const {UserId} = req.userData
         Todo.findAll({include: [User], where: {UserId}})
             .then(data => {
@@ -43,13 +41,11 @@ class Controller{
             })
             .catch(err => {
                 console.log(err)
-                return res.status(400).json({
-                    message: "Failed to get all Todo List"
-                })
+                return next(err)
             })
     }
 
-    static update(req, res){
+    static update(req, res, next){
         const id = req.params.id
         const {title, description, due_date} = req.body
         Todo.update({title, description, due_date}, {where: {id}})
@@ -65,13 +61,11 @@ class Controller{
             })
             .catch(err => {
                 console.log(err)
-                return res.status(404).json({
-                    message: "Todo not found"
-                })
+                return next(err)
             })
     }
 
-    static delete (req, res){
+    static delete (req, res, next){
         const id = req.params.id
         Todo.destroy({where: {id}})
             .then(data => {
@@ -81,9 +75,7 @@ class Controller{
             })
             .catch(err => {
                 console.log(err)
-                return res.status(404).json({
-                    message: "Todo not found"
-                })
+                return next(err)
             })
     }
 }

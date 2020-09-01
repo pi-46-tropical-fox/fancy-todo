@@ -2,7 +2,7 @@ const {User} = require(`../models`)
 const {access_token, bcrypt} = require(`../helpers`)
 
 class Controller{
-    static register(req, res){
+    static register(req, res, next){
         let data = {
             username: req.body.username,
             email: req.body.email,
@@ -22,13 +22,11 @@ class Controller{
             })
             .catch(err => {
                 console.log(err)
-                return res.status(400).json({
-                    message: `Failed register new User`
-                })
+                return next(err)
             })
     }
 
-    static login(req, res){
+    static login(req, res, next){
         const {username, password} = req.body
         User.findOne({where: {username}})
             .then(data => {
@@ -41,21 +39,15 @@ class Controller{
                             token
                         })
                     } else {
-                        return res.status(400).json({
-                            message: "Invalid email or password"
-                        })
+                        throw { message: "Invalid email or password", statusCode: 400 }
                     }
                 }else{
-                    return res.status(400).json({
-                        message: "Invalid email or password"
-                    })
+                    throw { message: "Invalid email or password", statusCode: 400 }
                 }
             })
             .catch(err => {
-                console.log(err, "<<<<<<< error login")
-                return res.status(500).json({
-                    message: "Internal error server"
-                })
+                console.log(err)
+                return next(err)
             })
     }
 }

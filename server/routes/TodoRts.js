@@ -1,6 +1,6 @@
 const routes = require(`express`).Router()
 const {TodoCtr} = require(`../controllers`) 
-const {authentication, authorization} = require(`../helpers`)
+const {authentication, authorization} = require(`../middlewares`)
 
 // Create new todo
 routes.post(`/`, authentication, TodoCtr.create)

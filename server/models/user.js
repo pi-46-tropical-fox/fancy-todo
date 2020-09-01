@@ -11,15 +11,43 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   User.init({
-    username: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING
+    username: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Username can not be empty"
+        },
+      }
+    },
+    email: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Email can not be empty"
+        },
+        isEmail: {
+          args: false,
+          msg: "Email format is wrong. e.g. foo@mail.com"
+        }
+      }
+    },
+    password: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Password can not be empty"
+        },
+      }
+    },
   }, {
     sequelize,
     modelName: 'User',
   });
 
-  User.beforeCreate((user, opstion) => {
+  User.beforeCreate((user, option) => {
     user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
   })
   return User;
