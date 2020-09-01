@@ -22,7 +22,7 @@ Website for manage your todo. This app has :
 > Get all todos
 
 _Request Header_
-```
+```json
 {
   "access_token": "<your access token>"
 }
@@ -34,7 +34,7 @@ not needed
 ```
 
 _Response (200)_
-```
+```json
 [
   {
     "id": 1,
@@ -57,10 +57,10 @@ _Response (200)_
 ]
 ```
 
-_Response (400 - Bad Request)_
-```
+_Response (500 - Internal Server Error)_
+```json
 {
-  "message": "Invalid request"
+  "message": "Server Error"
 }
 ```
 ---
@@ -69,14 +69,14 @@ _Response (400 - Bad Request)_
 > Create new todo
 
 _Request Header_
-```
+```json
 {
   "access_token": "<your access token>"
 }
 ```
 
 _Request Body_
-```
+```json
 {
     "title": "<todo title>",
     "description": "<todo description>",
@@ -86,9 +86,9 @@ _Request Body_
 ```
 
 _Response (201 - Created)_
-```
+```json
 {
-    "id": <given id by system>,
+    "id": "<given id by system>",
     "title": "<posted title>",
     "description": "<posted description>",
     "status": "<posted status>",
@@ -99,9 +99,16 @@ _Response (201 - Created)_
 ```
 
 _Response (400 - Bad Request)_
-```
+```json
 {
-  "message": "Invalid requests"
+  "message": "Validation Error"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "Server Error"
 }
 ```
 ---
@@ -110,14 +117,14 @@ _Response (400 - Bad Request)_
 > Get todos by id
 
 _Request Header_
-```
+```json
 {
   "access_token": "<your access token>"
 }
 ```
 
 _Request Params_
-```
+```json
 {
     "id": "<id of todo>"
 }
@@ -125,11 +132,11 @@ _Request Params_
 
 _Request Body_
 ```
-not needed
+    not needed
 ```
 
 _Response (200)_
-```
+```json
 [
   {
     "id": 1,
@@ -143,10 +150,10 @@ _Response (200)_
 ]
 ```
 
-_Response (400 - Bad Request)_
-```
+_Response (404 - Not Found)_
+```json
 {
-  "message": "Invalid request"
+  "message": "Data not found"
 }
 ```
 ---
@@ -155,32 +162,34 @@ _Response (400 - Bad Request)_
 > Update todos by id
 
 _Request Header_
-```
+```json
 {
   "access_token": "<your access token>"
 }
 ```
 
 _Request Params_
-```
+```json
 {
     "id": "<id of todo>"
 }
 ```
 
 _Request Body_
-```
+```json
+{
     "title": "<todo title>",
     "description": "<todo description>",
     "status": "<todo status>",
     "due_date": "<todo due_date>"
+}
 ```
 
 _Response (200)_
-```
+```json
 [
   {
-    "id": "<id of todo>"
+    "id": "<id of todo>",
     "title": "<todo title>",
     "description": "<todo description>",
     "status": "<todo status>",
@@ -192,9 +201,23 @@ _Response (200)_
 ```
 
 _Response (400 - Bad Request)_
-```
+```json
 {
-  "message": "Invalid request"
+  "message": "Validation errors"
+}
+```
+
+_Response (404 - Not Found)_
+```json
+{
+  "message": "Data not found"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "Server Error"
 }
 ```
 ---
@@ -203,14 +226,14 @@ _Response (400 - Bad Request)_
 > Delete todos by id
 
 _Request Header_
-```
+```json
 {
   "access_token": "<your access token>"
 }
 ```
 
 _Request Params_
-```
+```json
 {
     "id": "<id of todo>"
 }
@@ -222,10 +245,10 @@ _Request Body_
 ```
 
 _Response (200)_
-```
+```json
 [
   {
-    "id": "<id of todo>"
+    "id": "<id of todo>",
     "title": "<todo title>",
     "description": "<todo description>",
     "status": "<todo status>",
@@ -236,9 +259,108 @@ _Response (200)_
 ]
 ```
 
-_Response (400 - Bad Request)_
-```
+_Response (404 - Not Found)_
+```json
 {
-  "message": "Invalid request"
+  "message": "Data not found"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "Server Error"
+}
+```
+---
+### POST /register
+
+> Register
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Params_
+```json
+    not needed
+```
+
+_Request Body_
+```json
+{
+    "username": "<username from input>",
+    "email": "<email from input>",
+    "password": "<password from input>"
+}
+```
+
+_Response (201)_
+```json
+[
+  {
+    "id": "<given id by system>",
+    "username": "<username from input>",
+    "email": "<email from input>",
+    "password": "<password from input>",
+    "createdAt": "2020-03-20T07:15:12.149Z",
+    "updatedAt": "2020-03-20T07:15:12.149Z",
+  }
+]
+```
+
+_Response (400 - Bad Request)_
+```json
+{
+  "message": "Validation Error"
+}
+```
+---
+### POST /login
+
+> Login
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Params_
+```json
+    not needed
+```
+
+_Request Body_
+```json
+{
+    "username": "<username from input>",
+    "email": "<email from input>",
+    "password": "<password from input>"
+}
+```
+
+_Response (201)_
+```json
+[
+  {
+    "id": "<given id by system>",
+    "username": "<username from input>",
+    "email": "<email from input>",
+    "password": "<password from input>",
+    "createdAt": "2020-03-20T07:15:12.149Z",
+    "updatedAt": "2020-03-20T07:15:12.149Z",
+  }
+]
+```
+
+_Response (400 - Bad Request)_
+```json
+{
+  "message": "Validation Error"
 }
 ```
