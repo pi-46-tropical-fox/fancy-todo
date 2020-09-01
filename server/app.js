@@ -10,5 +10,5 @@ app.use(express.json())
 app.use(route)
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`App listening at http://localhost:${port}`)
 })
