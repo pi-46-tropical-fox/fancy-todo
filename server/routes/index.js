@@ -7,6 +7,6 @@ route.get('/', (req, res) => {
 })
 
 route.use('/todos', todoRoute)
-route.use('/register', userRoute)
+route.use('/user', userRoute)
 
 module.exports = route
