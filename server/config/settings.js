@@ -1,5 +1,5 @@
 module.exports = {
     app: {
-        title: "Todolicious",
+        title: "Todoers!",
     },
 }
