@@ -3,7 +3,13 @@ const { Todo } = require('../models')
 class Controller {
 
     static findAll(req, res) {
-        Todo.findAll({ order: [['id', 'ASC']]})
+        const dataId = req.userData.id
+        Todo.findAll(
+            {   
+                order: [['id', 'ASC']],
+                where: { UserId: dataId }
+            }
+        )
         .then(data => {
             res.status(200).json(data)
         })
@@ -17,8 +23,12 @@ class Controller {
             title: req.body.title,
             description: req.body.description,
             status: req.body.status,
-            due_date: req.body.due_date
+            due_date: req.body.due_date,
+            UserId: req.userData.id
         }
+        //console.log(req.body, newTodo)
+        // req.body.UserId = req.userData.id
+        console.log(req.userData)
 
         Todo.create(newTodo)
         .then(data => {
@@ -102,13 +112,14 @@ class Controller {
             }
         })
         .then(data => {
+            console.log(data)
             res.status(200).json(todoDeleted)
         })
         .catch(err => {
             res.status(500).json(err)
         })
     }
-
+        //destroy -> return data 1 jika sukses delete, 0 jika gagal
 }
 
 module.exports = Controller 

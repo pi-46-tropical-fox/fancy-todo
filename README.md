@@ -12,7 +12,6 @@ My todos App is an application to manage your todos. This app has :
 - POST /todos
 - GET /todos/:id
 - PUT /todos/:id
-- PATCH /todos/:id
 - DELETE /todos:id
 - POST /register
 - POST /login
@@ -58,7 +57,7 @@ _Response (200)_
 _Response (400 - Bad Request)_
 ```
 {
-  "message": "Invalid request"
+  "message": "error validation"
 }
 ```
 
@@ -120,17 +119,17 @@ not needed
 
 _Response (200)_
 ```
-[
-  {
-        "id": <todos id>,
-        "title": "<todos title>",
-        "description": "<todos description>",
-        "status": "<todos status>",
-        "due_date": "<todos due_date>",
-        "createdAt": "2020-04-27T13:15:33.821Z",
-        "updatedAt": "2020-04-27T13:39:19.162Z"
-    }
-]
+
+{
+  "id": <todos id>,
+  "title": "<todos title>",
+  "description": "<todos description>",
+  "status": "<todos status>",
+  "due_date": "<todos due_date>",
+  "createdAt": "2020-04-27T13:15:33.821Z",
+  "updatedAt": "2020-04-27T13:39:19.162Z"
+}
+
 ```
 
 _Response (404 - Error Not Found)_
@@ -234,3 +233,66 @@ _Response (500 - Internal Server Error)_
   "message": "<returned error message>"
 }
 ```
+
+### POST /register
+> Create new user to database
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+_Request Body_
+```
+{
+  "email": "<email to get insert into>",
+  "password": "<password to get insert into>",
+}
+```
+
+_Response (201)_
+```
+{
+  "id": <given id by system>,
+  "email": "<posted email>",
+  "password": "<posted password>",
+  "createdAt": "2020-03-20T07:15:12.149Z",
+  "updatedAt": "2020-03-20T07:15:12.149Z",
+}
+```
+
+_Response (500)_
+
+### POST /login
+> Login to todos
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+{
+  "email": "<email to get insert into>",
+  "password": "<password to get insert into>",
+}
+```
+
+_Response (200)_
+```
+[
+  {
+    "id": 1,
+    "email": "<user email>",
+    "password": "<user password>",
+    "createdAt": "2020-03-20T07:15:12.149Z",
+    "updatedAt": "2020-03-20T07:15:12.149Z",
+  },
+]
+```
+
+_Response (500 - Internal server error)_

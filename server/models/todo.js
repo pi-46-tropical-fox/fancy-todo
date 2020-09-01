@@ -11,10 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Todo.belongsTo(models.User)
     }
   };
   Todo.init({
-   title: {
+    title: {
       type: DataTypes.STRING,
       validate: {
         notEmpty:{
@@ -45,7 +46,8 @@ module.exports = (sequelize, DataTypes) => {
             msg: 'Wrong Date Format'
           }
       }
-    }
+    },
+    UserId: DataTypes.INTEGER
   }, {
     hooks: {
       beforeCreate: (user, options) => {

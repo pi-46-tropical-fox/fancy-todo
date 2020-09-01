@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.hasMany(models.Todo)
     }
   };
   User.init({
@@ -20,7 +21,8 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isEmail:{
           msg : 'Wrong Email format'
-        }
+        },
+        unique: true
       }
     },
     password: {

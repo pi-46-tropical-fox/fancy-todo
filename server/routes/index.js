@@ -2,6 +2,8 @@ require('dotenv').config()
 const router = require('express').Router()
 const TodoController = require('../controllers/controller')
 const UserController = require('../controllers/userController')
+const authentication = require('../middlewares/authentication')
+const authorization = require('../middlewares/authorization')
 
 
 // router.get('/', (req,res)=>{
@@ -11,10 +13,10 @@ const UserController = require('../controllers/userController')
 router.post('/register', UserController.register)
 router.post('/login', UserController.login)
 
-router.get('/todos', TodoController.findAll)
-router.post('/todos', TodoController.addTodo)
-router.get('/todos/:id', TodoController.findById)
-router.put('/todos/:id', TodoController.updateTodo)
-router.delete('/:id', TodoController.deleteTodo)
+router.get('/todos', authentication, TodoController.findAll) //dikasih authentification biar tau kalo user itu sendiri yg akses
+router.post('/todos', authentication, TodoController.addTodo)
+router.get('/todos/:id', authentication, authorization, TodoController.findById)
+router.put('/todos/:id', authentication, authorization, TodoController.updateTodo)
+router.delete('/todos/:id', authentication, authorization, TodoController.deleteTodo)
 
 module.exports = router
