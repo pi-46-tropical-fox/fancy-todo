@@ -6,7 +6,7 @@ const { authentication, authorization } = require('../middlewares/auth')
 route.get('/', authentication, todoController.getAllTodos)
 // post todo
 route.post('/', authentication, todoController.postTodo)
-route.get('/:id', authentication, todoController.getTodoById)
+route.get('/:id', authentication, authorization, todoController.getTodoById)
 
 route.put('/:id', authentication, authorization, todoController.editTodoById)
 route.delete('/:id', authentication, authorization, todoController.deleteTodo)
