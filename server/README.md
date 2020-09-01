@@ -1,4 +1,4 @@
-# Todolicious API
+# Todoers! API
 
 ## Todo
 

@@ -1,4 +1,4 @@
-# Todolicious
+# Todoers! App
 
 Your one-stop solution for todo-lists.
 
