@@ -4,24 +4,21 @@ const { comparePassword } = require('../helpers/bcrypt')
 
 class UserController {
 
-    static register(req, res) {
-        let params = {
-            email: req.body.email,
-            password: req.body.password
-        }
+    static async register(req, res, next) {
+        try {
+            const { email, password } = req.body
+            const newUser = await User.create({email, password})
 
-        User.create(params)
-        .then(data =>{
-            res.status(201).json(data)
-        })
-        .catch(err =>{
-            console.log(err)
-            res.status(500).json({message: 'internal server error'})
-        })
-        
+            return res.status(201).json({
+                email: newUser.email,
+            })
+        } 
+        catch(err) {
+            next(err)
+        }
     }
 
-    static login(req, res) {
+    static login(req, res, next) {
         let option = {
             where: {
                 email: req.body.email
@@ -37,17 +34,16 @@ class UserController {
                     return res.status(200).json({access_token})
                 }
                 else{
-                    return res.status(400).json({message: `invalid bad request`})
+                    throw {name: 'INVALID_EMAIL/PASSWORD', statusCode: 400}
                 }
             }
             else{
-                return res.status(400).json({message: `invalid email or pass`})
+                throw {name: 'INVALID_EMAIL/PASSWORD', statusCode: 400}
             }
         })
 
         .catch(err =>{
-            console.log(err)
-            res.status(500).json({message: 'internal server error'})
+            next(err)
         })
     }
 

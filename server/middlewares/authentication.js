@@ -1,19 +1,31 @@
 const { verifyToken } = require('../helpers/jwt')
+const { User } = require('../models')
 
-const authentication = (req, res, next) => {
+const authentication = async (req, res, next) => {
     const {access_token} = req.headers
 
     if(!access_token) {
-        res.status(400).json({message: 'Please Login First'})
+        throw {name: 'USER_NOT_FOUND', statusCode: 400}
     }
 
     try{
         const decoded = verifyToken(access_token)
-        req.userData = decoded
-        next()
+        let user = await User.findOne({
+            where: {
+                email: decoded.email
+            }
+        })
+        
+        if (user) {
+            req.decoded = decoded
+            next()
+        } 
+        else {
+            throw { name: 'USER_NOT_AUTHENTICATED', statusCode: 401 }
+        }
     } 
     catch(err) {
-        res.status(401).json({message: 'user not authenticate'})
+        next(err)
     }
 }
 

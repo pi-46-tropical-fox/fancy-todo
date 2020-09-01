@@ -6,17 +6,17 @@ const authorization = (req, res, next) => {
     Todo.findByPk(id)
     .then(todo => {
         if(!todo) {
-            res.status(404).json({message: 'Todo Not Found'})
+            throw {name: 'NOT_FOUND', statusCode: 404}
         } 
-        else if(todo.UserId !== req.userData.id) {
-            res.status(403).json({message: 'Forbidden Access'})
+        else if(todo && todo.UserId !== req.userData.id) {
+            throw ({name: `FORBIDDEN_ACCESS`, statusCode: 403})
         } 
         else {
             next()
         }
     })
     .catch(err => {
-        res.status(500).json({message: 'user not authorized'})
+        next(err)
     })
 }
 
