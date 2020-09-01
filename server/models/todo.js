@@ -18,20 +18,29 @@ module.exports = (sequelize, DataTypes) => {
     title: {
       type: DataTypes.STRING,
       validate: {
-        notEmpty: true
+        notEmpty: {
+          args: true,
+          msg: "title cannot be left blank!"
+        }
       }
     },
     description: {
       type: DataTypes.STRING,
       validate: {
-        notEmpty: true
+        notEmpty: {
+          args: true,
+          msg: "description cannot be left blank!"
+        }
       }
     },
     status: DataTypes.BOOLEAN,
     due_date: {
       type: DataTypes.DATE,
       validate: {
-        isBefore: new Date().toISOString().split("T")[0]
+        isAfter: {
+          args: new Date().toISOString().split("T")[0],
+          msg: "due_date have to be set after the current date"
+        }
       }
     },
     UserId: DataTypes.INTEGER

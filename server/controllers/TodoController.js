@@ -2,7 +2,7 @@ const { Todo, User } = require("../models");
 
 class TodoController {
 
-  static async addNewTodo(req, res) {
+  static async addNewTodo(req, res, next) {
     console.log(+req.userData.id, "this is from todo controller");
     const newTodo = {
       title: req.body.title,
@@ -15,38 +15,32 @@ class TodoController {
       const createdTodo = await Todo.create(newTodo);
       return res.status(201).json(createdTodo);
     } catch(err) {
-      if (err.name === "SequelizeValidationError") {
-        let errors = [];
-        err.errors.forEach((error) => {
-          errors.push(error.message);
-        });
-        return res.status(400).json({ message:"Bad Request", errors: [ err.message ] });
-      } else {
-        return res.status(500).json({ message:"Internal Server Error", errors: [ err.message ] });
-      }
+      console.log("<<<< error in addNewTodo TodoController");
+      return next(err);
     }
   }
 
-  static async showAllTodos(req, res) {
+  static async showAllTodos(req, res, next) {
     console.log(+req.userData.id, "this is from todo controller");
     try {
       const todos = await Todo.findAll();
       return res.status(200).json(todos);
     } catch(err) {
-      return res.status(500).json({ message: "Internal Server Error", errors: [ err.message ] });
+      console.log("<<<< error in showAllTodos TodoController");
+      return next(err);
     }
   }
 
-  static async showTodoById(req, res) {
+  static async showTodoById(req, res, next) {
     try {
       const todo = await Todo.findByPk(+req.params.id);
       return res.status(200).json(todo);
     } catch(err) {
-      return res.status(404).json({ message: "Not Found", errors: [ err.message ] });
+      return next(err);
     }
   }
 
-  static async updateTodo(req, res) {
+  static async updateTodo(req, res, next) {
     try {
       const id = +req.params.id;
       const updatedTodo = {
@@ -61,23 +55,13 @@ class TodoController {
         },
         returning: true
       });
-      if (todo[0] === 0) {
-        return res.status(404).json({ message: "Not Found" });
-      }
-      return res.status(200).json(todo);
+      return res.status(200).json(todo[1]);
     } catch(err) {
-      if (err.name === "SequelizeValidationError") {
-        let errors = [];
-        err.errors.forEach((error) => {
-          errors.push(error);
-        });
-        return res.status(400).json({ message: "Bad Request", errors: [ err.message ] });
-      }
-      return res.status(500).json({ message: "Internal Server Error", errors: [ err.message ] });
+      return next(err);
     }
   }
 
-  static async deleteTodo(req, res) {
+  static async deleteTodo(req, res, next) {
     try {
       const id = +req.params.id;
       const destroyedTodo = await Todo.destroy({ 
@@ -85,12 +69,9 @@ class TodoController {
           id: id
         } 
       });
-      if (destroyedTodo === 0) {
-        return res.status(404).json({ message: "Not Found" });
-      }
       return res.status(200).json(destroyedTodo);
     } catch(err) {
-      return res.status(500).json({ message: "Internal Server Error", errors: [ err.message ] });
+      return next(err);
     }
   }
 

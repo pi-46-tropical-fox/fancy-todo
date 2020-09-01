@@ -7,7 +7,8 @@ const generateToken = (user) => {
 }
 
 const verifyToken = (token) => {
-  return jwt.verify(token, secret);
+  const verified = jwt.verify(token, secret);
+  return verified;
 }
 
 module.exports = {

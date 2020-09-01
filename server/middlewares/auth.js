@@ -1,5 +1,7 @@
 const { verifyToken } = require("../helpers/jwt.js");
 const { Todo, User } = require("../models");
+
+
 // process to check if token is valid or not
 // token / access_token is saved in req.headers
 
@@ -16,22 +18,27 @@ const authentication = (req, res, next) => {
     next();
 
   } catch (err) {
-    console.log(err, "this is error in auth");
-    return res.status(401).json({ message: "Unauthorized", errors: [ err.message ] });
+    console.log("<<<< error in authentication");
+    return next(err);
   }
 }
 
 const  authorization = async (req, res, next) => {
+  console.log("this is authorization");
   const { id } = req.params;
   try {
     const todo = await Todo.findByPk(+id);
-    if (todo && todo.UserId === req.userData.id) {
+    if (todo === null) {
+      throw({ message: "Not Found", statusCode: 404 });
+    }
+     else if (todo && todo.UserId === req.userData.id) {
       next();
     } else {
-      return res.status(403).json({ message: "Forbidden" });
+      throw({ message: "Unauthorized Access", statusCode: 403 });
     }
   } catch (err) {
-    return res.status(403).json({ message: "Forbidden" });
+    console.log("<<<< error in authorization");
+    return next(err);
   }
 }
 

@@ -5,7 +5,7 @@ const { generateToken, verifyToken } = require("../helpers/jwt.js");
 
 class UserController {
 
-  static async register(req, res) {
+  static async register(req, res, next) {
     try {
       const newUser = {
         username: req.body.username,
@@ -15,30 +15,20 @@ class UserController {
       const user = await User.create(newUser);
       return res.status(201).json({ username: user.username, email: user.email });
     } catch(err) {
-      if (err.name === "SequelizeValidationError") {
-        let errors = [];
-        err.errors.forEach((error) => {
-          errors.push(error);
-        });
-        return res.status(400).json({ message: "Bad Request", errors });
-      }
-      return res.status(500).json({ message: "Internal Server Error", errors: [ err.message ] });
+      console.log("<<<< error in register UserController");
+      return next(err);
     }
   }
 
-  static async login(req, res) {
+  static async login(req, res, next) {
     try {
-      const loggedUser = {
-        email: req.body.email,
-        password: req.body.password
-      };
       const user = await User.findOne({
         where: {
           email: req.body.email
         }
       });
       if (!user) {
-        return res.status(400).json({ message: "Invalid email or password" });
+        throw { message: "Invalid email or password", statusCode: 400 };
       }
       const isValid = checkPassword(req.body.password, user.password);
       if (isValid) {
@@ -46,17 +36,11 @@ class UserController {
         const access_token = generateToken(user);
         return res.status(200).json({ access_token });
       } else {
-        res.status(400).json({ message: "Invalid email or password" });
+        throw { message: "Invalid email or password", statusCode: 400 };
       }
     } catch(err) {
-      if (err.name === "SequelizeValidationError") {
-        let errors = [];
-        err.errors.forEach((error) => {
-          errors.push(error);
-        });
-        return res.status(400).json({ message: "Bad Request", errors })
-      }
-      return res.status(500).json({ message: "Internal Server Error", errors: [ err.message ] });
+      console.log("<<<< error in register UserController");
+      return next(err);
     }
   }
 

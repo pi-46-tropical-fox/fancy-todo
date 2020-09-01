@@ -20,7 +20,10 @@ module.exports = (sequelize, DataTypes) => {
     username: {
       type: DataTypes.STRING,
       validate: {
-        notEmpty: true,
+        notEmpty: {
+          args: true,
+          msg: "username cannot be left blank!"
+        },
         is: {
           args: /^[a-zA-Z0-9_]{3,15}$/,
           msg: "username can only be consisted of alphanumeric and special characters, such as: '_'"
@@ -30,17 +33,23 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       validate: {
-        notEmpty: true,
+        notEmpty: {
+          args: true,
+          msg: "email cannot be left blank!"
+        },
         isEmail: {
           args: true,
-          msg: "email is required!"
+          msg: "please insert a valid email!"
         }
       }
     },
     password: {
       type: DataTypes.STRING,
       validate: {
-        notEmpty: true,
+        notEmpty: {
+          args: true,
+          msg: "password cannot be left blank!"
+        },
         len: {
           args: [8, 15],
           msg: "password must be consisted of 8 to 15 characters"

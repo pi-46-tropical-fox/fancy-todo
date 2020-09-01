@@ -172,9 +172,7 @@ _Request Body_
 _Response (200)_
 ```
 [
-  1,
-  [
-    {
+  {
     "id": <requested id>,
     "title": "<posted title>",
     "description": "<posted description>",
@@ -183,7 +181,6 @@ _Response (200)_
     "createdAt": "2020-08-31T06:30:49.914Z",
     "updatedAt": "2020-08-31T06:30:49.914Z",
   }
-  ]
 ]
 ```
 
