@@ -99,8 +99,12 @@ _Response (500 - Internal server error)_
 
 ```json
 {
-	"name": "InternalServerError",
-	"message": "Internal server error"
+	"errors": [
+		{
+			"name": "InternalServerError",
+			"message": "Internal server error"
+		}
+	]
 }
 ```
 
@@ -148,8 +152,12 @@ _Response (500 - Internal server error)_
 
 ```json
 {
-	"name": "InternalServerError",
-	"message": "Internal server error"
+	"errors": [
+		{
+			"name": "InternalServerError",
+			"message": "Internal server error"
+		}
+	]
 }
 ```
 
@@ -221,8 +229,12 @@ _Response (500 - Internal server error)_
 
 ```json
 {
-	"name": "InternalServerError",
-	"message": "Internal server error"
+	"errors": [
+		{
+			"name": "InternalServerError",
+			"message": "Internal server error"
+		}
+	]
 }
 ```
 
@@ -344,8 +356,12 @@ _Response (500 - Internal server error)_
 
 ```json
 {
-	"name": "InternalServerError",
-	"message": "Internal server error"
+	"errors": [
+		{
+			"name": "InternalServerError",
+			"message": "Internal server error"
+		}
+	]
 }
 ```
 
@@ -417,8 +433,12 @@ _Response (500 - Internal server error)_
 
 ```json
 {
-	"name": "InternalServerError",
-	"message": "Internal server error"
+	"errors": [
+		{
+			"name": "InternalServerError",
+			"message": "Internal server error"
+		}
+	]
 }
 ```
 
@@ -485,8 +505,12 @@ _Response (500 - Internal server error)_
 
 ```json
 {
-	"name": "InternalServerError",
-	"message": "Internal server error"
+	"errors": [
+		{
+			"name": "InternalServerError",
+			"message": "Internal server error"
+		}
+	]
 }
 ```
 
@@ -528,7 +552,11 @@ _Response (500 - Internal server error)_
 
 ```json
 {
-	"name": "InternalServerError",
-	"message": "Internal server error"
+	"errors": [
+		{
+			"name": "InternalServerError",
+			"message": "Internal server error"
+		}
+	]
 }
 ```
