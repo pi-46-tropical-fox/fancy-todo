@@ -16,7 +16,8 @@ class UserController {
             const registered = await User.create(params)
             res.status(201).json(registered)
         } catch (err) {
-            res.status(400).json(err)
+            next(err)
+            // res.status(400).json(err)
         }
     }
     static async login(req,res) {
@@ -30,13 +31,14 @@ class UserController {
                 if (auth) {
                     const accessToken = jwt.sign({email: user.email, id: user.id}, secret)
                     res.status(200).json(accessToken + '  << access token')
-                } else res.status(400).json('wrong username/password')
+                } else throw res.status(400).json('wrong username/password')
             } else {
-                res.status(400).json('wrong username/password')
+                throw res.status(400).json('wrong username/password')
             }
             
         } catch (err) {
-            res.status(400).json(err)
+            // res.status(400).json(err)
+            next(err)
         }
     }
 }

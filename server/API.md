@@ -13,7 +13,7 @@ My TODO App is an application to manage your to-do lists. This app has :
 _Request Header_
 ```
 {
-  "access_token": "<your access token>"
+  "Authorization": "Bearer <your access token>"
 }
 ```
 
@@ -40,6 +40,7 @@ _Response (200)_
     "description": "<todo description>",
     "status": "<todo status>",
     "due_date": "<todo due date>",
+    "UserId": "<todo user id FK>"
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
   }
@@ -60,7 +61,7 @@ _Response (400 - Bad Request)_
 _Request Header_
 ```
 {
-  "access_token": "<your access token>"
+  "Authorization": "Bearer <your access token>"
 }
 ```
 
@@ -82,6 +83,7 @@ _Response (201 - Created)_
     "description": "<posted description>",
     "status": "<posted status>",
     "due_date": "<posted due date>",
+    "UserId": "<todo user id FK>",
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
 }
@@ -101,7 +103,7 @@ _Response (400 - Bad Request)_
 _Request Header_
 ```
 {
-  "access_token": "<your access token>"
+  "Authorization": "Bearer <your access token>"
 }
 ```
 
@@ -118,6 +120,7 @@ _Response (200)_
     "description": "<todo description>",
     "status": "<todo status>",
     "due_date": "<todo due date>",
+    "UserId": "<todo user id FK>",
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
 }
@@ -138,7 +141,7 @@ _Response (404 - Not Found)_
 _Request Header_
 ```
 {
-  "access_token": "<your access token>"
+  "Authorization": "Bearer <your access token>"
 }
 ```
 
@@ -160,6 +163,7 @@ _Response (200)_
     "description": "<todo description>",
     "status": "<todo status>",
     "due_date": "<todo due date>",
+    "UserId": "<todo user id FK>",
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
 }
@@ -180,7 +184,7 @@ _Response (400 - Bad Request)_
 _Request Header_
 ```
 {
-  "access_token": "<your access token>"
+  "Authorization": "Bearer <your access token>"
 }
 ```
 
@@ -192,13 +196,7 @@ not needed
 _Response (200)_
 ```
 {
-    "id": <id>,
-    "title": "<todo title>",
-    "description": "<todo description>",
-    "status": "<todo status>",
-    "due_date": "<todo due date>",
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
+  1
 }
 ```
 
