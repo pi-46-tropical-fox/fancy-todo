@@ -53,7 +53,15 @@ _Response (401 - Unauthorized)_
 
 ```json
 {
-	"message": "'User not authorized'"
+	"message": "User not authorized"
+}
+```
+
+_Response (401 - Unauthorized)_
+
+```json
+{
+	"message": "User not authenticated"
 }
 ```
 
@@ -89,6 +97,14 @@ _Response (200 - OK)_
 		"updatedAt": "<todo created at>"
 	}
 ]
+```
+
+_Response (401 - Unauthorized)_
+
+```json
+{
+	"message": "User not authenticated"
+}
 ```
 
 _Response (500 - Internal server error)_
@@ -137,7 +153,15 @@ _Response (401 - Unauthorized)_
 
 ```json
 {
-	"message": "'User not authorized'"
+	"message": "User not authorized"
+}
+```
+
+_Response (401 - Unauthorized)_
+
+```json
+{
+	"message": "User not authenticated"
 }
 ```
 
@@ -190,7 +214,15 @@ _Response (401 - Unauthorized)_
 
 ```json
 {
-	"message": "'User not authorized'"
+	"message": "User not authorized"
+}
+```
+
+_Response (401 - Unauthorized)_
+
+```json
+{
+	"message": "User not authenticated"
 }
 ```
 
@@ -251,7 +283,15 @@ _Response (401 - Unauthorized)_
 
 ```json
 {
-	"message": "'User not authorized'"
+	"message": "User not authorized"
+}
+```
+
+_Response (401 - Unauthorized)_
+
+```json
+{
+	"message": "User not authenticated"
 }
 ```
 
