@@ -49,6 +49,14 @@ _Response (400 - Bad request)_
 }
 ```
 
+_Response (401 - Unauthorized)_
+
+```json
+{
+	"message": "'User not authorized'"
+}
+```
+
 _Response (500 - Internal server error)_
 
 ```json
@@ -125,6 +133,14 @@ _Response (404 - Not Found)_
 }
 ```
 
+_Response (401 - Unauthorized)_
+
+```json
+{
+	"message": "'User not authorized'"
+}
+```
+
 _Response (500 - Internal server error)_
 
 ```json
@@ -167,6 +183,14 @@ _Response (404 - Not Found)_
 ```json
 {
 	"message": "Error todo not found"
+}
+```
+
+_Response (401 - Unauthorized)_
+
+```json
+{
+	"message": "'User not authorized'"
 }
 ```
 
@@ -220,6 +244,86 @@ _Response (404 - Not Found)_
 ```json
 {
 	"message": "Error todo not found"
+}
+```
+
+_Response (401 - Unauthorized)_
+
+```json
+{
+	"message": "'User not authorized'"
+}
+```
+
+_Response (500 - Internal server error)_
+
+```json
+{
+	"message": "Internal server error"
+}
+```
+
+### POST /register
+
+> Register a new user
+
+_Request Body_
+
+```json
+{
+	"email": "<user email>",
+	"password": "<user password>"
+}
+```
+
+_Response (201 - Created)_
+
+```json
+{
+	"id": "<user id>",
+	"email": "<user email>"
+}
+```
+
+_Response (400 - Bad request)_
+
+```json
+{
+	"validation_errors": [
+		{
+			"name": "<validator name>",
+			"message": "<validator message>"
+		}
+	]
+}
+```
+
+_Response (500 - Internal server error)_
+
+```json
+{
+	"message": "Internal server error"
+}
+```
+
+### POST /login
+
+> Login to app
+
+_Request Body_
+
+```json
+{
+	"email": "<user email>",
+	"password": "<user password>"
+}
+```
+
+_Response (400 - Bad request)_
+
+```json
+{
+	"message": "Invalid email or password"
 }
 ```
 

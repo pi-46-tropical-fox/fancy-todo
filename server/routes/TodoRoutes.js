@@ -1,15 +1,14 @@
 const TodoController = require('../controllers/TodoController');
+const { authorizationTodoByUserId } = require('../middlewares/auth');
 
 const routes = require('express').Router();
 
 routes.get('/todos', TodoController.list);
 
-routes.get('/todos/:id', TodoController.byId);
-
 routes.post('/todos', TodoController.create);
 
-routes.put('/todos/:id', TodoController.update);
-
-routes.delete('/todos/:id', TodoController.delete);
+routes.get('/todos/:id', authorizationTodoByUserId, TodoController.byId);
+routes.put('/todos/:id', authorizationTodoByUserId, TodoController.update);
+routes.delete('/todos/:id', authorizationTodoByUserId, TodoController.delete);
 
 module.exports = routes;
