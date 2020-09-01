@@ -1,5 +1,6 @@
 const { User } = require('../models')
-const {hashPassword, checkPassword} = require('../helper/password')
+const {hashPassword, checkPassword} = require('../helpers/password')
+const {generateToken, verifyToken} = require('../helpers/jwt')
 
 class UserController { 
     static show(req,res){
@@ -12,7 +13,7 @@ class UserController {
             lastname: req.body.lastname,
             username: req.body.username,
             email: req.body.email,
-            password: hashPassword(req.body.password),
+            password: req.body.password,
             createdAt: new Date,
             updatedAt: new Date
         })
@@ -47,11 +48,9 @@ class UserController {
                 let check = checkPassword(req.body.password,user.password)
                 console.log(check)
                 if(check){
-                    let result = {
-                        id: user.id,
-                        username: user.username
-                    }
-                    res.status(200).json(result)
+                    let token = generateToken(user)
+                    // verifyToken(token)
+                    res.status(200).json({token})
                 }else{
                     res.status(400).json({"msg": "username or password is wrong"})
                 }

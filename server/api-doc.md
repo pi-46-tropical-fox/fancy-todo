@@ -24,10 +24,8 @@ Fancy Todo App is an application to manage your fancy todo. This app has :
 > Create new user
 
 _Request Header_
-```json
-{
-  "access_token": "<your access token>"
-}
+```
+not needed
 ```
 
 _Request Body_
@@ -45,13 +43,8 @@ _Response (201 - Created)_
 ```json
 {
   "id": 1,
-  "firstname": "<posted firstname>",
-  "lastname": "<posted lastname>",
   "username": "<posted username>",
   "email": "<posted email>",
-  "password": "<posted password>",
-  "createdAt": "2020-03-20T07:15:12.149Z",
-  "updatedAt": "2020-03-20T07:15:12.149Z",
 }
 ```
 
@@ -77,10 +70,8 @@ _Response (500 - Internal Server Error)_
 > Login user
 
 _Request Header_
-```json
-{
-  "access_token": "<your access token>"
-}
+```
+not needed
 ```
 
 _Request Body_
@@ -94,8 +85,7 @@ _Request Body_
 _Response (200)_
 ```json
 {
-  "username": "<user's username>",
-  "email": "<user's email">
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJmYXVkemFuIiwiaWF0IjoxNTk4OTU1OTk2fQ.-bZ3Gi4AXPQMtrHfbxJ605On57u4gRXfU0ok88aIW94"
 }
 ```
 
@@ -227,17 +217,17 @@ not needed
 
 _Response (200)_
 ```json
-[
-  {
-    "id": 1,
-    "title": "<todo's name>",
-    "description": "<todo's description>",
-    "status": "<todo's status>",
-    "due_date": "<todo's due_date>",
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
-  }
-]
+
+{
+  "id": 1,
+  "title": "<todo's name>",
+  "description": "<todo's description>",
+  "status": "<todo's status>",
+  "due_date": "<todo's due_date>",
+  "createdAt": "2020-03-20T07:15:12.149Z",
+  "updatedAt": "2020-03-20T07:15:12.149Z",
+}
+
 ```
 
 _Response (404 - Not Found)_

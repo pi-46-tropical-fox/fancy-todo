@@ -20,6 +20,7 @@ class TodoController {
             description: req.body.description,
             status: req.body.status,
             due_date: req.body.due_date,
+            UserId: req.userData.id,
             createdAt: new Date,
             updatedAt: new Date
         })
