@@ -19,35 +19,59 @@ module.exports = (sequelize, DataTypes) => {
 				type: DataTypes.STRING,
 				allowNull: false,
 				validate: {
-					notEmpty: true,
-					notNull: true,
+					notEmpty: {
+						args: true,
+						msg: 'Title cannot empty',
+					},
+					notNull: {
+						args: true,
+						msg: 'Title cannot null',
+					},
 				},
 			},
 			description: {
 				type: DataTypes.STRING,
 				allowNull: false,
 				validate: {
-					notEmpty: true,
-					notNull: true,
+					notEmpty: {
+						args: true,
+						msg: 'Description cannot empty',
+					},
+					notNull: {
+						args: true,
+						msg: 'Description cannot null',
+					},
 				},
 			},
 			status: {
 				type: DataTypes.STRING,
 				allowNull: false,
 				validate: {
-					notEmpty: true,
-					notNull: true,
+					notEmpty: {
+						args: true,
+						msg: 'Status cannot empty',
+					},
+					notNull: {
+						args: true,
+						msg: 'Status cannot null',
+					},
 				},
 			},
 			due_date: {
 				type: DataTypes.DATE,
 				allowNull: false,
 				validate: {
-					notEmpty: true,
-					notNull: true,
+					notEmpty: {
+						args: true,
+						msg: 'Due date cannot empty',
+					},
+					notNull: {
+						args: true,
+						msg: 'Due date cannot null',
+					},
 					notPast(value) {
 						if (isPast(new Date(value)) && !isToday(new Date(value))) {
-							throw new Error('Tanggal tidak boleh lewat hari ini');
+							throw new Error('Due date cannot yesterday or past');
 						}
 					},
 				},

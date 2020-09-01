@@ -31,6 +31,7 @@ _Response (201 - Created)_
 	"description": "<todo description>",
 	"status": "<todo status>",
 	"due_date": "<todo due date>",
+	"UserId": "<todo user id>",
 	"createdAt": "<todo created at>",
 	"updatedAt": "<todo created at>"
 }
@@ -40,10 +41,42 @@ _Response (400 - Bad request)_
 
 ```json
 {
-	"validation_errors": [
+	"errors": [
 		{
-			"name": "<validation name>",
-			"message": "<validation message>"
+			"name": "is_null",
+			"message": "Title cannot null"
+		},
+		{
+			"name": "is_null",
+			"message": "Description cannot null"
+		},
+		{
+			"name": "is_null",
+			"message": "Status cannot null"
+		},
+		{
+			"name": "is_null",
+			"message": "Due date cannot null"
+		},
+		{
+			"name": "notPast",
+			"message": "Due date cannot yesterday or past"
+		},
+		{
+			"name": "notEmpty",
+			"message": "Title cannot empty"
+		},
+		{
+			"name": "notEmpty",
+			"message": "Description cannot empty"
+		},
+		{
+			"name": "notEmpty",
+			"message": "Status cannot empty"
+		},
+		{
+			"name": "notEmpty",
+			"message": "Due date cannot empty"
 		}
 	]
 }
@@ -53,15 +86,12 @@ _Response (401 - Unauthorized)_
 
 ```json
 {
-	"message": "User not authorized"
-}
-```
-
-_Response (401 - Unauthorized)_
-
-```json
-{
-	"message": "User not authenticated"
+	"errors": [
+		{
+			"name": "notAuthenticated",
+			"message": "User not authenticated"
+		}
+	]
 }
 ```
 
@@ -69,6 +99,7 @@ _Response (500 - Internal server error)_
 
 ```json
 {
+	"name": "InternalServerError",
 	"message": "Internal server error"
 }
 ```
@@ -93,6 +124,7 @@ _Response (200 - OK)_
 		"description": "<todo description>",
 		"status": "<todo status>",
 		"due_date": "<todo due date>",
+		"UserId": "<todo user id>",
 		"createdAt": "<todo created at>",
 		"updatedAt": "<todo created at>"
 	}
@@ -103,7 +135,12 @@ _Response (401 - Unauthorized)_
 
 ```json
 {
-	"message": "User not authenticated"
+	"errors": [
+		{
+			"name": "notAuthenticated",
+			"message": "User not authenticated"
+		}
+	]
 }
 ```
 
@@ -111,6 +148,7 @@ _Response (500 - Internal server error)_
 
 ```json
 {
+	"name": "InternalServerError",
 	"message": "Internal server error"
 }
 ```
@@ -128,24 +166,28 @@ not needed
 _Response (200 - OK)_
 
 ```json
-[
-	{
-		"id": "<todo id>",
-		"name": "<todo name>",
-		"description": "<todo description>",
-		"status": "<todo status>",
-		"due_date": "<todo due date>",
-		"createdAt": "<todo created at>",
-		"updatedAt": "<todo created at>"
-	}
-]
+{
+	"id": "<todo id>",
+	"name": "<todo name>",
+	"description": "<todo description>",
+	"status": "<todo status>",
+	"due_date": "<todo due date>",
+	"UserId": "<todo user id>",
+	"createdAt": "<todo created at>",
+	"updatedAt": "<todo created at>"
+}
 ```
 
 _Response (404 - Not Found)_
 
 ```json
 {
-	"message": "Error todo not found"
+	"errors": [
+		{
+			"name": "notFound",
+			"message": "Error todo not found"
+		}
+	]
 }
 ```
 
@@ -153,7 +195,12 @@ _Response (401 - Unauthorized)_
 
 ```json
 {
-	"message": "User not authorized"
+	"errors": [
+		{
+			"name": "notAuthorized",
+			"message": "User not authorized accessing this Todo"
+		}
+	]
 }
 ```
 
@@ -161,7 +208,12 @@ _Response (401 - Unauthorized)_
 
 ```json
 {
-	"message": "User not authenticated"
+	"errors": [
+		{
+			"name": "notAuthenticated",
+			"message": "User not authenticated"
+		}
+	]
 }
 ```
 
@@ -169,6 +221,7 @@ _Response (500 - Internal server error)_
 
 ```json
 {
+	"name": "InternalServerError",
 	"message": "Internal server error"
 }
 ```
@@ -197,6 +250,7 @@ _Response (200 - OK)_
 	"description": "<todo description>",
 	"status": "<todo status>",
 	"due_date": "<todo due date>",
+	"UserId": "<todo user id>",
 	"createdAt": "<todo created at>",
 	"updatedAt": "<todo created at>"
 }
@@ -206,7 +260,12 @@ _Response (404 - Not Found)_
 
 ```json
 {
-	"message": "Error todo not found"
+	"errors": [
+		{
+			"name": "notFound",
+			"message": "Error todo not found"
+		}
+	]
 }
 ```
 
@@ -214,7 +273,12 @@ _Response (401 - Unauthorized)_
 
 ```json
 {
-	"message": "User not authorized"
+	"errors": [
+		{
+			"name": "notAuthorized",
+			"message": "User not authorized accessing this Todo"
+		}
+	]
 }
 ```
 
@@ -222,7 +286,12 @@ _Response (401 - Unauthorized)_
 
 ```json
 {
-	"message": "User not authenticated"
+	"errors": [
+		{
+			"name": "notAuthenticated",
+			"message": "User not authenticated"
+		}
+	]
 }
 ```
 
@@ -230,10 +299,42 @@ _Response (400 - Bad request)_
 
 ```json
 {
-	"validation_errors": [
+	"errors": [
 		{
-			"name": "<validation name>",
-			"message": "<validation message>"
+			"name": "is_null",
+			"message": "Title cannot null"
+		},
+		{
+			"name": "is_null",
+			"message": "Description cannot null"
+		},
+		{
+			"name": "is_null",
+			"message": "Status cannot null"
+		},
+		{
+			"name": "is_null",
+			"message": "Due date cannot null"
+		},
+		{
+			"name": "notPast",
+			"message": "Due date cannot yesterday or past"
+		},
+		{
+			"name": "notEmpty",
+			"message": "Title cannot empty"
+		},
+		{
+			"name": "notEmpty",
+			"message": "Description cannot empty"
+		},
+		{
+			"name": "notEmpty",
+			"message": "Status cannot empty"
+		},
+		{
+			"name": "notEmpty",
+			"message": "Due date cannot empty"
 		}
 	]
 }
@@ -243,6 +344,7 @@ _Response (500 - Internal server error)_
 
 ```json
 {
+	"name": "InternalServerError",
 	"message": "Internal server error"
 }
 ```
@@ -266,6 +368,7 @@ _Response (200 - OK)_
 	"description": "<todo description>",
 	"status": "<todo status>",
 	"due_date": "<todo due date>",
+	"UserId": "<todo user id>",
 	"createdAt": "<todo created at>",
 	"updatedAt": "<todo created at>"
 }
@@ -275,7 +378,12 @@ _Response (404 - Not Found)_
 
 ```json
 {
-	"message": "Error todo not found"
+	"errors": [
+		{
+			"name": "notFound",
+			"message": "Error todo not found"
+		}
+	]
 }
 ```
 
@@ -283,7 +391,12 @@ _Response (401 - Unauthorized)_
 
 ```json
 {
-	"message": "User not authorized"
+	"errors": [
+		{
+			"name": "notAuthorized",
+			"message": "User not authorized accessing this Todo"
+		}
+	]
 }
 ```
 
@@ -291,7 +404,12 @@ _Response (401 - Unauthorized)_
 
 ```json
 {
-	"message": "User not authenticated"
+	"errors": [
+		{
+			"name": "notAuthenticated",
+			"message": "User not authenticated"
+		}
+	]
 }
 ```
 
@@ -299,6 +417,7 @@ _Response (500 - Internal server error)_
 
 ```json
 {
+	"name": "InternalServerError",
 	"message": "Internal server error"
 }
 ```
@@ -329,10 +448,34 @@ _Response (400 - Bad request)_
 
 ```json
 {
-	"validation_errors": [
+	"errors": [
 		{
-			"name": "<validator name>",
-			"message": "<validator message>"
+			"name": "is_null",
+			"message": "Email cannot null"
+		},
+		{
+			"name": "is_null",
+			"message": "Password cannot null"
+		},
+		{
+			"name": "minLength",
+			"message": "Password must be minimal 6 characters"
+		},
+		{
+			"name": "isEmail",
+			"message": "Email format is invalid"
+		},
+		{
+			"name": "notEmpty",
+			"message": "Email cannot empty"
+		},
+		{
+			"name": "notEmpty",
+			"message": "Password cannot empty"
+		},
+		{
+			"name": "not_unique",
+			"message": "Email already registered"
 		}
 	]
 }
@@ -342,6 +485,7 @@ _Response (500 - Internal server error)_
 
 ```json
 {
+	"name": "InternalServerError",
 	"message": "Internal server error"
 }
 ```
@@ -359,11 +503,24 @@ _Request Body_
 }
 ```
 
+_Response (200 - OK)_
+
+```json
+{
+	"access_token": "<access_token>"
+}
+```
+
 _Response (400 - Bad request)_
 
 ```json
 {
-	"message": "Invalid email or password"
+	"errors": [
+		{
+			"name": "invalidLogin",
+			"message": "Invalid email or password!"
+		}
+	]
 }
 ```
 
@@ -371,6 +528,7 @@ _Response (500 - Internal server error)_
 
 ```json
 {
+	"name": "InternalServerError",
 	"message": "Internal server error"
 }
 ```

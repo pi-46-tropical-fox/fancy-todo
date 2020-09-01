@@ -11,10 +11,10 @@ const authentication = async (req, res, next) => {
 			req.userData = userData;
 			next();
 		} else {
-			throw err;
+			throw { name: 'notAuthenticated' };
 		}
 	} catch (error) {
-		res.status(401).json({ message: 'User not authenticated' });
+		next(error);
 	}
 };
 
@@ -22,13 +22,18 @@ const authorizationTodoByUserId = async (req, res, next) => {
 	try {
 		const { id } = req.userData;
 		const todo = await Todo.findOne({ where: { id: req.params.id } });
-		if (todo.UserId === id) {
-			next();
+
+		if (todo) {
+			if (todo.UserId === id) {
+				next();
+			} else {
+				throw { name: 'notAuthorized' };
+			}
 		} else {
-			throw err;
+			throw { name: 'notFound' };
 		}
 	} catch (error) {
-		res.status(401).json({ message: 'User not authorized' });
+		next(error);
 	}
 };
 
