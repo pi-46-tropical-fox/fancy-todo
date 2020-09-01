@@ -1,11 +1,11 @@
 const { validateToken } = require('../Helpers/jwt')
 const { User, Todo } = require('../models')
 
-const authentication = (req, res, next) => {
+const authentication = async (req, res, next) => {
     const { access_token } = req.headers
 
     try {
-        const userData = validateToken(access_token)
+        const userData = await validateToken(access_token)
 
         User.findOne({
             where: {
@@ -13,8 +13,7 @@ const authentication = (req, res, next) => {
             }
         })
             .then(user => {
-                if(user) {
-                    
+                if(user) {                    
                     req.userData = userData
                     next()
                 }else {
@@ -24,7 +23,6 @@ const authentication = (req, res, next) => {
             })
 
     } catch (err) {
-        // return res.status(401).json({message: 'user not authenticates'})
         return next(err)
     }
 }

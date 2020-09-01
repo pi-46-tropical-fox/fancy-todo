@@ -19,7 +19,11 @@ Fancy Todo App is an application to manage your todo list. This app has :
 ### POST /register
 
 > Create new user
-Desc: - email must be unique
+Desc: 
+  - name, email, and password can not be empty
+  - name and email must be unique
+  - email must use email format
+  - password min 6 characters
 
 _Request Header_
 ```
@@ -29,9 +33,9 @@ no need
 _Request Body_
 ```json
 {
-  "name": "<name to get insert into>",
-  "email": "<email to get insert into",
-  "password": "<password to get insert into>"
+  "name": "Amanda Caessara",
+  "email": "amanda@mail.com",
+  "password": "amanda123"
 }
 ```
 
@@ -39,8 +43,8 @@ _Response (201 - Created)_
 ```json
 {
   "id": 1,
-  "name": "<posted name>",
-  "email": "<posted email>"
+  "name": "Amanda Caessara",
+  "email": "amanda@mail.com"
 }
 ```
 
@@ -55,6 +59,9 @@ _Response (400 - Bad Request)_
 ### POST /login
 
 > Login to app
+Desc:
+  - password must be hashed using bcrypt before stored into database
+  - response login must be token (access_token) that contains id, name and email
 
 _Request Header_
 ```
@@ -64,8 +71,8 @@ no need
 _Request Body_
 ```json
 {
-  "email": "<email to get insert into, found into database>",
-  "password": "<password to get insert into, found into database>"
+  "email": "amanda@mail.com",
+  "password": "amanda123"
 }
 ```
 
@@ -87,6 +94,10 @@ _Response (401 - Not Authenticated)_
 ### POST /todos
 
 > Create new a todo
+Desc:
+  - Title, description, status and due date can not be empty
+  - Due date must be after 5 September 2020
+  - User must login to access this site
 
 _Request Header_
 ```json
@@ -98,10 +109,10 @@ _Request Header_
 _Request Body_
 ```json
 {
-  "title": "<name to get insert into>",
-  "description": "<description to get insert into>",
-  "status": "<status to get insert into>",
-  "due date": "<due date to get insert into, must be after todays date>"
+  "title": "Mencuci",
+  "description": "Mencuci baju menggunakan mesin cuci",
+  "status": "false",
+  "due date": "12 November 2020"
 }
 ```
 
@@ -109,19 +120,27 @@ _Response (201 - Created)_
 ```json
 {
   "id": 1,
-  "title": "<posted title>",
-  "description": "<posted description>",
-  "status": "<posted status>",
-  "due date": "<posted due date>",
-  "createdAt": "<posted createdAt date>",
-  "updatedAt": "<posted updatedAt date>",
+  "title": "Mencuci",
+  "description": "Mencuci baju menggunakan mesin cuci",
+  "status": "false",
+  "due date": "12 November 2020",
+  "createdAt": "1 September 2020",
+  "updatedAt": "1 September 2020",
+  "UserId": 5
 }
 ```
 
 _Response (400 - Bad Request)_
 ```json
 {
-  "message": "Title can not be empty"
+  "message": "Title/Description/Status/Due Date can not be empty"
+},
+```
+
+_Response (401 - Not Athenticated)_
+```json
+{
+  "message": "User not authenticated"
 }
 ```
 
@@ -136,6 +155,8 @@ _Response (500 - Internal server error)_
 ### GET /todos
 
 > Get all todo list
+Desc:
+  - User must login to access this site
 
 _Request Header_
 ```json
@@ -154,14 +175,32 @@ _Response (200 - Ok)_
 [
   {
     "id": 1,
-    "title": "<posted title>",
-    "description": "<posted description>",
-    "status": "<posted status>",
-    "due date": "<posted due date>",
-    "createdAt": "<posted createdAt date>",
-    "updatedAt": "<posted updatedAt date>",
+    "title": "Mencuci",
+    "description": "Mencuci baju menggunakan mesin cuci",
+    "status": "false",
+    "due date": "12 November 2020",
+    "createdAt": "1 September 2020",
+    "updatedAt": "1 September 2020",
+    "UserId": 5,
+  },
+  {
+    "id": 2,
+    "title": "Memasak",
+    "description": "Memasak ayam pop",
+    "status": "false",
+    "due date": "1 November 2020",
+    "createdAt": "1 September 2020",
+    "updatedAt": "1 September 2020",
+    "UserId": 6
   }
 ]
+```
+
+_Response (401 - Not Athenticated)_
+```json
+{
+  "message": "User not authenticated"
+}
 ```
 
 _Response (500 - Internal server error)_
@@ -175,7 +214,10 @@ _Response (500 - Internal server error)_
 
 ### GET /todos/:id
 
-> Get a spesific todo
+> Get a todo list that owned by certain user
+Desc: 
+  - User must login to access this site
+  - Only display todo list which are owned by authorized User
 
 _Request Header_
 ```json
@@ -191,14 +233,41 @@ no need
 
 _Response (200 - Ok)_
 ```json
+[
+  {
+    "id": 1,
+    "title": "Mencuci",
+    "description": "Mencuci baju menggunakan mesin cuci",
+    "status": "false",
+    "due date": "12 November 2020",
+    "createdAt": "1 September 2020",
+    "updatedAt": "1 September 2020",
+    "UserId": 5,
+  },
+  {
+    "id": 3,
+    "title": "Memancing",
+    "description": "Memancing di danau",
+    "status": "false",
+    "due date": "3 November 2020",
+    "createdAt": "1 September 2020",
+    "updatedAt": "1 September 2020",
+    "UserId": 5
+  }
+]
+```
+
+_Response (401 - Not Athenticated)_
+```json
 {
-    "id": <given id by system>,
-    "title": "<posted title>",
-    "description": "<posted description>",
-    "status": "<posted status>",
-    "due date": "<posted due date>",
-    "createdAt": "<posted createdAt date>",
-    "updatedAt": "<posted updatedAt date>",
+  "message": "User not authenticated"
+}
+```
+
+_Response (402 - Not Athorized)_
+```json
+{
+  "message": "User not authorized"
 }
 ```
 
@@ -213,6 +282,9 @@ _Response (404 - Not Found)_
 ### PUT /todos/:id
 
 > Get a spesific todo
+Desc:
+  - User must login to access this site
+  - Only able to update todo that is owned by authorized User
 
 _Request Header_
 ```json
@@ -224,23 +296,38 @@ _Request Header_
 _Request Body_
 ```json
 {
-    "title": "<title to get update into>",
-    "description": "<description to get update into>",
-    "status": "<status to get update into>",
-    "due date": "<due date to get update into>",
+    "title": "Menggoreng",
+    "description": "Menggoreng ikan",
+    "status": "false",
+    "due date": "12 September 2020",
 }
 ```
 
 _Response (200 - Ok)_
 ```json
 {
-    "id": <given id by system>,
-    "title": "<updated title>",
-    "description": "<updated description>",
-    "status": "<updated status>",
-    "due date": "<updated due date>",
-    "createdAt": "<posted createdAt date>",
-    "updatedAt": "<posted updatedAt date>",
+    "id": 7,
+    "title": "Menggoreng",
+    "description": "Menggoreng ikan",
+    "status": "false",
+    "due date": "12 September 2020",
+    "createdAt": "1 September 2020",
+    "updatedAt": "3 September 2020",
+    "UserId": 5,
+}
+```
+
+_Response (401 - Not Athenticated)_
+```json
+{
+  "message": "User not authenticated"
+}
+```
+
+_Response (401 - Not Athorized)_
+```json
+{
+  "message": "User not authorized"
 }
 ```
 
@@ -250,7 +337,6 @@ _Response (404 - Not Found)_
   "message": "Todo data is not found!"
 }
 ```
-
 
 _Response (500 - Internal server error)_
 ```json
@@ -262,7 +348,11 @@ _Response (500 - Internal server error)_
 
 ### Delete /todos/:id
 
-> Get a spesific todo
+> Delete a todo owned by an authorized User
+Desc:
+  - User must login to access this site
+  - Only able to delete todo that is owned by authorized User
+
 
 _Request Header_
 ```json
@@ -282,6 +372,19 @@ _Response (200 - Ok)_
   "message": "Todo is successfully deleted!"
 }
 ```
+
+_Response (401 - Not Athenticated)_
+```json
+{
+  "message": "User not authenticated"
+}
+```
+
+_Response (401 - Not Athorized)_
+```json
+{
+  "message": "User not authorized"
+}
 
 _Response (404 - Not Found)_
 ```json
