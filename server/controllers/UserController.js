@@ -1,22 +1,44 @@
+const bcrypt = require('bcryptjs');
 const { User } = require('../models');
 const { generateToken } = require('../helpers/jwt');
 
 class UserController {
-    static async register(req, res) {
-        try {
-            const result = await User.create(req.body);
-            const access_token = generateToken({ id: result.id });
+	static async register(req, res, next) {
+		try {
+			const { id, email } = await User.create(req.body);
 
-            res.json({ access_token });
-        } catch (err) {
-            console.log(err);
-            res.send(err);
-        }
-    }
+			res.status(201).json({ id, email });
+		} catch (err) {
+			next(err)
+		}
+	}
 
-    static async login(req, res) {
+	static async login(req, res, next) {
+		try {
+			const { password, username } = req.body;
+			const data = await User.findOne({
+				where: {
+					username,
+				},
+			});
 
-    }
+			const pass = await bcrypt.compare(password, data.password);
+
+			console.log(password, data.password);
+
+			if (pass) {
+				const access_token = generateToken({ id: data.id });
+
+				res.json({ access_token });
+			} else {
+				next({
+					name : ''
+				})
+			}
+		} catch (err) {
+			next(err)
+		}
+	}
 }
 
 module.exports = UserController;

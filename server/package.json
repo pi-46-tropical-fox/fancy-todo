@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/reaganiwadha/fancy-todo#readme",
   "dependencies": {
+    "axios": "^0.20.0",
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
     "eslint-config-airbnb": "^18.2.0",

@@ -11,7 +11,9 @@
         "ecmaVersion": 11
     },
     "rules": {
-        "indent" : ["error", 4],
+        "prefer-const" : "error",
+        "indent" : ["error", "tab"],
+        "no-tabs" : "off",
         "no-console" : "off"
     }
 }

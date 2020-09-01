@@ -6,8 +6,8 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 
 if (!process.env.JWT_SECRET) {
-    console.error('JWT_SECRET not found in environment variable!');
-    process.exit();
+	console.error('JWT_SECRET not found in environment variable!');
+	process.exit();
 }
 
 app.use(express.json());
