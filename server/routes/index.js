@@ -1,12 +1,18 @@
 const router = require('express').Router()
 const todo = require('./todo')
-const user = require('./user');
+const UserController = require('../controllers/UserController')
+const {authentication} = require('../middleware/auth')
 
 router.get('/', (req, res) => {
     res.send('home')
 })
 
+router.post('/register', UserController.register)
+router.post('/login', UserController.login)
+
+router.use(authentication)
+
 router.use('/todos', todo)
-router.use('/user', user)
+
 
 module.exports = router

@@ -13,9 +13,28 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.hasMany(models.Todo)
     }
   };
   User.init({
+    firstName: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: `First name cannot be empty`
+        }
+      }
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: `Last Name cannot be empty`
+        }
+      }
+    },
     email: {
       type: DataTypes.STRING,
       validate: {

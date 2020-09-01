@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Todo.belongsTo(models.User,({foreignKey:'UserId'}))
     }
   };
   Todo.init({
@@ -50,11 +51,14 @@ module.exports = (sequelize, DataTypes) => {
           msg: `Due date cannot be empty`
         },
         checkDate(value){
-          if(value > getDate(new Date()) || value < getDate(new Date())){
+          if(value !== getDate(new Date())){
             throw new Error(`The due date cannot be past or earlier than today`) 
           }
         }
       }
+    },
+    UserId: {
+      type: DataTypes.INTEGER
     }
   }, {
     sequelize,

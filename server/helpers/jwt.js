@@ -3,8 +3,8 @@ require('dotenv').config()
 const secret = process.env.SECRET
 
 const generateToken = (user) => {
-    const accessToken = jwt.sign({id: user.id, email: user.email}, secret)
-    return accessToken
+    const {id, firstName, lastName, email} = user
+    return jwt.sign({id, firstName, lastName, email}, secret)
 }
 
 const verifyToken = (token) => {
