@@ -4,7 +4,7 @@ const secret = process.env.SECRET
 
 
 function generateToken(user) {
-    const token = jwt.sign({ name: user.name, id: user.id }, secret)
+    const token = jwt.sign({ id: user.id, name: user.name, email:user.email }, secret)
 
     return token
 }

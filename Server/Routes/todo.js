@@ -1,21 +1,21 @@
 const todoRoutes = require('express').Router()
-const todoController = require('../Controller/TodoController')
 const TodoController = require('../Controller/TodoController')
+const { authentication, authorization } = require('../Middlewares/auth')
 
+// Create Todo
+todoRoutes.post('/todos', authentication, TodoController.addTodo)
 
-todoRoutes.post('/todos', TodoController.addTodo)
+//Show All Todo List
+todoRoutes.get('/todos', authentication, TodoController.readAll)
 
-todoRoutes.get('/todos', TodoController.readAll)
+//Select Todo list Owned by UserId
+todoRoutes.get('/todos/:id', authentication, authorization, TodoController.selectTodo)
 
-todoRoutes.get('/todos/:id', TodoController.selectTodo)
+//Update Todo list Owned by UserId
+todoRoutes.put('/todos/:id', authentication, authorization, TodoController.updateTodo)
 
-todoRoutes.put('/todos/:id', TodoController.updateTodo)
-
-todoRoutes.put('/todos/:id', (req,res) => {
-    res.send('lov lov')
-})
-
-todoRoutes.delete('/todos/:id', TodoController.deleteTodo)
+//Delete Todo list Owned by UserId
+todoRoutes.delete('/todos/:id', authentication, authorization, TodoController.deleteTodo)
 
 
 module.exports = todoRoutes

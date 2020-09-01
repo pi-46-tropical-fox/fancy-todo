@@ -22,10 +22,8 @@ Fancy Todo App is an application to manage your todo list. This app has :
 Desc: - email must be unique
 
 _Request Header_
-```json
-{
-  "access_token": "<your access token>"
-}
+```
+no need
 ```
 
 _Request Body_
@@ -42,10 +40,7 @@ _Response (201 - Created)_
 {
   "id": 1,
   "name": "<posted name>",
-  "email": "<posted email>",
-  "password": "<posted password, hasdhed by bcryptjs>",
-  "createdAt": "<new Date>",
-  "updatedAt": "<new Date>",
+  "email": "<posted email>"
 }
 ```
 
@@ -62,10 +57,8 @@ _Response (400 - Bad Request)_
 > Login to app
 
 _Request Header_
-```json
-{
-  "access_token": "<your access token>"
-}
+```
+no need
 ```
 
 _Request Body_
@@ -79,16 +72,11 @@ _Request Body_
 _Response (200 - Ok)_
 ```json
 {
-  "id": 1,
-  "name": "<posted name>",
-  "email": "<posted email>",
-  "password": "<posted password, hasdhed by bcryptjs>",
-  "createdAt": "<posted createdAt date>",
-  "updatedAt": "<posted updatedAt date>",
+  "access_token": "<token>"
 }
 ```
 
-_Response (404 - Not Found)_
+_Response (401 - Not Authenticated)_
 ```json
 {
   "message": "Username or/and password is invalid"
@@ -120,11 +108,11 @@ _Request Body_
 _Response (201 - Created)_
 ```json
 {
-  "id": <given id by system>,
+  "id": 1,
   "title": "<posted title>",
   "description": "<posted description>",
   "status": "<posted status>",
-  "due date": "<posted due date>"
+  "due date": "<posted due date>",
   "createdAt": "<posted createdAt date>",
   "updatedAt": "<posted updatedAt date>",
 }
@@ -165,11 +153,11 @@ _Response (200 - Ok)_
 ```json
 [
   {
-    "id": <given id by system>,
+    "id": 1,
     "title": "<posted title>",
     "description": "<posted description>",
     "status": "<posted status>",
-    "due date": "<posted due date>"
+    "due date": "<posted due date>",
     "createdAt": "<posted createdAt date>",
     "updatedAt": "<posted updatedAt date>",
   }
@@ -197,11 +185,8 @@ _Request Header_
 ```
 
 _Request Body_
-```json
-{
-    "id": <given id by system>,
-    "title": "<posted title>"
-}
+```
+no need
 ```
 
 _Response (200 - Ok)_
@@ -253,7 +238,7 @@ _Response (200 - Ok)_
     "title": "<updated title>",
     "description": "<updated description>",
     "status": "<updated status>",
-    "due date": "<updated due date>"
+    "due date": "<updated due date>",
     "createdAt": "<posted createdAt date>",
     "updatedAt": "<posted updatedAt date>",
 }
@@ -287,22 +272,14 @@ _Request Header_
 ```
 
 _Request Body_
-```json
-{
-    "title": "<title to get delete>"
-}
+```
+ne need
 ```
 
 _Response (200 - Ok)_
 ```json
 {
-    "id": <posted id>,
-    "title": "<posted title>",
-    "description": "<posted description>",
-    "status": "<posted status>",
-    "due date": "<posted due date>",
-    "createdAt": "<posted createdAt date>",
-    "updatedAt": "<posted updatedAt date>",
+  "message": "Todo is successfully deleted!"
 }
 ```
 
