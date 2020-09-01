@@ -7,7 +7,7 @@ class HolidayController {
 			url: 'https://public-holiday.p.rapidapi.com/2020/ID',
 			headers: {
 				'x-rapidapi-host': 'public-holiday.p.rapidapi.com',
-				'x-rapidapi-key': process.env.RAPID_API_KEYs,
+				'x-rapidapi-key': process.env.RAPID_API_KEY,
 			},
 		})
 			.then(response => res.status(200).json(response.data))
