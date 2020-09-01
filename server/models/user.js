@@ -50,9 +50,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: {
       type: DataTypes.STRING,
-      // validate:{
-      //   len:[6,10]
-      // }
+      validate:{
+        notEmpty:{
+          msg: "Password Must Be Filled"
+        }
+      }
     }
   }, {
     sequelize,
