@@ -290,7 +290,7 @@ Logs user into the app.
 
 URL
 
-`/auth/login`
+`/u/login`
 
 Method
 
@@ -334,7 +334,7 @@ Content `{ error : "The username or password you input is incorrect." }`
 
 ```markdownjavascript
 $.ajax({
-    url: "/auth/login",
+    url: "/u/login",
     dataType: "json",
     type: "POST",
     data: data,
@@ -352,7 +352,7 @@ Registers user into a database
 
 URL
 
-/auth/register
+/u/register
 
 Method
 
@@ -398,7 +398,7 @@ Content `{ error : [Error(s) will depend on user input] }`
 
 ```markdownjavascript
 $.ajax({
-    url: "/auth/login",
+    url: "/u/login",
     dataType: "json",
     type: "POST",
     data: data,
