@@ -1,2 +1,5 @@
-console.log(new Date().getTime())
-console.log(new Date('08 / 25 / 2019').getTime())
+let test;
+let verify = 'nice'
+
+const token = test && verify;
+console.log(token)

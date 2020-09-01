@@ -6,6 +6,81 @@ A simple website to manage upcoming activities. This app has:
 &nbsp;
 
 ## RESTful endpoints
+### POST /register
+
+> Register new account
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+{
+  "username":"<your username>",
+  "password":"<your password>",
+  "email":"<your email>"
+  }
+```
+
+_Response (200)_
+```
+  {
+    "username":"<your username>",
+    "email":"<your email>"
+  }
+```
+
+_Response (500)_
+```
+{
+  "message": "Internal Server Error"
+}
+```
+---
+### POST /login
+
+> Register new account
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+{
+  "username":"<your username>",
+  "password":"<your password>"
+  }
+```
+
+_Response (200)_
+```
+  {
+    "access_token": "<your access token>"
+  }
+```
+
+_Response (400)_
+```
+{
+  "message": "Username/password is invalid"
+}
+```
+
+_Response (500)_
+```
+{
+  "message": "Internal Server Error"
+}
+```
+---
 ### GET /todos
 
 > Get all todos

@@ -21,9 +21,9 @@ class Controller {
         User.findOne({ where: { username } })
             .then(user => {
                 if (user) {
-                    const isValid = compare(password, user.password)
+                    const isValid = compare(password, user.password) //Compare Password(using bacrypt)//
                     if (isValid) {
-                        const access_token = generateToken(user)
+                        const access_token = generateToken(user) //Generate Token (using JWT)//
                         return res.status(200).json({ access_token })
                     } else {
                         return res.status(400).json({ message: "Username/password is invalid" })
