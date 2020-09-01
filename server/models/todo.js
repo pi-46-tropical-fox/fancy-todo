@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Todo.belongsTo(models.User);
     }
   };
   Todo.init({
@@ -32,7 +33,8 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isBefore: new Date().toISOString().split("T")[0]
       }
-    }
+    },
+    UserId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Todo',

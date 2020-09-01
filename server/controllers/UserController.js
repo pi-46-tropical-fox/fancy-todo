@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { User, Todo } = require("../models");
 // const bcrypt = require("bcryptjs");
 const { hashPassword, checkPassword } = require("../helpers/bcrypt.js");
 const { generateToken, verifyToken } = require("../helpers/jwt.js");
@@ -43,8 +43,8 @@ class UserController {
       const isValid = checkPassword(req.body.password, user.password);
       if (isValid) {
         // generate access token
-        const accessToken = generateToken(user);
-        return res.status(200).json({ accessToken });
+        const access_token = generateToken(user);
+        return res.status(200).json({ access_token });
       } else {
         res.status(400).json({ message: "Invalid email or password" });
       }
