@@ -32,7 +32,6 @@ class UserController {
                     
                     const access_token = generateToken(data)
                    return res.status(200).json({ access_token })
-    
                 } else {
                     return res.status(400).json({message: `Invalid email/password!`})
                 }
