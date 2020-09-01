@@ -1,5 +1,6 @@
 const fs = require('fs')
 const index = require('express').Router()
+const { authenticate } = require('../helpers/AuthHelper')
 const endpoints = {}
 
 fs
@@ -14,8 +15,8 @@ fs
 // console.log(endpoints);
 
 index
-.use('/auth', endpoints.auth)
-.use('/todos', endpoints.todo)
+.use('/u', endpoints.auth)
+.use('/todos', authenticate, endpoints.todo)
 .get('/', (req, res) => {
     res.status(200).send('Welcome to Todolicious!')
 })
