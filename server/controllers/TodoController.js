@@ -1,33 +1,36 @@
 const {Todo} = require('../models');
 
 class TodoController {
-  static getTodos(req, res) {
-    Todo.findAll()
-    .then(todos => {
-      return res.status(200).json(todos)
-    })
-    .catch(err => {
-      return res.status(500).json({message: err.message})
-    })
-  }
 
-  static createTodo(req, res) {
+  static createTodo(req, res, next) {
+    // console.log(req.userData, 'ini di create book');
     var todo = {
       title: req.body.title,
       description: req.body.description,
       status: req.body.status,
-      due_date: req.body.due_date
+      due_date: req.body.due_date,
+      // UserId: req.userData.id
     }
     Todo.create(todo)
     .then(todo => {
       return res.status(201).json(todo)
     })
     .catch(err => {
-      return res.status(500).json({message: err.message})
+      return next(err)
     })
   }
 
-  static getTodoById(req, res) {
+  static getTodos(req, res, next) {
+    Todo.findAll()
+    .then(todos => {
+      return res.status(200).json(todos)
+    })
+    .catch(err => {
+      return next(err)
+    })
+  }
+
+  static getTodoById(req, res, next) {
       Todo.findOne({
         where: {id: req.params.id}
       })
@@ -35,11 +38,11 @@ class TodoController {
         res.status(200).json(todo)
       })
       .catch(err => {
-        res.status(400).json({message: err.message})
+        return next(err)
       })
   }
 
-  static updateTodo(req, res) {
+  static updateTodo(req, res, next) {
     const { title, description, status, due_date } = req.body;
     Todo.update(
       {
@@ -56,19 +59,23 @@ class TodoController {
       res.status(201).json(todo)
     })
     .catch(err => {
-      res.status(400).json({message: err.message})
+      return next(err)
     })
   }
 
-  static deleteTodo(req, res) {
+  static deleteTodo(req, res, next) {
     Todo.destroy({
       where:{id: req.params.id}
     })
-    .then(todo => {
-      res.status(200).json(todo)
+    .then(result => {
+      if(!result) {
+        throw {message: "Failed to delete", statusCode: 400}
+      } else {
+        res.status(200).json({message: "successfully delete"})
+      }
     })
     .catch(err => {
-      res.status(400).json({message: err.message})
+      return next(err)
     })
   }
 }

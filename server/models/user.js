@@ -2,9 +2,7 @@
 const {
   Model
 } = require('sequelize');
-
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
+const bcrypt = require('bcryptjs');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -15,18 +13,52 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.hasMany(models.Todo)
     }
   };
   User.init({
-    username: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING
+    name:{
+      type: DataTypes.STRING,
+      unique: true,
+      validate: {
+        notEmpty: {
+          msg: 'Name required'
+        }
+      }
+    }, 
+    email:{
+      type: DataTypes.STRING,
+      unique:{
+        msg: 'email already taken'
+      },
+      validate: {
+        notEmpty: {
+          msg: 'Email required!'
+        },
+        isEmail: {
+          msg: 'Please use email format'
+        }
+      }
+    },
+    password:{
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: 'Password required!'
+        },
+        len: {
+          args: [8, 100],
+          msg: 'password min 8 characters'
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'User',
     hooks: {
       beforeCreate(user) {
-        user.password = bcrypt.hashSync(user.password, saltRounds)
+        let salt = bcrypt.genSaltSync(10);
+        user.password = bcrypt.hashSync(user.password, salt)
       }
     }
   });

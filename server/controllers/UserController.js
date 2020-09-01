@@ -4,39 +4,29 @@ const bcrypt = require('bcrypt')
 
 class UserController {
 
-  static async register(req, res) {
-    const { username, email, password } = req.body;
+  static register(req, res, next) {
+    const { name, email, password } = req.body;
 
-    User.create({ username, email, password })
+    User.create({ name, email, password })
       .then(user => {
-        const { username, email } = user
-        res.status(201).json({ username, email })
+        const { name, email, id } = user
+        res.status(201).json({name, email, id})
       })
       .catch(err => {
-        res.status(500).json({ message: "internal error server" })
+          return next(err)
       })
-    // try {
-    //   const user = await User.create({ username, email, password })
-    //   const { username, email } = user
-    //   return res.status(201).json({username, email})
-    // }
-    // catch(err) {
-    //   return res.status(500).json({ message: "internal error server" })
-    // }
   }
 
-  static login(req, res) {
+  static login(req, res, next) {
     const { email, password } = req.body;
-    console.log(req.body);
     User.findOne({ where: { email } })
-      .then(email => {
-        if (!email) {
-          return res.status(400).json({ message: "Invalid email/password" })
+      .then(user => {
+        if (!user) {
+          throw {message: 'invalid name / password', statusCode: 400}
         }
-        return email;
+        return user;
       })
       .then(user => {
-        console.log(user.password, password, '<<< password');
         const isValid = bcrypt.compareSync(password, user.password)
 
         if (isValid) {
@@ -46,12 +36,11 @@ class UserController {
           return res.status(200).json({ access_token })
 
         } else {
-          return res.status(400).json({ message: "Invalid email/password" })
+          throw {message: 'invalid name / password', statusCode: 400}
         }
       })
       .catch(err => {
-        console.log(err, '<< error login');
-        res.status(500).json({ message: "internal error server" })
+        return next(err)
       })
   }
 }

@@ -1,7 +1,6 @@
-# My FancyTodo Server
-Fancy Todo. This app has : 
+# Todo Fancy App
+Website for manage your todo. This app has : 
 * CRUD Todo
-* Register and Login
 * JSON formatted response
 
 &nbsp;
@@ -12,7 +11,7 @@ Fancy Todo. This app has :
 - POST /todos
 - GET /todos/:id
 - PUT /todos/:id
-- DELETE /todos:id
+- DELETE /todos/:id
 - POST /register
 - POST /login
 ```
@@ -21,9 +20,8 @@ Fancy Todo. This app has :
 ### GET /todos
 
 > Get all todos
-
 _Request Header_
-```
+```json
 {
   "access_token": "<your access token>"
 }
@@ -35,157 +33,305 @@ not needed
 ```
 
 _Response (200)_
-```
+```json
 [
   {
-    "id": 1,
-    "title": "Learn REST API",
-    "description": "Learn how to create RESTful API with Express and Sequelize",
-    "status": "true",
-    "due_date": "2020-09-01",
+    "id": "<todo id>",
+    "title": "<todo title>",
+    "description": "<todo description>",
+    "status": "<todo status>",
+    "due_date": "<todo due_date>",
+    "createdAt": "2020-03-20T07:15:12.149Z",
+    "updatedAt": "2020-03-20T07:15:12.149Z",
+  },
+  {
+    "id": "<todo id>",
+    "title": "<todo title>",
+    "description": "<todo description>",
+    "status": "<todo status>",
+    "due_date": "<todo due_date>",
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
   }
 ]
 ```
 
-_Response (400 - Bad Request)_
-```
+_Response (500 - Internal Server Error)_
+```json
 {
-  "message": "Invalid request"
+  "message": "Server Error"
 }
 ```
 ---
 ### POST /todos
 
-> Create new todos
-
+> Create new todo
 _Request Header_
-```
+```json
 {
   "access_token": "<your access token>"
 }
 ```
 
 _Request Body_
-```
+```json
 {
-  "title": "learn REST API",
-  "description": "Learn how to create RESTful API with Express and Sequelize",
-  "status": "true",
-  "due_date": "2020-01-29"
+    "title": "<todo title>",
+    "description": "<todo description>",
+    "status": "<todo status>",
+    "due_date": "<todo due_date>"
 }
 ```
 
 _Response (201 - Created)_
-```
+```json
 {
-  "id": 1,
-  "title": "learn REST API",
-  "description": "Learn how to create RESTful API with Express and Sequelize",
-  "status": "true",
-  "due_date": "2020-01-29",
-  "createdAt": "2020-03-20T07:15:12.149Z",
-  "updatedAt": "2020-03-20T07:15:12.149Z",
+    "id": "<given id>",
+    "title": "<posted title>",
+    "description": "<posted description>",
+    "status": "<posted status>",
+    "due_date": "<posted due_date>",
+    "createdAt": "2020-03-20T07:15:12.149Z",
+    "updatedAt": "2020-03-20T07:15:12.149Z",
 }
 ```
 
 _Response (400 - Bad Request)_
-```
+```json
 {
-  "message": "Invalid requests"
+  "message": "Validation Error"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "Server Error"
 }
 ```
 ---
 ### GET /todos/:id
 
 > Get todos by id
-
 _Request Header_
-```
+```json
 {
   "access_token": "<your access token>"
 }
 ```
 
 _Request Params_
-```
+```json
 {
-  "id": "<todo id>"
+  "id": "<id of todo>"
 }
 ```
 
 _Request Body_
 ```
-not needed
+  not needed
 ```
 
-_Response (201 - Created)_
-```
+_Response (200)_
+```json
+
 {
-  "id": 1,
-  "title": "learn REST API",
-  "description": "Learn how to create RESTful API with Express and Sequelize",
-  "status": "true",
-  "due_date": "2020-01-29",
+  "id": "<todo id>",
+  "title": "<todo title>",
+  "description": "<todo description>",
+  "status": "<todo status>",
+  "due_date": "<todo due_date>",
   "createdAt": "2020-03-20T07:15:12.149Z",
   "updatedAt": "2020-03-20T07:15:12.149Z",
 }
+
 ```
 
-_Response (400 - Bad Request)_
-```
+_Response (404 - Not Found)_
+```json
 {
-  "message": "Invalid requests"
+  "message": "Data not found"
 }
 ```
 ---
 ### PUT /todos/:id
 
 > Update todos by id
-
 _Request Header_
-```
+```json
 {
   "access_token": "<your access token>"
 }
 ```
 
 _Request Params_
-```
+```json
 {
-  "id": "<todo id>"
+    "id": "<id of todo>"
+}
+```
+
+_Request Body_
+```json
+{
+  "title": "<todo title>",
+  "description": "<todo description>",
+  "status": "<todo status>",
+  "due_date": "<todo due_date>"
+}
+```
+
+_Response (200)_
+```json
+
+{
+  "id": "<id of todo>",
+  "title": "<todo title>",
+  "description": "<todo description>",
+  "status": "<todo status>",
+  "due_date": "<todo due_date>",
+  "createdAt": "2020-03-20T07:15:12.149Z",
+  "updatedAt": "2020-03-20T07:15:12.149Z",
+}
+
+```
+
+_Response (400 - Bad Request)_
+```json
+{
+  "message": "Validation errors"
+}
+```
+
+_Response (404 - Not Found)_
+```json
+{
+  "message": "Data not found"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "Server Error"
+}
+```
+---
+### DELETE /todos/:id
+
+> Delete todos by id
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Params_
+```json
+{
+    "id": "<id of todo>"
 }
 ```
 
 _Request Body_
 ```
+    not needed
+```
+
+_Response (200)_
+```json
 {
-  "title": "learn REST API",
-  "description": "Learn how to create RESTful API with Express and Sequelize",
-  "status": "true",
-  "due_date": "2020-01-29",
-  "createdAt": "2020-03-20T07:15:12.149Z",
-  "updatedAt": "2020-03-20T07:15:12.149Z",
+  "message": "successfully delete"
 }
 ```
 
-_Response (201 - Created)_
-```
+_Response (404 - Not Found)_
+```json
 {
-  "id": 1,
-  "title": "learn REST API",
-  "description": "Learn how to create RESTful API with Express and Sequelize",
-  "status": "true",
-  "due_date": "2020-01-29",
-  "createdAt": "2020-03-20T07:15:12.149Z",
-  "updatedAt": "2020-03-20T07:15:12.149Z",
+  "message": "Data not found"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "Server Error"
+}
+```
+---
+### POST /register
+
+> Register
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Params_
+```json
+    not needed
+```
+
+_Request Body_
+```json
+{
+    "username": "<username from body>",
+    "email": "<email from body>",
+    "password": "<password from body>"
+}
+```
+
+_Response (201)_
+```json
+[
+  {
+    "username": "<username from body>",
+    "email": "<email from body>",
+  }
+]
+```
+
+_Response (400 - Bad Request)_
+```json
+{
+  "message": "Validation Error"
+}
+```
+---
+### POST /login
+
+> Login
+_Request Header_
+```json
+not needed
+```
+
+_Request Params_
+```json
+    not needed
+```
+
+_Request Body_
+```json
+{
+  "email": "<email from body>",
+  "password": "<password from body>"
+}
+```
+
+_Response (200)_
+```json
+{
+  "access_token": "<access_token>",
 }
 ```
 
 _Response (400 - Bad Request)_
-```
+```json
 {
-  "message": "Invalid requests"
+  "message": "Validation Error"
 }
 ```
