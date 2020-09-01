@@ -198,7 +198,7 @@ Content
 
 * **Error Response**
 
-Code - `404 NOT FOUND<br>`
+Code - `404 NOT FOUND`
 
 Content `{ error : "The todo data you're searching for is not found." }`
 
@@ -261,7 +261,7 @@ Content
 
 * **Error Response**
 
-Code - `404 NOT FOUND<br>`
+Code - `404 NOT FOUND`
 
 Content `{ error : "The todo data you're searching for is not found" }`
 
