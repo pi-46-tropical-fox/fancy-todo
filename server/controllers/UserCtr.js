@@ -29,13 +29,13 @@ class Controller{
     }
 
     static login(req, res){
-        const {username, password, id} = req.body
+        const {username, password} = req.body
         User.findOne({where: {username}})
             .then(data => {
                 if(data){
                     const isValid = bcrypt(password, data.password)
                     if(isValid){
-                        const token = access_token(username, id)
+                        const token = access_token(username, data.id)
                         return res.status(200).json({
                             message: "Login Success",
                             token
@@ -52,7 +52,7 @@ class Controller{
                 }
             })
             .catch(err => {
-                console.log(err, "<<<<<<< error register")
+                console.log(err, "<<<<<<< error login")
                 return res.status(500).json({
                     message: "Internal error server"
                 })

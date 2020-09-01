@@ -12,7 +12,15 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     status: DataTypes.STRING,
-    due_date: DataTypes.DATE,
+    due_date: {
+      type: DataTypes.DATE,
+      validate: {
+        isAfter: {
+          args: new Date().toISOString().split("T")[0],
+          message: "Invalid date"
+        }
+      }
+    },
     UserId: DataTypes.INTEGER
   }, {
     sequelize,
@@ -22,5 +30,6 @@ module.exports = (sequelize, DataTypes) => {
   Todo.beforeCreate((user, option) => {
     user.status = false
   })
+
   return Todo;
 };

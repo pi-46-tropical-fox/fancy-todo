@@ -3,13 +3,14 @@ const {verify_token} = require(`../helpers`)
 
 class Controller{
     static create(req, res){
-        let UserId = verify_token(req.header.token)
+        let UserId = req.userData.UserId
         let data = {
             title: req.body.title,
             description: req.body.description,
             due_date: req.body.due_date,
-            UserId: UserId
+            UserId
         }
+
         Todo.create(data)
             .then(data => {
                 return res.status(201).json({
@@ -26,7 +27,8 @@ class Controller{
     }
 
     static getAll(req, res){
-        Todo.findAll({where: {UserId: req.session.UserId}})
+        const {UserId} = req.userData
+        Todo.findAll({include: [User], where: {UserId}})
             .then(data => {
                 if(data.length < 1){
                     return res.status(204).json({
@@ -49,11 +51,16 @@ class Controller{
 
     static update(req, res){
         const id = req.params.id
-        Todo.update({where: {id}})
+        const {title, description, due_date} = req.body
+        Todo.update({title, description, due_date}, {where: {id}})
             .then(data => {
                 return res.status(201).json({
                     message: "Successfully update todo",
-                    data
+                    data: {
+                        title, 
+                        description, 
+                        due_date
+                    }
                 })
             })
             .catch(err => {
@@ -69,8 +76,7 @@ class Controller{
         Todo.destroy({where: {id}})
             .then(data => {
                 return res.status(200).json({
-                    message: "Successfully delete Todo",
-                    data
+                    message: "Successfully delete Todo"
                 })
             })
             .catch(err => {
