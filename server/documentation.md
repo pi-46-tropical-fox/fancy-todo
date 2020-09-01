@@ -7,50 +7,102 @@
 &nbsp;
 ## **Endpoints**
 ---
-  * `GET` /tasks
-  * `POST` /tasks
-  * `PUT` /tasks/:id
-  * `PATCH` /tasks/:id
-  * `DELETE` /tasks/:id
-  * `GET` /completed
   * `POST` /register
   * `POST` /login
+  * `GET` /todos
+  * `POST` /todos
+  * `GET` /todos/:id
+  * `PUT` /todos/:id
+  * `PATCH` /todos/:id
+  * `DELETE` /tasks/:id
+  * `GET` /completed
 
 &nbsp;
+### **`POST` /register**
+---
+  Register a new user
+
+* **Request Body**
+    <br/>
+    **Content**: `{ username, email, password }`
+
+* **Success Response:**
+
+  * **Code:** 201 <br />
+    **Content:** `{ username, email }`
+ 
+* **Error Response:**
+
+  * **Code:** 400 <br />
+    **Content:** `{ <error message> }`
+
+<!-- ----------------------------------------------------------------- -->
+### **`POST` /login**
+---
+  Login into the application
+
+* **Request Body**
+    <br/>
+    **Content**: 
+    ```
+    {
+      username,
+      password
+    }
+    ```
+
+* **Success Response:**
+
+  * **Code:** 201 <br />
+    **Content:** `{ access_token: <jwt_token> }`
+ 
+* **Error Response:**
+
+  * **Code:** 400 <br />
+    **Content:** `{ <error message> }`
+
+<!-- ----------------------------------------------------------------- -->
 ### **`GET` /tasks**
 ---
   Shows all active tasks
+
+* **Request Headers**
+    <br/>
+    **Content:** `{ access_token: <jwt_token> }`
 
 * **Success Response:**
 
   * **Code:** 200 <br />
     **Content:**
-```
+  ```
     [
         {
-            "id": 1,
-            "taskName": String,
-            "deadline": DateTime,
-            "completed": Boolean,
-            "completedAt": DateTime,
-            "createdAt": DateTime
+            title,
+            description,
+            due_date,
+            status,
+            completedAt, <-- if status = true
+            createdBy
         }
     ]
-```
+  ```
  
 * **Error Response:**
 
   * **Code:** 404 NOT FOUND <br />
     **Content:** `{ error : "User doesn't exist" }`
 
-  OR
-
   * **Code:** 401 UNAUTHORIZED <br />
     **Content:** `{ error : "You are unauthorized to make this request." }`
 
+<!-- ----------------------------------------------------------------- -->
 ### **`POST` /tasks**
 ---
  Add a new task
+
+* **Request Headers**
+    <br/>
+    **Content:** `{ access_token: <jwt_token> }`
 
 * **Request Body**
     <br/>
@@ -58,9 +110,7 @@
     ```
     {
         "taskName": required String,
-        "deadline": DateTime,
-        "routine": Boolean,
-        "reminder": DateTime
+        "deadline": DateTime
     }
     ```
 
@@ -73,9 +123,7 @@
         {
             "id": <system generated>
             "taskName": String,
-            "deadline": DateTime,
-            "routine": Boolean,
-            "reminder": DateTime,
+            "deadline": DateTime
             "createdAt": DateTime,
             "updatedAt": DateTime,
             "completed": false,
@@ -93,3 +141,8 @@
 
   * **Code:** 401 UNAUTHORIZED <br />
     **Content:**`{ error : "You are unauthorized to make this request." }`
+
+<!-- ----------------------------------------------------------------- -->
+### **`GET` /todos/:id**
+---
+  Show todo details
