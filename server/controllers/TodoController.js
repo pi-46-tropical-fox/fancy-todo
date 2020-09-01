@@ -1,38 +1,30 @@
 const {Todo} = require('../models')
 
 class TodoController {
-    static async showBook (req, res) {
+    static async showBook (req, res, next) {
         try {
             const todos = await Todo.findAll()
             return res.status(200).json(todos)
         } catch(err) {
-            return res.status(500).json({message: err.message})
+            return next(err)
         }
     }
-    static async createTodo (req, res) {
+    static async createTodo (req, res, next) {
+        let obj = {
+            title: req.body.title.trim(),
+            description: req.body.description.trim(),
+            status: 'incomplete',
+            due_date: req.body.due_date.trim(),
+            UserId: req.user.id
+        }
         try {
-            let obj = {
-                title: req.body.title.trim(),
-                description: req.body.description.trim(),
-                status: 'incomplete',
-                due_date: req.body.due_date.trim(),
-                UserId: req.user.id
-            }
             const todo = await Todo.create(obj)
             return res.status(201).json(todo)
         } catch(err) {
-            if(err.name === 'SequelizeValidationError'){
-                let errors = []
-                for(const el of err.errors){
-                    errors.push(el.message)
-                }
-                return res.status(400).json({message: errors})
-            }else{
-                return res.status(500).json({message: err.message})
-            } 
+            return next(err)
         }
     }
-    static async findTodoById (req, res) {
+    static async findTodoById (req, res, next) {
         try {
             const todo = await Todo.findOne({
                 where: {
@@ -40,23 +32,23 @@ class TodoController {
                 }
             })
             if(!todo){
-                return res.status(404).json({message: `Todo's id not found`})
+                throw {name: `TodoNotFound`}
             }else{
                 return res.status(200).json(todo)
             }  
         } catch(err) {
-            return res.status(500).json({message: err.message})
+            return next(err)
         }
     }
-    static async updateTodo (req, res) {
+    static async updateTodo (req, res, next) {
+        let obj = {
+            title: req.body.title.trim(),
+            description: req.body.description.trim(),
+            status: req.body.status.trim(),
+            due_date: req.body.due_date.trim(),
+            updatedAt: new Date()
+        }
         try {
-            let obj = {
-                title: req.body.title.trim(),
-                description: req.body.description.trim(),
-                status: req.body.status.trim(),
-                due_date: req.body.due_date.trim(),
-                updatedAt: new Date()
-            }
             const todo = await Todo.update(obj, {
                 where: {
                     id : +req.params.id
@@ -64,23 +56,15 @@ class TodoController {
                 returning : true
             })
             if(!todo[1][0]){
-                return res.status(404).json({message: `Todo's id not found`})
+                throw {name: `TodoNotFound`}
             }else{
                 return res.status(200).json(todo[1][0])
             } 
         } catch(err) {
-            if(err.name === 'SequelizeValidationError'){
-                let errors = []
-                for(const el of err.errors){
-                    errors.push(el.message)
-                }
-                return res.status(400).json({message: errors})
-            }else{
-                return res.status(500).json({message: err.message})
-            } 
+            return next(err)
         }
     }
-    static async deleteTodo (req, res) {
+    static async deleteTodo (req, res, next) {
         try {
             const todo = await Todo.findOne({
                 where: {
@@ -88,7 +72,7 @@ class TodoController {
                 }
             })
             if(!todo){
-                return res.status(404).json({message: `Todo's id not found`})
+                throw {name: `TodoNotFound`}
             }else{
                 Todo.destroy({
                     where: {
@@ -99,11 +83,11 @@ class TodoController {
                     return res.status(200).json(todo)
                 })
                 .catch(err => {
-                    return res.status(500).json({message: err.message})
+                    return next(err)
                 })
             }
         } catch(err) {
-            return res.status(500).json({message: err.message})
+            return next(err)
         }
     }
 }

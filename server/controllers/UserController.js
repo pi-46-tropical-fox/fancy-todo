@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs')
 const {generateToken} = require('../helpers/jwt')
 
 class UserController {
-    static async register (req, res) {
+    static async register (req, res, next) {
         try {
             let obj = {
                 firstName: req.body.firstName.trim(),
@@ -15,22 +15,10 @@ class UserController {
             const {id, email} = user
             return res.status(201).json({id, email})
         } catch(err) {
-            if(err.name === 'SequelizeValidationError'){
-                let errors = []
-                for(const el of err.errors){
-                    errors.push(el.message)
-                }
-                return res.status(400).json({message: errors})
-            }else if(err.name === 'SequelizeUniqueConstraintError'){
-                let msg = 'Email already exists'
-                err.errors[0].message = msg
-                return res.status(400).json({message: msg})
-            }else{
-                return res.status(500).json({message: err.message})
-            }
+            return next(err)
         }
     }
-    static async login (req, res) {
+    static async login (req, res, next) {
         try {
             const user = await User.findOne({
                 where : {
@@ -43,13 +31,13 @@ class UserController {
                     const access_token = generateToken(user)
                     return res.status(200).json({access_token})
                 }else{
-                    return res.status(400).json({message: `Email/password is incorrect`})
+                    throw {name: `InvalidEmailPassword`}
                 }
             }else{
-                return res.status(400).json({message: `Email/password is incorrect`})
+                throw {name: `InvalidEmailPassword`}
             }
         } catch(err) {
-            return res.status(500).json({message: err.message})
+            return next(err)
         }
     }
 }

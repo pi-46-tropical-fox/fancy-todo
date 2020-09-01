@@ -14,11 +14,11 @@ const authentication = async (req, res, next) => {
             req.user = user
             next()
         }else{
-            throw {message: `User not authenticated`}
+            throw {name: `NotAuthenticated`, message: `User not authenticated`}
         }
 
     } catch(err) {
-        return res.status(401).json({message: `User not authenticated`})
+        return next(err)
     }
 }
 
@@ -32,10 +32,10 @@ const authorization = async (req, res, next) => {
         if(todo && todo.UserId === req.user.id){
             next()
         }else{
-            return res.status(403).json({message: 'Forbidden access'})
+            throw {name: `ForbidenAccess`}
         }
     }catch(err){
-        return res.status(403).json({message: 'Forbidden access'})
+        return next(err)
     }
 }
 
