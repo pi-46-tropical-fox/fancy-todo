@@ -99,8 +99,12 @@ _Response (500 - Internal server error)_
 
 ```json
 {
-	"name": "InternalServerError",
-	"message": "Internal server error"
+	"errors": [
+		{
+			"name": "InternalServerError",
+			"message": "Internal server error"
+		}
+	]
 }
 ```
 
@@ -148,8 +152,12 @@ _Response (500 - Internal server error)_
 
 ```json
 {
-	"name": "InternalServerError",
-	"message": "Internal server error"
+	"errors": [
+		{
+			"name": "InternalServerError",
+			"message": "Internal server error"
+		}
+	]
 }
 ```
 
@@ -221,8 +229,12 @@ _Response (500 - Internal server error)_
 
 ```json
 {
-	"name": "InternalServerError",
-	"message": "Internal server error"
+	"errors": [
+		{
+			"name": "InternalServerError",
+			"message": "Internal server error"
+		}
+	]
 }
 ```
 
@@ -344,8 +356,12 @@ _Response (500 - Internal server error)_
 
 ```json
 {
-	"name": "InternalServerError",
-	"message": "Internal server error"
+	"errors": [
+		{
+			"name": "InternalServerError",
+			"message": "Internal server error"
+		}
+	]
 }
 ```
 
@@ -417,8 +433,12 @@ _Response (500 - Internal server error)_
 
 ```json
 {
-	"name": "InternalServerError",
-	"message": "Internal server error"
+	"errors": [
+		{
+			"name": "InternalServerError",
+			"message": "Internal server error"
+		}
+	]
 }
 ```
 
@@ -485,8 +505,12 @@ _Response (500 - Internal server error)_
 
 ```json
 {
-	"name": "InternalServerError",
-	"message": "Internal server error"
+	"errors": [
+		{
+			"name": "InternalServerError",
+			"message": "Internal server error"
+		}
+	]
 }
 ```
 
@@ -528,7 +552,78 @@ _Response (500 - Internal server error)_
 
 ```json
 {
-	"name": "InternalServerError",
-	"message": "Internal server error"
+	"errors": [
+		{
+			"name": "InternalServerError",
+			"message": "Internal server error"
+		}
+	]
+}
+```
+
+### GET /holidays
+
+> get list of indonesian holidays
+
+_Request Body_
+
+```
+not needed
+```
+
+_Response (200 - OK)_
+
+```json
+[
+    {
+        "date": "2020-01-01",
+        "localName": "Tahun Baru Masehi",
+        "name": "New Year's Day",
+        "countryCode": "ID",
+        "fixed": true,
+        "global": true,
+        "counties": null,
+        "launchYear": null,
+        "type": "Public"
+    }
+}
+```
+
+_Response (401 - Unauthorized)_
+
+```json
+{
+	"errors": [
+		{
+			"name": "notAuthenticated",
+			"message": "User not authenticated"
+		}
+	]
+}
+```
+
+_Response (400 - Bad request)_
+
+```json
+{
+	"errors": [
+		{
+			"name": "invalidHeaderRapidAPI",
+			"message": "Invalid Header Rapid API"
+		}
+	]
+}
+```
+
+_Response (500 - Internal server error)_
+
+```json
+{
+	"errors": [
+		{
+			"name": "InternalServerError",
+			"message": "Internal server error"
+		}
+	]
 }
 ```

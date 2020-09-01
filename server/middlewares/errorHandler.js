@@ -40,6 +40,13 @@ const errorHandler = (err, req, res, next) => {
 				message: 'User not authenticated',
 			});
 			break;
+		case 'invalidHeaderRapidAPI':
+			statusCode = 400;
+			errors.push({
+				name: err.name,
+				message: 'Invalid Header Rapid API',
+			});
+			break;
 
 		default:
 			statusCode = 500;
