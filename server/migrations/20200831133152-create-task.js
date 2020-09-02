@@ -8,16 +8,17 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      taskName: {
+      title: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      description: {
         type: Sequelize.STRING
       },
-      deadline: {
+      due_date: {
         type: Sequelize.DATEONLY
       },
-      activeStatus: {
-        type: Sequelize.BOOLEAN
-      },
-      completed: {
+      status: {
         type: Sequelize.BOOLEAN
       },
       completedAt: {

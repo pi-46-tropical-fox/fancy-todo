@@ -2,41 +2,45 @@ const {verifyToken} = require('../helpers/jwt')
 const {User, Task} = require('../models')
 
 const authentication = async (req, res, next) => {
-    const {access_token} = req.headers
-    
     try{
-        req.userData = verifyToken(access_token)
-        let user = User.findOne({
+        console.log('Autheticatiing...');
+        const {access_token} = req.headers
+        let userData = verifyToken(access_token)
+        let user = await User.findOne({
             where:{
-                username: req.userData.username
+                username: userData.username
             }
         })
 
         if (user) {
+            req.userData = userData
             console.log('authentication accepted.');
             next()
         } else {
-            throw {message: 'User not authenticated'}
+            throw {message: 'User not authenticated', statusCode: 401}
         }
     } catch(err) {
-        return res.status(401).json({message:'User not authenticated'})
+        return next(err)
     }
 }
 
 const authorization = async (req, res, next) => {
-    const id = req.params.id
-
     try {
-        const task = await Task.findByPk(id)
+        console.log('Authorizing...');
+        const task = await Task.findByPk(req.params.id)
+
+        if (!task) {
+            throw {message: 'Not found', statusCode: 404}
+        }
 
         if (task.UserId == req.userData.id) {
             console.log('authorization accepted.');
             next()
         } else {
-            return res.status(403).json({message: 'forbidden access'})
+            throw {message: 'Forbidden Access', statusCode: 403}
         }
     } catch (err) {
-        return res.status(403).json({message: 'forbidden access'})
+        return next(err)
     }
 }
 

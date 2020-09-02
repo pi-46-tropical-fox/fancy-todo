@@ -3,44 +3,45 @@ const {isValid} = require('../helpers/bcrypt')
 const {tokenGenerator} = require('../helpers/jwt')
 
 class UserController {
-    static register (req, res) {
-        const {username, email, password} = req.body
+    static async register (req, res, next) {
+        try {
+            const {username, email, password} = req.body
 
-        User.create({username, email, password})
-            .then(user => {
-                const {username, email} = user
-                res.status(201).json({username, email})
+            const newUser = await User.create({username, email, password})
+
+            return res.status(201).json({
+                username: newUser.username,
+                email: newUser.email
             })
-            .catch(err => {
-                res.status(500).json({message: err.message})
-            })
+        } catch (err) {
+            return next(err)
+        }
     }
 
-    static login (req, res) {
-        const {username, password} = req.body
+    static async login (req, res, next) {
+        try {
+            const {email, password} = req.body
 
-        User.findOne({
-            where: {
-                username
-            }
-        }).then(user => {
+            let user = await User.findOne({
+                where: {
+                    email
+                }
+            })
+
             if (!user) {
-                return res.status(400).json({message: 'Wrong username/password'})
+                throw {message: 'Wrong username / password', statusCode: 400}
             }
 
-            return user
-        }).then(user => {
-            if (isValid) {
+            if (isValid(password, user.password)) {
                 const access_token = tokenGenerator(user)
 
                 return res.status(200).json({access_token})
             } else {
-                return res.status(400).json({message: 'Wrong username/password'})
+                throw {message: 'Wrong username / password', statusCode: 400}
             }
-        }).catch(err => {
-            res.status(500).json({message: err.message})
-        })
-
+        } catch (err) {
+            return next(err)
+        }
     }
 }
 

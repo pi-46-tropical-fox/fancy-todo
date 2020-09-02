@@ -3,10 +3,13 @@ const express = require('express')
 const app = express()
 const route = require('./routes')
 const port = 3000
+const {errorHandler} = require('./middlewares/errHandler')
 
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 
 app.use('/', route)
+
+app.use(errorHandler)
 
 app.listen(port, () => console.log(`Listening on port ${port}`))

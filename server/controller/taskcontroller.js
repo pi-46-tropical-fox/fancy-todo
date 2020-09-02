@@ -1,92 +1,91 @@
-const {Task} = require('../models')
+const {Task, User} = require('../models')
 
 class TaskController {
-    static activeTasks (req, res) {
-        Task.findAll({
-            include: [User]
-        })
-            .then(tasks => {
-                return res.status(200).json(tasks)
+    static async activeTasks (req, res, next) {
+        try {
+            const tasks = Task.findAll({
+                include: [{model: User, attributes: ['username']}]
             })
-            .catch(err => {
-                return res.status(500).json({message: err.message})
-            })
-    }
-
-    static newTask (req, res) {
-        let task = {
-            title: req.body.title,
-            due_date: req.body.due_date,
-            status: false,
-            description: req.body.description,
-            completedAt: null,
-            UserId: req.userData.id
+            
+            return res.status(200).json(tasks)
+        } catch (err) {
+            return next(err)
         }
-        Task.create(task)
-            .then(data => {
-                return res.status(201).json(data)
-            })
-            .catch(err => {
-                return res.status(500).json({message: err.message})
-            })
     }
 
-    static viewTask (req, res) {
-        Task.findOne({
-            where: {
-                id: req.params.id
+    static async newTask (req, res, next) {
+        try {
+            let task = {
+                title: req.body.title,
+                due_date: req.body.due_date,
+                status: false,
+                description: req.body.description,
+                completedAt: null,
+                UserId: req.userData.id
             }
-        }).then(task => {
-            return res.status(200).json(task)
-        }).catch(err => {
-            return res.status(500).json({message: err.message})
-        })
-    }
 
-    static editTask (req, res) {
-        const TaskId = req.params.id
+            let createdTask = await Task.create(task)
 
-        const data = {
-            title: req.body.title,
-            description: req.body.description,
-            status: false,
-            due_date: req.body.due_date
+            return res.status(201).json(createdTask)
+        } catch (err) {
+            return next(err)
         }
-
-        Task.update(data, {
-            where: {
-                id: TaskId
-            },
-            returning: true
-        })
-        .then(updated => {
-            return res.status(200).json(updated[1])
-        }).catch(err => {
-            return res.status(500).json({message: err.message})
-        })
     }
 
-    static deleteTask (req, res) {
-        const taskId = req.params.id
-        Task.findOne({
-            where: {
-                id: taskId
-            }
-        }).then(task => {
-            Task.destroy({
+    static async viewTask (req, res, next) {
+        try {
+            let task = await Task.findOne({
                 where: {
-                    id: taskId
+                    id: req.params.id
                 }
-            }).then(destroyed => {
-                return res.status(200).json(task)
-            }).catch(err => {
-                return res.status(500).json({message: err.message})
             })
-        }).catch(err => {
-            return res.status(500).json({message: err.message})
-        })
 
+            return res.status(200).json(task)
+        } catch (err) {
+            return next(err)
+        }
+    }
 
+    static async editTask (req, res, next) {
+        try {
+            const data = {
+                title: req.body.title,
+                description: req.body.description,
+                status: false,
+                due_date: req.body.due_date
+            }
+    
+            let updated = await Task.update(data, {
+                where: {
+                    id: req.params.id
+                },
+                returning: true
+            })
+
+            return res.status(200).json(updated[1])
+        } catch (err) {
+            return next(err)
+        }
+    }
+
+    static async deleteTask (req, res, next) {
+        try {
+            let task = await Task.findOne({
+                where: {
+                    id: req.params.id
+                }
+            })
+
+            await Task.destroy({
+                where: {
+                    id: req.params.id
+                }
+            })
+
+            return res.status(200).json(task)
+        } catch (err) {
+            return next
+        }
     }
 }
 
