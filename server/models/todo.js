@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: `Due date cannot be empty`
         },
         checkDate(value){
-          if(value !== getDate(new Date())){
+          if(value < getDate(new Date())){
             throw new Error(`The due date cannot be past or earlier than today`) 
           }
         }

@@ -12,8 +12,8 @@ class UserController {
                 password: req.body.password.trim()
             }
             const user = await User.create(obj)
-            const {id, email} = user
-            return res.status(201).json({id, email})
+            const access_token = generateToken(user)
+            return res.status(201).json({access_token})
         } catch(err) {
             return next(err)
         }

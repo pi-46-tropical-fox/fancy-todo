@@ -1,9 +1,13 @@
 const {Todo} = require('../models')
 
 class TodoController {
-    static async showBook (req, res, next) {
+    static async showTodo (req, res, next) {
         try {
-            const todos = await Todo.findAll()
+            const todos = await Todo.findAll({
+                where: {
+                    UserId : req.user.id
+                }
+            })
             return res.status(200).json(todos)
         } catch(err) {
             return next(err)

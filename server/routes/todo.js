@@ -3,7 +3,7 @@ const {authorization} = require('../middleware/auth')
 
 const router = require('express').Router()
 
-router.get('/', TodoController.showBook)
+router.get('/', TodoController.showTodo)
 router.post('/', TodoController.createTodo)
 
 router.get('/:id', authorization, TodoController.findTodoById)
