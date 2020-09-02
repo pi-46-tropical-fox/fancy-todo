@@ -1,17 +1,27 @@
 const { tokenVerificator } = require ("../helpers/jwt.js")
+// const UserController = require("../controllers/UserController.js")
 
 const authentication = (req, res, next) => {
     const {token} = req.headers
+    const {User} = require ("../models")
 
-    try {
+    
         const data = tokenVerificator (token)
         // console.log (data)
-        next ()
-    
-    } catch (err) {
-        return res.status (401).json ({message : "Invalid User"})
+        User.findByPk(data.id)
 
-    }
+        .then (result => {
+            // console.log (result.id)
+            req.UserData = result
+            next ()
+
+        }) 
+         .catch (err => {
+             console.log (err)
+             return res.status (401).json ({message : "Invalid User"})
+         })      
+    
+    
 
 }
 

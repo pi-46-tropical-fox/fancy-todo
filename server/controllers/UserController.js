@@ -47,8 +47,9 @@ class UserController {
             const comparePassword = compare (password, data.password)
 
             if (comparePassword) {
-                
-                let token = tokenGenerator (data)
+                let payLoad = {id : data.id, email : data.email}
+
+                let token = tokenGenerator (payLoad)
 
                 return res.status (200).json ({token})
             

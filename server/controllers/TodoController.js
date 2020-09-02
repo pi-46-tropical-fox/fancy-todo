@@ -8,7 +8,7 @@ class TodoController {
             description : req.body.description,
             status : req.body.status,
             due_date : req.body.due_date,
-            UserId : req.body.UserId
+            UserId : req.UserData.id
         }
 
         Todo.create (params)
@@ -62,7 +62,8 @@ class TodoController {
             title : req.body.title,
             description : req.body.description,
             status : req.body.status,
-            due_date : req.body.due_date
+            due_date : req.body.due_date,
+            
         }
 
         Todo.update (params, {
@@ -71,7 +72,7 @@ class TodoController {
 
         .then (data => {
             // console.log (data)
-            if (!data[0]) {
+            if (!data) {
                 return res.status (400).json ({message : "Bad Request"})
 
 

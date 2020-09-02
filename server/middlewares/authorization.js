@@ -4,20 +4,25 @@ const {Todo} = require ("../models")
 const authorization = (req, res, next) => {
     const {id} = req.params
 
-    try {
-        const data = Todo.findByPk (id)
+        Todo.findByPk (id)
+        
+        .then (data => {
+            if (data && data.UserId === req.UserData.id ) {
+                next ()
+    
+            } else {
+                console.log (data.UserId)
+                return res.status (403).json ({message : "Unauthorized Access "})
+            }
 
-        if (data && data.UserId === req.userData.id ) {
-            next ()
+        })
 
-        } else {
-            return res.status (403).json ({message : "Unauthorized Access "})
-        }
+        .catch (err => {
+            return res.status (403).json ({message : err.message})
 
-    } catch (err) {
-        return res.status (403).json ({message : err.message})
+        })
 
-    }
+    
     
 }
 
