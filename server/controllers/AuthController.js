@@ -21,40 +21,29 @@ class AuthController {
                 throw { code: 400, msg: 'Username or password you entered is incorrect. Hmm... which one is it?' }
             }
         } catch (err) {
-            if(!err.code){
-                err = { code: 400, msg: 'Did you enter the required inputs?' }
-            }
-
             return next(err)
         }
     }
 
     static async register(req, res, next){
         try {
-            let newUser = await User.create(req.body)
-            let { id, username, createdAt } = newUser
+            // biar bisa di-limit inputan apa aja yang bisa masuk
+            let newUser = {
+                name: req.body.name,
+                username: req.body.username,
+                password: req.body.password
+            }
 
+            // create user, terus dibalikin lagi dalam bentuk instance
+            let user = await User.create(newUser)
+
+            // destructure object-nya, ambil bagian-bagian yang non-sensitif aja
+            let { id, username, createdAt } = user
+
+            // lempar hasilnya
             return res.status(201).json({ id, username, createdAt })
         } catch (err) {
-            let error = {
-                code: 400,
-                msg: []
-            }
-
-            switch(err.name){
-                case 'SequelizeValidationError':
-                    err.errors.forEach(e => {
-                        error.msg.push(`${e.path}: ${e.message}`)
-                    })
-                break
-                case 'SequelizeUniqueConstraintError':
-                    err.errors.forEach(e => {
-                        error.msg.push(`${e.type}: ${e.message}`)
-                    })
-                break
-            }
-            
-            return next(error)
+            return next(err)
         }
     }
 }
