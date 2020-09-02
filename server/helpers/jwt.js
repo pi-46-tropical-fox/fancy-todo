@@ -13,4 +13,4 @@ const verifyToken = (token) => {
     return verified
 }
 
-module.exports = {generateToken, verifyToken}
+module.exports = {generateToken, verifyToken} 

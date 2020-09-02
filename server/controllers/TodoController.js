@@ -6,7 +6,8 @@ class TodoController {
             title: req.body.title,
             description: req.body.description,
             status: req.body.status,
-            due_date: req.body.due_date
+            due_date: req.body.due_date,
+            UserId: req.userData.id
         }
 
         Todo.create(todoObj)
@@ -15,11 +16,11 @@ class TodoController {
         })
         .catch(err => {
             if (err.errors) {
-                let msg = []
+                let errors = []
                 for (let i = 0; i < err.errors.length; i++) {
-                    msg.push(err.errors[i].message)
+                    errors.push(err.errors[i].message)
                 }
-                return res.status(400).json({msg: 'Validation Error'})
+                return res.status(400).json({errors})
             } else {
                 return res.status(500).json(err)
             }
@@ -60,15 +61,16 @@ class TodoController {
 
         Todo.update(todoUpdate, {where: {id: req.params.id}})
         .then(todo => {
-            return res.status(200).json(todo)
+            console.log(todo, '<<<<< ini di Todo Controller');
+            return res.status(200).json(todoUpdate)
         })
         .catch(err => {
             if (err.errors) {
-                let msg = []
+                let errors = []
                 for (let i = 0; i < err.errors.length; i++) {
-                    msg.push(err.errors[i].message)
+                    errors.push(err.errors[i].message)
                 }
-                return res.status(400).json({msg: 'Validation Error'})
+                return res.status(400).json({errors})
             } else {
                 return res.status(500).json(err)
             }
@@ -79,8 +81,14 @@ class TodoController {
         Todo.destroy({
             where: {id:req.params.id}
         })
-        .then(todo => {
-            return res.status(200).json(todo)
+        .then(result => {
+            console.log(result);
+            if (result === 1) {
+                return res.status(200).json({message: 'Succesfully delete todo'})
+            } else {
+                return res.status(400).json({message: 'Failed delete todo'})
+
+            }
         })
         .catch(err => {
             return res.status(404).json(err)

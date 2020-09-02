@@ -37,7 +37,7 @@ _Response (200)_
 ```json
 [
   {
-    "id": 1,
+    "id": "<given id by system>",
     "title": "<todo title>",
     "description": "<todo description>",
     "status": "<todo status>",
@@ -46,7 +46,7 @@ _Response (200)_
     "updatedAt": "2020-03-20T07:15:12.149Z",
   },
   {
-    "id": 2,
+    "id": "<given id by system>",
     "title": "<todo title>",
     "description": "<todo description>",
     "status": "<todo status>",
@@ -139,7 +139,7 @@ _Response (200)_
 ```json
 [
   {
-    "id": 1,
+    "id": "<given id by system>",
     "title": "<todo title>",
     "description": "<todo description>",
     "status": "<todo status>",
@@ -246,17 +246,9 @@ _Request Body_
 
 _Response (200)_
 ```json
-[
-  {
-    "id": "<id of todo>",
-    "title": "<todo title>",
-    "description": "<todo description>",
-    "status": "<todo status>",
-    "due_date": "<todo due_date>",
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
-  }
-]
+{
+    "message": "Succesfully delete todo"
+}
 ```
 
 _Response (404 - Not Found)_
@@ -278,10 +270,8 @@ _Response (500 - Internal Server Error)_
 > Register
 
 _Request Header_
-```json
-{
-  "access_token": "<your access token>"
-}
+```
+    no need
 ```
 
 _Request Params_
@@ -300,16 +290,12 @@ _Request Body_
 
 _Response (201)_
 ```json
-[
+
   {
-    "id": "<given id by system>",
     "username": "<username from input>",
-    "email": "<email from input>",
-    "password": "<password from input>",
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
+    "email": "<email from input>"
   }
-]
+
 ```
 
 _Response (400 - Bad Request)_
@@ -324,21 +310,18 @@ _Response (400 - Bad Request)_
 > Login
 
 _Request Header_
-```json
-{
-  "access_token": "<your access token>"
-}
+```
+no need
 ```
 
 _Request Params_
-```json
+```
     not needed
 ```
 
 _Request Body_
 ```json
 {
-    "username": "<username from input>",
     "email": "<email from input>",
     "password": "<password from input>"
 }
@@ -348,12 +331,7 @@ _Response (201)_
 ```json
 [
   {
-    "id": "<given id by system>",
-    "username": "<username from input>",
-    "email": "<email from input>",
-    "password": "<password from input>",
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
+    "access_token": "<token>"
   }
 ]
 ```

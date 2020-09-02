@@ -1,9 +1,9 @@
 let bcrypt = require('bcryptjs')
 
-let compare = (inputPass, password) => {
+let comparePassword = (inputPass, password) => {
     const isValid = bcrypt.compareSync(inputPass, password)
     return isValid
 }
 
 
-module.exports = compare
+module.exports = { comparePassword }

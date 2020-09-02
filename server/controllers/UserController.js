@@ -1,5 +1,5 @@
 const {User} = require('../models')
-const bcrypt = require('bcryptjs')
+const {comparePassword} = require('../helpers/compare')
 const {generateToken, verifyToken} = require('../helpers/jwt')
 
 class UserController {
@@ -17,32 +17,34 @@ class UserController {
     }
 
     static login(req, res) {
-        const { username, password } = req.body
-
-        User.findOne({where: {username}})
-        .then(user => {
-            if (!user) {
-                return res.status(400).json({message: 'Invalid email or password'})
+        let option = {
+            where: {
+                email: req.body.email
             }
+        }
 
-            return user
-        })
-
-        .then(user => {
-            const isValid = bcrypt.compareSync(password, user.password)
-
-            if (isValid) {
-                const access_token = generateToken(user)
-
-                return res.status(200).json({ access_token })
-            } else {
-                return res.status(400).json({message: 'Invalid email or password'})
+        User.findOne(option)
+        .then(user =>{
+            if(user){
+                let isValid = comparePassword(req.body.password, user.password)
+                if(isValid){
+                    const access_token = generateToken(user)
+                    return res.status(200).json({access_token})
+                }
+                else{
+                    return res.status(400).json({message: 'Invalid Email or Password'})
+                }
+            }
+            else{
+                return res.status(400).json({message: 'Invalid Email or Password'})
             }
         })
-        .catch(err => {
-            return res.status(500).json({message: "Internal Server Error"})
+        .catch(err =>{
+            console.log(err)
+            res.status(500).json({message: 'internal server error'})
         })
     }
 }
+
 
 module.exports = UserController
