@@ -15,10 +15,6 @@ const authenticate = (req, res, next) => {
             throw { code: 401, msg: `You either are not logged in or don't have proper access token.` }
         }
     } catch (err) {
-        if(!err.code){
-            err = { code: 401, msg: `You either are not logged in or don't have proper access token.` }
-        }
-
         return next(err)
     }
 }
