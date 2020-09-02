@@ -1,5 +1,5 @@
 const {User} = require('../models');
-const bcrypt = require('bcryptjs');
+const {comparePassword} = require("../helpers/hashPassword");
 const {generateToken} = require('../helpers/generateJWT');
 
 
@@ -34,7 +34,7 @@ class UserController {
                 // res.status(400).json({message: "email/password wrong"})
             } else {
                 // res.send(200).json(data)
-                let isValid = bcrypt.compareSync(password, data.password)
+                let isValid = comparePassword(password, data.password)
                 if(isValid) {
                     let acces_token = generateToken(data)
                     res.status(200).json({acces_token})

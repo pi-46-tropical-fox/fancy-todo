@@ -6,4 +6,9 @@ function hashPassword(data) {
     return hashedPassword
 }
 
-module.exports = hashPassword
+function comparePassword(pasw1,pasw2) {
+   let compare = bcrypt.compareSync(pasw1,pasw2)
+   return compare
+}
+
+module.exports = {hashPassword,comparePassword}
