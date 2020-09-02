@@ -1,10 +1,9 @@
 const { User } = require('../models')
-const { compareHash, createHash } = require('../helpers/BcryptHelper')
 const { generateToken } = require('../helpers/AuthHelper')
-const errors = require('../helpers/ErrorHelper')
+const { compareHash } = require('../helpers/BcryptHelper')
 
 class AuthController {
-    static async login(req, res){
+    static async login(req, res, next){
         try {
             let { username, password } = req.body
             let user = await User.findOne({ where: { username } })
@@ -16,26 +15,46 @@ class AuthController {
 
                     return res.status(200).json(access_token)
                 }else{
-                    return errors.throwUnauthorized(res, 'Username or password you entered is incorrect. Hmm... which one is it?')
+                    throw { code: 400, msg: 'Username or password you entered is incorrect. Hmm... which one is it?' }
                 }
             }else{
-                return errors.throwUnauthorized(res, 'Username or password you entered is incorrect. Hmm... which one is it?')
+                throw { code: 400, msg: 'Username or password you entered is incorrect. Hmm... which one is it?' }
             }
         } catch (err) {
-            return errors.throwServerError(res, err)
+            if(!err.code){
+                err = { code: 400, msg: 'Did you enter the required inputs?' }
+            }
+
+            return next(err)
         }
     }
 
-    static async register(req, res){
+    static async register(req, res, next){
         try {
-            req.body.password = createHash(req.body.password)
-
             let newUser = await User.create(req.body)
             let { id, username, createdAt } = newUser
 
             return res.status(201).json({ id, username, createdAt })
         } catch (err) {
-            return errors.throwServerError(res, err)
+            let error = {
+                code: 400,
+                msg: []
+            }
+
+            switch(err.name){
+                case 'SequelizeValidationError':
+                    err.errors.forEach(e => {
+                        error.msg.push(`${e.path}: ${e.message}`)
+                    })
+                break
+                case 'SequelizeUniqueConstraintError':
+                    err.errors.forEach(e => {
+                        error.msg.push(`${e.type}: ${e.message}`)
+                    })
+                break
+            }
+            
+            return next(error)
         }
     }
 }
