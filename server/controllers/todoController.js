@@ -84,19 +84,27 @@ class TodoController {
     }
 
     static async delete(req,res, next) {
+        // try {
+        //    let data = await Todo.findByPk(req.params.id)
+        //    if(data) {
+        //        await Todo.destroy({where: {id: req.params.id}})
+        //        res.status(200).json(data)
+        //    } else {
+            
+        //     throw {message: "Todo Not Found", statusCode:404}
+        //    }
+        // } catch (err) {
+            
+        //     return next(err)
+        // }
         try {
-           let data = await Todo.findByPk(req.params.id)
-           if(data) {
-               await Todo.destroy({where: {id: req.params.id}})
-               res.status(200).json(data)
-           } else {
-            //res.status(404).json({message:"Data Not found"})
-            throw {message: "Todo Not Found", statusCode:404}
-           }
-        } catch (err) {
-            // res.status(500).json({message:err.message})
-            return next(err)
-        }
+
+            await Todo.destroy({where: {id: req.params.id}})
+            res.status(200).json({message: "Berhasil dihapus"})
+            
+         } catch (err) {
+             return next(err)
+         }
     }
 }
 
