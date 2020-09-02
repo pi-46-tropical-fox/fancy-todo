@@ -14,25 +14,27 @@ const authenticate = (req, res, next) => {
         } else {
             throw { code: 401, msg: `You either are not logged in or don't have proper access token.` }
         }
-    } catch (e) {
-        console.log(e);
-        next(e)
-        return errors.throwUnauthenticated(res, `You either are not logged in or don't have proper access token.`)
+    } catch (err) {
+        if(!err.code){
+            err = { code: 401, msg: `You either are not logged in or don't have proper access token.` }
+        }
+
+        return next(err)
     }
 }
 
-const authorize = (req, res, next) => {
-    const { access_token } = req.headers
+// const authorize = (req, res, next) => {
+//     const { access_token } = req.headers
     
-    try {
-        // 
-    } catch (e) {
-        return errors.throwUnauthorized(res, `You're not allowed to access this area`)
-        res.status(403).json({ msg: '403 Unauthenticated'})
-    }
-}
+//     try {
+//         // 
+//     } catch (e) {
+//         return errors.throwUnauthorized(res, `You're not allowed to access this area`)
+//         res.status(403).json({ msg: '403 Unauthenticated'})
+//     }
+// }
 
 module.exports = {
     authenticate,
-    authorize,
+    // authorize,
 }
