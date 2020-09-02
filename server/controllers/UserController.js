@@ -9,7 +9,8 @@ class UserController {
         try {
             const {username,email,password} = req.body
             const user = await User.create({username,email,password})
-            
+            let payload = {email: user.email, id: user.id}
+            const access_token = generateToken(payload)
             return res.status(201).json({
                 username: user.username,
                 email: user.email

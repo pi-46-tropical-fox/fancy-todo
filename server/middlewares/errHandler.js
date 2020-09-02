@@ -1,5 +1,5 @@
 function errHandler (err,req,res,next) {
-    console.log(err,'ini error'); 
+    console.log('>>>>>>>>>>>>>>',err.name,'<<<<<<<<<<< ini error');
 
     let statusCode
     let errors = []
@@ -9,6 +9,7 @@ function errHandler (err,req,res,next) {
             errors.push("User not authenticated")
             statusCode = 401
             break
+        case 'SequelizeUniqueConstraintError': //unique ga bareng
         case 'SequelizeValidationError':
             err.errors.forEach(error => {
                 errors.push(error.message)
