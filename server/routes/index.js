@@ -13,8 +13,6 @@ fs
     endpoints[name] = require(`./endpoints/${name}`)
 })
 
-// console.log(endpoints);
-
 index
 .use('/u', endpoints.auth)
 .use('/todos', authenticate, endpoints.todo)
