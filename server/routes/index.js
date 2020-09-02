@@ -1,8 +1,9 @@
 const fs = require('fs')
 const index = require('express').Router()
-const { authenticate } = require('../helpers/AuthHelper')
+const { authenticate } = require('../middleware/authHandler')
 const endpoints = {}
 
+// ./routes/endpoints
 fs
 .readdirSync(`${__dirname}/endpoints`).filter(file => {
     return (file.indexOf('.') !== 0) && (file !== 'index') && (file.slice(-3) === '.js')
