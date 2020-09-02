@@ -1,12 +1,34 @@
-const { Todo } = require("../models")
+const { Todo, User } = require("../models")
 
 class TodoController {
     static show(req,res,next){
+        let todo
         Todo.findAll({
+            // include:[User],
             order: [['id', 'ASC']]
         })
         .then(todos=>{
-            res.status(200).json(todos)
+            todo = todos
+            // res.status(200).json(todos)
+            return User.findAll()
+        })
+        .then(user=>{
+            // console.log(todo)
+            let test = []
+            user.forEach(el=>{
+                test.push(el.fullname)
+                todo.forEach(ele=>{
+                    if(el.id === ele.UserId){
+                        console.log(ele.dataValues)
+                        // console.log('masuk', el.fullname)
+                        ele.dataValues['userFullName'] = el.fullname
+                        console.log('--')
+                        console.log(ele.dataValues)
+                    }
+                })
+            })
+            // console.log(todo)
+            res.status(200).json(todo)
         })
         .catch(err=>{
             // res.status(500).json({"message":"Server Error"})

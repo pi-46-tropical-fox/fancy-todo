@@ -10,6 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
+    get fullname(){
+      return `${this.firstname} ${this.lastname}`
+    }
+    
     static associate(models) {
       // define association here
       User.hasMany(models.Todo)

@@ -1,0 +1,22 @@
+.nav{
+    position: absolute;
+    right: 0px;
+    font-size: large;
+}
+
+#form_registration{
+    border: black;
+    margin-bottom: 20px;
+}
+
+#form_login{
+    margin-bottom: 20px;
+}
+
+#ftodoList{
+    margin-bottom: 20px;
+}
+
+.form-row{
+    margin: 20px;
+}
