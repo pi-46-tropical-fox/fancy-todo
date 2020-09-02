@@ -1,0 +1,76 @@
+body {
+  background-image: url("./img/pexels-francesco-ungaro-1525041.jpg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover; 
+
+  
+}
+
+#login-form-container, #register-form-container {
+  background-color: rgba(255, 255, 255, 0.904);
+  padding: 1em;
+
+  margin: 0;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#todo-list{
+  position: relative;
+  width: 100%;
+  margin-top: 1em;
+
+}
+
+#todo-list-sidebar{
+  position: absolute;
+  margin: 10px
+}
+#todo-list-content {
+  /* background-color: rgba(255, 255, 255, 0.904); */
+  padding: 1em;
+/* 
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%); */
+  position: absolute  ;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-flow: row wrap;
+  align-content: flex-end;
+  gap: 0.5em;
+  /* min-width: 0; */
+}
+/* .card{
+  /* margin: 0.3em; */
+  /* flex: 2 1 auto;
+  flex-basis: auto;
+
+} */
+#add-todos-button{
+  margin: 0.5em;
+}
+#add-todo-data{
+  position: absolute;
+  z-index: 10;
+  display: none;
+  top: 150%;
+  left: 0;
+  width: 30%;
+  /* text-align: center; */
+
+  /* left: 50%; */
+}
+
+#add-todo-data input{
+  border:0;
+  outline:0;
+  border-bottom: 2px black;
+  width: 100%;
+}

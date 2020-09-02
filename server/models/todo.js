@@ -42,6 +42,14 @@ module.exports = (sequelize, DataTypes) => {
         isDate : {
           args : true,
           msg : "invalid date format"
+        },
+        isDateTrue(value){
+          if (new Date(value) < new Date()){
+            let error = new Error ()
+            error.name = "SequelizeValidationError"
+            error.message = "due_date value must be greater than now"
+            throw error
+          }
         }
       }
     },

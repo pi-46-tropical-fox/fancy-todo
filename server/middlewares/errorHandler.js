@@ -1,5 +1,5 @@
 function errorHandler (err, req, res, next){
-  // console.log("---------FROM ERROR HANDLER--------- \n", err )
+  console.log("---------FROM ERROR HANDLER--------- \n", err )
   // res.status(400).json(err)
   let statusCode = 500
   let errors = []
@@ -37,6 +37,10 @@ function errorHandler (err, req, res, next){
       break;
     case "401":
       statusCode = 401
+      errors.push(err.message)
+      break;
+    case "400":
+      statusCode = 400
       errors.push(err.message)
       break;
     default:
