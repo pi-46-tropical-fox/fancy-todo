@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT || 3000
 const routes = require('./routes')
+const errHandler = require('./middleware/errHandler')
 
 // Trying the method chaining for the first time...
 
@@ -12,6 +13,7 @@ app
 .use(express.json())
 // ...and then import needed routes
 .use(routes)
+.use(errHandler)
 // ...and lastly, listen to specified port
 .listen(port, () => {
     // voila! The app is up and running.
