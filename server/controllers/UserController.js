@@ -5,43 +5,41 @@ const {compareBcrypt} = require('../helpers/bcrypt.js')
 
 class UserController {
 
-    static async register(req,res) {
+    static async register(req,res,next) {
         try {
+            const {username,email,password} = req.body
             const user = await User.create({username,email,password})
-            const {username,email} = user
-            res.status(201).json({username,email})
+            
+            return res.status(201).json({
+                username: user.username,
+                email: user.email
+            })
 
         } catch(err) {
-            console.log(err, "error register");
-            res.status(500).json({msg: "internal error server"})
+            return next(err)
         }
     }
 
-    static login (req,res) {
+    static async login (req,res,next) {
         const {username,password} = req.body
-
-        User.findOne({where: {username}})
-            .then(user => {
-                if(!user) {
-                    return res.status(400).json({msg: "invalid email or password"})
-                }
-
-                return user
-            })
-            .then(user => {
-                const isValid = compareBcrypt(password, user.password)
-                if(isValid) {
-                    const access_token = generateToken(user)
-                    
-                    return res.status(200).json({access_token})
-                } else {
-                    return res.status(400).json({msg: "invalid email or password"})
-                }
+        try {
+            const user = await User.findOne({where: {username}})
+            if(!user) {
+                throw {statusCode: 400, msg: "invalid email or password"}
+            }
             
-            })
-            .catch(err => {
-                res.status(500).json({msg: "internal error server"})
-            })
+            const isValid = await compareBcrypt(password, user.password)
+            if(isValid) {
+                const access_token = generateToken(user)
+                
+                return res.status(200).json({access_token})
+            } else {
+                throw {statusCode: 400, msg: "invalid email or password"}
+            }
+        }
+        catch(err) {
+            return next(err)
+        }
     }
 
 }

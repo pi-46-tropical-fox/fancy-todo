@@ -1,89 +1,76 @@
 const {Todo} = require('../models')
 
 class TodoController {
-    static getTodos(req,res) {
-        console.log('masuk');
-        Todo.findAll()
-            .then(todos => {
-                return res.status(200).json(todos)
-            })
-            .catch(err => {
-                console.log(err);
-                return res.status(500).json({msg: err.msg})
-            })
 
+    static async getTodos(req,res,next) {
+        try {
+           const todos = await Todo.findAll()
+           return res.status(200).json(todos)
+        } catch(err) {
+            return next(err)
+        }
     }
 
-    static createTodo (req,res) {
+    static createTodo (req,res,next) {
         const todo = { 
             title: req.body.title,
             description: req.body.description,
             status: req.body.status,
-            due_date: req.body.due_date || new Date()
+            due_date: req.body.due_date,
+            UserId: req.userData.id
          }
         Todo.create(todo)
             .then(todo => {
                 return res.status(201).json(todo)
             })
             .catch(err => {
-                console.log(err);
-                return res.status(500).json({msg: err.msg})
+                return next(err)
             })
 
     }
 
-    static getTodo (req,res) {
+    static getTodo (req,res,next) {
         Todo.findByPk(req.params.id)
         .then(data => {
             return res.status(200).json(data)
         })
         .catch(err => {
-            console.log(err);
-            return res.status(404).json(err)
+            return next(err)
         })
 
     }
 
-    static updateTodo (req, res) {
+    static async updateTodo (req, res,next) {
         const updatedTodo = {
             title: req.body.title,
             description: req.body.description,
             status: req.body.status,
             due_date: req.body.due_date,
-            createdAt: new Date(),
-            updatedAt: new Date()
         }
+        try {
+            const result = await Todo.update(updatedTodo, {
+                where: {id: req.params.id}
+            })
+            if(!result) throw {statusCode: 404, msg: "book not found"}
+            else return res.status(200).json(result)
 
-        Todo.update(updatedTodo, {
-            where: {id: req.params.id}
-        })
-            .then(data => {
-                console.log(data)
-                if(!data) return res.status(404).json(data)
-                return res.status(200).json(data)
-            })
-            .catch(err => {
-                console.log(err)
-                return res.status(500).json(err)
-            })
+        } catch(err){
+            return next(err)
+        }
     }
 
-    static deleteTodo (req, res) {
-        Todo.destroy({
-            where: {id: req.params.id}
-        })
-            .then(data => {
-                if(!data) return res.status(404).json(data)
-                else return res.status(200).json(data)
+    static async deleteTodo (req, res, next) {
+        try {
+            const result =  await Todo.destroy({
+                where: {id: req.params.id}
             })
-            .catch(err => {
-                console.log(err);
-                return res.status(500).json(err)
-            })
+            if(!result) throw {statusCode: 404, msg: "book not found"}
+            else return res.status(200).json([result])
+        }
+        catch(err) {
+            return next(err)
+        }
     }
-
-
-    
 
 }
 
