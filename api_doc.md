@@ -7,6 +7,8 @@ My Fancy Todo App is an application to manage your activities. This app has :
 
 ## Endpoints
 ```
+ - POST /register
+ - POST /login
  - POST /todos
  - GET /todos
  - GET /todos/:id
@@ -15,6 +17,74 @@ My Fancy Todo App is an application to manage your activities. This app has :
 ```
 
 ## RESTful endpoints
+### POST /register
+
+> Register user
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+{
+  "username": "johndoe",
+  "email": "johndoe@mail.com",
+  "password": "johndoe123"
+}
+```
+
+_Response (201 - Created)_
+```
+{
+  "id": "1",
+  "email": "johndoe@mail.com"
+}
+```
+
+_Response (400 - Bad Request)_
+```
+{
+  "message": "Invalid request"
+}
+```
+---
+### POST /login
+
+> Login user
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+{
+  "email": "johndoe@mail.com",
+  "password": "johndoe123"
+}
+```
+
+_Response (200 - OK)_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Response (400 - Bad Request)_
+```
+{
+  "message": "Invalid request"
+}
+```
+---
 ### POST /todos
 
 > Create new todo
@@ -43,7 +113,7 @@ _Response (201 - Created)_
   "title": "Learn REST API",
   "description": "Learn how to create RESTful API with Express and Sequelize",
   "status": "ongoing",
-  "due_date": "2020-01-29",
+  "due_date": "2020-01-29T00:00:00.000Z",
   "createdAt": "2020-01-27T07:15:12.149Z",
   "updatedAt": "2020-01-27T07:15:12.149Z",
 }
@@ -80,7 +150,7 @@ _Response (200 - OK)_
     "title": "Learn REST API",
     "description": "Learn how to create RESTful API with Express and Sequelize",
     "status": "ongoing",
-    "due_date": "2020-01-29",
+    "due_date": "2020-01-29T00:00:00.000Z",
     "createdAt": "2020-01-27T07:15:12.149Z",
     "updatedAt": "2020-01-27T07:15:12.149Z",
   },
@@ -89,7 +159,7 @@ _Response (200 - OK)_
     "title": "Learn API Documentation",
     "description": "Learn how to create API Documentation with REST standard",
     "status": "done",
-    "due_date": "2020-01-29",
+    "due_date": "2020-01-29T00:00:00.000Z",
     "createdAt": "2020-01-28T07:15:12.149Z",
     "updatedAt": "2020-01-28T07:15:12.149Z",
   }
@@ -117,13 +187,6 @@ _Request Header_
 _Request Body_
 ```
 not needed
-```
-
-_Request Params_
-```
-{
-  "id": "1"
-}
 ```
 
 _Response (200 - OK)_
@@ -163,14 +226,7 @@ _Request Body_
   "title": "Learn Node",
   "description": "Learn how to create app with Express and Sequelize",
   "status": "ongoing",
-  "due_date": "2020-01-30",
-}
-```
-
-_Request Params_
-```
-{
-  "id": "1"
+  "due_date": "2020-01-30"
 }
 ```
 
