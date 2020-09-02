@@ -1,4 +1,6 @@
 'use strict';
+const { createHash } = require('../helpers/BcryptHelper')
+
 const {
   Model
 } = require('sequelize');
@@ -15,13 +17,49 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   User.init({
-    name: DataTypes.STRING,
-    username: {
-      type: DataTypes.STRING
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: "Is your name '', or empty?"
+        }
+      }
     },
-    password: DataTypes.STRING
+    username: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: "How should I call you if your username is '', or empty?"
+        },
+        // min 6 chars
+        minLength(value){
+          if(value.length < 6){
+            throw new Error('Make your username longer than 6 characters, please, or else.')
+          }
+        }
+      }
+    },
+    password: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: "Do you want your account be accessible by anyone?"
+        },
+        // min 6 chars
+        minLength(value){
+          if(value.length < 6){
+            throw new Error('Do you want your password be hackable?')
+          }
+        }
+      }
+    }
   }, {
     sequelize,
+    hooks: {
+      afterValidate: (instance, options) => {
+        instance.password = createHash(instance.password)
+      }
+    },
     modelName: 'User',
   });
   return User;

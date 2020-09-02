@@ -15,10 +15,24 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Todo.init({
-    title: DataTypes.STRING,
+    title: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: "Title must be filled."
+        }
+      }
+    },
     description: DataTypes.STRING,
     status: DataTypes.STRING,
-    due_date: DataTypes.DATE,
+    due_date: {
+      type: DataTypes.DATEONLY,
+      validate: {
+        isDate: {
+          msg: "Are you sure the date is in the correct format?"
+        }
+      }
+    },
     UserId: {
       type: DataTypes.INTEGER,
       references: {
@@ -28,6 +42,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
+    hooks: {
+      beforeCreate(instance, options) {
+        instance.status = 'pending'
+      }
+    },
     modelName: 'Todo',
   });
   return Todo;
