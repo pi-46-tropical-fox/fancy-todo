@@ -23,9 +23,13 @@ class TodoController {
     }
 
     static async showAll(req,res,next) {
-    
+        const id = req.userData.id
         try {
-            let show = await Todo.findAll()
+            let show = await Todo.findAll({
+                where: {
+                    UserId: id
+                }
+            })
             res.status(200).json(show)
         } catch (err) {
             // res.status(500).json({message:err.message})
