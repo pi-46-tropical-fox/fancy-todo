@@ -2,10 +2,14 @@ const axios = require(`axios`)
 
 class Controller{
     static list(req, res, next){
-        const url = `http://www.omdbapi.com/?apikey=${process.env.APIEY}&s=avengers`
+        const url = `http://www.omdbapi.com/`
         axios({
             method: "get",
             url,
+            params: {
+                apikey: process.env.APIKEY,
+                s: "avengers"
+            }
         })
         .then(response => {
             res.status(200).json({

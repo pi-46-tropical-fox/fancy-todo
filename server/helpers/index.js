@@ -1,4 +1,4 @@
 const {access_token, verify_token} = require(`./jwt`)
-const bcrypt = require(`./bcrypt`)
+const {compare, hashing} = require(`./bcrypt`)
 
-module.exports = {access_token, verify_token, bcrypt}
+module.exports = {access_token, verify_token, compare, hashing}

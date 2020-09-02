@@ -10,7 +10,6 @@ class Controller{
             due_date: req.body.due_date,
             UserId
         }
-        console.log(data)
         Todo.create(data)
             .then(data => {
                 return res.status(201).json({
@@ -19,14 +18,21 @@ class Controller{
                 })
             })
             .catch(err => {
-                console.log(err)
                 return next(err)
             })
     }
 
     static getAll(req, res, next){
         const {UserId} = req.userData
-        Todo.findAll({include: [User], where: {UserId}})
+        Todo.findAll({
+            include: [User], 
+            where: {
+                    UserId
+                },
+            order: [
+                    ['createdAt', 'DESC']
+                ],
+            })
             .then(data => {
                 if(data.length < 1){
                     return res.status(204).json({
@@ -40,7 +46,6 @@ class Controller{
                 }
             })
             .catch(err => {
-                console.log(err)
                 return next(err)
             })
     }
@@ -60,7 +65,6 @@ class Controller{
                 })
             })
             .catch(err => {
-                console.log(err)
                 return next(err)
             })
     }
@@ -74,7 +78,6 @@ class Controller{
                 })
             })
             .catch(err => {
-                console.log(err)
                 return next(err)
             })
     }

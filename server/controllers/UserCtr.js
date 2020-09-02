@@ -21,7 +21,6 @@ class Controller{
                 })
             })
             .catch(err => {
-                console.log(err)
                 return next(err)
             })
     }
@@ -30,23 +29,23 @@ class Controller{
         const {username, password} = req.body
         User.findOne({where: {username}})
             .then(data => {
-                if(data){
-                    const isValid = bcrypt(password, data.password)
-                    if(isValid){
-                        const token = access_token(username, data.id)
-                        return res.status(200).json({
-                            message: "Login Success",
-                            token
-                        })
-                    } else {
-                        throw { message: "Invalid email or password", statusCode: 400 }
-                    }
-                }else{
-                    throw { message: "Invalid email or password", statusCode: 400 }
+                const errorMessage = { message: "Invalid email or password", statusCode: 400 }
+                if(!data){
+                    throw errorMessage
+                }
+                
+                const isValid = bcrypt(password, data.password)
+                if(isValid){
+                    const token = access_token(username, data.id)
+                    return res.status(200).json({
+                        message: "Login Success",
+                        token
+                    })
+                } else {
+                    throw errorMessage
                 }
             })
             .catch(err => {
-                console.log(err)
                 return next(err)
             })
     }

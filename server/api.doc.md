@@ -40,9 +40,9 @@ I. REGISTER
       }
     ]
 
-  * Response (400 - Bad Request)
+  * Response (500 - No Found)
     {
-      "message": "Invalid request"
+      "message": "Error internal server"
     }
 
 
@@ -72,9 +72,13 @@ II. LOGIN
       }
     ]
 
-  * Response (404 - No Found)
+  * Response (400 - Bad request)
     {
       "message": "Ivalid Username or Password"
+    }
+  * Response (500 - No Found)
+    {
+      "message": "Error internal server"
     }
 
 
@@ -111,9 +115,17 @@ III. GET ALL TODOS
       }
     ]
 
-  * Response (400 - Bad Request)
+  * Response (404 - Not found)
     {
-      "message": "Invalid request"
+      "message": "Todo not found"
+    }
+  * Response (401 - User not authenticated)
+    {
+      "message": "User not authenticated"
+    }
+  * Response (500 - No Found)
+    {
+      "message": "Error internal server"
     }
 
 
@@ -143,9 +155,13 @@ IV. CREATE NEW TODO
         "updatedAt": "2020-03-20T07:15:12.149Z"
       }
 
-  * Response (400 - Bad Request)
+  * Response (401 - User not authenticated)
     {
-      "message": "Invalid request"
+      "message": "User not authenticated"
+    }
+  * Response (500 - No Found)
+    {
+      "message": "Error internal server"
     }
 
 
@@ -179,6 +195,18 @@ V. UPDATE TODO
     {
       "message": "Todo not found"
     }
+  * Response (403 - Not authorized)
+    {
+      "message": "Forbiden access"
+    }
+  * Response (401 - User not authenticated)
+    {
+      "message": "User not authenticated"
+    }
+  * Response (500 - No Found)
+    {
+      "message": "Error internal server"
+    }
 
 
 VI. DELETE TODO
@@ -196,9 +224,21 @@ VI. DELETE TODO
         "message": "Successfuly delete todo"
     }
 
-  * Response (404 - Bad Request)
+  * Response (404 - Not found)
     {
       "message": "Todo not found"
+    }
+  * Response (403 - Not authorized)
+    {
+      "message": "Forbiden access"
+    }
+  * Response (401 - User not authenticated)
+    {
+      "message": "User not authenticated"
+    }
+  * Response (500 - No Found)
+    {
+      "message": "Error internal server"
     }
 
 

@@ -25,12 +25,15 @@ module.exports = {
         try{
             const todo = await Todo.findByPk(id)
 
-            if(todo && todo.UserId === req.userData.UserId){
-                next()
-            } else {
-                
-                 throw { message: "Forbidden Access", statusCode: 403}
+            if(!todo){
+                throw { message: "Todo not found", statusCode: 404 }
             }
+
+            if(todo.UserId !== req.userData.UserId){
+                throw { message: "Forbidden Access", statusCode: 403}
+            }
+            
+            return next()
         }catch(err){
             return next(err)
         }
