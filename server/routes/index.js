@@ -5,10 +5,10 @@ const myTodoRoute = require('./myTodoRoute')
 const weatherController = require('../controllers/weatherController')
 
 
-// route.get('/', (req, res) => {
-//     res.send('home')
-// })
-route.use('/', weatherController.current)
+route.get('/', (req, res) => {
+    res.send('home')
+})
+route.use('/weather', weatherController.current)
 
 
 route.use('/todos', todoRoute)

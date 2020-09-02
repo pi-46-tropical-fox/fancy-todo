@@ -39,8 +39,10 @@ module.exports = (sequelize, DataTypes) => {
           args: true,
           msg: 'Invalid email format'
         }
-      }
-    }
+      },
+      unique: true
+    },
+    city: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'User',

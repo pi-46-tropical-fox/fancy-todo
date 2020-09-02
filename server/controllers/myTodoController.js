@@ -16,7 +16,7 @@ class MyTodoController {
                 return res.status(201).json(data)
             })
             .catch(err => {
-                return res.status(500).json({ message: err.message })
+                return next(err)
             })
     }
 
@@ -36,7 +36,8 @@ class MyTodoController {
                 return res.status(200).json(data)
             })
             .catch(err => {
-                return res.status(500).json({ message: err.message })
+                return next(err)
+                // return res.status(500).json({ message: err.message })
             })
     }
 
@@ -46,7 +47,8 @@ class MyTodoController {
                 return res.status(200).json(data)
             })
             .catch(err => {
-                return res.status(500).json({ message: err.message })
+                return next(err)
+                // return res.status(500).json({ message: err.message })
             })
     }
 

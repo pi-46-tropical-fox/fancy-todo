@@ -27,9 +27,9 @@ class userController {
     static async register(req, res, next) {
         // console.log(User.create({ username, email, password }), '<==user.create')
         try {
-            const { username, password, email } = req.body
-            const user = await User.create({ username, email, password })
-            return res.status(201).json({ username:user.username, email:user.email })
+            const { username, password, email, city } = req.body
+            const user = await User.create({ username, email, password, city })
+            return res.status(201).json({ username:user.username, email:user.email, city:user.city })
         } catch(err) {
             // console.log(err, ' <=== error register')
             // return res.status(500).json({ message: "internal error server" })

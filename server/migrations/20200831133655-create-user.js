@@ -15,6 +15,10 @@ module.exports = {
         type: Sequelize.STRING
       },
       email: {
+        type: Sequelize.STRING,
+        unique: true
+      },
+      city: {
         type: Sequelize.STRING
       },
       createdAt: {
