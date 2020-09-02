@@ -3,15 +3,10 @@ const { Todo } = require('../models')
 class TodoController {
     static async readAll(req, res, next){
         try {
-            let todos = await Todo.findAll()
+            let todos = await Todo.findAll({ where: { UserId: req.userData.id } })
 
             res.status(200).json(todos)
         } catch (error) {
-            err = {
-                code: 500,
-                msg: `Oops! Something wrong happened on our end. Don't worry, we'll get this thing done fast.`
-            }
-
             return next(err)
         }
     }
@@ -25,25 +20,7 @@ class TodoController {
 
             res.status(201).json(newTodo)
         } catch (err) {
-            let error = {
-                code: 400,
-                msg: []
-            }
-
-            switch(err.name){
-                case 'SequelizeValidationError':
-                    err.errors.forEach(e => {
-                        error.msg.push(`${e.path}: ${e.message}`)
-                    })
-                break
-                case 'SequelizeUniqueConstraintError':
-                    err.errors.forEach(e => {
-                        error.msg.push(`${e.type}: ${e.message}`)
-                    })
-                break
-            }
-            
-            return next(error)
+            return next(err)
         }
     }
     
@@ -62,52 +39,32 @@ class TodoController {
             } else {
                 throw { code: 403, msg: 'Hey, you! The unauthorized thief! What are you doing here?' }
             }
-        } catch (err) {
-            let error = {}
-
-            if(!err.code){
-                error.code = 400
-            } else {
-                error.code = err.code
-            }
-
-            if(!err.msg){
-                error.msg = []
-                
-                switch(err.name){
-                    case 'SequelizeValidationError':
-                        err.errors.forEach(e => {
-                            error.msg.push(`${e.path}: ${e.message}`)
-                        })
-                    break
-                    case 'SequelizeUniqueConstraintError':
-                        err.errors.forEach(e => {
-                            error.msg.push(`${e.type}: ${e.message}`)
-                        })
-                    break
-                }
-            } else {
-                error.msg = [err.msg]
-            }
-                        
-            return next(error)
+        } catch (err) {   
+            return next(err)
         }
     }
     
     static async delete(req, res, next){
         try {
-            await Todo.delete({
-                where: { id: req.params.id }
-            })
+            let todo = await Todo.findByPk(req.params.id)
+            
+            if(todo){
+                let isAuthorized = req.userData.id === todo.UserId
 
-            res.status(200).json({msg: `Todo with ID ${req.params.id} was successfully deleted`})
-        } catch (err) {
-            let error = {
-                code: 400,
-                msg: []
+                if(isAuthorized){
+                    await Todo.destroy({
+                        where: { id: req.params.id }
+                    })
+        
+                    res.status(200).json({msg: `Todo with ID ${req.params.id} was successfully deleted`})
+                } else {
+                    throw { code: 403, msg: 'Hey, you! The unauthorized thief! What are you doing here?' }
+                }
+            } else {
+                throw { code: 404, msg: `Sorry, but Todo with ID ${req.params.id} was not found.` }
             }
-
-            return next(error)
+        } catch (err) {
+            return next(err)
         }
     }
 }
