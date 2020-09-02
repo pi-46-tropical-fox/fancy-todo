@@ -13,7 +13,9 @@ class UserController {
         password: req.body.password
       };
       const user = await User.create(newUser);
-      return res.status(201).json({ username: user.username, email: user.email });
+      // return res.status(201).json({ username: user.username, email: user.email });
+      const access_token = generateToken(user);
+      return res.status(201).json({ access_token });
     } catch(err) {
       console.log("<<<< error in register UserController");
       return next(err);
