@@ -23,7 +23,11 @@ class TodoController {
   static async showAllTodos(req, res, next) {
     console.log(+req.userData.id, "this is from todo controller");
     try {
-      const todos = await Todo.findAll();
+      const todos = await Todo.findAll({
+        where: {
+          UserId: +req.userData.id
+        }
+      });
       return res.status(200).json(todos);
     } catch(err) {
       console.log("<<<< error in showAllTodos TodoController");

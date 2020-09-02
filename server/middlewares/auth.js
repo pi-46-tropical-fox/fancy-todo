@@ -5,17 +5,29 @@ const { Todo, User } = require("../models");
 // process to check if token is valid or not
 // token / access_token is saved in req.headers
 
-const authentication = (req, res, next) => {
+const authentication = async (req, res, next) => {
   console.log(req.headers, "this is authentication");
 
   const { access_token } = req.headers;
 
   try {
+    // verify token
     const userData = verifyToken(access_token);
-    req.userData = userData;
-    console.log(userData, "this is the data");
+    console.log(userData, "this is userData");
 
-    next();
+    // find user in database
+    let user = await User.findOne({
+      where: {
+        email: userData.email
+      }
+    });
+
+    if (user) {
+      req.userData = userData;
+      next();
+    } else {
+      throw { message: "User is not authenticated", statusCode: 401 };
+    }
 
   } catch (err) {
     console.log("<<<< error in authentication");
