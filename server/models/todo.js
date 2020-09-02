@@ -43,6 +43,9 @@ module.exports = (sequelize, DataTypes) => {
         model: 'Users',
         key: 'id'
       }
+    },
+    PasteeId: {
+      type: DataTypes.STRING
     }
   }, {
     sequelize,
