@@ -11,14 +11,17 @@ const authorization = (req, res, next) => {
                 next ()
     
             } else {
-                console.log (data.UserId)
-                return res.status (403).json ({message : "Unauthorized Access "})
+                // console.log (data.UserId)
+                // return res.status (403).json ({message : "Unauthorized Access "})
+                throw {message : "Unauthorized Access", errorStatus : 403}
             }
 
         })
 
         .catch (err => {
+            // console.log (err.name)
             return res.status (403).json ({message : err.message})
+            // throw {message : "Unauthorized Access", errorStatus : 403}
 
         })
 

@@ -1,12 +1,12 @@
+const bcrypt = require ('bcrypt')
 const {User} = require ("../models")
 const {tokenGenerator} = require ("../helpers/jwt.js")
 const {compare} = require ("../helpers/bcrypt.js")
 
-const bcrypt = require ('bcrypt')
 
 class UserController {
 
-    static registerUser (req, res) {
+    static registerUser (req, res, next) {
         let params = {
             username : req.body.username,
             email : req.body.email,
@@ -20,13 +20,12 @@ class UserController {
         })
 
         .catch (err => {
-            console.log (err, "--error register")
-            return res.status (500).json ({message : err.message})
+            return next (err)
         })
 
     }
 
-    static loginUser (req, res) {
+    static loginUser (req, res, next) {
         let {email, password} = req.body
 
         User.findOne ({
@@ -35,7 +34,8 @@ class UserController {
 
         .then (data => {
             if (!data) {
-                return res.status (400).json ({message : "Email or Password is wrong"})
+                // return res.status (400).json ({message : "Email or Password is wrong"})
+                throw {message : "Email or Password is wrong", errorStatus : 400}
             }
 
             return data
@@ -55,14 +55,14 @@ class UserController {
             
             } else {
                 // console.log (password, data.password)
-                return res.status (400).json ({message : "Email or Password is wrong"})
+                throw {message : "Email or Password is wrong", errorStatus : 400}
             }
 
         })
 
         .catch (err => {
             // console.log (err)
-            return res.status (500).json ({message : err.message})
+            return next (err)
         })
 
 

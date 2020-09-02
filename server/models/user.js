@@ -25,14 +25,37 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type : DataTypes.STRING,
       validate : {
-        isEmail : true
+        isEmail : {
+          args : true,
+          msg : "Invalid email format"
+        },
+        notEmpty: {
+          rgs : true,
+          msg : "You must insert your email address"
+        }
       },
       unique : {
         args : true,
-        msg : "Please select another email address"
+        msg : "Email Address has been registered"
       }
     },
-    password: DataTypes.STRING
+    password: {
+      type : DataTypes.STRING,
+      validate : {
+        notEmpty: {
+          rgs : true,
+          msg : "You can't leave your password field empty"
+        },
+        unique : {
+          args : true,
+          msg : "Password has been registered"
+        },
+        len : {
+          args : [5],
+          msg : "Minimum Password length is 5 characters"
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'User',

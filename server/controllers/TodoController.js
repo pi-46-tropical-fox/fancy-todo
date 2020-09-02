@@ -2,7 +2,7 @@ const {Todo} = require ("../models")
 
 class TodoController {
     
-    static postTodos (req, res) {
+    static postTodos (req, res, next) {
         let params = {
             title : req.body.title,
             description : req.body.description,
@@ -19,14 +19,16 @@ class TodoController {
         })
 
         .catch (err => {
-            console.log (err, "--error create Todo")
-            return res.status (400).json ({message : err.message})
+            // console.log (err, "--error create Todo")
+            // return res.status (400).json ({message : err.message})
+            throw {message : "Bad Request - Error Validation", errorStatus : 400}
+            
 
         })
 
     }
 
-    static getTodos (req, res) {
+    static getTodos (req, res, next) {
         Todo.findAll ()
 
         .then (data => {
@@ -35,13 +37,13 @@ class TodoController {
         })
 
         .catch (err => {
-            console.log (err, "--error show Todo")
-            return res.status (500).json ({message : err.message})
+            // console.log (err, "--error show Todo")
+            return next (err)
 
         })
     }
 
-    static getTodosbyId (req, res) {
+    static getTodosbyId (req, res, next) {
         Todo.findByPk (req.params.id)
 
         .then (data => {
@@ -50,14 +52,15 @@ class TodoController {
         })
 
         .catch (err => {
-            console.log (err, "--error show Todo by Id")
-            return res.status (404).json ({message : err.message})
+            // console.log (err, "--error show Todo by Id")
+            // return res.status (404).json ({message : err.message})
+            throw {message : "Data Not Found", errorStatus : 404}
 
         })
 
     }
 
-    static updateTodos (req, res) {
+    static updateTodos (req, res, next) {
         let params = {
             title : req.body.title,
             description : req.body.description,
@@ -73,7 +76,8 @@ class TodoController {
         .then (data => {
             // console.log (data)
             if (!data) {
-                return res.status (400).json ({message : "Bad Request"})
+                // return res.status (400).json ({message : "Bad Request"})
+                throw {message : "Bad Request - Error Validation", errorStatus : 400}
 
 
             } else {
@@ -82,14 +86,15 @@ class TodoController {
         })
 
         .catch (err => {
-            console.log (err, "--error update Todo")
-            return res.status (404).json ({message : err.message})
+            // console.log (err, "--error update Todo")
+            // return res.status (404).json ({message : err.message})
+            throw {message : "Data Not Found", errorStatus : 404}
 
         })
 
     }
 
-    static deleteTodos (req, res) {
+    static deleteTodos (req, res, next) {
         Todo.destroy ({
             where : {id : req.params.id}
         })
@@ -101,8 +106,8 @@ class TodoController {
         })
 
         .catch (err => {
-            console.log (err, "--error delete Todo")
-            return res.status (500).json ({message : err.message})
+            // console.log (err, "--error delete Todo")
+            return next (err)
 
         })
 
