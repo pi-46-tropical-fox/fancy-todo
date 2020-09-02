@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Fancy Todos</title>
+</head>
+
+<body>
+  <nav>
+    <div class="nav-wrapper blue darken-4">
+      <a href="#" class="brand-logo center">Fancy Todo</a>
+      <ul id="nav-mobile" class="left hide-on-med-and-down">
+        <li><a href="">Home</a></li>
+        <li><a href="">Add Todo</a></li>
+        <li><a href="">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="register">
+    <center>
+      <img class="responsive-img" style="width: 250px;" src="" />
+      <div class="section"></div>
+
+      <h5 class="sub-title">Create your account</h5>
+      <div class="section"></div>
+
+      <div class="container">
+        <div class="z-depth-1 grey lighten-4 row"
+          style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+
+          <form class="col s12" method="post">
+            <div class='row'>
+              <div class='input-field'>
+                <input class='validate' type='text' name='name' id='name' />
+                <label for='name'>Enter your name</label>
+              </div>
+            </div>
+
+            <div class='row'>
+              <div class='input-field'>
+                <input class='validate' type='email' name='email-register' id='email-register' />
+                <label for='email-register'>Enter your email</label>
+              </div>
+            </div>
+
+            <div class='row'>
+              <div class='input-field'>
+                <input class='validate' type='password' name='password-register' id='password-register' />
+                <label for='password-register'>Enter your password</label>
+              </div>
+            </div>
+            <br />
+            <center>
+              <div class='row'>
+                <button type='submit' name='btn_login' class='button btn btn-large blue darken-4'>Register</button>
+              </div>
+            </center>
+          </form>
+        </div>
+      </div>
+    </center>
+  </div>
+
+  <div class="login">
+    <center>
+      <img class="responsive-img" style="width: 250px;" src="" />
+      <h5 class="sub-title">Please login to your account</h5>
+      <div class="container">
+        <div class="z-depth-1 grey lighten-4 row"
+          style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+
+          <form class="col s12" method="post">
+            <div class='row'>
+              <div class='input-field col s12'>
+                <input class='validate' type='email' name='email' id='email' />
+                <label for='email'>Enter your email</label>
+              </div>
+            </div>
+
+            <div class='row'>
+              <div class='input-field col s12'>
+                <input class='validate' type='password' name='password' id='password' />
+                <label for='password'>Enter your password</label>
+              </div>
+              <label style='float: right;'>
+              </label>
+            </div>
+
+            <br />
+            <center>
+              <div class='row'>
+                <button type='submit' name='btn_login' class='button col s12 btn btn-large blue darken-4'>Login</button>
+              </div>
+            </center>
+          </form>
+          <center>
+            <div class='row'>
+              <button type='submit' name='btn_login' class='button col s12 btn btn-large blue darken-4'>Google</button>
+            </div>
+          </center>
+        </div>
+      </div>
+      <a href="/register">Create account</a>
+    </center>
+  </div>
+  <center>
+    <div class="content">
+      <h5 class="sub-title">Add Todo</h5>
+      <div class="z-depth-1 grey lighten-4 row"
+        style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+        <form class="col s12" method="post">
+          <div class='row'>
+            <div class='input-field col s12'>
+              <input class='validate' type='text' name='title' id='title' />
+              <label for='title'>Enter your title</label>
+            </div>
+          </div>
+          <div class='row'>
+            <div class='input-field col s12'>
+              <input class='validate' type='text' name='description' id='description' />
+              <label for='description'>Enter description</label>
+            </div>
+          </div>
+          <div class='row'>
+            <label for='due_date'>Enter due date</label>
+            <div class='input-field col s12'>
+              <input class='validate' type='date' name='due_date' id='due_date' />
+            </div>
+          </div>
+          <div class='row'>
+            <div class='input-field col s12'>
+              <option value="">
+                <label>
+                  <input type="radio" class="with-gap">
+                </label>
+              </option>
+            </div>
+          </div>
+        </form>
+      </div>
+  </center>
+  <center>
+    <div id="services">
+      <div class="container">
+        <h5 class="sub-title">Todo List</h5>
+          <table class="highlight">
+              <thead>
+                  <tr>
+                      <th>#</th>
+                      <th>Title</th>
+                      <th>Description</th>
+                      <th>Status</th>
+                      <th>Due Date</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Watch Movie</td>
+                    <td>Watch movie after finish your challenge</td>
+                    <td>false</td>
+                    <td>05-09-2020</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Learn jquery</td>
+                    <td>Learn jquery with hacktiv8</td>
+                    <td>false</td>
+                    <td>05-09-2020</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>Holiday</td>
+                    <td>Go to Bali's white beaches</td>
+                    <td>false</td>
+                    <td>10-09-2020</td>
+                  </tr>
+              </tbody>
+          </table><br>
+          <!-- <button type='submit' name='btn_login' class='button pink darken-1 col s12 btn btn-large'><a
+                  href="/home/checkout">Checkout</a></button> -->
+      </div>
+  </div>
+  </center>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+</body>
+
+</html>
