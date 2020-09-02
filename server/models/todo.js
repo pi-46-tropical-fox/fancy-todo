@@ -30,6 +30,10 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isDate: {
           msg: "Are you sure the date is in the correct format?"
+        },
+        isAfter: {
+          args: Date(),
+          msg: "Hey, the date you entered is waaaay overdue!"
         }
       }
     },
