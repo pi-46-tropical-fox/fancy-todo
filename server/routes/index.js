@@ -1,4 +1,5 @@
 const fs = require('fs')
+const settings = require('../config/settings')
 const index = require('express').Router()
 const { authenticate } = require('../middleware/authHandler')
 const endpoints = {}
@@ -17,7 +18,7 @@ index
 .use('/u', endpoints.auth)
 .use('/todos', authenticate, endpoints.todo)
 .get('/', (req, res) => {
-    res.status(200).send('Welcome to Todolicious!')
+    res.status(200).send(`Welcome to ${settings.app.title}`)
 })
 
 module.exports = index
