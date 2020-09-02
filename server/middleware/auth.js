@@ -19,12 +19,13 @@ const authentication = async (req,res,next) => {
             req.userData = userData
             next()
         } else {
-            throw {message: "User not autenticated"}
+            throw {message: "User not autenticated", statusCode: 401}
         }
 
     } catch (err) {
         console.log(err, "ini error auth")
-        res.status(401).json({message: "User not autenticated"})
+        // res.status(401).json({message: "User not autenticated"})
+        return next(err)
     }
 }
 
