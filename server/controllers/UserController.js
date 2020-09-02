@@ -21,6 +21,10 @@ class UserController {
 					username,
 				},
 			});
+			
+			if(!data){
+				throw { message: 'Username/Password not found', statusCode: 400 };
+			}
 
 			const pass = await bcrypt.compare(password, data.password);
 

@@ -30,11 +30,27 @@ class TodoController {
 	}
 
 	static deleteTodoById(req, res) {
-
+		const { id } = req.params;
+		console.log(id);
 	}
 
-	static updateTodoById(req, res) {
+	static async updateTodoById(req, res) {
+		const data = {
+			title: req.body.title,
+			description: req.body.description,
+			status: req.body.status,
+			due_date: new Date(req.body.due_date)
+		};
 
+		const { id } = req.params;
+
+		await Todo.update(data, {
+			where : {
+				id
+			}
+		})
+
+		res.status(200);
 	}
 }
 
