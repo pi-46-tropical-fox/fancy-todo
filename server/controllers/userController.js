@@ -27,7 +27,8 @@ class Controller{
         try {
             let user = await User.findOne({where:{email}})
             if(!user){
-                return res.status(401).json({message: "invalid email or password"})
+                // return res.status(401).json({message: "invalid email or password"})
+                throw {message: "invalid email or password", statusCode: 400}
             }else{
                 console.log(user)
                 if(compareHashes(password,user.password)){
@@ -36,7 +37,7 @@ class Controller{
                     return res.status(200).json({token})
                 }else{
                     // return res.status(401).json({message:'invalid email or password'})
-                    next(error)
+                    throw {message: "invalid email or password", statusCode: 400}
                 }
             }
 

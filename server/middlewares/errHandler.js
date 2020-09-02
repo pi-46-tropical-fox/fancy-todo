@@ -11,11 +11,16 @@ function errHandler(err,req,res,next){
             });
             statusCode = 400
             break;
-        // case ""
+        case "JsonWebTokenError":
+            errors.push('Error dah pokoknya')
+            statusCode = 401
+            break;
         default:
+            errors.push(err.message)
+            statusCode = err.statusCode 
             break;
     }
-    res.status(500).json({errors})
+    res.status(statusCode).json({errors})
 }
 
 module.exports = errHandler

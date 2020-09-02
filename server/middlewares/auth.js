@@ -1,16 +1,23 @@
 const { verifyToken } = require('../helpers/jwt')
-const { Todo } = require('../models')
+const { Todo, User } = require('../models')
 
-const authentication = (req,res,next) =>{
+
+const authentication  = async (req,res,next) =>{
     const { acces_token } = req.headers
     try {
         const userData = verifyToken(acces_token)
-        req.userData = userData
-        console.log(userData,'ini data')
-        next()
+        let user = await User.findOne({where:{email:userData.email}})
+        if(user){
+            req.userData = userData
+            console.log(userData,'ini data')
+            next()
+        }else{
+            throw{msg : 'User Not Authenticated', statusCode:401}
+        }
     } catch (err) {
         console.log(err,'ini error')
-        res.status(401).json({msg : 'User Not Authenticated'})
+        // res.status(401).json({msg : 'User Not Authenticated'})
+        return next(err)
     }
 }
 
@@ -20,11 +27,13 @@ const authorization = (req,res,next) =>{
         if(data && data.UserId === req.userData.id){
             next()
         }else{
-            return res.status(401).json({msg:'Forbidden Access'})
+            // return res.status(401).json({msg:'Forbidden Access'})
+            throw{msg:'Forbidden Access', statusCode: 401}
         }
     })
     .catch(err =>{
-        return res.status(400).json({msg:'Bad request'})
+        // return res.status(400).json({msg:'Bad request'})
+        return next(err)
     })
 }
 

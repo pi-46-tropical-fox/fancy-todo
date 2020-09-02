@@ -19,16 +19,16 @@ module.exports = (sequelize, DataTypes) => {
       type : DataTypes.STRING,
       validate:{
         notEmpty:{
-          args:[10],
-          msg: 'please inser passrowd minimum ten characters'
+          args: true,
+          msg: 'please insert title'
         }
       }
     },
     description: { type : DataTypes.STRING,
       validate:{
         notEmpty:{
-          args:[10],
-          msg: 'please inser passrowd minimum ten characters'
+          args: true,
+          msg: 'please insert description'
         }
       }},
     status: DataTypes.BOOLEAN,
@@ -36,8 +36,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       validate:{
         isPassed(value){
-          if(value.toISOString().split("T")[0] > new Date().toISOString().split("T")[0] || value.toISOString().split("T")[0] < new Date().toISOString().split("T")[0]){
-            throw new Error('Invalid date')
+          if(!value){
+            throw new Error('please insert date')
+          }else{
+            if(new Date(value) < new Date()){
+              throw new Error('Cannot insert passed date')
+            }
           }
         }
       }

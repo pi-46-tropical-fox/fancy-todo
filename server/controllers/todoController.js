@@ -43,7 +43,8 @@ class Controller{
         })
         .catch(err =>{
             console.log('test')
-            return res.status(400).json(err)
+            // return res.status(400).json(err)
+            return next(err)
         })
     }
 
@@ -60,7 +61,8 @@ class Controller{
             return res.status(200).json(data)
         })
         .catch(err =>{
-            return res.status(400).json(err)
+            // return res.status(400).json(err)
+            return next(err)
         })
     }
 
@@ -71,7 +73,8 @@ class Controller{
             return res.status(200).json(data)
         })
         .catch(err =>{
-            return res.status(400).json(err)
+            // return res.status(400).json(err)
+            return next(err)
         })
     }
 }
