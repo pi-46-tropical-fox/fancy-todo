@@ -9,7 +9,7 @@ class TodoController {
       description: req.body.description,
       status: req.body.status,
       due_date: req.body.due_date,
-      // UserId: req.userData.id
+      UserId: req.userData.id
     }
     Todo.create(todo)
     .then(todo => {
@@ -55,8 +55,12 @@ class TodoController {
         where: {id:req.params.id}
       }
     )
-    .then(todo => {
-      res.status(201).json(todo)
+    .then(result => {
+      if(!result[0]) {
+        throw {message: "book not found", statusCode: 400}
+      } else {
+        res.status(201).json({message: "successfully update todo"})
+      }
     })
     .catch(err => {
       return next(err)

@@ -1,5 +1,5 @@
 const { verifyToken } = require('../helpers/jwt');
-const { User } = require('../models')
+const { User, Todo } = require('../models')
 
 const authentication = async (req, res, next) => {
   console.log(req.headers, 'ini authentication');
@@ -8,7 +8,7 @@ const authentication = async (req, res, next) => {
 
   try {
     const userData = verifyToken(access_token)
-
+    console.log(userData);
     let user = await User.findOne({
       where: {
         email: userData.email
@@ -26,9 +26,22 @@ const authentication = async (req, res, next) => {
     return next(err)
   }
 }
+  const authorization = async (req, res, next) => {
+    const { id } = req.params
+  
+    try {
+      const todo = await Todo.findByPk(id)
+  
+      if(todo && todo.UserId === req.userData.id) {
+        next()
+      } else {
+        throw { message: 'forbidden access', statusCode: 403 }
+      }
+    } catch(err) {
+      return next(err)
+    }
+  
+  }
 
-const authorization = (req, res, next) => {
 
-}
-
-module.exports = { authentication, authorization }
+module.exports = { authentication, authorization}
