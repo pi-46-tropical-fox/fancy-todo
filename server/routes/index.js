@@ -1,17 +1,13 @@
-require('dotenv').config()
 const router = require('express').Router()
-const TodoController = require('../controllers')
-const UserController = require('../controllers/UserController')
-const authentication = require('../middleware/authentication')
-const authorization = require('../middleware/authentication')
+const UserRoute = require('./UserRoute')
+const TodoRoute = require('./TodoRoute')
+const {authorization, authentication} = require('../middleware')
 
-router.post('/register', UserController.register)
-router.post('/login', UserController.login)
+router.get('/', (req, res) => {
+    res.redirect('/login')
+})
 
-router.get('/todos', authentication, TodoController.findAll)
-router.post('/todos', authentication, TodoController.addTodo)
-router.get('/todos/:id', authentication, authorization, TodoController.findById)
-router.put('/todos/:id', authentication, authorization, TodoController.updateTodo)
-router.delete('/todos/:id', authentication, authorization, TodoController.deleteTodo)
+router.use('/login', UserRoute)
+router.use('/todos', authentication, authorization, TodoRoute)
 
 module.exports = router 
