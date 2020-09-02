@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const UserController = require('../controllers/UserController');
 const GithubController = require('../controllers/GithubController');
-const { authentication } = require('../middlewares/auth');
-const errorHandler = require('../middlewares/errorHandler');
+const { authentication, authorization } = require('../middlewares/auth');
+const TodoController = require('../controllers/TodoController');
 
 router.get('/', (req, res) => res.send('Hello!!'));
 
@@ -11,8 +11,12 @@ router.post('/login', UserController.login);
 
 router.use(authentication);
 
-router.get('/github/user/:username', GithubController.getUser);
+router.get('/todos', TodoController.getAllTodos);
+router.post('/todos', TodoController.createTodo);
+router.get('/todos/:id', authorization, TodoController.getTodoById);
+router.delete('/todos/:id', authorization, TodoController.deleteTodoById);
+router.put('/todos/:id', authorization, TodoController.updateTodoById);
 
-router.use(errorHandler)
+router.get('/github/user/:username', GithubController.getUser);
 
 module.exports = router;

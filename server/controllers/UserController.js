@@ -9,7 +9,7 @@ class UserController {
 
 			res.status(201).json({ id, email });
 		} catch (err) {
-			next(err)
+			next(err);
 		}
 	}
 
@@ -31,12 +31,10 @@ class UserController {
 
 				res.json({ access_token });
 			} else {
-				next({
-					name : ''
-				})
+				throw { message: 'Username/Password not found', statusCode: 400 };
 			}
 		} catch (err) {
-			next(err)
+			next(err);
 		}
 	}
 }

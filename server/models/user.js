@@ -2,6 +2,7 @@ const {
 	Model,
 } = require('sequelize');
 const { hash } = require('../helpers/bcrypt');
+const { validatePassword, validateEmail, validateUsername } = require('../helpers/validation');
 
 module.exports = (sequelize, DataTypes) => {
 	class User extends Model {
@@ -15,12 +16,22 @@ module.exports = (sequelize, DataTypes) => {
 		}
 	}
 	User.init({
-		username: DataTypes.STRING,
-		email: DataTypes.STRING,
+		username: {
+			type: DataTypes.STRING,
+			validate: {
+				validateUsername,
+			},
+		},
+		email: {
+			type: DataTypes.STRING,
+			validate: {
+				validateEmail,
+			},
+		},
 		password: {
 			type: DataTypes.STRING,
 			validate: {
-
+				validatePassword,
 			},
 		},
 	}, {
