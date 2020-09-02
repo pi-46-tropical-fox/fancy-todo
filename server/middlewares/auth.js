@@ -23,14 +23,13 @@ const authorizationTodoByUserId = async (req, res, next) => {
 		const { id } = req.userData;
 		const todo = await Todo.findOne({ where: { id: req.params.id } });
 
-		if (todo) {
-			if (todo.UserId === id) {
-				next();
-			} else {
-				throw { name: 'notAuthorized' };
-			}
-		} else {
+		if (!todo) {
 			throw { name: 'notFound' };
+		} else if (todo && todo.UserId === id) {
+			req.todo = todo;
+			next();
+		} else {
+			throw { name: 'notAuthorized' };
 		}
 	} catch (error) {
 		next(error);

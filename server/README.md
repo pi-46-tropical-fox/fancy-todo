@@ -575,18 +575,18 @@ _Response (200 - OK)_
 
 ```json
 [
-    {
-        "date": "2020-01-01",
-        "localName": "Tahun Baru Masehi",
-        "name": "New Year's Day",
-        "countryCode": "ID",
-        "fixed": true,
-        "global": true,
-        "counties": null,
-        "launchYear": null,
-        "type": "Public"
-    }
-}
+	{
+		"date": "2020-01-01",
+		"localName": "Tahun Baru Masehi",
+		"name": "New Year's Day",
+		"countryCode": "ID",
+		"fixed": true,
+		"global": true,
+		"counties": null,
+		"launchYear": null,
+		"type": "Public"
+	}
+]
 ```
 
 _Response (401 - Unauthorized)_

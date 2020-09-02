@@ -2,8 +2,9 @@ const { Todo } = require('../models');
 
 class TodoController {
 	static async list(req, res, next) {
+		const { id } = req.userData;
 		try {
-			const todos = await Todo.findAll();
+			const todos = await Todo.findAll({ where: { UserId: id } });
 
 			return res.status(200).json(todos);
 		} catch (error) {
@@ -13,7 +14,7 @@ class TodoController {
 
 	static async byId(req, res, next) {
 		try {
-			const todo = await Todo.findOne({ where: { id: req.params.id } });
+			const todo = req.todo;
 
 			if (todo) {
 				return res.status(200).json(todo);
