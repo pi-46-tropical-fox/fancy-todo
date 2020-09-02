@@ -295,3 +295,87 @@ _Response (404 - Not Found)_
 }
 ```
 ---
+### GET /articles/:input
+
+> Get most recent articles
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200)_
+```
+ {
+    "result": [
+        {
+            "Title": "How to Find a Truly Dark Location for the Best Photos of the Night Sky",
+            "url": "https://lifehacker.com/how-to-find-a-truly-dark-location-for-the-best-photos-o-1844881808"
+        },
+        {
+            "Title": "How to Quickly Fact Check Forwarded Messages on WhatsApp",
+            "url": "https://lifehacker.com/how-to-quickly-fact-check-forwarded-messages-on-whatsap-1844605934"
+        }
+    ]
+}
+```
+
+_Response (404 - Not Found)_
+```
+{
+  "message": "Articles Not Found"
+}
+```
+---
+### GET /todos/articles/:id
+
+> Get related articles with your specific todo
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200)_
+```
+ {
+    "result": [
+        {
+            "Title": "Makan"
+        },
+        {
+            "Title": "Bakar Daun Salam di Dalam Rumah, Hal Mengejutkan Akan Terjadi",
+            "url": "https://www.viva.co.id/gaya-hidup/kesehatan-intim/1298374-bakar-daun-salam-di-dalam-rumah-hal-mengejutkan-akan-terjadi"
+        },
+        {
+            "Title": "Diet Ala Militer Bisa Pangkas 4,5Kg dalam Seminggu Tanpa Banyak Usaha",
+            "url": "https://www.viva.co.id/gaya-hidup/kesehatan-intim/1298265-diet-ala-militer-bisa-pangkas-4-5kg-dalam-seminggu-tanpa-banyak-usaha"
+        },
+        {
+            "Title": "6 Cara Sederhana Menurunkan Lemak Perut, Berdasarkan Penelitian",
+            "url": "https://www.viva.co.id/gaya-hidup/kesehatan-intim/1298370-6-cara-sederhana-menurunkan-lemak-perut-berdasarkan-penelitian"
+        }
+    ]
+}
+```
+
+_Response (404 - Not Found)_
+```
+{
+  "message": "Articles Not Found"
+}
+```

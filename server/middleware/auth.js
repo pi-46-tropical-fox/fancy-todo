@@ -1,20 +1,27 @@
 const { verifyToken } = require("../helpers/jwt");
-const { Todo } = require('../models');
+const { Todo, User } = require('../models');
 //proses utuk cek token valid atau tidak
 //access token disiman di req.headers
-const authentication = (req, res, next) => {
+const authentication = async(req, res, next) => {
     console.log(req.headers);
     //assume that this has already been aded to the headers right after logging in
     const { access_token } = req.headers;
-
     try {
-        const userData = verifyToken(access_token)
-        req.userData = userData
+        //verify token
+        const userData = verifyToken(access_token);
+        console.log(userData, '<<< user data dari authentication');
+        //lookup databse for specified user
+        let user = await User.findOne({ where: { username: userData.username } });
+        //conditional
+        if (user) {
+            req.userData = userData;
+            next()
+        } else {
+            throw { message: "User is not authenticated", statusCode: 401 }
+        }
         console.log(userData)
-        next()
     } catch (err) {
-        console.log(err, 'ini error auth')
-        res.status(401).json({ message: "User is not authenticated" })
+        return next(err)
     }
 }
 
@@ -22,16 +29,15 @@ const authentication = (req, res, next) => {
 //req.userData will be carried out as well from previous authentication
 const authorization = async(req, res, next) => {
     const { id } = req.params;
-
     try {
         const target = await Todo.findByPk(id);
         if (target && target.UserId === req.userData.id) {
             next()
         } else {
-            return res.status(403).json({ message: "Access Forbiden" })
+            throw { message: "Access Forbiden", statusCode: 403 }
         }
     } catch (err) {
-        return res.status(403).json({ message: "Access Forbiden" })
+        next(err)
     }
 
 }

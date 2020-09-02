@@ -1,9 +1,9 @@
 const { User } = require('../models');
-const { compare } = require('../helpers/bcrypt')
-const { generateToken, verifyToken } = require('../helpers/jwt')
-
+const { compare } = require('../helpers/bcrypt');
+const { generateToken, verifyToken } = require('../helpers/jwt');
+//###############################################################
 class Controller {
-    static register(req, res) {
+    static register(req, res, next) {
         const { username, email, password } = req.body;
         User.create({ username, email, password })
             .then(user => {
@@ -11,12 +11,11 @@ class Controller {
                 res.status(201).json({ username, email })
             })
             .catch(err => {
-                console.log(err, '<<< ini error')
-                res.status(500).json({ message: "Internal Server Error" })
+                return next(err)
             })
     };
 
-    static login(req, res) {
+    static login(req, res, next) {
         const { username, password } = req.body;
         User.findOne({ where: { username } })
             .then(user => {
@@ -26,15 +25,14 @@ class Controller {
                         const access_token = generateToken(user) //Generate Token (using JWT)//
                         return res.status(200).json({ access_token })
                     } else {
-                        return res.status(400).json({ message: "Username/password is invalid" })
+                        throw { message: "Username/password is invalid", statusCode: 400 }
                     }
                 } else {
-                    return res.status(400).json({ message: "Username/password is invalid" })
+                    throw { message: "Username/password is invalid", statusCode: 400 }
                 }
             })
             .catch(err => {
-                console.log(err, '<<< ini error')
-                res.status(500).json({ message: "Internal Server Error" })
+                return next(err)
             })
     }
 }
