@@ -98,12 +98,12 @@ _Response (201 - Created)_
 }
 ```
 
-<!-- _Response (400 - Bad Request)_
+_Response (400 - Bad Request)_
 ```
 {
   "message": "Invalid requests"
 }
-``` -->
+```
 
 _Response (500 - Internal server error)_
 ```
@@ -184,12 +184,12 @@ _Response (200)_
 }
 ```
 
-<!-- _Response (400 - Bad Request)_
+_Response (400 - Bad Request)_
 ```
 {
   "message": "Invalid requests"
 }
-``` -->
+```
 
 _Response (404 - Not Found)_
 ```
@@ -236,12 +236,12 @@ _Response (200)_
     "updatedAt": "2020-03-20T07:15:12.149Z",
 }
 ```
-<!-- _Response (400 - Bad Request)_
+_Response (400 - Bad Request)_
 ```
 {
   "message": "Invalid requests"
 }
-``` -->
+```
 
 _Response (404 - Not Found)_
 ```
@@ -289,12 +289,12 @@ _Response (201)_
     "updatedAt": "2020-03-20T07:15:12.149Z",
 }
 ```
-<!-- _Response (400 - Bad Request)_
+_Response (400 - Bad Request)_
 ```
 {
   "message": "Invalid requests"
 }
-``` -->
+```
 
 _Response (500)_
 ```
