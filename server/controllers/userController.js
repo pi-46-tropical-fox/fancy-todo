@@ -1,6 +1,6 @@
 const {User} = require('../models')
 const { generateToken } = require('../helpers/jwt')
-const bcrypt = require('bcrypt')
+const { comparePassword } = require('../helpers/bcrypt')
 
 class UserController {
     static async register(req, res) {
@@ -19,15 +19,14 @@ class UserController {
             if (!user) {
                 return res.status(400).json({message: "Invalid Email"})
             }
-            const isValid = bcrypt.compareSync(password, user.password)
+            const isValid = comparePassword(password, user.password)
             if(isValid) {
-                const access_token = generateToken(user)
+                const access_token = generateToken({email: user.email, id: user.id})
                 return res.status(200).json({access_token})
             } else {
                 return res.status(400).json({message: "Invalid Password"})
             }
         } catch(err) {
-            console.log('fsda')
             return res.status(500).json({message: err.message})
         }
     }
