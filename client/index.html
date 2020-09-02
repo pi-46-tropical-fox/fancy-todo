@@ -68,18 +68,18 @@
       <!----------------------------------- Register --------------------------------->
 			<div id="form-register">
 				<h3>Register</h3>
-			<form >
+			<form id="registerForm">
 					<div class="form-group">
 						<label for="exampleInputEmail1">Username</label>
-						<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+						<input type="text" class="form-control" id="registerUsername" aria-describedby="emailHelp">
 					</div>
 					<div class="form-group">
 							<label for="exampleInputPassword1">Email</label>
-							<input type="email" class="form-control" id="exampleInputPassword1">
+							<input type="email" class="form-control" id="registerEmail">
 						</div>
 					<div class="form-group">
 						<label for="exampleInputPassword1">Password</label>
-						<input type="password" class="form-control" id="exampleInputPassword1">
+						<input type="password" class="form-control" id="registerPassword">
 					</div>
 					<!-- <div class="form-group form-check">
 						<input type="checkbox" class="form-check-input" id="exampleCheck1">
@@ -91,26 +91,61 @@
       
 
     <!----------------------------------- Table --------------------------------->
-    <div id="todo-list">
-			<table class="table table-striped">
+    <div id="todo-list"> 
+			<!-- show -->
+			<table class="table table-striped" id="showAllTodos">
 					<thead>
 						<tr>
 							<th scope="col">#</th>
-							<th scope="col">First</th>
-							<th scope="col">Last</th>
-							<th scope="col">Handle</th>
+							<th scope="col">Title</th>
+							<th scope="col">Description</th>
+							<th scope="col">Status</th>
+							<th scope="col">Due Date</th>
+							<th scope="col">Action</th>	
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<th scope="row">1</th>
-							<td>Mark</td>
-							<td>Otto</td>
-							<td>@mdo</td>
-						</tr>
+					<tbody id="todoList">	
 					</tbody>
 				</table>
-    </div>
+		</div>
+		
+		<!----------------------------------- Create Todo --------------------------------->
+		<div id="create-todo">
+			<form id="createTodoForm">
+				<h3>Create Todo</h3>
+				<div class="form-group">
+					<label for="exampleInputEmail1">Title</label>
+					<input type="text" class="form-control" id="titleCreate" aria-describedby="emailHelp">
+				</div>
+				<div class="form-group">
+						<label for="exampleInputPassword1">Description</label>
+						<input type="text" class="form-control" id="descriptionCreate">
+					</div>
+				<div class="form-group">
+					<label for="exampleInputPassword1">Due Date</label>
+					<input type="date" class="form-control" id="due_dateCreate">
+				</div>
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+
+			<form id="editTodo">
+				<h3>Edit Todo</h3>
+				<div class="form-group">
+					<label for="exampleInputEmail1">Title</label>
+					<input type="text" class="form-control" id="title" aria-describedby="emailHelp">
+				</div>
+				<div class="form-group">
+						<label for="exampleInputPassword1">Description</label>
+						<input type="text" class="form-control" id="description">
+					</div>
+				<div class="form-group">
+					<label for="exampleInputPassword1">Due Date</label>
+					<input type="date" class="form-control" id="due_date">
+				</div>
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
+
       
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
