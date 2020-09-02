@@ -2,9 +2,9 @@ const { Todo } = require('../models');
 
 class Controller {
     static async showAllTodo(req, res, next) {
-        console.log(req.userData)
+        // console.log(req.userData)
         try {
-            const data = await Todo.findAll();
+            const data = await Todo.findAll({ where: { UserId: req.userData.id } });
             res.status(200).json(data)
         } catch {
             return next(arr)

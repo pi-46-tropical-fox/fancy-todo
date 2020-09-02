@@ -16,8 +16,8 @@ class Controller {
     };
 
     static login(req, res, next) {
-        const { username, password } = req.body;
-        User.findOne({ where: { username } })
+        const { email, password } = req.body;
+        User.findOne({ where: { email } })
             .then(user => {
                 if (user) {
                     const isValid = compare(password, user.password) //Compare Password(using bacrypt)//

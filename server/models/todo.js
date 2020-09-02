@@ -31,6 +31,11 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         sequelize,
         modelName: 'Todo',
+        hooks: {
+            beforeCreate(todo) {
+                todo.due_date = todo.due_date.split('/').join('-')
+            }
+        }
     });
     return Todo;
 };
