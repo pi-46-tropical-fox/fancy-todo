@@ -27,6 +27,7 @@ menuLogout = () => {
     beforeLogin()
     menuLogin()
     localStorage.clear()
+    $('.msg').append(`<div class="alert alert-success" role="alert">You've logged out!</div>`)
 }
 menuAllTodo = () => {
     $('#form-login').hide()
@@ -131,6 +132,7 @@ loginForm = e => {
         localStorage.setItem('access_token', res.access_token)
         afterLogin()
         menuAllTodo()
+        $('.msg').append(`<div class="alert alert-success" role="alert">Login success!</div>`)
     })
     .fail(err => {
         for(const el of err.responseJSON.errors){
@@ -162,6 +164,7 @@ registerForm = e => {
         localStorage.setItem('access_token', res.access_token)
         afterLogin()
         menuAllTodo()
+        $('.msg').append(`<div class="alert alert-success" role="alert">Account created successfully!</div>`)
     })
     .fail(err => {
         for(const el of err.responseJSON.errors){
@@ -188,23 +191,7 @@ todoCreateForm = e => {
     })
     .done(res => {
         menuAllTodo()
-    })
-    .fail(err => {
-        for(const el of err.responseJSON.errors){
-            $('.msg').append(`<small class="text-danger">${el}</small><br>`)
-        }
-    })
-}
-deleteTodo = (id) => {
-    $.ajax({
-        method: 'DELETE',
-        url: `http://localhost:3000/todos/${id}`,
-        headers: {
-            access_token: localStorage.getItem('access_token')
-        }
-    })
-    .done(res => {
-        menuAllTodo()
+        $('.msg').append(`<div class="alert alert-success" role="alert">Todo created successfully!</div>`)
     })
     .fail(err => {
         for(const el of err.responseJSON.errors){
@@ -293,6 +280,7 @@ $(document).ready(() => {
                 })
                 .done(res => {
                     menuAllTodo()
+                    $('.msg').append(`<div class="alert alert-success" role="alert">Todo edited successfully!</div>`)
                 })
                 .fail(err => {
                     for(const el of err.responseJSON.errors){
@@ -300,6 +288,24 @@ $(document).ready(() => {
                     }
                 })
             })
+        })
+        .fail(err => {
+            for(const el of err.responseJSON.errors){
+                $('.msg').append(`<small class="text-danger">${el}</small><br>`)
+            }
+        })
+    }
+    deleteTodo = (id) => {
+        $.ajax({
+            method: 'DELETE',
+            url: `http://localhost:3000/todos/${id}`,
+            headers: {
+                access_token: localStorage.getItem('access_token')
+            }
+        })
+        .done(res => {
+            menuAllTodo()
+            $('.msg').append(`<div class="alert alert-success" role="alert">Todo deleted successfully!</div>`)
         })
         .fail(err => {
             for(const el of err.responseJSON.errors){
