@@ -45,20 +45,26 @@ menuAllTodo = () => {
         }
     })
     .done(res => {
-        for(const el of res){
-            let data = `<tr>
-                            <th scope="row">${el.id}</th>
-                            <td>${el.title}</td>
-                            <td>${el.description}</td>
-                            <td>${el.due_date}</td>
-                            <td>${el.status}</td>
-                            <td>
-                                <button type="button" class="btn btn-success btn-sm">Edit</button>
-                                <button type="button" class="btn btn-danger btn-sm">Delete</button>
-                                <button type="button" class="btn btn-primary btn-sm">Detail</button>
-                            </td>
-                        </tr>`
-            $('#todo-list tbody').append(data)
+        if(res.length === 0){
+            $('#todo-list .container').empty()
+            $('#todo-list .container').append(`<h2>You don't have any todo</h2>`)
+        }else{
+            let i = 1
+            for(const el of res){                
+                let data = `<tr>
+                                <th scope="row">${i++}</th>
+                                <td>${el.title}</td>
+                                <td>${el.description}</td>
+                                <td>${el.due_date}</td>
+                                <td>${el.status}</td>
+                                <td>
+                                    <button type="button" onclick="editTodo(${el.id})" class="btn btn-success btn-sm">Edit</button>
+                                    <button type="button" onclick="deleteTodo(${el.id})" class="btn btn-danger btn-sm">Delete</button>
+                                    <button type="button" onclick="detailTodo(${el.id})" class="btn btn-primary btn-sm">Detail</button>
+                                </td>
+                            </tr>`
+                $('#todo-list tbody').append(data)
+            }
         }
     })
     .fail(err => {
@@ -189,9 +195,24 @@ todoCreateForm = e => {
         }
     })
 }
-todoEditForm = () => {
-    
+deleteTodo = (id) => {
+    $.ajax({
+        method: 'DELETE',
+        url: `http://localhost:3000/todos/${id}`,
+        headers: {
+            access_token: localStorage.getItem('access_token')
+        }
+    })
+    .done(res => {
+        menuAllTodo()
+    })
+    .fail(err => {
+        for(const el of err.responseJSON.errors){
+            $('.msg').append(`<small class="text-danger">${el}</small><br>`)
+        }
+    })
 }
+
 $(document).ready(() => {
     initContent()
 
@@ -211,7 +232,81 @@ $(document).ready(() => {
     $('#formLogin').submit(loginForm)
     $('#formRegister').submit(registerForm)
     $('#formCreateTodo').submit(todoCreateForm)
-    $('#formEditTodo').submit(todoEditForm)
+    editTodo = (id) => {
+        $('#form-login').hide()
+        $('#form-register').hide()
+        $('#todo-list').hide()
+        $('#todo-create-form').hide()
+        $('#todo-edit-form').show()
+        $('#todo-card').hide()
+        $('.msg').empty()
+        $.ajax({
+            method: 'GET',
+            url: `http://localhost:3000/todos/${id}`,
+            headers: {
+                access_token: localStorage.getItem('access_token')
+            }
+        })
+        .done(res => {
+            $('#todo-edit-form .container').empty()
+            let data = `
+            <form id="formEditTodo">
+                <div class="form-group" style="width: 500px;">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" name="edit-title" id="edit-title" value="${res.title}">
+                    <label for="description">Description</label>
+                    <input type="text" class="form-control" name="edit-description" id="edit-description" value="${res.description}">
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col">
+                            <label for="due_date">Due Date</label>
+                        <input type="date" class="form-control" name="edit-due_date" id="edit-due_date" value="${res.due_date}">
+                        </div>
+                        <div class="col">
+                            <label for="edit-status">Status</label>
+                            <input type="text" class="form-control" name="edit-status" id="edit-status" value="${res.status}">
+                        </div>
+                    </div>
+                </div> 
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>`
+            $('#todo-edit-form .container').append(data)
+            $('#formEditTodo').submit(e => {
+                e.preventDefault()
+                const title = $('#edit-title').val()
+                const description = $('#edit-description').val()
+                const due_date = $('#edit-due_date').val()
+                const status = $('#edit-status').val()
+                $.ajax({
+                    method: 'PUT',
+                    url: `http://localhost:3000/todos/${id}`,
+                    headers: {
+                        access_token: localStorage.getItem('access_token')
+                    },
+                    data: {
+                        title,
+                        description,
+                        due_date,
+                        status                                                                                                                                                                                                                                                                                                                                                      
+                    }
+                })
+                .done(res => {
+                    menuAllTodo()
+                })
+                .fail(err => {
+                    for(const el of err.responseJSON.errors){
+                        $('.msg').append(`<small class="text-danger">${el}</small><br>`)
+                    }
+                })
+            })
+        })
+        .fail(err => {
+            for(const el of err.responseJSON.errors){
+                $('.msg').append(`<small class="text-danger">${el}</small><br>`)
+            }
+        })
+    }
     $('button[type=submit]').click(e => {
         $('.msg').empty()
     })
