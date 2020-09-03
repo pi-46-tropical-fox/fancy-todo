@@ -46,7 +46,7 @@ const  authorization = async (req, res, next) => {
      else if (todo && todo.UserId === req.userData.id) {
       next();
     } else {
-      throw({ message: "Unauthorized Access", statusCode: 403 });
+      throw { message: "Unauthorized Access", statusCode: 403 };
     }
   } catch (err) {
     console.log("<<<< error in authorization");
