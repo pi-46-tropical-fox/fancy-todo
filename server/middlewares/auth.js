@@ -1,14 +1,23 @@
 "use strict";
 
 const { verify_jwt_token } = require("../helpers/jwt");
-const { Todo } = require("../models");
+const { User, Todo } = require("../models");
 
-const authentication = (req, res, next) => {
+const authentication = async (req, res, next) => {
 	const { access_token } = req.headers;
+	const decoded_user_data = verify_jwt_token(access_token);
 	try {
-		const decoded_user_data = verify_jwt_token(access_token);
-		req.user = decoded_user_data;
-		next();
+		const user = await User.findOne({
+			where: {
+				username: decoded_user_data.username
+			}
+		});
+		if (!user) {
+			throw { message: "The user is not authenticated." };
+		} else {
+			req.user = user;
+			next();
+		}
 	} catch(err) {
 		return res.status(401).json({ message: "The user is not authenticated." });
 	}

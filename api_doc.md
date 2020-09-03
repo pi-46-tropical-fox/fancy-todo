@@ -23,9 +23,7 @@ My Fancy Todo App is an application to manage your activities. This app has :
 
 _Request Header_
 ```
-{
-  "access_token": "<your access token>"
-}
+not needed
 ```
 
 _Request Body_
@@ -58,9 +56,7 @@ _Response (400 - Bad Request)_
 
 _Request Header_
 ```
-{
-  "access_token": "<your access token>"
-}
+not needed
 ```
 
 _Request Body_
