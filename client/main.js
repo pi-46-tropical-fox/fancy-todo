@@ -19,18 +19,14 @@ function menuAdd(event) {
     $('#todo-list').hide()
 }
 
-function menuList(event) {
-    $('#form-login').hide()
-    $('#form-register').hide()
-    $('#form-add-todo').hide()
-    $('#todo-list').show()
-}
 
 function menuList(event) {
     $('#form-login').hide()
     $('#form-register').hide()
     $('#form-add-todo').hide()
     $('#todo-list').show()
+
+    $('#tableTodo').empty()
 
     $.ajax({
         method: "GET",
@@ -114,6 +110,31 @@ function loginForm(event) {
         })
 }
 
+function registerForm(event) {
+    event.preventDefault();
+    const email = $('#registerEmail').val()
+    const password = $('#registerPassword').val()
+
+    $.ajax({
+        method:'POST',
+        url: 'http://localhost:3000/register',
+        data: {
+            email,
+            password
+        }
+    })
+    .done(response => {
+        $('#registerEmail').val('')
+        $('#registerPassword').val('')
+        localStorage.setItem('acces_token',response.acces_token)
+        menuList()
+        afterLogin()
+    })
+    .fail(err => {
+        console.log(err)
+    })
+}
+
 $(document).ready(function() {
     initContent()
     if(localStorage.getItem('acces_token')) {
@@ -130,5 +151,6 @@ $(document).ready(function() {
     $('#nav-home').click(menuList)
     $('#nav-logout').click(menuLogout)
     $('#loginForm').submit(loginForm)
+    $('#registerForm').submit(registerForm)
     
 })
