@@ -85,7 +85,7 @@ class CalendarController {
 
         .then (response => {
             console.log (response.data)
-            return res.status (200).json ({message : "Success, Displaying Public Holidays"})
+            return res.status (200).json ({message : "Success, Displaying Long Weekends 2020"})
         })
 
         .catch (err => {
@@ -102,7 +102,7 @@ class CalendarController {
 
         .then (response => {
             console.log (response.data)
-            return res.status (200).json ({message : "Success, Displaying Public Holidays"})
+            return res.status (200).json ({message : "Success, Displaying Long Weekends 2021"})
         })
 
         .catch (err => {
@@ -119,7 +119,7 @@ class CalendarController {
 
         .then (response => {
             console.log (response.data)
-            return res.status (200).json ({message : "Success, Displaying Public Holidays"})
+            return res.status (200).json ({message : "Success, Displaying Long Weekends 2022"})
         })
 
         .catch (err => {

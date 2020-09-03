@@ -29,8 +29,6 @@ fancy Todos App is an application to manage your assets. This app has :
     GET /calendars/longweekends2021
     GET /calendars/longweekends2022
     
-
-
 ```
 
 
@@ -236,7 +234,7 @@ _Response (500 - Internal Server Error)_
 }
 ```
 
-### POST /users/
+### POST /users/ register
 
 > Create new users
 
@@ -263,18 +261,257 @@ _Response (201 - Created)_
   "username": "<new username>",
   "email": "<new email>"
   "password" : "<new hash password>"
-  "updatedAt" : "<new hash password>"
-  "createdAt" : "<new hash password>"
+  "updatedAt" : "<new Date>"
+  "createdAt" : "<new Date>"
 
 }
 ```
 
-_Response (400 - Bad Request)_
+_Response (403 - Forbidden Access)_
 ```
 {
-  "message": "Invalid requests"
+  "message": "Forbidden Access"
 }
 ```
+
+### POST /users/login
+
+> Signing in users
+
+_Request Header_
+```
+{
+  "Content-Type": "application/json"
+}
+```
+
+_Request Body_
+```
+{
+  "email": "<insert registered email>"
+  "password" : "<insert registered  password>"
+}
+```
+
+_Response (200 - Ok)_
+```
+{
+  "token" : "access_token"
+
+}
+```
+
+_Response (403 - Forbidden Access)_
+```
+{
+  "message": "Forbidden Access"
+}
+```
+_Response (404 - Not Found_
+```
+{
+  "message": "Email or Password is wrong"
+}
+```
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "Internal Server Error"
+}
+```
+
+### GET /calendars/holidays2020
+
+> Get all calendars holidays2020
+
+_Request Header_
+```
+{
+  "Content-Type": "application/json"
+}
+```
+
+_Request Body_
+```
+{
+    not needed
+}
+```
+
+_Response (200 - Ok)_
+```
+{
+  "message": "Success, Displaying Public Holidays"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "Internal Server Error"
+}
+```
+
+### GET /calendars/holidays2021
+
+> Get all calendars holidays2021
+
+_Request Header_
+```
+{
+  "Content-Type": "application/json"
+}
+```
+
+_Request Body_
+```
+{
+    not needed
+}
+```
+
+_Response (200 - Ok)_
+```
+{
+  "message": "Success, Displaying Public Holidays"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "Internal Server Error"
+}
+```
+
+### GET /calendars/holidays2022
+
+> Get all calendars holidays2020
+
+_Request Header_
+```
+{
+  "Content-Type": "application/json"
+}
+```
+
+_Request Body_
+```
+{
+    not needed
+}
+```
+
+_Response (200 - Ok)_
+```
+{
+  "message": "Success, Displaying Public Holidays"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "Internal Server Error"
+}
+```
+
+### GET /calendars/longweekends2020
+
+> Get all calendars long weekends 2020
+
+_Request Header_
+```
+{
+  "Content-Type": "application/json"
+}
+```
+
+_Request Body_
+```
+{
+    not needed
+}
+```
+
+_Response (200 - Ok)_
+```
+{
+  "message": "Success, Displaying Long Weekends 2020"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "Internal Server Error"
+}
+```
+
+### GET /calendars/longweekends2021
+
+> Get all calendars long weekends 2021
+
+_Request Header_
+```
+{
+  "Content-Type": "application/json"
+}
+```
+
+_Request Body_
+```
+{
+    not needed
+}
+```
+
+_Response (200 - Ok)_
+```
+{
+  "message": "Success, Displaying Long Weekends 2021"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "Internal Server Error"
+}
+```
+
+### GET /calendars/longweekends2022
+
+> Get all calendars long weekends 2022
+
+_Request Header_
+```
+{
+  "Content-Type": "application/json"
+}
+```
+
+_Request Body_
+```
+{
+    not needed
+}
+```
+
+_Response (200 - Ok)_
+```
+{
+  "message": "Success, Displaying Long Weekends 2022"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "Internal Server Error"
+}
+```
+
 
 
 

@@ -17,7 +17,7 @@ function errorHandler (err, req, res, next) {
             break;
 
         case "ValidationErrorItem" :
-            errors.push("Invalid User")
+            errors.push("Forbidden Access")
             errorStatus = 403
             break;
 
