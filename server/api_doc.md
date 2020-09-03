@@ -14,6 +14,26 @@ fancy Todos App is an application to manage your assets. This app has :
     DELETE /todos/:id
 
 ```
+```
+    POST /users/register
+    POST /users/login
+
+```
+
+```
+    GET /calendars/holidays2020
+    GET /calendars/holidays2021
+    GET /calendars/holidays2022
+    
+    GET /calendars/longweekends2020
+    GET /calendars/longweekends2021
+    GET /calendars/longweekends2022
+    
+
+
+```
+
+
 
 ### POST /todos
 
@@ -213,6 +233,46 @@ _Response (500 - Internal Server Error)_
 ```
 {
   "message": "Internal Server Error"
+}
+```
+
+### POST /users/
+
+> Create new users
+
+_Request Header_
+```
+{
+  "Content-Type": "application/json"
+}
+```
+
+_Request Body_
+```
+{
+  "username": "<insert new username>",
+  "email": "<insert new email>"
+  "password" : "<insert new password>"
+}
+```
+
+_Response (201 - Created)_
+```
+{
+  "id": 1,
+  "username": "<new username>",
+  "email": "<new email>"
+  "password" : "<new hash password>"
+  "updatedAt" : "<new hash password>"
+  "createdAt" : "<new hash password>"
+
+}
+```
+
+_Response (400 - Bad Request)_
+```
+{
+  "message": "Invalid requests"
 }
 ```
 

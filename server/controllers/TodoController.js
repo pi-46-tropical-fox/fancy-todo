@@ -21,7 +21,8 @@ class TodoController {
         .catch (err => {
             // console.log (err, "--error create Todo")
             // return res.status (400).json ({message : err.message})
-            throw {message : "Bad Request - Error Validation", errorStatus : 400}
+            // throw {message : "Bad Request - Error Validation", errorStatus : 400}
+            return next (err)
             
 
         })
@@ -54,7 +55,8 @@ class TodoController {
         .catch (err => {
             // console.log (err, "--error show Todo by Id")
             // return res.status (404).json ({message : err.message})
-            throw {message : "Data Not Found", errorStatus : 404}
+            // throw {message : "Data Not Found", errorStatus : 404}
+            return next (err)
 
         })
 
@@ -88,7 +90,8 @@ class TodoController {
         .catch (err => {
             // console.log (err, "--error update Todo")
             // return res.status (404).json ({message : err.message})
-            throw {message : "Data Not Found", errorStatus : 404}
+            // throw {message : "Data Not Found", errorStatus : 404}
+            return next (err)
 
         })
 

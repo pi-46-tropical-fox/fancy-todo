@@ -16,6 +16,13 @@ function errorHandler (err, req, res, next) {
             errorStatus = 401
             break;
 
+        case "ValidationErrorItem" :
+            errors.push("Invalid User")
+            errorStatus = 403
+            break;
+
+
+
         default:
             errors.push (err.message)
             errorStatus = err.errorStatus || 500

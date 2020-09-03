@@ -20,6 +20,7 @@ class UserController {
         })
 
         .catch (err => {
+            // console.log (err)
             return next (err)
         })
 
@@ -68,6 +69,7 @@ class UserController {
 
     }
 
+    
 }
 
 module.exports = UserController

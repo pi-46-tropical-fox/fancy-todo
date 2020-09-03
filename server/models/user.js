@@ -46,10 +46,10 @@ module.exports = (sequelize, DataTypes) => {
           rgs : true,
           msg : "You can't leave your password field empty"
         },
-        unique : {
-          args : true,
-          msg : "Password has been registered"
-        },
+        // unique : {
+        //   args : true,
+        //   msg : "Password has been registered"
+        // },
         len : {
           args : [5],
           msg : "Minimum Password length is 5 characters"
