@@ -14,8 +14,8 @@ Website to manage todo. This app has :
 - PUT /todo/:id
 - PATCH /todo/:id
 - DELETE /todo/:id
-- POST /todo/:register
-- POST /todo/:login
+- POST /user/:register
+- POST /user/:login
 
 ```
 

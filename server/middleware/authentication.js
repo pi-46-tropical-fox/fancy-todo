@@ -1,19 +1,21 @@
 const { verifyToken } = require('../helpers/jwt')
+const { User } = require('../models')
 
 function authentication (req, res, next) {
     console.log(req.headers)
-    // if(!req.headers.token) {
-        
-    //     return res.status(401).json({message: "authentication failed"})
-    // } else {
-        try {
-            const payload = verifyToken(req.headers.token)
+    
+
+    const payload = verifyToken(req.headers.token)
+    console.log(payload)
+    User.findByPk(payload.id)
+        .then( user => {
+        if(user.email === payload.email)
             req.userData = payload
             next()
-        } catch (err) {
-            return res.status(401).json({message: "authentication failed"})
-        }
-    // }
+        })
+        .catch (err => {
+            return next(err)
+        })
+    
 }
-
 module.exports = authentication

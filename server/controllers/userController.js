@@ -1,9 +1,9 @@
 const { User } = require ('../models')
 const { generateToken } = require('../helpers/jwt')
-const validateUser = require('../helpers/validateUser')
+const { validateUser } = require('../helpers/validateUser')
 
 class UserController {
-    static register (req,res) {
+    static register (req,res,next) {
         const { username, email, password } = req.body
 
         User.create({username, email, password})
@@ -13,17 +13,17 @@ class UserController {
             })
             .catch(err => {
                 console.log(err)
-                res.status(500).json({message: "internal error server"})
+                return next(err)
             })
     }
 
-    static login (req,res) {
-        const {username, password} = req.body
+    static login (req,res, next) {
+        const {email, password} = req.body
 
-        User.findOne({where : { username }})
+        User.findOne({where : { email }})
             .then( user => {
                 if (!user) {
-                    res.status(400).json({ message : "Invalid username or password"})
+                    throw { message : "Invalid username or password" , statusCode : 400}
                 }
                 return user
             })
@@ -34,11 +34,11 @@ class UserController {
                     const token = generateToken(user)
                     return res.status(200).json({token})
                 } else {
-                    res.status(400).json({ message : "Invalid username or password"})
+                    throw { message : "Invalid username or password" , statusCode : 400}
                 }
             })
             .catch( err => {
-                return res.status(500).json({message : "Internal server error"})
+                return next(err)
             })
     }
 }

@@ -9,15 +9,24 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       username: {
-        type: Sequelize.STRING,
         allowNull: false,
-        unique: true
+        type: Sequelize.STRING
       },
       email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        notEmpty: true,
+        isEmail: {
+          args: true,
+          msg: 'invalid email format'
+        }
       },
       password: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        len: {
+          args: [6, 15],
+          msg: 'Pasword min 6 characters max 15 characters'
+        }
       },
       createdAt: {
         allowNull: false,

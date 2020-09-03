@@ -1,17 +1,17 @@
 const { Todo } = require('../models')
 
 class TodoController {
-    static getTodos (req, res) {
-        Todo.findAll({where : { UserId : req.userData.id}})
+    static getTodos (req, res, next) {
+        Todo.findAll({where : { UserId : req.userData.id}, order: [['due_date', 'DESC']]})
             .then(todos => {
                 return res.status(200).json(todos)
             })
             .catch(err => {
-                return res.status(500).json({message : err.message})
+                return next(err)
             })
     }
 
-    static createTodo (req, res) {
+    static createTodo (req, res, next) {
         
         const data = {
             title : req.body.title,
@@ -25,21 +25,25 @@ class TodoController {
                 return res.status(201).json(todo)
             })
             .catch( err => {
-                return res.status(500).json({message : err.message})
+                return next(err)
             })
     }
 
-    static find (req, res) {
+    static find (req, res, next) {
         Todo.findByPk(req.params.id)
             .then( todo => {
-                res.status(200).json(todo)
+                if(!todo){
+                    throw { message: "Data not found", statusCode: 404}
+                } else {
+                    return res.status(200).json(todo)
+                }
             })
             .catch( err => {
-                res.status(404).json({message: `data not found`} )
+                return next(err)
             })
     }
     
-    static putTodo (req, res) {
+    static putTodo (req, res, next) {
         const params = { 
             title : req.body.title,
             description : req.body.description,
@@ -47,22 +51,23 @@ class TodoController {
             due_date : req.body.due_date
         }
 
-        Todo.update(params, {where: {id: req.body.id}})
+        Todo.update(params, {where: {id: req.params.id}})
             .then ( todo => {
-                res.status(200).json({message: `Successfully update Todo with id ${req.params.id}`})
+                return res.status(200).json({message: `Successfully update Todo with id ${req.params.id}`})
             })
             .catch ( err => {
-                res.status(404).json({message:`data not found`})
+                return next(err)
             })
     }
 
-    static deleteTodo (req, res) {
+    static deleteTodo (req, res, next) {
         Todo.destroy({where : { id : req.params.id}})
             .then( todo => {
-                res.status(200).json({message: `Successfully delete Todo with id ${req.params.id}`})
+                
+                return res.status(200).json({message: `Successfully delete Todo with id ${req.params.id}`})
             })
             .catch( err => {
-                res.status(404).json({message: `data not found`} )
+                return next(err)
             })
     }
 
