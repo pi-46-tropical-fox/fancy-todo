@@ -2,7 +2,7 @@
 const {
   Model
 } = require('sequelize');
-const hashedPassword = require('../helpers/hashPassword');
+const {hashPassword} = require('../helpers/hashPassword');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
   User.init({
     email: {
       type: DataTypes.STRING,
+      unique: {
+        args: true,
+        msg: `Email sudah ada`
+      },
       validate: {
         isEmail: {
           args: true,
@@ -27,10 +31,6 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: {
           args: true,
           msg: `Tidak boleh kosong`
-        },
-        unique: {
-          args: true,
-          msg: `Email must be unique`
         }
       }
     },
@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   User.beforeCreate((inst, opt) => {
-    inst.password = hashedPassword(inst)
+    inst.password = hashPassword(inst)
   })
   return User;
 };

@@ -264,3 +264,75 @@ _Response (500 - Server Error)_
   "message": "Internal server error"
 }
 ```
+
+### POST /register
+
+> Create new user
+
+_Request Body_
+```
+{
+  "email": "<email to get insert into>",
+  "password": "<password to get insert into>",  
+}
+```
+
+_Response (201 - Created)_
+```
+{
+  "id": <given id by system>,
+  "email": "<email to get insert into>"
+}
+```
+
+_Response (400 - Bad Request)_
+```
+{
+  "message": "Invalid requests"
+}
+```
+
+_Response (500 - Server Error)_
+```
+{
+  "message": "Internal server error"
+}
+```
+
+### POST /login
+
+> Login user
+
+_Request Body_
+```
+{
+  "email": "<email to get insert into>",
+  "password": "<password to get insert into>",  
+}
+```
+
+_Response (200 - OK)_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Response (400 - Bad Request)_
+```
+{
+  "message": "Invalid requests"
+}
+```
+
+_Response (500 - Server Error)_
+```
+{
+  "message": "Internal server error"
+}
+```
+---
+User bisa create todo dan findAll Todo jika memberikan accesstoken. acces token tersebut sudah terverivikasi(Authentication)
+
+---
+User hanya bisa melihat (findOne), menghapus dan menghapus todonya sendiri (Authorization)

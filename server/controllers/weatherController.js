@@ -3,7 +3,7 @@ const axios = require('axios')
 class weatherController {
     static async showAll(req,res) {
         try {
-          const city = req.query.query
+          const {city} = req.query
 
           const response = await axios.get(`http://api.weatherstack.com/current?access_key=${process.env.ACCESS_KEY}&query=${city}`);
           // res.send(response.data)

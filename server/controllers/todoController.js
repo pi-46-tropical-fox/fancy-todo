@@ -103,7 +103,7 @@ class TodoController {
             res.status(200).json({message: "Berhasil dihapus"})
             
          } catch (err) {
-             return next(err)
+            return next(err)
          }
     }
 }
