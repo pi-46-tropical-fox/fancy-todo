@@ -1,9 +1,14 @@
 const route = require('express').Router()
+const {LocationController, WeatherController} = require('../controller/apicontroller')
 const TaskController = require('../controller/taskcontroller')
 const UserController = require('../controller/usercontroller')
 
 route.get('/', (req, res) => {
     res.send('hohohome')
+})
+
+route.get('/test', (req, res) => {
+    res.send('a')
 })
 
 route.post('/register', UserController.register)

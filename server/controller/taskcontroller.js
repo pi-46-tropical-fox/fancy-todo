@@ -1,4 +1,6 @@
 const {Task, User} = require('../models')
+const { getCoordinates } = require('../middlewares/geocode')
+
 
 class TaskController {
     static async activeTasks (req, res, next) {
@@ -18,11 +20,22 @@ class TaskController {
             let task = {
                 title: req.body.title,
                 due_date: req.body.due_date,
-                status: false,
                 description: req.body.description,
+                status: false,
                 completedAt: null,
+                location: req.body.location,
                 UserId: req.userData.id
             }
+
+            let location = await getCoordinates(task.location)
+            
+            if (location.statusCode) {
+                throw location
+            }
+
+            task.longitude = location.features[0].center[0]
+            task.latitude = location.features[0].center[1]
+            task.location = location.features[0].place_name
 
             let createdTask = await Task.create(task)
 
@@ -52,7 +65,8 @@ class TaskController {
                 title: req.body.title,
                 description: req.body.description,
                 status: false,
-                due_date: req.body.due_date
+                due_date: req.body.due_date,
+                location: req.body.location
             }
     
             let updated = await Task.update(data, {

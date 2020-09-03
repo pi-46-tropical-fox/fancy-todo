@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Task extends Model {
     /**
@@ -19,9 +20,29 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING
     },
     due_date: {
-      type: DataTypes.DATE
+      type: DataTypes.DATE,
+      validate: {
+        isNotEmpty: (value) => {
+          if (!value) {
+            throw new Error('Due date is required')
+          } else {
+            if (new Date(value) < new Date()) {
+              throw new Error('Due date cannot be earlier than today')
+            }
+          }
+        }
+      }
     },
     description: {
+      type: DataTypes.STRING
+    },
+    location: {
+      type: DataTypes.STRING
+    },
+    longitude: {
+      type: DataTypes.STRING
+    },
+    latitude: {
       type: DataTypes.STRING
     },
     status: {
