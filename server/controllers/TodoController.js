@@ -1,4 +1,6 @@
 const { Todo } = require('../models')
+const axios = require('axios')
+const pasteeApiKey = process.env.PASTEE_API_KEY
 
 class TodoController {
     static async readAll(req, res, next){
@@ -13,12 +15,27 @@ class TodoController {
     
     static async create(req, res, next){
         try {
-            // assume req.body has title, description, status, and due_date
-            req.body.UserId = req.userData.id
-            let newTodo = await Todo.create(req.body)
+            let newTodo = {
+                title: req.body.title,
+                description: req.body.description,
+                due_date: req.body.due_date,
+                UserId: req.userData.id,
+            }
 
+            if(req.body.code){
+                let data = {
+                    title: req.body.title,
+                    description: req.body.description,
+                    code: req.body.code
+                }
 
-            res.status(201).json(newTodo)
+                newTodo.PasteeId = await TodoController.addPastee(data, next)
+                console.log(newTodo);
+            }
+
+            let todo = await Todo.create(newTodo)
+
+            res.status(201).json(todo)
         } catch (err) {
             return next(err)
         }
@@ -52,6 +69,8 @@ class TodoController {
                 let isAuthorized = req.userData.id === todo.UserId
 
                 if(isAuthorized){
+                    await TodoController.deletePasteeId(todo.PasteeId)
+
                     await Todo.destroy({
                         where: { id: req.params.id }
                     })
@@ -65,6 +84,41 @@ class TodoController {
             }
         } catch (err) {
             return next(err)
+        }
+    }
+
+    static async addPastee(data, next){
+        try {
+            let pastee = {
+                method: "POST",
+                url: "https://api.paste.ee/v1/pastes",
+                data: {
+                    description: data.title,
+                    key: pasteeApiKey,
+                    sections: [
+                        {
+                            name: data.description,
+                            contents: data.code
+                        }
+                    ]
+                }
+            }
+
+            let res = await axios(pastee)
+
+            return res.data.id
+        } catch (err) {
+            next(err)
+        }
+    }
+
+    static async deletePasteeId(id, next){
+        try {
+            let res = await axios.delete(`https://api.paste.ee/v1/pastes/${id}`)
+
+            return res
+        } catch (err) {
+            next(err)
         }
     }
 }

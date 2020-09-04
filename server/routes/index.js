@@ -17,6 +17,7 @@ fs
 index
 .use('/u', endpoints.auth)
 .use('/todos', authenticate, endpoints.todo)
+.use('/api', authenticate, endpoints.api)
 .get('/', (req, res) => {
     res.status(200).send(`Welcome to ${settings.app.title}`)
 })
