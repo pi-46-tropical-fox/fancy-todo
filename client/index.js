@@ -1,145 +1,202 @@
 const url = "http://localhost:1223";
 
 function login() {
-  const username = $("#login-username").val();
-  const password = $("#login-password").val();
+    const email = $("#login-email").val();
+    const password = $("#login-password").val();
 
-  $("#error-text-login").hide();
+    $("#error-text-login").hide();
 
-  $.ajax({
-    method: "POST",
-    url: `${url}/login`,
-    data: {
-      username,
-      password,
-    },
-  })
-    .done((res) => {
-      localStorage.setItem("access_token", res.access_token);
-      console.log(`Login berhasil! Token nya adalah ${res.access_token}`);
-      initialize();
+    $.ajax({
+        method: "POST",
+        url: `${url}/login`,
+        data: {
+            email,
+            password,
+        },
     })
-    .fail((err) => {
-      $("#error-text-login").show();
-      $("#error-text-login").html(err.responseJSON.errors.join(","));
-    });
+        .done((res) => {
+            localStorage.setItem("access_token", res.access_token);
+            localStorage.setItem("email", res.email);
+            localStorage.setItem("username", res.username);
+
+            console.log(`Login berhasil! Token nya adalah ${res.access_token}`);
+            initialize();
+        })
+        .fail((err) => {
+            $("#error-text-login").show();
+            $("#error-text-login").html(err.responseJSON.errors.join(" ,"));
+        });
 }
 
 // Code untuk sign in dengan google
 function onSignIn(googleUser) {
-  console.log(googleUser);
+    console.log(googleUser);
 }
 
 function register() {
-  const username = $("#register-username").val();
-  const password = $("#register-password").val();
-  const email = $("#register-email").val();
+    const username = $("#register-username").val();
+    const password = $("#register-password").val();
+    const email = $("#register-email").val();
 
-  $("#error-text-register").hide();
+    $("#error-text-register").hide();
 
-  $.ajax({
-    method: "POST",
-    url: `${url}/register`,
-    data: {
-      username,
-      email,
-      password,
-    },
-  })
-    .done((res) => {
-      console.log(res);
-      initialize();
+    $.ajax({
+        method: "POST",
+        url: `${url}/register`,
+        data: {
+            username,
+            email,
+            password,
+        },
     })
-    .fail((err) => {
-      $("#error-text-register").show();
-      $("#error-text-register").html(err.responseJSON.errors.join(","));
-    });
+        .done(() => {
+            $("#success-text-register").show();
+
+            initialize();
+        })
+        .fail((err) => {
+            $("#error-text-register").show();
+            $("#error-text-register").html(err.responseJSON.errors.join(" ,"));
+        });
 }
 
 function logout() {
-  localStorage.removeItem("access_token");
+    localStorage.removeItem("access_token");
+}
+
+function deleteTodo(el) {
+    const id = el.attr("data-id");
+
+    $.ajax({
+        method: "DELETE",
+        url: `${url}/todos/${id}`,
+        headers: {
+            access_token: localStorage.getItem("access_token"),
+        },
+    })
+        .done(() => {
+            el.remove();
+        })
+        .fail((err) => {
+            console.error(err);
+        });
+}
+
+function showUpdateModal(id){
+  console.log(`Hello from show update modal ${id}`)
+}
+
+function addTodoToView(todo){
+  const el = $("<li>")
+  .addClass("list-group-item")
+  .attr("data-id", todo.id)
+  .append(todo.title)
+
+  const delBtn = $("<button>").html("Delete").addClass(["btn", "btn-danger"])
+  const updateBtn = $("<button>").html("Update").addClass(["btn", "btn-info"]);
+
+  updateBtn.click(() => showUpdateModal(el))
+  delBtn.click(() => deleteTodo(el))
+
+  el.append(delBtn)
+  el.append(updateBtn)
+
+  $("#todo-container").append(el);
 }
 
 function fetchTodos() {
-  $.ajax({
-    method: "GET",
-    url: `${url}/todos`,
-    headers: {
-      access_token: localStorage.getItem("access_token"),
-    },
-  })
-    .done((res) => {
-      console.log(res);
-      res.forEach((e) => {
-		console.log(e.title);
-		
-		$('#todo-container').append(`<h1>${e.title}</h1>`)
+    $("#todo-container").html("");
 
-      });
+    $.ajax({
+        method: "GET",
+        url: `${url}/todos`,
+        headers: {
+            access_token: localStorage.getItem("access_token"),
+        },
     })
-    .fail((err) => {
-      console.log(err);
-    });
+        .done((res) => {
+            res.forEach((e) => addTodoToView(e));
+        })
+        .fail((err) => {
+            console.log(err);
+        });
+}
+
+function logout() {
+    localStorage.clear();
+    initialize();
 }
 
 function addTodo() {
-  const title = $("#form-todo-title").val();
-  const description = $("#form-todo-description").val();
-  const due_date = $("#form-todo-due-date").val();
+    const title = $("#form-todo-title").val();
+    const description = $("#form-todo-description").val();
+    const due_date = $("#form-todo-due-date").val();
 
-  $.ajax({
-    method: "POST",
-    url: `${url}/todos`,
-    headers: {
-      access_token: localStorage.getItem("access_token"),
-    },
-    data: {
-      title,
-      description,
-      due_date,
-    },
-  })
-    .done((data) => {
-      $("#add-todo-modal").modal("toggle");
-      $("#add-todo-form").trigger("reset");
-      console.log(data);
+    $.ajax({
+        method: "POST",
+        url: `${url}/todos`,
+        headers: {
+            access_token: localStorage.getItem("access_token"),
+        },
+        data: {
+            title,
+            description,
+            due_date,
+        },
     })
-    .fail((err) => {
-      console.log(err);
-    });
+        .done((data) => {
+            $("#add-todo-modal").modal("toggle");
+            $("#add-todo-form").trigger("reset");
+
+            addTodoToView(data)
+        })
+        .fail((err) => {
+            console.log(err);
+        });
 }
 
 function initialize() {
-  if (localStorage.getItem("access_token")) {
-    // Kalo access token sudah ada
-    $("#credentials-form").hide();
-    $("#main").show();
+    if (localStorage.getItem("access_token")) {
+        // Kalo access token sudah ada
+        const email = localStorage.getItem("email");
+        const username = localStorage.getItem("username");
 
-    fetchTodos();
-  } else {
-    $("#main").hide();
-    $("#credentials-form").show();
-  }
+        $("#credentials-form").hide();
+        $("#main").show();
+        $("#user-dropdown").show();
+        $("#user-dropdown-text").html(`${username} (${email})`);
+
+        fetchTodos();
+    } else {
+        $("#main").hide();
+        $("#user-dropdown").hide();
+        $("#credentials-form").show();
+    }
 }
 
 $(document).ready(() => {
-  initialize();
+    initialize();
 
-  // Sets the minimal date to today
-  $("#form-todo-due-date").attr("min", new Date().toISOString().split("T")[0]);
+    $("#logout-btn").click((e) => {
+        e.preventDefault();
+        logout();
+    });
 
-  $("#add-todo-form").submit((e) => {
-    e.preventDefault();
-    addTodo();
-  });
+    // Sets the minimal date to today
+    $("#form-todo-due-date").attr("min", new Date().toISOString().split("T")[0]);
 
-  $("#login-form").submit((e) => {
-    e.preventDefault();
-    login();
-  });
+    $("#add-todo-form").submit((e) => {
+        e.preventDefault();
+        addTodo();
+    });
 
-  $("#register-form").submit((e) => {
-    e.preventDefault();
-    register();
-  });
+    $("#login-form").submit((e) => {
+        e.preventDefault();
+        login();
+    });
+
+    $("#register-form").submit((e) => {
+        e.preventDefault();
+        register();
+    });
 });

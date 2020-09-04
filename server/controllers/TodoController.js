@@ -31,34 +31,25 @@ class TodoController {
 
 	static async deleteTodoById(req, res, next) {
 		try{
-			
-		const { id } = req.params;
+			const { id } = req.params;
 
-		const toBeDestroyed = await Todo.findOne({
-			where : {
-				id
+			const toBeDestroyed = await Todo.findOne({
+				where : {
+					id
+				}
+			})
+
+			if(toBeDestroyed){
+				await Todo.destroy({
+					where : {
+						id
+					}
+				})
+
+				res.status(200).send();
+			} else { 
+				throw  { message: 'Item to be deleted not found!', statusCode: 404 };
 			}
-		})
-
-		if(toBeDestroyed){
-			
-		}
-
-		const destroyed = await Todo.destroy({
-			where : {
-				id
-			}
-		})
-
-		console.log(destroyed)
-
-		if(destroyed){
-			res.status
-		}
-
-		res.status(200).send();
-
-
 		} catch(err){
 			next(err)
 		}

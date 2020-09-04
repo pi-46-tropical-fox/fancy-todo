@@ -4,7 +4,7 @@ const usernameRegex = /^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
 
 function validatePassword(password) {
 	if (password.length < 8) {
-		throw new Error('Password harus melebihi 8 karakter');
+		throw new Error('Password harus melebihi 6 karakter');
 	}
 
 	// if (!passwordRegex.test(password)) {

@@ -26,29 +26,28 @@
         aria-controls="navbarSupportedContent"
         aria-expanded="false"
         aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
+      ></button>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <!-- <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            </ul> -->
+      <div style="display: none;" class="collapse navbar-collapse">
+        <form id="user-dropdown" class="ml-auto form-inline my-2 my-lg-0">
+          <a class="nav-link dropdown-toggle" href="#" id="user-dropdown-text" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#" id="logout-btn">Logout</a>
+          </div>
+        </form>
       </div>
     </nav>
 
     <!-- Modals -->
     <!-- Add todo modal -->
-    <div class="modal fade" id="add-todo-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="add-todo-modal" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+            <img class="img-fluid" src="https://source.unsplash.com/user/erondu/700x400">
+            <h5 class="modal-title">New todo item</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -90,8 +89,8 @@
 
       <!-- Todo Container -->
 
-      <div class="" id="todo-container">
-        <a>asd</a>
+      <div class="card">
+        <ul class="list-group list-group-flush" id="todo-container"></ul>
       </div>
     </div>
 
@@ -103,8 +102,8 @@
               <form method="POST" id="login-form">
                 <h1>Login</h1>
                 <div class="form-group">
-                  <label>Username</label>
-                  <input class="form-control" type="text" name="username" id="login-username" />
+                  <label>Email</label>
+                  <input class="form-control" type="email" name="username" id="login-email" />
                 </div>
 
                 <div class="form-group">
@@ -143,6 +142,7 @@
             </div>
 
             <p id="error-text-register" class="text-danger"></p>
+            <p id="success-text-register" style="display: none;" class="text-success">Berhasil Register! Silahkan login!</p>
 
             <input class="form-control" type="submit" value="Register" />
           </form>

@@ -15,10 +15,10 @@ class UserController {
 
 	static async login(req, res, next) {
 		try {
-			const { password, username } = req.body;
+			const { password, email } = req.body;
 			const data = await User.findOne({
 				where: {
-					username,
+					email,
 				},
 			});
 			
@@ -28,12 +28,10 @@ class UserController {
 
 			const pass = await bcrypt.compare(password, data.password);
 
-			console.log(password, data.password);
-
 			if (pass) {
 				const access_token = generateToken({ id: data.id });
 
-				res.json({ access_token });
+				res.json({ access_token, username : data.username, email });
 			} else {
 				throw { message: 'Username/Password not found', statusCode: 400 };
 			}
