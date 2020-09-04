@@ -41,13 +41,13 @@ function menuList(event) {
 
             $('#tableTodo').append(`
             <tr>
-                      <th>${el.title}</th>
-                      <th>${el.description}</th>
-                      <th>${el.status}</th>
-                      <th>${el.due_date}</th>
-                      <th>==Action</th>
-                    </tr>
-            `)
+                <th>${el.title}</th>
+                <th>${el.description}</th>
+                <th>${el.status}</th>
+                <th>${el.due_date}</th>
+                <th><button onclick="deleteTodo(${el.id})" type="button" class="close" aria-label="Close">X</button></th>
+            </tr>
+`)
         })
     })
     .fail(err => {
@@ -126,12 +126,92 @@ function registerForm(event) {
     .done(response => {
         $('#registerEmail').val('')
         $('#registerPassword').val('')
-        localStorage.setItem('acces_token',response.acces_token)
-        menuList()
+           
         afterLogin()
     })
     .fail(err => {
         console.log(err)
+    })
+}
+
+function addTodo(even) {
+    even.preventDefault();
+    const title = $('#inputTitle').val()
+    const description = $('#inputDescription').val()
+    const status = $('#inputStatus').val()
+    const due_date = $('#inputDueDate').val()
+    
+
+    $.ajax({
+        method: 'POST',
+        url :'http://localhost:3000/todos',
+        data: {
+            title,
+            description,
+            status,
+            due_date
+        },
+        headers: {
+            acces_token: localStorage.getItem('acces_token')
+        }
+    })
+    .done(response =>{ 
+        Swal.fire(
+            'Good job!',
+            `${response.title} telah ditambahkan`,
+            'success'
+          )
+        menuList()
+    })
+    .fail(err => {
+        console.log(err)
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+            footer: '<a href>Why do I have this issue?</a>'
+          })
+    })
+}
+
+function deleteTodo(id) {
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+          Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+        }
+      })
+    $.ajax({
+        url: `http://localhost:3000/todos/${id}`,
+        method: 'delete',
+        headers: {
+            acces_token: localStorage.getItem('acces_token')
+        }
+    })
+    .done(response => {
+        
+        menuList()
+    })
+    .fail(err => {
+        console.log(err)
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+            footer: '<a href>Why do I have this issue?</a>'
+          })
     })
 }
 
@@ -152,5 +232,7 @@ $(document).ready(function() {
     $('#nav-logout').click(menuLogout)
     $('#loginForm').submit(loginForm)
     $('#registerForm').submit(registerForm)
+    $('#addTodo').submit(addTodo)
+    // $('#buttonDelete').click(deleteTodo)
     
 })
