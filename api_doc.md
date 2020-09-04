@@ -45,9 +45,19 @@ _Response (201 - Created)_
 
 _Response (400 - Bad Request)_
 ```
-{
-  "message": "Invalid request"
-}
+[
+  "<error message 1>",
+  "<error message 2>",
+  ...,
+  "<error message n>"
+]
+```
+
+_Response (500 - Internal Server Error)_
+```
+[
+  "<error message>"
+]
 ```
 ---
 ### POST /login
@@ -76,9 +86,16 @@ _Response (200 - OK)_
 
 _Response (400 - Bad Request)_
 ```
-{
-  "message": "Invalid request"
-}
+[
+  "The Email or Password is invalid."
+]
+```
+
+_Response (500 - Internal Server Error)_
+```
+[
+  "<error message>"
+]
 ```
 ---
 ### POST /todos
@@ -88,7 +105,7 @@ _Response (400 - Bad Request)_
 _Request Header_
 ```
 {
-  "content_type": "application/json"
+  "access_token": "<your access token>"
 }
 ```
 
@@ -98,7 +115,8 @@ _Request Body_
   "title": "Learn REST API",
   "description": "Learn how to create RESTful API with Express and Sequelize",
   "status": "ongoing",
-  "due_date": "2020-01-29"
+  "due_date": "2020-01-29",
+  "UserId": 1
 }
 ```
 
@@ -110,16 +128,31 @@ _Response (201 - Created)_
   "description": "Learn how to create RESTful API with Express and Sequelize",
   "status": "ongoing",
   "due_date": "2020-01-29T00:00:00.000Z",
+  "UserId": 1,
   "createdAt": "2020-01-27T07:15:12.149Z",
   "updatedAt": "2020-01-27T07:15:12.149Z",
 }
 ```
 
-_Response (400 - Bad Request)_
+_Response (401 - Unauthorized)_
 ```
-{
-  "message": "Invalid request"
-}
+[
+  "The user is not authenticated"
+]
+```
+
+_Response (403 - Forbidden)_
+```
+[
+  "The user is not authorized."
+]
+```
+
+_Response (500 - Internal Server Error)_
+```
+[
+  "<error message>"
+]
 ```
 ---
 ### GET /todos
@@ -147,6 +180,7 @@ _Response (200 - OK)_
     "description": "Learn how to create RESTful API with Express and Sequelize",
     "status": "ongoing",
     "due_date": "2020-01-29T00:00:00.000Z",
+    "UserId": 1,
     "createdAt": "2020-01-27T07:15:12.149Z",
     "updatedAt": "2020-01-27T07:15:12.149Z",
   },
@@ -156,17 +190,32 @@ _Response (200 - OK)_
     "description": "Learn how to create API Documentation with REST standard",
     "status": "done",
     "due_date": "2020-01-29T00:00:00.000Z",
+    "UserId": 1,
     "createdAt": "2020-01-28T07:15:12.149Z",
     "updatedAt": "2020-01-28T07:15:12.149Z",
   }
 ]
 ```
 
-_Response (400 - Bad Request)_
+_Response (401 - Unauthorized)_
 ```
-{
-  "message": "Invalid requests"
-}
+[
+  "The user is not authenticated"
+]
+```
+
+_Response (403 - Forbidden)_
+```
+[
+  "The user is not authorized."
+]
+```
+
+_Response (500 - Internal Server Error)_
+```
+[
+  "<error message>"
+]
 ```
 ---
 ### GET /todos/:id
@@ -193,6 +242,7 @@ _Response (200 - OK)_
   "description": "Learn how to create RESTful API with Express and Sequelize",
   "status": "ongoing",
   "due_date": "2020-01-29",
+  "UserId": 1,
   "createdAt": "2020-01-27T07:15:12.149Z",
   "updatedAt": "2020-01-27T07:15:12.149Z",
 }
@@ -200,9 +250,30 @@ _Response (200 - OK)_
 
 _Response (400 - Bad Request)_
 ```
-{
-  "message": "Invalid requests"
-}
+[
+  "The todo with id <todo id> was not found."
+]
+```
+
+_Response (401 - Unauthorized)_
+```
+[
+  "The user is not authenticated"
+]
+```
+
+_Response (403 - Forbidden)_
+```
+[
+  "The user is not authorized."
+]
+```
+
+_Response (500 - Internal Server Error)_
+```
+[
+  "<error message>"
+]
 ```
 ---
 ### PUT /todos/:id
@@ -234,16 +305,31 @@ _Response (200 - OK)_
   "description": "Learn how to create app with Express and Sequelize",
   "status": "ongoing",
   "due_date": "2020-01-30",
+  "UserId": 1,
   "createdAt": "2020-01-27T07:15:12.149Z",
   "updatedAt": "2020-01-29T07:15:12.149Z",
 }
 ```
 
-_Response (400 - Bad Request)_
+_Response (401 - Unauthorized)_
 ```
-{
-  "message": "Invalid requests"
-}
+[
+  "The user is not authenticated"
+]
+```
+
+_Response (403 - Forbidden)_
+```
+[
+  "The user is not authorized."
+]
+```
+
+_Response (500 - Internal Server Error)_
+```
+[
+  "<error message>"
+]
 ```
 ---
 ### DELETE /todos/:id
@@ -262,13 +348,6 @@ _Request Body_
 not needed
 ```
 
-_Request Params_
-```
-{
-  "id": "2"
-}
-```
-
 _Response (200 - OK)_
 ```
 {
@@ -277,14 +356,29 @@ _Response (200 - OK)_
   "description": "Learn how to create API Documentation with REST standard",
   "status": "done",
   "due_date": "2020-01-29",
+  "UserId": 1,
   "createdAt": "2020-01-28T07:15:12.149Z",
   "updatedAt": "2020-01-28T07:15:12.149Z",
 }
 ```
 
-_Response (400 - Bad Request)_
+_Response (401 - Unauthorized)_
 ```
-{
-  "message": "Invalid requests"
-}
+[
+  "The user is not authenticated"
+]
+```
+
+_Response (403 - Forbidden)_
+```
+[
+  "The user is not authorized."
+]
+```
+
+_Response (500 - Internal Server Error)_
+```
+[
+  "<error message>"
+]
 ```

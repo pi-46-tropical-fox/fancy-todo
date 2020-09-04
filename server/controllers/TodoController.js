@@ -6,40 +6,32 @@ class TodoController {
 		const UserId = req.user.id;
 		try {
 			const new_todo = await Todo.create({ title, description, status, due_date, UserId });
-			if (!new_todo) {
-				return res.status(400).json({ message: err.message });
-			} else {
-				return res.status(201).json(new_todo);
-			}
+			return res.status(201).json(new_todo);
 		} catch(err) {
-			return res.status(500).json({ message: err.message });
+			return next(err);
 		}
 	}
 
 	static async readTodos(req, res) {
 		try {
 			const todos = await Todo.findAll();
-			if (!todos) {
-				return res.status(400).json({ message: err.message });
-			} else {
-				return res.status(200).json(todos);
-			}
+			return res.status(200).json(todos);
 		} catch(err) {
-			return res.status(500).json({ message: err.message });
+			return next(err);
 		}
 	}
 
 	static async readTodoById(req, res) {
 		const todo_id = +req.params.id;
 		try {
-			const todo = await Todo.findByPk(todo_id);
+			const todo = await Todo.findOne({ where: { id: todo_id } });
 			if (!todo) {
-				return res.status(400).json({ message: err.message });
+				throw { message: `The todo with id ${todo_id} was not found.`, status_code: 400 };
 			} else {
 				return res.status(200).json(todo);
 			}
 		} catch(err) {
-			return res.status(500).json({ message: err.message });
+			return next(err);
 		}
 	}
 
@@ -53,13 +45,9 @@ class TodoController {
 				},
 				returning: true
 			});
-			if (!updated_todo) {
-				return res.status(400).json({ message: err.message });
-			} else {
-				return res.status(200).json(updated_todo[1][0]);
-			}
+			return res.status(200).json(updated_todo[1][0]);
 		} catch(err) {
-			return res.status(500).json({ message: err.message });
+			return next(err);
 		}
 	}
 
@@ -67,14 +55,10 @@ class TodoController {
 		const todo_id = +req.params.id;
 		try {
 			const deleted_todo = await Todo.findByPk(todo_id);
-			const result = await Todo.destroy({ where: { id: todo_id } });
-			if (!result) {
-				return res.status(400).json({ message: err.message });
-			} else {
-				return res.status(200).json(deleted_todo);
-			}
+			const result = await Todo.destroy({ where: { id: deleted_todo.id } });
+			return res.status(200).json(deleted_todo);
 		} catch(err) {
-			return res.status(500).json({ message: err.message });
+			return next(err);
 		}
 	}
 }
