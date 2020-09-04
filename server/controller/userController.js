@@ -1,6 +1,7 @@
 const {User} = require('../models/index')
+const {OAuth2Client} = require('google-auth-library');
 const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 // const dotenv = require('dotenv')
 require('dotenv').config()
 
@@ -30,7 +31,7 @@ class UserController {
                 let auth = bcrypt.compareSync(req.body.password, user.password)
                 if (auth) {
                     const accessToken = jwt.sign({email: user.email, id: user.id}, secret)
-                    res.status(200).json(accessToken + '  << access token')
+                    res.status(200).json({accessToken: accessToken})
                 } else throw res.status(400).json('wrong username/password')
             } else {
                 throw res.status(400).json('wrong username/password')
@@ -40,6 +41,40 @@ class UserController {
             // res.status(400).json(err)
             next(err)
         }
+    }
+    static googleLogin(req,res,next) {
+        const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
+        const {google_access_token} = req.headers
+        let email_google = ''
+        client.verifyIdToken({
+            idToken: google_access_token,
+            audience: process.env.GOOGLE_CLIENT_ID
+        })
+        .then(ticket => {
+            return ticket.getPayload()
+        })
+        .then(payload => {
+            console.log(payload);
+            email_google = payload.email
+            return User.findOne({where:{email:payload.email}})
+        })
+        .then(user => {
+            if (!user) {
+                let params = {
+                    email: email_google,
+                    password: 'defaultgoogle'
+                }
+                return User.create(params)
+            } else {
+                return user
+            }
+        })
+        .then(user => {
+            const accessToken = jwt.sign({email: user.email, id: user.id}, secret)
+            res.status(200).json({accessToken: accessToken})
+        })
+        .catch(err => console.log(err))
+
     }
 }
 

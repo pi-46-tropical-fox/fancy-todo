@@ -15,7 +15,7 @@ const tokenAuth = async (req,res,next) => {
                 // console.log(req.header.UserID.id);
                 next()
             } else {
-                throw res.status(400).json({message: 'wrong username/password'})
+                throw res.status(400).json({message: 'unauthorized'})
             }
     
             // jwt.verify(token, process.env.SECRET, (err,user)=>{

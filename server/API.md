@@ -175,6 +175,12 @@ _Response (400 - Bad Request)_
   "message": "Invalid request"
 }
 ```
+_Response (404 - Not Found)_
+```
+{
+  "message": "Error Not Found"
+}
+```
 ---
 
 ### DELETE /todo/:id
@@ -196,7 +202,7 @@ not needed
 _Response (200)_
 ```
 {
-  1
+  message: 'Successfully deleted todo'
 }
 ```
 

@@ -44,7 +44,9 @@ class TodoController {
 
     static async getTodoById(req,res) {
         try {
-            const todo = await Todo.findOne({where:{id:req.params.id, UserId: req.userData.id}})
+            console.log(req.params.id);
+            const todo = await Todo.findOne({where:{id:req.params.id}})
+            console.log(todo);
             res.status(200).json(todo)
         } catch (err) {
             res.status(400).json(err)
@@ -54,7 +56,7 @@ class TodoController {
     static async updateTodo(req,res) {
         const { title,description,status,due_date } = req.body
         try {
-            const update = await Todo.update({ title,description,status,due_date },{where:{id:req.params.id, UserId: req.userData.id}})
+            const update = await Todo.update({ title,description,status,due_date },{where:{id:req.params.id}})
             res.status(201).json(update)
         } catch (err) {
             res.status(400).json(err)
@@ -62,8 +64,8 @@ class TodoController {
     }
     static async deleteTodo (req,res) {
         try {
-            const todo = await Todo.destroy({where:{id:req.params.id, UserId: req.userData.id}})
-            res.status(200).json(todo)
+            const todo = await Todo.destroy({where:{id:req.params.id}})
+            res.status(200).json({message: 'Successfully deleted todo'})
         } catch (err) {
             res.status(400).json(err)
         }
