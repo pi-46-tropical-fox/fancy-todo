@@ -15,9 +15,7 @@ function login() {
         },
     })
         .done((res) => {
-            localStorage.setItem("access_token", res.access_token);
-            localStorage.setItem("email", res.email);
-            localStorage.setItem("username", res.username);
+            setLoginLocalStorage(res)
 
             console.log(`Login berhasil! Token nya adalah ${res.access_token}`);
             initialize();
@@ -28,8 +26,27 @@ function login() {
         });
 }
 
+function setLoginLocalStorage(res){
+  localStorage.setItem("access_token", res.access_token);
+  localStorage.setItem("email", res.email);
+  localStorage.setItem("username", res.username);
+}
+
 // Code untuk sign in dengan google
 function onSignIn(googleUser) {
+    const google_access_token = googleUser.getAuthResponse().id_token
+    $.ajax({
+      method: "POST",
+      url: `${url}/googlelogin`,
+      headers: { google_access_token }
+    }).done(res => {
+      setLoginLocalStorage(res)
+      console.log(`Login berhasil! Token nya adalah ${res.access_token}`);
+      initialize()
+    }).fail(err => {
+      console.error(err)
+    })
+
     console.log(googleUser);
 }
 
@@ -60,9 +77,6 @@ function register() {
         });
 }
 
-function logout() {
-    localStorage.removeItem("access_token");
-}
 
 function deleteTodo(el) {
     const id = el.attr("data-id");
@@ -124,6 +138,10 @@ function fetchTodos() {
 
 function logout() {
     localStorage.clear();
+    const auth2 = gapi.auth2.getAuthInstance()
+    auth2.signOut().then(() => {
+      console.log("Logged out from google oauth ")
+    })
     initialize();
 }
 

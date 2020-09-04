@@ -1,6 +1,9 @@
 const bcrypt = require('bcryptjs');
 const { User } = require('../models');
 const { generateToken } = require('../helpers/jwt');
+const { OAuth2Client } = require('google-auth-library');
+
+const GOOGLE_OAUTH_CLIENT_ID = process.env.GOOGLE_OAUTH_CLIENT_ID
 
 class UserController {
 	static async register(req, res, next) {
@@ -11,6 +14,45 @@ class UserController {
 		} catch (err) {
 			next(err);
 		}
+	}
+
+	static async googleLogin(req, res, next){
+		const client = new OAuth2Client(GOOGLE_OAUTH_CLIENT_ID);
+		const { google_access_token } = req.headers;
+
+		console.log(google_access_token)
+
+		try {
+			const ticket = await client.verifyIdToken({
+				idToken : google_access_token,
+				audience : GOOGLE_OAUTH_CLIENT_ID
+			})
+
+			const payload = ticket.getPayload()
+			console.log(payload)
+
+			const username = payload.email.split('@')[0] + Math.ceil(Math.random()*100).toString()
+
+			let user = await User.findOne({
+				where : {
+					email : payload.email
+				}
+			})
+
+			if(!user){
+				user = await User.create({
+					username, email : payload.email, password : 'a1a1a1a1a1a1'
+				})
+			}
+
+			const access_token = generateToken({ id: user.id });
+
+			res.status(200).json({ access_token, username : user.username , email : user.email });
+
+		} catch(err){
+			next(err)
+		}
+
 	}
 
 	static async login(req, res, next) {
