@@ -299,8 +299,9 @@ function editTodo() {
   event.preventDefault();
   const title = $("#editTitle").val();
   const description = $("#editDescription").val();
-  const status = $("input[name=inlineRadioOptions]").value;
+  const status = $("input[name=status]:checked").val();
   const due_date = $("#editDueDate").val();
+  console.log(status);
 
   $.ajax({
     method: "PUT",
@@ -308,7 +309,7 @@ function editTodo() {
     data: {
       title,
       description,
-      status,
+      status: !!status,
       due_date
     },
     headers: {
