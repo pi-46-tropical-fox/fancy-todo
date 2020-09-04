@@ -15,18 +15,22 @@ class TodoController {
 		res.status(200).json(req.todo);
 	}
 
-	static async createTodo(req, res) {
-		const data = {
-			title: req.body.title,
-			description: req.body.description,
-			status: req.body.status,
-			due_date: new Date(req.body.due_date),
-			UserId: req.userData.id,
-		};
-
-		const insertRes = await Todo.create(data);
-
-		res.status(201).json(insertRes);
+	static async createTodo(req, res, next) {
+		try{
+			const data = {
+				title: req.body.title,
+				description: req.body.description,
+				status: req.body.status,
+				due_date: new Date(req.body.due_date),
+				UserId: req.userData.id,
+			};
+	
+			const insertRes = await Todo.create(data);
+	
+			res.status(201).json(insertRes);
+		} catch (err){
+			next(err)
+		}
 	}
 
 	static async deleteTodoById(req, res, next) {

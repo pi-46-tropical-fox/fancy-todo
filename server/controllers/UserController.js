@@ -3,7 +3,7 @@ const { User } = require('../models');
 const { generateToken } = require('../helpers/jwt');
 const { OAuth2Client } = require('google-auth-library');
 
-const GOOGLE_OAUTH_CLIENT_ID = process.env.GOOGLE_OAUTH_CLIENT_ID
+const GOOGLE_OAUTH_CLIENT_ID = process.env.OAUTH_CLIENT_ID
 
 class UserController {
 	static async register(req, res, next) {

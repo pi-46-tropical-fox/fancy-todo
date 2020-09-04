@@ -169,6 +169,9 @@ function addTodo() {
             addTodoToView(data)
         })
         .fail((err) => {
+            $("#error-text-add-todo").show();
+            $("#error-text-add-todo").html(err.responseJSON.errors.join(" ,"));
+         
             console.log(err);
         });
 }
