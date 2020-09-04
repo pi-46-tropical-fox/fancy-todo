@@ -5,7 +5,7 @@ const {authorization} = require('../middlewares/auth.js')
 
 router.get('/', TodoController.getTodos)
 router.post('/', TodoController.createTodo)
-
+router.get('/myTodos', TodoController.getMyTodos)
 router.get('/random', TodoRandomController.randomActivity)
 
 router.get('/:id', TodoController.getTodo)

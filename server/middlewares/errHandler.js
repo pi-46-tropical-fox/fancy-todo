@@ -1,5 +1,6 @@
 function errHandler (err,req,res,next) {
     console.log('>>>>>>>>>>>>>>',err.name,'<<<<<<<<<<< ini error');
+    console.log(err);
 
     let statusCode
     let errors = []

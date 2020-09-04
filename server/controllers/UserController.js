@@ -33,7 +33,7 @@ class UserController {
             if(isValid) {
                 const access_token = generateToken(user)
                 
-                return res.status(200).json({access_token})
+                return res.status(200).json({access_token,id:user.id, username: user.username })
             } else {
                 throw {statusCode: 400, msg: "invalid email or password"}
             }
