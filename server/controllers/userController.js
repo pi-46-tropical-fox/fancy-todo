@@ -1,6 +1,7 @@
 const {User} = require('../models');
 const {comparePassword} = require("../helpers/hashPassword");
 const {generateToken} = require('../helpers/generateJWT');
+const {OAuth2Client} = require('google-auth-library');
 
 
 
@@ -41,6 +42,49 @@ class UserController {
             // res.status(500).json({message:err.message})
             return next(err)
         }
+    }
+
+    static googleLogin(req,res,next) {
+        const client = new OAuth2Client(process.env.CLIENT_ID)
+        const {google_access_token} = req.headers
+
+        let email_google = ""
+        let profile_picture = ""
+        
+        client
+        .verifyIdToken({
+            idToken : google_access_token,
+            audience: process.env.CLIENT_ID
+        })
+        .then(ticket => {
+            return ticket.getPayload()
+        })
+        .then(payload => {
+            console.log(payload)
+            email_google = payload.email
+            profile_picture = payload.picture;
+            return User.findOne({where:{email:payload.email}})
+        })
+        .then(user => {
+            if(!user) {
+                const userObj = {
+                    email:email_google,
+                    password:"randomaja"
+                }
+                return User.create(userObj)
+            } else {
+                return user
+            }
+        })
+        .then(user => {
+           const payload = {email:user.email,id:user.id}
+           const acces_token = generateToken(payload) 
+
+           return res.status(200).json({acces_token,avatar:profile_picture,email:email_google})
+        })
+        .catch(err => {
+            console.log(err)
+        })
     }
     
 }

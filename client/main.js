@@ -1,3 +1,7 @@
+let todo = []
+function tgl(date) {
+    return new Date(date).toISOString().split("T")[0]
+}
 function menuLogin(event) {
     $('#form-login').show()
     $('#form-register').hide()
@@ -37,15 +41,16 @@ function menuList(event) {
     })
     .done(response => {
         console.log(response)
+        todo = response
         response.forEach(el => {
 
             $('#tableTodo').append(`
             <tr>
-                <th>${el.title}</th>
-                <th>${el.description}</th>
-                <th>${el.status}</th>
-                <th>${el.due_date}</th>
-                <th><button onclick="deleteTodo(${el.id})" type="button" class="close" aria-label="Close">X</button></th>
+                <td>${el.title}</td>
+                <td>${el.description}</td>
+                <td>${el.status}</th>
+                <td>${tgl(el.due_date)}</td>
+                <td><button onclick="deleteTodo(${el.id})" type="button" class="btn btn-danger">Delete</button> <button onclick="updateTodo(${el.id})" type="button" class="btn btn-primary">Update</button></td>
             </tr>
 `)
         })
@@ -60,8 +65,9 @@ function menuLogout(event) {
     $('#form-register').hide()
     $('#form-add-todo').hide()
     $('#todo-list').hide()
-    beforeLogin()
     localStorage.clear()
+    signOut()
+    beforeLogin()
     // localStorage.removeItem('acces_token')
 }
 
@@ -104,6 +110,7 @@ function loginForm(event) {
         .done(response => {
             localStorage.setItem('acces_token', response.acces_token)
             menuList()
+            afterLogin()
         })
         .fail(err => {
             console.log(err)
@@ -176,23 +183,6 @@ function addTodo(even) {
 
 function deleteTodo(id) {
 
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-      }).then((result) => {
-        if (result.value) {
-          Swal.fire(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success'
-          )
-        }
-      })
     $.ajax({
         url: `http://localhost:3000/todos/${id}`,
         method: 'delete',
@@ -212,6 +202,74 @@ function deleteTodo(id) {
             text: 'Something went wrong!',
             footer: '<a href>Why do I have this issue?</a>'
           })
+    })
+}
+
+// function updateTodo(id) {
+//     $('#updateTodos').submit(even =>{
+//         even.preventDefault()
+//         const UserId = todo[0].UserId
+//         const title = $('#updateTitle').val(todo[0].title)
+//         const description =  $('#updateDescription').val(todo[0].description)
+//         const status = $('#updateStatus').val(todo[0].status)
+//         const due_date = $('#updateDueDate').val(todo[0].due_date)
+
+//         $.ajax({
+//             url: `http://localhost:3000/todos/${id}`,
+//             method: "put",
+//             data: {
+//                 title,description,status,due_date,UserId
+//             },
+//             headers: {
+//                 acces_token: localStorage.getItem('acces_token')
+//             }
+//         })
+//         .done(response => {
+    
+//             Swal.fire(
+//                 'Good job!',
+//                 `${response.title} telah diedit`,
+//                 'success'
+//               )
+//             menuList()
+//         })
+//         .fail(err =>{
+//             console.log(err)
+//         })
+//     }) 
+// }
+
+function onSignIn(googleUser) {
+    var google_access_token = googleUser.getAuthResponse().id_token;
+    console.log(google_access_token)
+
+    $.ajax({
+        method: 'POST',
+        url:'http://localhost:3000/googleLogin',
+        headers:{google_access_token}
+    })
+    .done(response => {
+        console.log(response)
+
+        localStorage.setItem('acces_token',response.acces_token)
+        localStorage.setItem('email_user',response.email)
+        // localStorage.setItem('avatar',response.avatar)
+        $('#email_user').text('Welcome' + localStorage.email_user)
+        // $('#avatar_user').text('Welcome' + localStorage.avatar)
+
+        initContent()
+        menuList()
+        afterLogin()
+    })
+    .fail(err => {
+        console.log(err)
+    })
+}
+
+function signOut() {
+    const auth2 = gapi.auth2.getAuthInstance()
+    auth2.signOut().then(function () {
+        console.log("User Signed Out")
     })
 }
 
