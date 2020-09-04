@@ -1,7 +1,9 @@
 module.exports = function(err, req, res, next) {
+    console.log(err);
     let statusCode = 500
     let errorCode = 'Unknown_Error'
-
+    let message;
+    
     if(err.name === 'SequelizeValidationError') {
         statusCode = 400
         errorCode = 'Validation_Error'

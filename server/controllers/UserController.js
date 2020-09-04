@@ -17,31 +17,26 @@ class UserController {
         }
     }
 
-    static login(req, res, next) {
-        let option = {
+    static login(req,res, next){
+        User.findOne({
             where: {
                 email: req.body.email
             }
-        }
-
-        User.findOne(option)
-        .then(data =>{
-            if(data){
-                let hasValid = comparePassword(req.body.password, data.password)
-                if(hasValid){
-                    const access_token = generateToken(data)
-                    return res.status(200).json({access_token})
+        })
+        .then(user=>{
+            if(user){
+                let check = comparePassword(req.body.password,user.password)
+                if(check){
+                    let token = generateToken(user)
+                    res.status(200).json({token})
+                }else{
+                    throw {message: "Invalid Username or Password", statusCode: 400}
                 }
-                else{
-                    throw {name: 'INVALID_EMAIL/PASSWORD', statusCode: 400}
-                }
-            }
-            else{
-                throw {name: 'INVALID_EMAIL/PASSWORD', statusCode: 400}
+            }else{
+                throw {message: "Invalid Username or Password", statusCode: 400}
             }
         })
-
-        .catch(err =>{
+        .catch(err=>{
             next(err)
         })
     }

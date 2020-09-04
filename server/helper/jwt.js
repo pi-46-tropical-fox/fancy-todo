@@ -1,12 +1,14 @@
 const jwt = require('jsonwebtoken')
-const secret = process.env.SECRET
+let secret = process.env.SECRET
 
 const generateToken = (user) => {
-    let access_token = jwt.sign(
-        {id: user.id, email: user.email},
-        secret
-    )
-    return access_token
+   const token = jwt.sign({ id: user.id, username: user.email }, secret)
+   return token
 }
 
-module.exports = { generateToken } 
+const verifyToken = (token)=>{
+    const verified = jwt.verify(token,secret)
+    return verified
+}
+
+module.exports = {generateToken, verifyToken} 
