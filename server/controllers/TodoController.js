@@ -59,23 +59,31 @@ class TodoController {
 		}
 	}
 
-	static async updateTodoById(req, res) {
-		const data = {
-			title: req.body.title,
-			description: req.body.description,
-			status: req.body.status,
-			due_date: new Date(req.body.due_date)
-		};
+	static async updateTodoById(req, res, next) {
+		try{
+			const data = {
+				title: req.body.title,
+				description: req.body.description,
+				status: req.body.status,
+				due_date: new Date(req.body.due_date)
+			};
+	
+			const { id } = req.params;
+	
+			let updated = await Todo.update(data, {
+				where : {
+					id
+				},
+				returning : true,
+	 			 plain: true
+			})
 
-		const { id } = req.params;
-
-		await Todo.update(data, {
-			where : {
-				id
-			}
-		})
-
-		res.status(200);
+			console.log(updated)
+	
+			res.status(200).json(updated[1]);
+		} catch(err){
+			next(err)
+		}
 	}
 }
 

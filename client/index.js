@@ -96,26 +96,88 @@ function deleteTodo(el) {
         });
 }
 
-function showUpdateModal(id){
-  console.log(`Hello from show update modal ${id}`)
+function updateTodo(el, id){
+    const title = $('#update-form-todo-title').val();
+    const description = $('#update-form-todo-description').val();
+    const due_date = $('#update-form-todo-due-date').val();
+    const status = $('#update-form-todo-status').val();
+
+    $.ajax({
+        method : "PUT",
+        url: `${url}/todos/${id}`,
+        data : {
+            title,
+            description,
+            due_date,
+            status
+        },
+        headers: {
+            access_token: localStorage.getItem("access_token"),
+        }
+    }).done(e => {
+        $('#update-todo-modal').modal('toggle')
+
+        console.log(e)
+
+        addOrUpdateTodoToView(e, el)
+    })
 }
 
-function addTodoToView(todo){
-  const el = $("<li>")
-  .addClass("list-group-item")
-  .attr("data-id", todo.id)
-  .append(todo.title)
+function showUpdateModal(el){
+    const id = el.attr("data-id");
 
-  const delBtn = $("<button>").html("Delete").addClass(["btn", "btn-danger"])
-  const updateBtn = $("<button>").html("Update").addClass(["btn", "btn-info"]);
+    $.ajax({
+        method : "GET",
+        url : `${url}/todos/${id}`,
+        headers: {
+            access_token: localStorage.getItem("access_token"),
+        }
+    }).done(e => {
+        // Prefill the values
+        $('#update-todo-modal').modal('toggle')
+        $('#update-form-todo-title').val(e.title)
+        $('#update-form-todo-description').val(e.description)
+        $('#update-form-todo-due-date').val(new Date(e.due_date).toISOString().substring(0, 10))
+
+        $('#submit-update-todo').unbind()
+
+        $('#submit-update-todo').click(a => { 
+            a.preventDefault()
+            updateTodo(el, id)
+        })
+
+    }).fail(e => {
+        console.error(e)
+    })
+}
+
+function addOrUpdateTodoToView(todo, old){
+    let count = $("#todo-container").length
+
+  const el = $("<tr>")
+  .attr("data-id", todo.id)
+  .append($('<td>').append(count))
+  .append($('<td>').append(todo.title))
+  .append($('<td>').append(todo.description))
+  .append($('<td>').append(todo.due_date))
+  .append($('<td>').append(todo.status))
+
+  const delBtn = $("<button>").html("Delete").addClass(["btn", "btn-danger", 'mx-1'])
+  const updateBtn = $("<button>").html("Update").addClass(["btn", "btn-info", 'mx-1']);
 
   updateBtn.click(() => showUpdateModal(el))
   delBtn.click(() => deleteTodo(el))
 
-  el.append(delBtn)
-  el.append(updateBtn)
+  el.append($('<td>').append(delBtn).append(updateBtn))
 
-  $("#todo-container").append(el);
+    if(old){
+        old.replaceWith(el)
+    } else {
+        $("#todo-container").append(el);
+
+    }
+
+
 }
 
 function fetchTodos() {
@@ -129,7 +191,7 @@ function fetchTodos() {
         },
     })
         .done((res) => {
-            res.forEach((e) => addTodoToView(e));
+            res.forEach((e) => addOrUpdateTodoToView(e));
         })
         .fail((err) => {
             console.log(err);
@@ -166,7 +228,7 @@ function addTodo() {
             $("#add-todo-modal").modal("toggle");
             $("#add-todo-form").trigger("reset");
 
-            addTodoToView(data)
+            addOrUpdateTodoToView(data)
         })
         .fail((err) => {
             $("#error-text-add-todo").show();
