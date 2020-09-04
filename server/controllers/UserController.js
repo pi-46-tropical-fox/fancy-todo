@@ -2,6 +2,9 @@ const {User} = require('../models')
 
 const {generateToken} = require('../helpers/jwt.js')
 const {compareBcrypt} = require('../helpers/bcrypt.js')
+const {OAuth2Client} = require('google-auth-library');
+
+
 
 class UserController {
 
@@ -26,7 +29,7 @@ class UserController {
         try {
             const user = await User.findOne({where: {username}})
             if(!user) {
-                throw {statusCode: 400, msg: "invalid email or password"}
+                throw {statusCode: 400, msg: "invalid username or password"}
             }
             
             const isValid = await compareBcrypt(password, user.password)
@@ -35,11 +38,47 @@ class UserController {
                 
                 return res.status(200).json({access_token,id:user.id, username: user.username })
             } else {
-                throw {statusCode: 400, msg: "invalid email or password"}
+                throw {statusCode: 400, msg: "invalid username or password"}
             }
         }
         catch(err) {
             return next(err)
+        }
+    }
+
+    static async googleLogin(req,res,next){
+        try{
+            const client = new OAuth2Client(process.env.CLIENT_GOOGLE);
+            const  {google_id_token} = req.headers
+            let email_by_google = ''
+            const ticket = await client.verifyIdToken({
+                idToken: google_id_token,
+                audience: process.env.CLIENT_GOOGLE,  // Specify the CLIENT_ID of the app that accesses the backend
+                // Or, if multiple clients access the backend:
+                //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+            })
+            let payload = ticket.getPayload();
+            email_by_google = payload.email
+            let user = await User.findOne({
+                where: {email: payload.email}
+            })
+            if(!user) {
+                var userObj = {
+                    email: email_by_google,
+                    password: 'accessbygoogle'
+                }
+               user = await User.create(userObj)
+            } 
+            
+            const payloadGoogle = {
+                email: user.email,
+                id: user.id
+                }
+            const access_token = generateToken(payloadGoogle)
+            console.log(access_token);
+            return res.status(200).json({access_token})
+        }catch(err) {
+            console.log(err);
         }
     }
 
