@@ -1,9 +1,9 @@
 const bcrypt = require('bcryptjs')
 
-function runBcrypt(inputPassword, hashPassword) {
+function comparePassword(inputPassword, hashPassword) {
     const result = bcrypt.compareSync(inputPassword, hashPassword);
 
     return result
 }
 
-module.exports = runBcrypt
+module.exports = comparePassword

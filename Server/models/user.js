@@ -18,7 +18,6 @@ module.exports = (sequelize, DataTypes) => {
   User.init({
     name:{
       type: DataTypes.STRING,
-      unique: true,
       validate: {
         notEmpty: {
           msg: 'Name is required!'
@@ -28,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     email:{
       type: DataTypes.STRING,
       unique:{
+        args: true,
         msg: 'email has been taken, please change'
       },
       validate: {

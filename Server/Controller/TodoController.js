@@ -1,11 +1,11 @@
-const { Todo } = require('../models')
+const { Todo, User } = require('../models')
 
 class TodoController {
     static addTodo(req, res, next) {
         let todoObj= {
             title: req.body.title,
             description: req.body.description,
-            status: req.body.status,
+            status: false,
             due_date: req.body.due_date,
             UserId: req.userData.id
         }
@@ -20,7 +20,9 @@ class TodoController {
     }
 
     static readAll(req, res, next) {
-        Todo.findAll()
+        Todo.findAll({
+            include: [User]
+        })
             .then(data => {
                 return res.status(200).json(data)
             })

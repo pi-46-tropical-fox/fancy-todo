@@ -1,11 +1,13 @@
 function errorHandler (err, req, res, next) {
-    console.log('err handler >>>', err, '<<< error handler')
+    // console.log('err handler >>>', err, '<<< error handler')
     let statusCode = 500
     let errors = []
 
+    //TambahAPI3rdpartyerror
     switch(err.name) {
         //UNIQUE CONSTRAINT BELUM MASUK!
         case 'SequelizeValidationError':
+            // console.log(err, '<< masuk sini')
             err.errors.forEach(element => {
                 errors.push(element.message)
             });
