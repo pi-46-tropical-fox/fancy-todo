@@ -40,6 +40,23 @@
       </div>
     </nav>
 
+    <!-- error message -->
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" id="errorAlert">
+    </div>
+
+    <!-- weather forecast -->
+    <div class="container mt-5 mx-auto">
+      <div class="row">
+        <div class="col-6">
+          <div class="card">
+            <div class="card-body" id="weather-forecast">
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- login -->
     <div class="container mt-5" id="form-login">
       <div class="row">
@@ -122,7 +139,7 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Add Todo</h5>
-              <form>
+              <form id="addForm">
                 <div class="form-group row">
                   <label for="addTitle" class="col-sm-3 col-form-label">Title</label>
                   <div class="col-sm-9">
@@ -185,7 +202,7 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Edit Todo</h5>
-              <form>
+              <form id="editForm">
                 <div class="form-group row">
                   <label for="editTitle" class="col-sm-3 col-form-label">Title</label>
                   <div class="col-sm-9">
@@ -201,11 +218,11 @@
                 <div class="form-group row">
                   <label for="editStatus" class="col-sm-3 col-form-label">Status</label>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="editStatusTrue" value="true">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" value="true">
                     <label class="form-check-label" for="editStatusTrue">Finished</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="editStatusFalse" value="false" />
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" value="false" />
                     <label class="form-check-label" for="editStatusFalse">Not Yet</label>
                   </div>
                 </div>
@@ -226,8 +243,6 @@
         </div>
       </div>
     </div>
-
-    <!-- weather forecast -->
 
 
     <!-- Optional JavaScript -->
