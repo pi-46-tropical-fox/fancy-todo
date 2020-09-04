@@ -1,4 +1,4 @@
-const { Todo, User } = require('../models')
+const { Todo, User, Project } = require('../models')
 
 class TodoController {
     static addTodo(req, res, next) {
@@ -7,7 +7,8 @@ class TodoController {
             description: req.body.description,
             status: false,
             due_date: req.body.due_date,
-            UserId: req.userData.id
+            UserId: req.body.UserId,
+            ProjectId: req.body.ProjectId
         }
 
         Todo.create(todoObj)
@@ -21,7 +22,7 @@ class TodoController {
 
     static readAll(req, res, next) {
         Todo.findAll({
-            include: [User]
+            include: [User, Project]
         })
             .then(data => {
                 return res.status(200).json(data)

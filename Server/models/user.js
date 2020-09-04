@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.belongsToMany(models.Project,{through: models.Todo})
       User.hasMany(models.Todo)
     }
   };
@@ -50,7 +51,15 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'password min 6 characters'
         }
       }
-    }
+    },
+    role:{
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: 'Role is required!'
+        }
+      }
+    },
   }, {
     sequelize,
     modelName: 'User',

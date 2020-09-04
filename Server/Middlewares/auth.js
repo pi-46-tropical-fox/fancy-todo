@@ -41,9 +41,23 @@ const authorization = async (req, res, next) => {
     } catch (err) {
         console.log(err)
         return res.status(401).json({message: 'user not authorized'})
-    }
+    }    
 }
 
+    const createProjectAuthr = (req, res, next) => {
+        try {
+            if(req.userData.role === "Project Manager") {
+                next()
+            }else {
+                res.status(401).json({message: 'user not authorized'})
+            }
+        } catch (err) {
+            console.log(err)
+            return res.status(401).json({message: 'user not authorized'})
+        }
+    }
 
 
-module.exports = { authentication, authorization }
+
+
+module.exports = { authentication, authorization, createProjectAuthr }

@@ -8,17 +8,16 @@ class UserController {
         let userObj = {
             name: req.body.name,
             email: req.body.email,
-            password: req.body.password
+            password: req.body.password,
+            role: req.body.role
         }
 
         User.create(userObj)
             .then(data => {
-                const { id, name, email } = data
-                return res.status(200).json({ id, name, email })
+                const { id, name, email, role } = data
+                return res.status(200).json({ id, name, email, role })
             })
             .catch(err => {
-                console.log(err, '<<<< err controller')
-                console.log(err.name, '<<< err name')
                 return next(err)
             })
 
@@ -32,16 +31,15 @@ class UserController {
         })
             .then(data => {
                 if(!data) {
-                    // return res.status(400).json({message: 'invalid name password'})
                     throw {message: 'Invalid name or password', statusCode: 400}
                 }
 
                 const flag = comparePassword(req.body.password, data.password)
 
                 if(flag) {
-                    const token = generateToken(data)
+                    const access_token = generateToken(data)
     
-                    return res.status(200).json({token})
+                    return res.status(200).json({access_token})
                 }else {
                     throw {message: 'Invalid name or password', statusCode: 400}
                 }
@@ -81,7 +79,8 @@ class UserController {
                 let objUser = {
                     name: name_google,
                     email: email_google,
-                    password: 'passgoogle'
+                    password: 'passgoogle',
+                    role: "Team Member"
                 }
 
                 return User.create(objUser)
