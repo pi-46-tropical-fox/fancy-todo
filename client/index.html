@@ -11,54 +11,85 @@
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Simple Todo</a>
+        <img style="width: 40px; margin-right:1em;" src="assets/icons8-note-80.png">
+        <a class="navbar-brand" href="#">Fancy Todo</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
       
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
+          <!-- <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
               <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Link</a>
             </li>
-            </ul>
+            </ul> -->
         </div>
-
       </nav>
 
-    <div class="container">
+      <div class="container-fluid">
+          <button>Create new Todo</button>
+          <div class="">
+            <a>asd</a>
+          </div>
+      </div>
 
-    <form method="POST" id="login-form">
-        <h1>Login</h1>
-        <input type="text" name="username" id="login-username">
-        <input type="password" name="password" id="login-password">
-        <div class="g-signin2" data-onsuccess="onSignIn"></div>
-        <input type="submit" id="login-btn" value="Login">
-    </form>
+    <div class="container-fluid" id="credentials-form">
+        <div class="row justify-content-around">
+            <div class="col-3">
+                <div class="card">
+                    <div class="card-body">
+                <form method="POST" id="login-form">
+                    <h1>Login</h1>
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input class="form-control" type="text" name="username" id="login-username">
+                    </div>
+            
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input class="form-control" type="password" name="password" id="login-password">
+                    </div>
+            
+                    <div class="form-group">
+                        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                    </div>
 
-    
-    <form method="POST" id="register-form">
-        <h1>Register</h1>
-        <div class="form-group">
-            <label>Username</label>
-            <input class="form-control" type="text" name="username" id="register-username">
+                    <p id="error-text-login" class="text-danger"></p>
+
+                    <input class="form-control" type="submit" id="login-btn" value="Login">
+                </form>
+            </div>
+            </div>
+            </div>
+
+            <div class="col-3">
+                <form method="POST" id="register-form">
+                    <h1>Register</h1>
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input class="form-control" type="text" name="username" id="register-username">
+                    </div>
+            
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input class="form-control" type="email" name="email" id="register-email">
+                    </div>
+            
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input class="form-control" type="password" name="password" id="register-password">
+                    </div>
+            
+                    <p id="error-text-register" class="text-danger"></p>
+
+                    <input class="form-control" type="submit" value="Register">
+                </form>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label>Email</label>
-            <input class="form-control" type="email" name="email" id="register-email">
-        </div>
-
-        <div class="form-group">
-            <label>Password</label>
-            <input class="form-control" type="password" name="password" id="register-password">
-        </div>
-
-        <input class="form-control" type="submit" value="Register">
-    </form>
 </div>
 
     <script
@@ -72,76 +103,5 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
     <script src='./index.js'></script>
-
-    <script>
-        const url = 'http://localhost:1223'
-
-        function beforeLogin(event){
-            $('#nav-login').hide()
-        }
-
-        function login(){
-            const username = $('#login-username').val()
-            const password = $('#login-password').val()
-
-            $.ajax({
-                method : 'POST',
-                url : `${url}/login`,
-                data : {
-                    username, password
-                }
-            }).done(res => {
-                localStorage.setItem('access_token', res.access_token)
-                console.log(`Login berhasil! Token nya adalah ${res.access_token}`)
-            }).fail(console.error)
-        }
-
-        // Code untuk sign in dengan google
-        function onSignIn(googleUser){
-            console.log(googleUser)
-        }
-
-        function register(){
-            const username = $('#register-username').val()
-            const password = $('#register-password').val()
-            const email = $('#register-email').val()
-
-            $.ajax({
-                method : 'POST',
-                url : `${url}/register`,
-                data : {
-                    username, email, password
-                }
-            }).done(res => {
-                console.log(res)
-            }).fail(console.error)
-
-            console.log(username, password, email)
-
-        }
-
-        function logout(){
-            localStorage.removeItem('access_token')
-        }
-
-        $(document).ready(() => {
-            if(localStorage.access_token){
-                //Kalo access token sudah ada
-            } else {
-    
-                $('#login-form').submit(e => {
-                    e.preventDefault();
-                    login();
-                })
-
-                $('#register-form').submit(e => {
-                    e.preventDefault();
-                    register();
-                })
-
-            }
-        })
-    </script>
-
 </body>
 </html>

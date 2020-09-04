@@ -4,7 +4,7 @@
 ### GET /todos
 > Gets all the todos belonging to the user
 #### Request Header 
-```
+```json
 {
     "access_token": "<JWT Access Token>"
 }
@@ -71,7 +71,7 @@ Response (500)
 }
 ```
 #### Response (400)
-```
+```json
 {
     "errors" : [
         "Judul Invalid"
@@ -85,7 +85,7 @@ Response (500)
 
 ### GET /todos/:id
 #### Request Header 
-```
+```json
 {
     "access_token": "<JWT Access Token>"
 }
@@ -98,6 +98,7 @@ not required
 ```json
 {
     "id" : 1,
+    "userId" : 1,
     "title" : "Ngepel kamar",
     "description" : "jangan lupa ngepel kamar",
     "status" : "done",
@@ -117,13 +118,15 @@ not required
 #### Request Header
 ```json
 {
-    "Content-Type" : "application/json"
+    "Content-Type" : "application/json",
+    "access_token" : "<access_token>"
 }
 ```
 
 #### Request Body
 ```json
 {
+    "userId" : 1,
     "title" : "Ngepel kamar",
     "description" : "jangan lupa ngepel kamar",
     "status" : "done",
@@ -135,6 +138,7 @@ not required
 ```json
 {
     "id" : 1,
+    "userId" : 1,
     "title" : "Ngepel kamar",
     "description" : "jangan lupa ngepel kamar",
     "status" : "done",
@@ -171,6 +175,7 @@ not required
 ```json
 {
     "id" : 1,
+    "userId" : 1,
     "title" : "Ngepel kamar",
     "description" : "jangan lupa ngepel kamar",
     "status" : "done",

@@ -29,16 +29,39 @@ class TodoController {
 		res.status(201).json(insertRes);
 	}
 
-	static async deleteTodoById(req, res) {
+	static async deleteTodoById(req, res, next) {
+		try{
+			
 		const { id } = req.params;
 
-		await Todo.destroy({
+		const toBeDestroyed = await Todo.findOne({
 			where : {
 				id
 			}
 		})
 
-		res.status(200);
+		if(toBeDestroyed){
+			
+		}
+
+		const destroyed = await Todo.destroy({
+			where : {
+				id
+			}
+		})
+
+		console.log(destroyed)
+
+		if(destroyed){
+			res.status
+		}
+
+		res.status(200).send();
+
+
+		} catch(err){
+			next(err)
+		}
 	}
 
 	static async updateTodoById(req, res) {
