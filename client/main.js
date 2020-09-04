@@ -28,6 +28,32 @@ function addMenu(event) {
 let editId = 0; 
 function editMenu(event) {
   editId = event.srcElement.dataset.id;
+
+  $.ajax({
+    method: "GET",
+    url: `http://localhost:3000/todos/${editId}`,
+    headers: {
+      access_token: localStorage.getItem("access_token")
+    }
+  })
+    .done((response) => {
+      console.log(response);
+
+      $("#editTitle").val(response.title);
+      $("#editDescription").val(response.description);
+      if (response.status) {
+        console.log("if");
+        $("#status-true").prop("checked", true);
+      } else {
+        console.log("else");
+        $("#status-false").prop("checked", true);
+      }
+      $("#editDueDate").val(response.due_date.split("T")[0]);
+    })
+    .fail((err) => {
+      console.log(err);
+    })
+
   $("#form-login").hide();
   $("#form-register").hide();
   $("#form-add-todo").hide();
@@ -104,17 +130,24 @@ function initContent(event) {
 }
 
 function beforeLogin() {
-  $("#errorAlert").hide();
+  $("#error-edit").hide();
+  $("#error-login").hide();
+  $("#error-register").hide();
+  $("#error-add").hide();
   $("#nav-login").show();
   $("#nav-register").show();
   $("#nav-home").hide();
   $("#nav-add").hide();
   $("#nav-logout").hide();
   $("#email-user").text("");
+  $("#google-photo").empty();
 }
 
 function afterLogin() {
-  $("#errorAlert").hide();
+  $("#error-edit").hide();
+  $("#error-login").hide();
+  $("#error-register").hide();
+  $("#error-add").hide();
   $("#nav-login").hide();
   $("#nav-register").hide();
   $("#nav-home").show();
@@ -146,9 +179,9 @@ function loginForm(event) {
     })
     .fail((err) => {
       console.log(err, "<<<< error in loginForm");
-      $("#errorAlert").show()
+      $("#error-login").show()
       err.responseJSON.errors.forEach((error) => {
-        $("#errorAlert").append(`
+        $("#error-login").append(`
         <p>${error}</p>
         `);
       });
@@ -182,9 +215,9 @@ function registerForm(event) {
     })
     .fail((err) => {
       console.log(err, "<<<< errror in registerForm main");
-      $("#errorAlert").show();
+      $("#error-register").show();
       err.responseJSON.errors.forEach((error) => {
-        $("#errorAlert").append(`
+        $("#error-register").append(`
         <p>${error}</p>
         `);
       });
@@ -207,7 +240,10 @@ function onSignIn(googleUser) {
 
       localStorage.setItem("access_token", response.access_token);
       localStorage.setItem("email_user", response.email);
-      $("#email-user").text("welcome " + localStorage.email_user);
+      $("#google-photo").append(`
+      <img src="${response.avatar}" alt="google-photo" class="rounded-circle" width="35rem" />
+      `);
+      $("#email-user").text(localStorage.email_user);
       initContent();
       listMenu();
       afterLogin();
@@ -285,9 +321,9 @@ function addTodo() {
     })
     .fail((err) => {
       console.log(err, "<<<< error in addTodo");
-      $("#errorAlert").show();
+      $("#error-add").show();
       err.responseJSON.errors.forEach((error) => {
-        $("#errorAlert").append(`
+        $("#error-add").append(`
         <p>${error}</p>
         `);
       });
@@ -301,7 +337,6 @@ function editTodo() {
   const description = $("#editDescription").val();
   const status = $("input[name=status]:checked").val();
   const due_date = $("#editDueDate").val();
-  console.log(status);
 
   $.ajax({
     method: "PUT",
@@ -327,9 +362,9 @@ function editTodo() {
     })
     .fail((err) => {
       console.log(err, "<<<< error in editTodo");
-      $("#errorAlert").show();
+      $("#error-edit").show();
       err.responseJSON.errors.forEach((error) => {
-        $("#errorAlert").append(`
+        $("#error-edit").append(`
         <p>${error}</p>
         `);
       });
