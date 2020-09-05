@@ -45,12 +45,14 @@ const afterLogin = (event) => {
                                 <h5 class="card-title">${el.title}</h5>
                                 ${res.todosWithUserId.includes(el.id) ?
                                 `<div style="display:flex;flex-direction:row;padding:1em">
-                                    <a data-id=${el.id} data-title='${el.title}' data-description='${el.description}' data-status='${el.status}' data-date='${el.due_date}' href="#" onclick="updates(event)">Edit </a> 
+                                    <a data-id=${el.id} data-title='${el.title}' data-description='${el.description}' data-status='${el.status}' data-date='${el.due_date}' href="#" onclick="updates(event)">Edit </a>
                                     <a data-id=${el.id} href="#" onclick="deletes(event)" style="color:red;margin-left:1em;">Delete </a>
                                 </div>` : ''}
                             </div>
                             <h6 class="card-subtitle mb-2 text-muted">${el.User.email}</h6>
                             <p class="card-text">${el.description}</p>
+                            <p>Status : ${el.status ? 'Done' : 'Undone'} </p>
+                            <p>Due : ${new Date(el.due_date).toLocaleDateString("en-US")}</p> 
                         </div>
                     </div>
                 `)
@@ -273,8 +275,8 @@ function onSignIn(googleUser) {
         .fail(err => {
             $('#error-login').append(`
             <p class="error-message">Something Went Wrong</p
-        `)        
-    })
+        `)
+        })
 }
 
 const getPopularMovie = (event) => {
@@ -299,6 +301,7 @@ const getPopularMovie = (event) => {
                 <div class="card-body">
                     <h5 class="card-title">${data.title}</h5>
                     <p class="card-text" style="white-space:nowrap;overflow:hidden">${data.overview}</p>
+                    <a data-title='${data.title}' href="#" onclick="addMovie(event)">Add To Todos </a>
                 </div>
             </div>
             `)
@@ -308,6 +311,37 @@ const getPopularMovie = (event) => {
             $('#movie-card').append(`
                 <h1 style="margin-top:1em;">Failed To Get Movies</h1>
             `)
+        })
+}
+
+const addMovie = (event) => {
+    $.ajax({
+        method: 'POST',
+        url: 'http://localhost:3000/todos',
+        headers: {
+            access_token: localStorage.getItem('access_token')
+        },
+        data: {
+            title: event.srcElement.dataset.title,
+            description: `Watching ${event.srcElement.dataset.title}, text me if you want to join`,
+            due_date: new Date()
+        }
+    })
+        .done(res => {
+            $('#movie-card').empty()
+            $('#todo-card').show()
+            $('#todos-card').show()
+            afterLogin()
+        })
+        .fail(err => {
+            err.responseJSON.errors.forEach(el => {
+                $('#error-list').append(`
+                    <p class="error-message">${el}</p
+                `)
+                setTimeout(function () {
+                    $(".error-message").remove();
+                }, 2000);
+            })
         })
 }
 
