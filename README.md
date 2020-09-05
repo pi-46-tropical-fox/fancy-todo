@@ -402,7 +402,7 @@ Response 500 - Interval Server Error(Failed)
 }
 ``` 
 
-# GET /todos
+# GET /movies
 > Get Popular Movie List
 Request Header
 ```
