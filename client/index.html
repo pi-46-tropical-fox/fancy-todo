@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Lottie -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <!-- Google OAuth  -->
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="296883314892-mgfdkl3hkgbbib7j2fhjvdn9nggk9vbd.apps.googleusercontent.com">
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Kufam&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="./logo_fancy.png">
+    <title>Fancy Todo</title>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-light bg-light sticky-top" id="navbar">
+        <div>
+            <a class="navbar-brand" href="#" id="nav-home">
+                <img src="./logo_fancy.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy"> Fancy ToDo
+            </a>
+
+            <a href="#" class="navbar-brand float-right" id="logout">Logout</a>
+            <a href="#" class="navbar-brand float-right" id="add-new" data-toggle="modal" data-target="#createModal">Add New Todo</a>
+        </div>
+        <section>
+            <small class="username-viewer">You are logged in as:</small>
+            <span class="username" id="username"></span>
+        </section>
+
+    </nav>
+    <!-- Jumbotron -->
+    <div class="container" id="home">
+        <div class="row">
+            <div class="home jumbotron col-6 my-5">
+                <h2 class="display-2 big-text">Hello!</h2>
+                <p class="lead">Welcome, do we know each other?</p>
+                <hr class="my-1">
+                <hr class="my-2">
+                <a class="btn btn-primary btn-lg" href="#" role="button" id="register">Nope, but i'd love to.</a>
+                <a class="btn btn-primary btn-lg" href="#" role="button" id="login">Yes we do.</a>
+            </div>
+            <div class="col-4 my-5 mx-auto random-dots">
+                <lottie-player src="https://assets3.lottiefiles.com/packages/lf20_dl87KC.json" background="transparent" speed="1" style="width: 500px; height: 500px;" loop autoplay></lottie-player>
+            </div>
+        </div>
+    </div>
+    <!-- Login Form -->
+    <div class="container" id="login">
+        <div class="row">
+            <div class="login-form mx-auto jumbotron col-5">
+                <lottie-player class="mx-auto" src="https://assets8.lottiefiles.com/packages/lf20_FfXXWh.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></lottie-player>
+                <form id="login-form">
+                    <h1 class="form-info">Login</h1>
+                    <div class="form-group">
+                        <label for="login-email">Email address</label>
+                        <input type="email" class="form-control" id="login-email">
+                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" class="form-control" id="login-password">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="btn g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+                    <br>
+                    <br>
+                    <small>Don't have an account? <a href="#" id="click-register-button">Click here</a> to register.</small>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <!-- Register Form -->
+    <div class="container" id="register">
+        <div class="row">
+            <div class="register-form mx-auto jumbotron col-5">
+                <form id="register-form">
+                    <h1 class="form-info">Register</h1>
+                    <div class="form-group">
+                        <label>Email address</label>
+                        <input type="email" class="form-control" id="register-email" aria-describedby="emailHelp">
+                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" class="form-control" id="register-username">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" id="register-password">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <!-- ToDos Cards -->
+    <div class="container">
+        <div class="mx-auto row" id="todo-card">
+
+        </div>
+    </div>
+
+    <!--Jumbotron when nothing as upcoming -->
+    <div class="container" id="nothing">
+        <div class="row">
+            <div class="col-4 my-5 mx-auto random-dots">
+                <lottie-player src="https://assets9.lottiefiles.com/packages/lf20_PzSm9C.json" background="transparent" speed="1" style="width: 700px; height: 700px;" loop autoplay></lottie-player>
+            </div>
+            <div class="home col-2 my-5">
+                <h3 class="big-text my-4" style="color: wheat;">You have no upcoming events.. ... -- .. --- .. - . --- .. - .. -- .. -- .- . --- ... -- .. -- .. -- .- . . -- .- . --- ... -- ..- -- --- ... ---- .. . -- .- . --- ... -- .. -- .. -- .- . . -- .- . --- ... -- .. -- .. -- .- . -- .- . .
+                    -- .- . --- ... -- .. -- .. -- .- . --- ... --.-.</h3>
+            </div>
+
+        </div>
+    </div>
+    <!-- Modal for Update -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit ToDo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="title" class="col-form-label">Title:</label>
+                            <input type="text" class="form-control" id="title">
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="col-form-label">Description:</label>
+                            <textarea class="form-control" id="description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="due_date" class="col-form-label">Status:</label>
+                            <select class="form-control" name="" id="status">
+                                <option value="Unfinished">Unfinished</option>
+                                <option value="Finished">Finished</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="due_date" class="col-form-label">Due Date:</label>
+                            <input type="date" class="form-control" id="due_date">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button onclick="editCard(event)" type="button" class="btn btn-primary" data-dismiss="modal" id="updateData">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal for Create -->
+    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createModalLabel">New ToDo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="title" class="col-form-label">Title:</label>
+                            <input type="text" class="form-control" id="title-add">
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="col-form-label">Description:</label>
+                            <textarea class="form-control" id="description-add"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="due_date" class="col-form-label">Status:</label>
+                            <select class="form-control" name="" id="status-add">
+                                <option value="Unfinished">Unfinished</option>
+                                <option value="Finished">Finished</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="due_date" class="col-form-label">Due Date:</label>
+                            <input type="date" class="form-control" id="due_date-add">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button onclick="addCard(event)" type="button" class="btn btn-primary" data-dismiss="modal" id="addNew">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal for API -->
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Related Articles:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                </div>
+                <div class="modal-body" id='modal-articles'>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Error -->
+    <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modal-error">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content" id="error-modal">
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Bootstrap JS, popper, jQuery, Google API -->
+    <script src="http://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="./main.js"></script>
+</body>
+
+</html>
