@@ -355,19 +355,9 @@ _Response (200)_
  {
     "result": [
         {
-            "Title": "Makan"
-        },
-        {
             "Title": "Bakar Daun Salam di Dalam Rumah, Hal Mengejutkan Akan Terjadi",
-            "url": "https://www.viva.co.id/gaya-hidup/kesehatan-intim/1298374-bakar-daun-salam-di-dalam-rumah-hal-mengejutkan-akan-terjadi"
-        },
-        {
-            "Title": "Diet Ala Militer Bisa Pangkas 4,5Kg dalam Seminggu Tanpa Banyak Usaha",
-            "url": "https://www.viva.co.id/gaya-hidup/kesehatan-intim/1298265-diet-ala-militer-bisa-pangkas-4-5kg-dalam-seminggu-tanpa-banyak-usaha"
-        },
-        {
-            "Title": "6 Cara Sederhana Menurunkan Lemak Perut, Berdasarkan Penelitian",
-            "url": "https://www.viva.co.id/gaya-hidup/kesehatan-intim/1298370-6-cara-sederhana-menurunkan-lemak-perut-berdasarkan-penelitian"
+            "link": "https://www.viva.co.id/gaya-hidup/kesehatan-intim/1298374-bakar-daun-salam-di-dalam-rumah-hal-mengejutkan-akan-terjadi",
+            "snippet" : "blablabla"
         }
     ]
 }
