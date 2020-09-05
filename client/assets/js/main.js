@@ -1,5 +1,6 @@
 const host = 'localhost'
 const port = 3457
+const baseUrl = `http://${host}:${port}`
 
 const Toast = Swal.mixin({
     toast: true,
@@ -20,7 +21,7 @@ const register = (e) => {
 
     $.ajax({
         method: "POST",
-        url: `http://${host}:${port}/u/register`,
+        url: `${baseUrl}/u/register`,
         data: { name, username, password }
     })
     .done(() => {
@@ -44,7 +45,7 @@ const signIn = (e) => {
 
     $.ajax({
         method: "POST",
-        url: `http://${host}:${port}/u/login`,
+        url: `${baseUrl}/u/login`,
         data: { username, password }
     })
     .done((data) => {
@@ -87,7 +88,7 @@ function googleLogin (googleUser) {
     // send google token ke back end
     $.ajax ({
         method:'POST',
-        url : `http://${host}:${port}/u/googleLogin`,
+        url: `${baseUrl}/u/googleLogin`,
         headers: {google_access_token}
     })
     .done(response => {
@@ -113,8 +114,6 @@ const toggleModal = () => {
     $('body').toggleClass('modal-active')
 }
 
-const googleLogout = () => {}
-
 const checkAuth = () => {
     if(localStorage.getItem('access_token')){
         showMain()
@@ -127,6 +126,8 @@ const showMain = () => {
     $('#auth').hide()
     $('nav').show()
     $('#main').show()
+
+    getTodos()
 }
 
 const showLogin = () => {
@@ -156,6 +157,89 @@ const init = () => {
     $('#auth').hide()
     checkAuth()
 }
+
+
+// Todos
+
+const getTodos = () => {
+    let access_token = localStorage.getItem('access_token')
+    $.ajax({
+        method: 'GET',
+        url: `${baseUrl}/todos`,
+        headers: {
+            access_token
+        }
+    })
+    .done(data => {
+        console.log(data)
+    })
+}
+
+const postTodo = () => {
+    let access_token = localStorage.getItem('access_token')
+    let id = localStorage.getItem('id')
+
+    let data = {
+        id,
+        title: $('#title').val(),
+        description: $('#description').val(),
+        due_date: $('#due_date').val(),
+        status: 'pending',
+        code: $('#code').val()
+    }
+
+    $.ajax({
+        method: 'POST',
+        url: `${baseUrl}/todos`,
+        headers: { access_token },
+        data
+    })
+    .done(() => {
+        init()
+        Toast.fire('Yeay! Todo data was successfully made.', 'success')
+    })
+    .fail(err => {
+        Swal.fire('Oops!', err.responseJSON.msg.join('<br>'), 'error')
+    })
+}
+
+const editTodo = (todo) => {
+    $('#title').val(todo.title)
+    $('#description').val(todo.description)
+    $('#due_date').val(todo.date)
+
+    toggleModal()
+}
+
+const updateTodo = () => {
+    let access_token = localStorage.getItem('access_token')
+    let id = localStorage.getItem('id')
+
+    let data = {
+        id,
+        title: $('#title').val(),
+        description: $('#description').val(),
+        due_date: $('#due_date').val(),
+        status: 'pending',
+        code: $('#code').val()
+    }
+
+    $.ajax({
+        method: 'POST',
+        url: `${baseUrl}/todos`,
+        headers: { access_token },
+        data
+    })
+    .done(() => {
+        init()
+        Toast.fire('Yeay! Todo data was successfully made.', 'success')
+    })
+    .fail(err => {
+        Swal.fire('Oops!', err.responseJSON.msg.join('<br>'), 'error')
+    })
+}
+
+// 3rd Party APIs
 
 // main function
 
