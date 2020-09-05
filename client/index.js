@@ -152,14 +152,14 @@ function showUpdateModal(el){
 }
 
 function addOrUpdateTodoToView(todo, old){
-    let count = $("#todo-container").length
+    let count = $("#todo-container > *").length + 1
 
   const el = $("<tr>")
   .attr("data-id", todo.id)
   .append($('<td>').append(count))
   .append($('<td>').append(todo.title))
   .append($('<td>').append(todo.description))
-  .append($('<td>').append(todo.due_date))
+  .append($('<td>').append(new Date(todo.due_date).toDateString()))
   .append($('<td>').append(todo.status))
 
   const delBtn = $("<button>").html("Delete").addClass(["btn", "btn-danger", 'mx-1'])
@@ -265,6 +265,18 @@ $(document).ready(() => {
         logout();
     });
 
+    $('#popcorn-btn').mousedown(e => {
+        console.log(e)
+    })
+
+    $('#popcorn-check').click(e => {
+        e.preventDefault()
+        e.stopPropagation()
+        console.log('mousedwo')
+        $('#search-movie-modal').modal('toggle')
+        $('#popcorn-check')
+    })
+
     // Sets the minimal date to today
     $("#form-todo-due-date").attr("min", new Date().toISOString().split("T")[0]);
 
@@ -282,4 +294,13 @@ $(document).ready(() => {
         e.preventDefault();
         register();
     });
+});
+
+// Enable modal stacking
+$(document).on('show.bs.modal', '.modal', function () {
+    var zIndex = 1040 + (10 * $('.modal:visible').length);
+    $(this).css('z-index', zIndex);
+    setTimeout(function() {
+        $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+    }, 0);
 });
