@@ -345,6 +345,12 @@ const addMovie = (event) => {
         })
 }
 
+const home = () => {
+    afterLogin()
+    $('#movie-card').empty()
+    $('#todos-card').show()
+}
+
 $(document).ready(() => {
     if (localStorage.getItem('access_token')) {
         afterLogin()
@@ -356,6 +362,7 @@ $(document).ready(() => {
     $('#log-in').click(showLoginForm)
     $('#logout').click(logout)
     $('#movie-list').click(getPopularMovie)
+    $('#home').click(home)
 
     $('#formLogin').submit(loginPost)
     $('#formRegister').submit(registerPost)
