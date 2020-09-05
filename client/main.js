@@ -19,11 +19,15 @@ function login (event) {
 
 function logout (event) {
     $('#home').hide();
-    $('#form-login').show();
-    $('#form-register').show();
+    $('#form-login').hide();
+    $('#form-register').hide();
     $('#todo-list').hide();
     $('#todo-add').hide();
     $('#logout-page').show();
+    beforeLogin ()
+    localStorage.clear ()
+    localStorage.removeItem ('token')
+    signOut()
 }
 
 function register (event) {
@@ -57,7 +61,7 @@ function todoList (event) {
                 $("#todo-task").append (`
                 <div class="col-3">
           <div class="card">
-            <img src="./assets/img/todo1.png" class="card-img-top" alt="Todo Task">
+            <img src="./assets/img/training_1.svg" class="card-img-top" alt="Todo Task">
             <div class="card-body">
               <h5 class="card-title">Task : ${el.title}</h5>
               <p class="card-text">Description : ${el.description}</p>
@@ -81,18 +85,6 @@ function todoAdd (event) {
     $('#todo-list').hide();
     $('#todo-add').show();
     $('#logout-page').hide();
-}
-
-function logout (event) {
-    $('#home').hide();
-    $('#form-login').hide();
-    $('#form-register').hide();
-    $('#todo-list').hide();
-    $('#todo-add').hide();
-    $('#logout-page').show();
-    beforeLogin ()
-    localStorage.clear ()
-    localStorage.removeItem ('token')
 }
 
 function beforeLogin () {
@@ -178,6 +170,37 @@ function registerForm (event) {
         })
 
 }
+
+function onSignIn(googleUser) {
+    var google_id_token = googleUser.getAuthResponse().id_token;
+    console.log (google_id_token)
+
+    $.ajax ({
+        method : "POST",
+        url : "http://localhost:3000/users/googleLogin",
+        headers : {google_id_token}
+    })
+
+    .done (res => {
+        console.log (res)
+        localStorage.setItem ("token", res.token)
+        home ()
+        afterLogin ()
+        home ()
+    })
+
+    .fail (err => {
+        console.log (err)
+    })
+}
+
+function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+}
+
 
 
 $(document).ready(() => {
