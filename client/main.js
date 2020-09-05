@@ -269,6 +269,7 @@ function publicHoliday_list (event) {
     $('#todo-add').hide();
     $('#logout-page').hide();
     $('#publicHoliday_list').show();
+    $('#publicHoliday_list').empty()
     $('#longWeekend_list').hide();
 
     $.ajax ({
@@ -307,6 +308,7 @@ function longWeekend_list (event) {
     $('#logout-page').hide();
     $('#publicHoliday_list').hide();
     $('#longWeekend_list').show();
+    $('#longWeekend_list').empty();
 
     $.ajax ({
         method : "GET",
