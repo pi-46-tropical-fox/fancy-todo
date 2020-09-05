@@ -1,12 +1,16 @@
-const { Todo } = require('../models')
+const { Todo, User } = require('../models')
 
 class Controller {
     // get all todo datas
     static async getAllTodos(req, res) {
         try {
-            const todoData = await Todo.findAll()
+            const todoData = await Todo.findAll({include : [ { model : User, attributes: [ 'email', 'id' ] } ]})
+            
+            let todosWithUserId = todoData.map(todo => {
+                if(todo.UserId == req.userData.id) return todo.id
+              })
 
-            return res.status(200).json(todoData)
+            return res.status(200).json({todoData, todosWithUserId})
         } catch(err) {
             return res.status(500).json({ msg : 'Internal Server Error' })
         }
@@ -18,7 +22,7 @@ class Controller {
             const param = {
                 title : req.body.title,
                 description : req.body.description,
-                status : req.body.status,
+                status : false,
                 due_date : req.body.due_date,
                 UserId : req.userData.id
             }
@@ -63,7 +67,7 @@ class Controller {
 
             const dataEdit = await Todo.update(param, { where : {id : req.params.id}, returning : true})
 
-            if(dataEdit[0] == 0) {
+            if(!dataEdit[0]) {
                 return res.status(404).json({ msg : '404 Not Found' })
             } else {
                 return res.status(200).json(dataEdit[1][0])

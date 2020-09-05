@@ -5,7 +5,7 @@ const movieController = require('../controllers/MovieController')
 const { authentication } = require('../middlewares/auth')
 
 route.get('/', (req, res) => {
-    res.send('tai')
+    res.send('oopsie')
 })
 
 route.get('/movies', authentication ,movieController.getTrending)
