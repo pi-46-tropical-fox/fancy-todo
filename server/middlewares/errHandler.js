@@ -1,7 +1,7 @@
 
 
 function errHandler(err, req, res, next) {
-    console.log(err.name, '<<<<errorHandler register')
+    // console.log(err.name, '<<<<errorHandler register')
     let statusCode = 500
     let errors = []
     switch (err.name) {
@@ -13,7 +13,7 @@ function errHandler(err, req, res, next) {
             break;
         case 'JsonWebTokenError':
                 errors.push('User authentication failed')
-            statusCode = err.statusCode
+            statusCode = 401
             break;
         default:
             errors.push(err.message)

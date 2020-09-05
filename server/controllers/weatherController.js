@@ -18,4 +18,6 @@ class WeatherController {
 
 }
 
+// console.log( WeatherController.current(req, res, next))
+
 module.exports = WeatherController

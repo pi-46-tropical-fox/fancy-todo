@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-signin-client_id"
+        content="160460702617-4d89veprq6ktps8ga737t3blkkh86ceb.apps.googleusercontent.com">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <title>Document</title>
@@ -20,14 +23,17 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
+                <li class="nav-item active" id="navbar-login">
                     <a class="nav-link" href="#">Login <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item active" id="navbar-register">
                     <a class="nav-link" href="#">Register <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item active" id="navbar-add">
                     <a class="nav-link" href="#">Add <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active" id="navbar-logout">
+                    <a class="nav-link" href="#">Logout <span class="sr-only">(current)</span></a>
                 </li>
             </ul>
         </div>
@@ -50,6 +56,8 @@
                             <input type="password" class="form-control" id="loginPassword">
                         </div>
                         <button type="submit" class="btn btn-info" id="loginSubmit">Submit</button>
+                        <p>or Sign in with</p>
+                        <div class="g-signin2" data-onsuccess="onSignIn"></div>
                     </form>
                 </div>
             </div>
@@ -104,14 +112,37 @@
                             <input type="text" class="form-control" id="todoDescription" aria-describedby="emailHelp">
                         </div>
                         <div class="form-group">
-                            <label for="todoStatus">Status</label>
-                            <input type="text" class="form-control" id="todoStatus">
-                        </div>
-                        <div class="form-group">
                             <label for="todoDueDate">Due Date</label>
                             <input type="date" class="form-control" id="todoDueDate">
                         </div>
-                        <button type="submit" class="btn btn-info" id="registerSubmit">Submit</button>
+                        <button type="submit" class="btn btn-info" id="todoSubmit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Edit Todo Form -->
+    <div class="container mt-5" id="form-edit-todo">
+        <div class="row justify-content-md-center">
+            <div class="col-6 p-4 rounded-lg">
+                <div class="card p-4 rounded-lg">
+                    <h5 class="card-title font-weight-bold ">Edit Todo Form</h5>
+                    <form>
+                        <div class="form-group">
+                            <label for="todoTitle">Title</label>
+                            <input type="text" class="form-control" id="edittodoTitle">
+                        </div>
+                        <div class="form-group">
+                            <label for="todoDescription">Description</label>
+                            <input type="text" class="form-control" id="edittodoDescription" aria-describedby="emailHelp">
+                        </div>
+                        <div class="form-group">
+                            <label for="todoDueDate">Due Date</label>
+                            <input type="date" class="form-control" id="edittodoDueDate">
+                        </div>
+                        <button type="submit" class="btn btn-info" id="edittodoSubmit">Submit</button>
                     </form>
                 </div>
             </div>
@@ -120,68 +151,31 @@
     </div>
 
     <!-- Todo List -->
-    <div class="container border border-dark rounded-lg">
+    <div class="container border border-dark rounded-lg mt-5" id="list-todo">
+        <h1>My Todo List</h1>
         <div class="row justify-content-md-center">
-            <div class="card mt-3 ml-2 mr-2 text-white bg-info mb-3" style="width: 70rem;">
-                <nav class="navbar navbar-expand-lg bg-dark font-weight-bold">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarTodo">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item active" id="editTodo">
-                                <a class="nav-link text-white" href="#">Edit <span class="sr-only">(current)</span></a>
-                            </li>
-                            <li class="nav-item active" id="deleteTodo">
-                                <a class="nav-link text-white" href="#">Delete <span
-                                        class="sr-only">(current)</span></a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-                <div class="card-header bg-primary" id="todoTitle">Title</div>
-                <div class="card-body">
-                    <h5 class="card-title" id="todoDueDate">Due date</h5>
-                    <p class="card-text" id="todoDescription">Description</p>
+            <div class="col-6" id="completed-todo">
+                <h3>Completed Todos</h3>
+                <div class="card mt-3 ml-2 mr-2 text-white bg-info mb-3" id="completed-todos">
                 </div>
             </div>
-            <div class="card mt-3 ml-2 mr-2 text-white bg-info mb-3" style="width: 70rem;">
-                <nav class="navbar navbar-expand-lg bg-dark font-weight-bold">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarTodo">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item active" id="editTodo">
-                                <a class="nav-link text-white" href="#">Edit <span class="sr-only">(current)</span></a>
-                            </li>
-                            <li class="nav-item active" id="deleteTodo">
-                                <a class="nav-link text-white" href="#">Delete <span
-                                        class="sr-only">(current)</span></a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-                <div class="card-header bg-primary" id="todoTitle">Title</div>
-                <div class="card-body">
-                    <h5 class="card-title" id="todoDueDate">Due date</h5>
-                    <p class="card-text" id="todoDescription">Description</p>
+            <div class="col-6" id="outstanding-todo">
+                <h3>Outstanding Todos</h3>
+                <div class="card mt-3 ml-2 mr-2 text-white bg-info mb-3" id="outstanding-todos">
                 </div>
             </div>
         </div>
+    </div>
 
 
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-            crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-            integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-            crossorigin="anonymous"></script>
-</body>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="./main.js"></script>
 
 </html>

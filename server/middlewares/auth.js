@@ -6,25 +6,26 @@ const authentication = async (req, res, next) => {
     const { access_token } = req.headers
 
     try {
-        const data = verifyToken(access_token)
-        // req.userData = data
-        let user = await User.findOne({ where: { username: data.username } })
+        const userData = verifyToken(access_token)
+        // req.useruserData = userData
+        let user = await User.findOne({ where: { email: userData.email } })
         if (user) {
-            req.userData = data
+            req.userData = userData
             next()
         } else {
             throw { message: 'User authentication failed' }
         }
     } catch (err) {
-        res.status(401).json({ message: 'User authentication failed' })
+        // res.status(401).json({ message: 'User authentication failed' })
         console.log(err, 'ini error authentication')
-        next()
+        next(err)
     }
 
 }
 
 const authorization = async (req, res, next) => {
     const { todoId } = req.params
+    console.log(todoId, '<<<di authorization')
     try {
         const todo = await Todo.findByPk(todoId)
         console.log(todoId, 'ini req.userData di authorization')

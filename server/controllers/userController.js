@@ -38,14 +38,14 @@ class userController {
     }
 
     static login(req, res, next) {
-        const { username, password } = req.body
+        const { email, password } = req.body
 
-        User.findOne({ where: { username } })
+        User.findOne({ where: { email } })
             .then(user => {
 
                 if (!user) {
-                    // return res.status(400).json({ message: 'invalid username/password' })
-                    throw {message:'invalid username/password', statusCode:400 }
+                    // return res.status(400).json({ message: 'invalid email/password' })
+                    throw {message:'invalid email/password', statusCode:400 }
                 }
                 return user
             })
@@ -59,7 +59,7 @@ class userController {
                     return res.status(200).json({ access_token })
                 }
                 else {
-                    throw {message:'invalid username/password', statusCode:400 }
+                    throw {message:'invalid email/password', statusCode:400 }
                 }
             })
             .catch(err => {
