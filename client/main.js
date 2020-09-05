@@ -273,6 +273,25 @@ function signOut() {
     })
 }
 
+function weathers () {
+    $.ajax({
+        url: "http://localhost:3000/weathers",
+        method: "get"
+
+    })
+    .done(response => {
+        console.log(response.current, "<<<<<<<<<<<< hasil weathers")
+
+        $('#weather').append(`
+        <marquee scrolldelay="100" bgcolor="grey">Welcome Jakarta, Observasi Pukul: ${response.current.observation_time}, Suhu: ${response.current.temperature} derajat</marquee>
+        `)
+        
+    })
+    .fail(err => {
+        console.log(err)
+    })
+}
+
 $(document).ready(function() {
     initContent()
     if(localStorage.getItem('acces_token')) {
@@ -292,5 +311,5 @@ $(document).ready(function() {
     $('#registerForm').submit(registerForm)
     $('#addTodo').submit(addTodo)
     // $('#buttonDelete').click(deleteTodo)
-    
+    weathers()
 })
