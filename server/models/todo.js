@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         notEmpty: {
-          msg: 'Title cannot empty'
+          msg: 'Title cannot be empty'
         }
       }
     },
@@ -27,15 +27,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         notEmpty: {
-          msg: 'Description cannot empty'
+          msg: 'Description cannot be empty'
         }
       }
     },
     status: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.STRING,
       validate: {
         notEmpty: {
-          msg: 'Status cannot empty'
+          msg: 'Status cannot be empty'
         }
       }
     },
@@ -44,6 +44,9 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isDate: {
           msg: 'Wrong date format'
+        },
+        isAfter: {
+          msg: 'The date you entered is overdue'
         }
       }
     },

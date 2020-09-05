@@ -251,6 +251,13 @@ _Response (200)_
 }
 ```
 
+_Response (400 - Bad Request)_
+```json
+{
+  "message": "Failed delete todo"
+}
+```
+
 _Response (404 - Not Found)_
 ```json
 {

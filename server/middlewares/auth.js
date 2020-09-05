@@ -1,21 +1,27 @@
 const { verifyToken } = require('../helpers/jwt')
-const { Todo } = require('../models')
+const { Todo, User } = require('../models')
 
-const authentication = (req, res, next) => {
+const authentication = async (req, res, next) => {
     const { access_token } = req.headers
-
-    if(!access_token) {
-        return res.status(400).json({message: 'Please Login First'})
-    }
 
     try {
         const userData = verifyToken(access_token)
-        req.userData = userData
-
-        next()
+        console.log(userData);
+        let user = await User.findOne({
+            where: {
+                email: userData.email
+            }
+        })
+        
+        if (user) {
+            req.userData = userData
+            next()
+        } else {
+            throw {message: 'User not authenticated', statusCode: 401}
+        }
     } 
     catch(err) {
-        return res.status(401).json({message: 'User not authenticated'})
+        return next(err)
     }
 }
 
@@ -26,17 +32,17 @@ const authorization = (req, res, next) => {
     Todo.findByPk(id)
     .then(todo => {
         if(!todo) {
-            return res.status(404).json({message: 'Todo Not Found'})
+            throw {message: 'Todo Not Found', statusCode: 404}
         } 
         else if(todo.UserId == req.userData.id) {
             next()
         } 
         else {
-            return res.status(403).json({message: 'Forbidden Access'})
+            throw {message: 'Forbidden access', statusCode: 403}
         }
     })
     .catch(err => {
-        return res.status(500).json({message: 'User not authorized'})
+        return next(err)
     })
 }
 

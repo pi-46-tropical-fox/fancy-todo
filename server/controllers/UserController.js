@@ -1,18 +1,18 @@
 const {User} = require('../models')
 const {comparePassword} = require('../helpers/compare')
-const {generateToken, verifyToken} = require('../helpers/jwt')
+const {generateToken} = require('../helpers/jwt')
 
 class UserController {
-    static register(req, res) {
+    static register(req, res, next) {
         const { username, email, password } = req.body
 
         User.create({username, email, password})
         .then(user => {
             const {username, email} = user
-            res.status(201).json({username, email})
+            return res.status(201).json({username, email})
         })
         .catch(err => {
-            res.status(500).json({message: "Internal Server Error"})
+            return next(err)
         })
     }
 
@@ -32,19 +32,19 @@ class UserController {
                     return res.status(200).json({access_token})
                 }
                 else{
-                    return res.status(400).json({message: 'Invalid Email or Password'})
+                    throw {message: 'Invalid Email Error', statusCode: 400}
                 }
             }
             else{
-                return res.status(400).json({message: 'Invalid Email or Password'})
+                throw {message: 'Invalid Email Error', statusCode: 400}
             }
         })
         .catch(err =>{
-            console.log(err)
-            res.status(500).json({message: 'internal server error'})
+            next(err)
         })
     }
 }
+
 
 
 module.exports = UserController

@@ -1,11 +1,13 @@
 function errorHandler (err, req, res, next) {
+    console.log(err, '<<< ini dari error handler');
     let statusCode = 500
     let errors = []
 
     switch(err.name) {
+        case 'SequelizeUniqueConstraintError':
         case 'SequelizeValidationError':
-            err.errors.forEach(element => {
-                errors.push(element.message)
+            err.errors.forEach(el => {
+                errors.push(el.message)
             });
             statusCode = 400
             break
@@ -21,7 +23,6 @@ function errorHandler (err, req, res, next) {
 
 
     res.status(statusCode).json({errors})   
-    // res.status(statusCode).json({err})      
 }
 
 module.exports = errorHandler 
