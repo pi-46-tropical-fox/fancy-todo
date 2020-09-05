@@ -43,12 +43,29 @@ function menuList(event){
                 <td>${el.due_date.toString().substring(0,10)}</td>
                 <td>
                     <button type="submit" class="btn btn-primary">EDIT</button>
-                    <a href=#><button type="submit" class="btn btn-primary" id="delTodo" value="${el.id}">DEL</button></a>
+                    <button type="submit" class="btn btn-primary" class="test" id="delTodo${el.id}" value="${el.id}">DEL</button>
                 </td>
             </tr>
             `)
-        })
-        // console.log(result)
+            $(`#delTodo${el.id}`).click(function(event){
+            
+                let id = $(`#delTodo${el.id}`).val()
+                console.log('masuk delTodo ', id)
+                $.ajax({
+                    method: 'DELETE',
+                    url: `http://localhost:3000/todos/${id}`,
+                    headers: {
+                        access_token: localStorage.getItem('access_token')
+                    }
+                })
+                .done(reponse =>{
+                    menuList()
+                })
+                .fail(err =>{
+                    console.log(err)
+                })
+            }) 
+        })   
         
     })
     .fail((err)=>{
@@ -220,13 +237,7 @@ function cardResto(event){
         console.log(err)
     })
 }
-// function onSignIn(googleUser) {
-//     var profile = googleUser.getBasicProfile();
-//     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-//     console.log('Name: ' + profile.getName());
-//     console.log('Image URL: ' + profile.getImageUrl());
-//     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-// }
+
 function onSignIn(googleUser) {
     var google_access_token = googleUser.getAuthResponse().id_token;
     console.log(google_access_token)
@@ -271,4 +282,4 @@ $(document).ready(function(){
     $('#dataAddTodo').submit(addTodo)
     $('#nav_resto').click(cardResto)
 
-})
+    })
