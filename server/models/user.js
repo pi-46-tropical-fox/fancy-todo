@@ -24,10 +24,8 @@ module.exports = (sequelize, DataTypes) => {
         isEmail: {
           args: true,
           msg: 'Invalid email'
-        },
-        unique: true
-      },
-      notEmpty: true
+        }
+      }
     },
     password: {
       type: DataTypes.STRING,
@@ -36,10 +34,6 @@ module.exports = (sequelize, DataTypes) => {
         len: {
           args: [6],
           msg: 'Minimum password is six characters'
-        },
-        notEmpty: {
-          args: true,
-          msg: 'Invalid password'
         }
       }
     }

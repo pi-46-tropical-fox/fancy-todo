@@ -26,8 +26,8 @@ class TodoController{
 // Static method for read all "todos" from database
   static async getTodos(req, res, next) {
     try {
-      const showTodos = await Todo.findAll()
-      return res.status(200).json(showTodos)
+      const showTodosByloginUser = await Todo.findAll( { where : { UserId : +req.userData.id }  })
+      return res.status(200).json(showTodosByloginUser)
     } catch (err) {
       next (err)
     }
@@ -48,15 +48,17 @@ class TodoController{
 // Static method for update existing "todo" by requested id
   static async editTodo(req, res, next) {
     const { title, description, status, due_date, UserId } = req.body
+    const id  = +req.params.id
     try {
       const updateTodo = await Todo.update( 
         { title, description, status, due_date },
-        { where : { id : +req.params.id } }
+        { where : { id } }
         )
         if (!updateTodo || !updateTodo[0]) {
           throw { message : 'todo not found', statusCode : 404 }
         } else {
-          return res.status(200).json(updateTodo)
+          const showUpdatedTodo = await Todo.findByPk(id)
+          return res.status(200).json(showUpdatedTodo)
         }
     } catch (err) {
       next (err)
@@ -69,7 +71,7 @@ class TodoController{
       if (!removeTodo) {
         throw { message : 'todo not found', statusCode : 404 }
       } else {
-        return res.status(200).json(removeTodo)
+        return res.status(200).json('todo has been successfully deleted')
       }
     } catch (err) {
       next (err)

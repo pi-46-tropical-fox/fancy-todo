@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-signin-client_id" content="743154369441-7ofrkup56jkvvg4a2lnst84a21ds13cg.apps.googleusercontent.com">
+  
+  
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+  <title>Todo</title>
+</head>
+<body>
+
+<!-- NAVBAR  -->
+  <nav class="navbar navbar-expand-sm" style="background-color: #f0f0f0">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav" id="content-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#" id="nav-login">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" id="nav-register">Register</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" id="nav-logout">Logout</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" id="nav-todo-list">To-Do List</a>
+        </li>
+        <li>
+          <div class="weather col-sm" id="weather">
+            <div class="card">
+              <!-- <img id="weather-image" src="" class="card-img-top" alt="weather-icon"> -->
+              <div class="card-body">
+                <h2 class="card-title" id="weather-temp"></h5>
+                <h5 class="card-subtitle mb-2" id="weather-location"></h6>
+                <h5 class="card-subtitle mb-2 text-muted" id="weather-desc"></h6>
+                <p class="card-text" id="weather-pressure"></p>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+<!-- LOGO HEADER -->
+  <header id="heading">
+    <div class="container" id="giphy">
+      <img src="https://i.imgur.com/hJ2DFpN.png" style="max-width: 40%" />
+      <h1>To Do!</h1>
+      <h5>Remind me anywhere, anytime, anyplace</h5>
+    </div>
+    </header>
+  
+
+<!-- LOGIN FORM -->
+  <div class="container" id="login-form">
+    <h4>Login</h4>
+    <div id="errorLogin"></div>
+    <div id="emailLogin">
+      <form>
+        <div id="form-login" class="form-group">
+          <label for="login-email">Email:</label>
+          <input type="email" class="form-control" id="login-email" placeholder="Enter email" name="email">
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password:</label>
+          <input type="password" class="form-control" id="login-password" placeholder="Enter password" name="password">
+        </div>
+        <p> <button id="login-submit" type="submit" class="btn btn-primary">Login</button></p>
+      </form>
+    </div>
+
+<!-- LOGIN OPTION -->
+    <div id="login-option">
+      <div class="row">
+        <p>
+          <div class="g-signin2" id="gmail" data-onsuccess="onSignIn"></div>
+        </p>
+      </div>
+    </div>
+    <p>Don't have an account? Click here to <a href="#" id="register-not-have-button">register.</a></p>
+  </div>
+
+<!-- REGISTER FORM -->
+  <div class="container" id="register-form">
+    <div id="registerContent">
+      <form>
+        <h4>Register</h4>
+        <div id="errorRegister"></div>
+        <div class="form-group">
+          <label for="register-name">Name:</label>
+          <input type="text" class="form-control" id="register-name" placeholder="Enter name" name="name">
+        </div>
+        <div class="form-group">
+          <label for="register-email">Email:</label>
+          <input type="email" class="form-control" id="register-email" placeholder="Enter email" name="email">
+        </div>
+        <div class="form-group">
+          <label for="register-password">Password:</label>
+          <input type="password" class="form-control" id="register-password" placeholder="Enter password" name="password">
+        </div>
+        <button id="register-submit" type="submit" class="btn btn-primary mb-2">Register</button>
+      </form>
+    </div>
+    <p>Already have an account? Click here to <a href="#" id="login-have-button">login.</a></p>
+  </div>
+
+<!-- DASHBOARD -->
+<div class="container" id="dashboard">
+  <p id="createNew"><button type="button" id="#createTodoButton" class="btn btn-light" data-toggle="modal"
+    data-target="#createModal"><i class="fas fa-edit"></i> Create new to-do</button></p>
+  <div class="table-responsive" id="todo-table">
+    <table class="table" style="color:black">
+      <thead id="todo-header">
+        <tr>
+          <th style="width: 5%">No.</th>
+          <th style="width: 15%">To-do activity</th>
+          <th style="width: 30%">Description</th>
+          <th style="width: 10%">Status</th>
+          <th style="width: 10%">Due date</th>
+          <th style="width: 10%">Actions</th>
+      </tr>
+      </thead>
+      <tbody id="todo-list">
+        <tr>
+          <td>1</td>
+          <td>Play with Nevin</td>
+          <td>Nevin has invited me for join his farewell party.</td>
+          <td></td>
+          <td>09/09/2020</td>
+          <td>
+          <button type="button" class="btn btn-success btn-block" value="Done" onclick="done()"
+            id="buttonDone"><i class="fas fa-thumbs-up"></i> Done</button>
+          <button type="button" class="btn btn-warning btn-block" data-toggle="modal"
+            data-target="#editModal"><i class="fas fa-edit"></i> Edit</button>
+          <button type="button" class="btn btn-danger btn-block" data-toggle="modal"
+            data-target="#deleteModal" id="buttonDelete"><i class="fas fa-trash-alt"></i>
+            Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ADD FORM -->
+<div class="modal" id="createModal" style="color: #000000">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+    <!-- Modal Header -->
+    <div class="modal-header" style="color: #000000">
+        <h4 class="modal-title"><i class="fas fa-edit"></i> Create to-do</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+
+          <!-- Modal body -->
+    <div class="modal-body" style="color: #000000">
+      <div class="container">
+        <form>
+          <div class="form-group" style="color: #000000">
+            <label for="add-title">To-Do:</label>
+            <input type="text" class="form-control" id="add-title" placeholder="Enter task"
+                name="title">
+          </div>
+          <div class="form-group" style="color: #000000">
+            <label for="add-description">Description:</label>
+            <textarea class="form-control" rows="5" id="add-description"
+                placeholder="Enter description" name="description"></textarea>
+          </div>
+          <div class="form-group" style="color: #000000">
+            <label for="add-due_date">Date:</label>
+            <input type="date" class="form-control" id="add-due_date" name="date">
+          </div>
+          <div class="form-check-inline">
+            <label class="form-check-label" for="add-status"
+            style="color: #000000">Urgent:</label>
+              <div class="container" style="color: #000000">
+                <input type="checkbox" class="form-check-input" name="status"
+                id="add-status" style="color: #000000">Yes
+              </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+              <button type="button" class="btn btn-success" id="created-save"
+                data-dismiss="modal">Save</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+<!-- EDIT FORM -->
+<div class="modal" id="editModal" style="color: #000000">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header" style="color: #000000">
+        <h4 class="modal-title"><i class="fas fa-edit"></i> Edit to-do</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+          <!-- Modal body -->
+      <div class="modal-body" style="color: #000000">
+        <div class="container">
+          <form id="editModalForm">
+            <div class="form-group" style="color: #000000">
+              <label for="titleEditModal">To-Do:</label>
+              <input type="text" class="form-control" id="titleEditModal" placeholder="Enter task"
+              name="title">
+            </div>
+              <div class="form-group" style="color: #000000">
+                <label for="descriptionEditModal">Description:</label>
+                <textarea class="form-control" rows="5" id="descriptionEditModal"
+                placeholder="Enter description" name="description"></textarea>
+              </div>
+              <div class="form-group" style="color: #000000">
+                <label for="dueDateEditModal">Date:</label>
+                <input type="date" class="form-control" id="dueDateEditModal" name="date">
+              </div>
+              <div class="form-check-inline">
+                <label class="form-check-label" for="statusEditModal"
+                style="color: #000000">Urgent:</label>
+                <div class="container" style="color: #000000">
+                  <input type="checkbox" class="form-check-input" name="status" id="statusEditModal"
+                  style="color: #000000">Yes
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+          <!-- Modal footer -->
+      <div class="modal-footer" id="editModalFooter">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- DELETE POPUP -->
+<div class="modal" id="deleteModal" style="color: #000000;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header" style="color: #000000">
+        <h4 class="modal-title"><i class="fas fa-trash-alt"></i> Delete Todo</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body" style="color: #000000">
+        <div class="container">
+          <form>
+            <div class="form-group" style="color: #000000">
+              <p>Are you sure you want to delete this to-do?</p>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer" id="deleteModalFooter">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="./main.js"></script>
+</body>
+</html>

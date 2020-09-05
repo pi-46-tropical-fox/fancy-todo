@@ -11,11 +11,12 @@ function errorHandler (err, req, res, next) {
   if (err.name === 'JsonWebTokenError') {
     errors.push('User is not authenticated')
     statusCode = 401
-  } else if (err.errors[0].type === 'Validation error') {
-      while (!err.message) {
-      errors.push(err.message)
-    }
-  }
+  } 
+  // else if (err.errors[0].type === 'Validation error') {
+  //     while (!err.message) {
+  //     errors.push(err.message)
+  //   }
+  // }
   else {
     errors.push(err.message)
     statusCode = err.statusCode || 500

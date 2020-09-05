@@ -84,7 +84,7 @@ _Response (200 - OK)_
     "description": "<todo description>",
     "status": "<todo status>",
     "due_date": "<todo due date>",
-    "UserId": <todo User ID>,
+    "UserId": <todo User ID that who ordered the task>,
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
   },
@@ -94,7 +94,7 @@ _Response (200 - OK)_
     "description": "<todo description>",
     "status": "<todo status>",
     "due_date": "<todo due_date>",
-    "UserId": <todo User ID>,
+    "UserId": <todo User ID that who ordered the task>,
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
   }
@@ -133,7 +133,7 @@ _Response (200 - OK)_
     "description": "<todo description>",
     "status": "<todo status>",
     "due_date": "<todo due date>",
-    "UserId": <todo User ID>,
+    "UserId": <todo User ID that who ordered the task>,
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
   },
@@ -209,7 +209,7 @@ _Request Body_
 
 _Response (200 - OK)_
 ```
-not needed
+todo has been successfully deleted
 ```
 
 _Response (404 - Not found)_
@@ -286,6 +286,56 @@ _Response (400 - Bad Request)_
 }
 ```
 ---
+### POST /weather
+_Request Header_
+```
+not needed
+```
+
+_Request Body_
+```
+{
+  "city": <"your city name">
+}
+```
+
+_Response (200 - OK)_
+```
+not needed
+```
+
+_Response (400 - Bad Request)_
+```
+{
+  "message": "Invalid requests"
+}
+```
+
+### POST /pexels
+_Request Header_
+```
+not needed
+```
+
+_Request Body_
+```
+{
+  "keyword": <"your keyword search">
+}
+```
+
+_Response (200 - OK)_
+```
+not needed
+```
+
+_Response (400 - Bad Request)_
+```
+{
+  "message": "Invalid requests"
+}
+```
+
 
 
 
