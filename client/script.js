@@ -56,17 +56,18 @@ const afterLogin = (event) => {
             })
         })
         .fail(err => {
-            console.log(err);
+            $('#todos-card').append(`
+                <h1 style="margin-top:1em;">Failed To Get Todos Datas</h1>
+            `)
         })
 }
 
 const logout = (event) => {
+    $('#movie-card').hide()
     beforeLogin()
     localStorage.clear()
     const auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-        console.log('User signed out.');
-    });
+    auth2.signOut()
 }
 
 const loginPost = (event) => {
@@ -87,8 +88,14 @@ const loginPost = (event) => {
             afterLogin()
         })
         .fail(err => {
-            // console.log(err.responseJSON.msg)
-            console.log(err)
+            err.responseJSON.errors.forEach(el => {
+                $('#error-login').append(`
+                    <p class="error-message">${el}</p
+                `)
+                setTimeout(function () {
+                    $(".error-message").remove();
+                }, 2000);
+            })
         })
 }
 
@@ -119,11 +126,12 @@ const postTodo = (event) => {
         })
         .fail(err => {
             err.responseJSON.errors.forEach(el => {
-                setTimeout(() => {
-                    $('#error-list').append(`
-                <p>${el}</p
+                $('#error-list').append(`
+                    <p class="error-message">${el}</p
                 `)
-                }, 1000)
+                setTimeout(function () {
+                    $(".error-message").remove();
+                }, 2000);
             })
         })
 }
@@ -147,7 +155,14 @@ const registerPost = (event) => {
             beforeLogin()
         })
         .fail(err => {
-            console.log(err)
+            err.responseJSON.errors.forEach(el => {
+                $('#error-register').append(`
+                    <p class="error-message">${el}</p
+                `)
+                setTimeout(function () {
+                    $(".error-message").remove();
+                }, 2000);
+            })
         })
 }
 
@@ -158,14 +173,19 @@ const deletes = (event) => {
         method: 'DELETE',
         url: `http://localhost:3000/todos/${event.srcElement.dataset.id}`,
         headers: {
-            access_token: localStorage.getItem('access_token')
+            access_token: localStorage.getItem('access_tken')
         }
     })
         .done(res => {
             afterLogin()
         })
         .fail(err => {
-            console.log(err)
+            $('#error-delete').append(`
+                <h4 style="margin-top:1em;" class="delete-error">Failed To Delete Todos Datas</h4>
+            `)
+            setTimeout(function () {
+                $(".delete-error").remove();
+            }, 5000);
         })
 }
 
@@ -197,7 +217,6 @@ const updates = (event) => {
     } else {
         $("#undone-update").prop("checked", true);
     }
-    console.log(event.srcElement.dataset.status)
 
     $('#title-edit').val()
     $('#date-edit').val(today)
@@ -229,11 +248,12 @@ const submitEdit = (event) => {
         })
         .fail(err => {
             err.responseJSON.errors.forEach(el => {
-                setTimeout(() => {
-                    $('#error-edit').append(`
-                <p>${el}</p
+                $('#error-edit').append(`
+                    <p class="error-message">${el}</p
                 `)
-                }, 1000)
+                setTimeout(function () {
+                    $(".error-message").remove();
+                }, 2000);
             })
         })
 }
@@ -244,14 +264,16 @@ function onSignIn(googleUser) {
     $.ajax({
         method: 'POST',
         url: 'http://localhost:3000/auth/googleLogin',
-        headers: {id_token}
+        headers: { id_token }
     })
-    .done(res => {
-        localStorage.setItem('access_token', res.access_token)
-        afterLogin()
-    })
-    .fail(err => {
-        console.log(err)
+        .done(res => {
+            localStorage.setItem('access_token', res.access_token)
+            afterLogin()
+        })
+        .fail(err => {
+            $('#error-login').append(`
+            <p class="error-message">Something Went Wrong</p
+        `)        
     })
 }
 
@@ -264,14 +286,14 @@ const getPopularMovie = (event) => {
 
     $.ajax({
         method: 'GET',
-        url : 'http://localhost:3000/movies',
-        headers : {
-            access_token : localStorage.getItem('access_token')
+        url: 'http://localhost:3000/movies',
+        headers: {
+            access_token: localStorage.getItem('access_token')
         }
     })
-    .done(res => {
-        res.forEach(data => {
-            $('#movie-card').append(`
+        .done(res => {
+            res.forEach(data => {
+                $('#movie-card').append(`
             <div class="card" style="width: 18rem;margin:0.4em;">
                 <img class="card-img-top" src="https://image.tmdb.org/t/p/w500/${data.poster_path}" alt="Card image cap">
                 <div class="card-body">
@@ -280,11 +302,13 @@ const getPopularMovie = (event) => {
                 </div>
             </div>
             `)
+            })
         })
-    })
-    .fail(err => {
-        console.log(err)
-    })
+        .fail(err => {
+            $('#movie-card').append(`
+                <h1 style="margin-top:1em;">Failed To Get Movies</h1>
+            `)
+        })
 }
 
 $(document).ready(() => {
