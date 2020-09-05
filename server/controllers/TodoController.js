@@ -20,8 +20,8 @@ class TodoController {
 Hello ${user.username}, here is your new todo :
  - Title : ${new_todo.title}
  - Description : ${new_todo.description}
- - Due Date : ${new_todo.due_date_with_date_format}
- - Status : ${new_todo.status}`
+ - Status : ${new_todo.status}
+ - Due Date : ${new_todo.due_date_standard_format}`
 			};
 			mailgun.messages().send(data, (error, body) => {
 				if (error) console.log(error);
