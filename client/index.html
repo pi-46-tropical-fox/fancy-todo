@@ -217,7 +217,7 @@
       </div>
     </div>
 
-    <div class="container-fluid" id="credentials-form">
+    <div class="container-fluid mt-4 pt-4" id="credentials-form">
       <div class="row justify-content-around">
         <div class="col-3">
           <div class="card">
@@ -240,35 +240,39 @@
 
                 <p id="error-text-login" class="text-danger"></p>
 
-                <input class="form-control" type="submit" id="login-btn" value="Login" />
+                <input class="form-control btn-outline-primary" type="submit" id="login-btn" value="Login" />
               </form>
             </div>
           </div>
         </div>
 
         <div class="col-3">
-          <form method="POST" id="register-form">
-            <h1>Register</h1>
-            <div class="form-group">
-              <label>Username</label>
-              <input class="form-control" type="text" name="username" id="register-username" />
+          <div class="card">
+            <div class="card-body">
+              <form method="POST" id="register-form">
+                <h1>Register</h1>
+                <div class="form-group">
+                  <label>Username</label>
+                  <input class="form-control" type="text" name="username" id="register-username" />
+                </div>
+
+                <div class="form-group">
+                  <label>Email</label>
+                  <input class="form-control" type="email" name="email" id="register-email" />
+                </div>
+
+                <div class="form-group">
+                  <label>Password</label>
+                  <input class="form-control" type="password" name="password" id="register-password" />
+                </div>
+
+                <p id="error-text-register" class="text-danger"></p>
+                <p id="success-text-register" style="display: none;" class="text-success">Berhasil Register! Silahkan login!</p>
+
+                <input class="form-control btn-outline-primary" type="submit" value="Register" />
+              </form>
             </div>
-
-            <div class="form-group">
-              <label>Email</label>
-              <input class="form-control" type="email" name="email" id="register-email" />
-            </div>
-
-            <div class="form-group">
-              <label>Password</label>
-              <input class="form-control" type="password" name="password" id="register-password" />
-            </div>
-
-            <p id="error-text-register" class="text-danger"></p>
-            <p id="success-text-register" style="display: none;" class="text-success">Berhasil Register! Silahkan login!</p>
-
-            <input class="form-control" type="submit" value="Register" />
-          </form>
+          </div>
         </div>
       </div>
     </div>
