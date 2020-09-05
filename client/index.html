@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <link rel="icon" type= 'image/png' href="./asset/icon.png">
+    <title>FANCY TODOS</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-signin-client_id" content="672395688154-in3s97qpk4k8mrldldft0ocg6f1osc1o.apps.googleusercontent.com">
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Acme|Roboto+Slab&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="./style.css" rel="stylesheet">
+</head>
+<body>
+
+    <!--INI NAVBAR YANG TERBAIK HARUS PANJANG COMMENT LINENYA BIAR GA BINGUNG GUSTI-->
+
+    <nav id="navbar" class="navbar navbar-expand-md  fixed-top ">  
+        <a class="navbar-brand mb-0 h1" href="/"><img height="40px" width="40px" src="https://arnoldtherigan15.github.io/Arnold_Hacktiv8/images/title.png"> Fancy Todo</a>
+        <div class="collapse navbar-collapse " id="navbarSupportedContent">     
+            <ul class="navbar-nav mr-auto">       
+                <li class="nav-item"> 
+                        <a class="nav-link " id="logoutbtn">Logout</a>      
+                </li>
+            </ul> 
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="text" placeholder="search by title" aria-label="Search" id="searching">`
+                <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
+            </form>
+        </div>
+    </nav>
+             
+    
+    <!--INI LOGIN FORM YANG TERBIASA AJA TAPI SUDAH DISTANDARISASI OLEH SENDIRI COMMENT PANJANG-->
+
+    <main class="container">
+        <div class="content">
+            <div class="row" >
+                <div class="col-sm-4 offset-sm-4">
+                    <div id="loginForm">
+                        <form class="text-center p-5">
+                            <h1 style= "text-align-last: center;"><img src="https://icons.iconarchive.com/icons/sonya/swarm/256/Cat-icon.png"></h1>
+                            <h2 style="color: white;">Fancy Todo App</h2>
+                            <p class="h4 mb-4" style="color: white;">Sign in</p>
+                            <input type="email" id="email" class="form-control mb-4" placeholder="E-mail">
+                            <input type="password" id="password" class="form-control mb-4" placeholder="Password">
+                            <button class="btn btn-info btn-block my-4" type="submit" id="login">Sign in</button>
+                            <p style = "color:aliceblue">Not a member?
+                                <a href="" id="regisButton">Register</a>
+                            </p>
+                        
+                            <p style="color: aqua;">or sign in with:</p>
+                            <div class="g-signin2 center" data-onsuccess="onSignIn" style="position: relative;"></div>
+                            <br>
+                            <div id="fb-root">
+                                <div class="fb-login-button" data-size="medium" data-button-type="login_with" data-layout="default" data-auto-logout-link="true" data-use-continue-as="false" data-width=""></div>
+                            </div>
+                            
+                        </form>
+                    </div>
+    
+                    <!--INI LOGIN FORM YANG TERIDENTIFIKASI SAAT INI-->
+
+                    <div id="regisForm">
+                        <form class="text-center border border-light p-5">
+                            <p class="h4 mb-4">Sign up</p>
+                            <input type="email" id="Email1" class="form-control mb-4" placeholder="E-mail">
+                            <input type="password" id="Password1" class="form-control mb-4" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock">
+                            <input type="text" id="Username1" class="form-control" placeholder="Username">
+                            <button class="btn btn-info my-4 btn-block" type="submit" id="register">Sign Up</button>
+                            <hr>
+                            <p>By clicking
+                            <em>Sign up</em> you agree to our
+                            <a href="" target="blank">terms of service</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!--INI POP OUT ADD TODO-->
+            <div id="modalCreate" class="row margin-15px">
+                <div class="col-sm-12">
+                    <button type="button" class="btn btn-warning button-right" data-toggle="modal" data-target="#addTodoModal" data-whatever="@mdo">Create New Todo</button>
+                </div>
+            </div>
+
+            <div clas="row">
+                <div class="col-sm-12">
+                    <!--INI LIST TODO ATAU MAIN WEBSITENYA-->
+                    <div id="todolist" class="list-group">
+                    </div>
+                </div>
+                <div id="hero" class="heroku">
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!--INI ADALAH FORM UNTUK ADD TODO-->
+    <div class="modal fade" id="addTodoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">New Todo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formAddToDo">
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Title</label>
+                            <input type="text" class="form-control" id="title" placeholder="title">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Description</label>
+                            <textarea class="form-control" id="description" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea">Status</label>
+                            <select class="form-control" id="status" rows="1">
+                                <option value="">--Chose Your Status--</option>
+                                <option value="Complete">Complete</option>
+                                <option value="Uncomplete">Uncomplete</option>
+                                <option value="OnGoing">OnGoing</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                                <label for="exampleFormControlInput1">Due Date</label>
+                                <input type="date" class="form-control" id="duedate">
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-warning" id="submitAdd">Add To Do</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--INI YANG TERAKHIR DI TANDAIN REGISTER YAAA-->
+    <div class="modal fade" id="editTodoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Todo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="formEditToDo">
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Title</label>
+                            <input type="text" class="form-control" id="title1" placeholder="title">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Description</label>
+                            <textarea class="form-control" id="description1" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Status</label>
+                            <select class="form-control" id="status1" rows="1">
+                                <option value="">--Chose Your Status--</option>
+                                <option value="Complete">Complete</option>
+                                <option value="Uncomplete">Uncomplete</option>
+                                <option value="OnGoing">OnGoing</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                                <label for="exampleFormControlInput1">Due Date</label>
+                                <input type="date" class="form-control" id="duedate1">
+                        </div>
+                        <input type="hidden" class="form-control" id="uid" placeholder="id">
+                    </form>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-warning" id="submitEdit">Change To Do</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v8.0&appId=1771526673003967&autoLogAppEvents=1" nonce="0rIpPgS6"></script>
+    <script src="//code.responsivevoice.org/responsivevoice.js?key=GoUVOjjN"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="./index.js"></script>
+</body>
+</html>

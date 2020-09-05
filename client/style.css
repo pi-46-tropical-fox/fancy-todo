@@ -1,0 +1,44 @@
+
+body {
+    background-image: url(https://cdn5.f-cdn.com/contestentries/1370548/29833877/5b4f15b1ea4aa_thumb900.jpg);
+    background-size: 100%;
+    padding-top: 1rem;
+}
+
+a{
+    color: chartreuse;
+}
+.content{
+    padding: 3rem 1.5rem;
+    text-align: center;
+}
+
+.navbar {
+    background-color: #c6cee6;
+    height: 3.3rem;
+    color: rgb(4, 23, 59);
+}
+.nav-link:hover{ background: #d16c6c; color: #FD1E68; }
+
+.button-right{
+    float: left;
+}
+
+.margin-15px{
+    margin-top: 15px;
+    margin-bottom: 15px
+}
+
+
+.trash-icon{
+    color: #fa1008;
+    margin-top: 7px;
+}
+
+.pencil-icon{
+    color: #80704f;
+    margin-top: 7px;
+}
+
+
+
