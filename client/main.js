@@ -287,6 +287,34 @@ function signOut() {
     })
 }
 
+function weatherpost(){
+    $.ajax({
+        method: 'GET',
+        url: 'http://localhost:3000/weather',
+        headers: {
+            access_token: localStorage.getItem('access_token')
+        }
+    })
+
+    .done(response => {
+        console.log(response);
+            $('#post-container').append(`
+            <div class="card">
+            <div class="card-content">
+                <div class="content" text-align="center">
+                <h5>${response.location.name}</h5>
+                <img src="${response.current.weather_icons[0]}">
+                <h5>${response.current.temperature} °C</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+            `)
+    })
+    .fail(err => {
+        console.log(err);
+    })
+}
 
 
 function menuLogout(event) {
@@ -304,6 +332,7 @@ $(document).ready(function() {
         afterLogin();
         todoList();
     } else {
+        weatherpost();
         afterRegister();
         beforeLogin();
         loginMenu();
@@ -314,5 +343,6 @@ $(document).ready(function() {
     $('#register-form').submit(registerForm);
     $('#add-form').submit(addForm)
     $('#nav-signout').click(menuLogout)
+    
 
 })
