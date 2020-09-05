@@ -15,8 +15,6 @@ function menuList(event){
     $("#form_login").hide()
     $("#todoList").show()
     $("#addTodo").hide()
-    $("#card_resto").hide()
-
     $('#listTodo').empty()
 
     $.ajax({
@@ -35,7 +33,6 @@ function menuList(event){
             }
             $('#listTodo').append(`
             <tr>
-                <th scope="row">${el.userFullName}</th>
                 <td>${el.title}</td>
                 <td>${el.description}</td>
                 <td>${el.status}</td>
@@ -59,7 +56,7 @@ function menuAdd(event){
     $("#form_login").hide()
     $("#todoList").hide()
     $("#addTodo").show()
-    $("#card_resto").hide()
+
 }
 function menuLogout(event){
     localStorage.clear()
@@ -76,8 +73,6 @@ function beforeLogin(){
     $("#nav_login").show()
     $("#nav_register").show()
     $("#nav_logout").hide()
-    $("#nav_resto").hide()
-    $("#card_resto").hide()
 }
 function afterLogin(){
     $("#form_registration").hide()
@@ -89,8 +84,6 @@ function afterLogin(){
     $("#nav_login").hide()
     $("#nav_register").hide()
     $("#nav_logout").show()
-    $("#nav_resto").show()
-    $("#card_resto").hide()
 
     menuList()
 }
@@ -214,6 +207,5 @@ $(document).ready(function(){
     $('#dataLogin').submit(login)
     $('#dataRegister').submit(register)
     $('#dataAddTodo').submit(addTodo)
-    $('#nav_resto').click(cardResto)
 
 })
