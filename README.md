@@ -362,7 +362,7 @@ Response 500 - Interval Server Error(Failed)
 }
 ``` 
 
-# POST /login
+# POST /register
 > Login
 Request Header
 ```
