@@ -5,7 +5,7 @@ const authentication = (req,res,next) =>{
     try{
         const userData = verifyToken(req.headers.access_token)
 
-        User.findOne({where:{username: userData.username}})
+        User.findOne({where:{email: userData.email}})
         .then(user=>{
             if(user){
                 req.userData = userData

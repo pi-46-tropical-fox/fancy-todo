@@ -60,10 +60,12 @@ function menuAdd(event){
     $("#form_login").hide()
     $("#todoList").hide()
     $("#addTodo").show()
+    $("#card_resto").hide()
 }
 function menuLogout(event){
-    beforeLogin()
     localStorage.clear()
+    signOut()
+    beforeLogin()
 }
 function beforeLogin(){
     $("#form_registration").hide()
@@ -95,20 +97,20 @@ function afterLogin(){
 }
 function login(event){
     event.preventDefault()
-    const username = $('#usernameLogin').val()
+    const email = $('#emailLogin').val()
     const password = $('#passwordLogin').val()
     
-    // console.log(username, password)
+    // console.log(email, password)
     $.ajax({
         method: 'POST',
         url: 'http://localhost:3000/user/login',
         data:{
-            username,
+            email,
             password
         }
     })
     .done((response)=>{
-        $('#usernameLogin').val('')
+        $('#emailLogin').val('')
         $('#passwordLogin').val('')
         localStorage.setItem('access_token', response.token)
         afterLogin()
@@ -121,7 +123,7 @@ function register(event){
     event.preventDefault()
     const firstname = $('#inputFirstName3').val()
     const lastname = $('#inputLastName3').val()
-    const username = $('#inputUsername3').val()
+    // const username = $('#inputUsername3').val()
     const email = $('#inputEmail3').val()
     const password = $('#inputPassword3').val()
     
@@ -132,7 +134,6 @@ function register(event){
         data:{
             firstname,
             lastname,
-            username,
             email,
             password
         }
@@ -140,7 +141,7 @@ function register(event){
     .done((response)=>{
         $('#inputFirstName3').val('')
         $('#inputLastName3').val('')
-        $('#inputUsername3').val('')
+        // $('#inputUsername3').val('')
         $('#inputEmail3').val('')
         $('#inputPassword3').val('')
         beforeLogin()
@@ -219,6 +220,37 @@ function cardResto(event){
         console.log(err)
     })
 }
+// function onSignIn(googleUser) {
+//     var profile = googleUser.getBasicProfile();
+//     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+//     console.log('Name: ' + profile.getName());
+//     console.log('Image URL: ' + profile.getImageUrl());
+//     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+// }
+function onSignIn(googleUser) {
+    var google_access_token = googleUser.getAuthResponse().id_token;
+    console.log(google_access_token)
+
+    $.ajax({
+        method: 'POST',
+        url: 'http://localhost:3000/user/googleLogin',
+        headers: {google_access_token}
+    })
+    .done(response =>{
+        // console.log(response)
+        localStorage.setItem('access_token', response.access_token)
+        afterLogin()
+    })
+    .fail(err=>{
+        console.log(err)
+    })
+}
+function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+}
 
 
 $(document).ready(function(){
@@ -230,6 +262,7 @@ $(document).ready(function(){
 
     $('#nav_login').click(menuLogin)
     $('#nav_register').click(menuRegister)
+    $('#registerclick').click(menuRegister)
     $('#nav_todoList').click(menuList)
     $('#nav_addTodo').click(menuAdd)
     $('#nav_logout').click(menuLogout)

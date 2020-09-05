@@ -37,15 +37,6 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    username: {
-      type: DataTypes.STRING,
-      validate:{
-        notEmpty:{
-          args: true,
-          msg: "Username Must Be Filled"
-        }
-      }
-    },
     email: {
       type: DataTypes.STRING,
       validate:{

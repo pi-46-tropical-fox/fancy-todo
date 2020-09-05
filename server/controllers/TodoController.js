@@ -53,6 +53,7 @@ class TodoController {
         })
         .catch(err =>{
             next(err)
+            console.log(err)
         })
     }
 
