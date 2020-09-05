@@ -47,10 +47,12 @@ $(document).ready(() => {
 
     $('#logout').click(event => {
         event.preventDefault()
+        signOut()
         localStorage.removeItem('access_token')
         $('.element').hide()
         $('#messageLogin').hide()
         $('#login').show()
+        $("#logout").hide()
     })
 
     $('#add-todo-btn').click(event => {
@@ -78,6 +80,12 @@ $(document).ready(() => {
         $(".modal").show()
     })
 
+    $("#goto-todo-list").click(event => {
+        event.preventDefault()
+        $(".element").hide()
+        $("#todo-list").show()
+    })
+    
 })
 
 const login = () => {
@@ -279,4 +287,29 @@ const deleteTodo = (id) => {
     .fail(err => {
         console.log(err.responseJSON.message)
     })
+}
+
+function onSignIn(googleUser) {
+    var id_token = googleUser.getAuthResponse().id_token;
+    $.ajax({
+        method: 'POST',
+        url: `${url}/google-sign`,
+        data: {google_access_token: id_token}
+    })
+    .done(data => {
+        const access_token = data.access_token
+        localStorage.setItem('access_token', access_token)
+        $('.element').hide()
+        $('#todo-list').show()
+        $('#logout').show()
+        showTodo()
+    })
+    .fail(err => {
+        console.log(err)
+    })
+}
+
+function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance()
+    auth2.signOut()
 }

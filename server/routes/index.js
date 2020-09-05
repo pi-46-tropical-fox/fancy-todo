@@ -12,6 +12,7 @@ const authorization = require('../middlewares/authorization')
 
 router.post('/register', UserController.register)
 router.post('/login', UserController.login)
+router.post('/google-sign', UserController.googleSign)
 
 router.get('/todos', authentication, TodoController.findAll) //dikasih authentification biar tau kalo user itu sendiri yg akses
 router.post('/todos', authentication, TodoController.addTodo)
