@@ -19,9 +19,10 @@ class UserController{
   }
 
   static async login (req, res, next){
-    const {username, password} = req.body
-
     try {
+      const {username, password} = req.body
+      console.log(username,password, "\n<<<<<<<<<<<<<<<<<<<<")
+
       let userData = await User.findOne({where: {username}})
       if (!userData) {
         let error = Error ()
