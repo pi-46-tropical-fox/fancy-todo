@@ -7,23 +7,27 @@ My Fancy Todo App is an application to manage your activities. This app has :
 
 ## endpoints
 ``` 
-- GET /todos
-- POST /todos
-- GET /todos/:id
-- PUT /todos/:id
-- DELETE /todos/:id 
+- GET /mytodos
+- POST /mytodos
+- PUT /mytodos/:idTodo
+- PUT /mytodos/complete/:idTodo
+- DELETE /mytodos/"idTodo
+- GET /weather
+- POST /user/register
+- POST /user/login
+- POST /user/google-login
 ```
 
 
 ## RESTful endpoints
-### GET /todos
+### GET /mytodos
 
-> Get all assets
+> Get all assets WHERE id:req.params.id
 
 _Request Header_
 ```
 {
-  "access_token": "<your access token>"
+  "access_token": "<jwt generated token>"
 }
 ```
 
@@ -63,14 +67,14 @@ _Response (400 - Bad Request)_
 }
 ```
 ---
-### POST /todos/create
+### POST /mytodos
 
 > Create new todo
 
 _Request Header_
 ```
 {
-  "access_token": "<your access token>"
+  "access_token": "<jwt generated token>"
 }
 ```
 
@@ -104,73 +108,35 @@ _Response (400 - Bad Request)_
 }
 ```
 
-### GET /todos/:id
+### PUT /mytodos
 
-> Get all todos WHERE id == req.params.id
-
-_Request Header_
-```
-{
-  "access_token": "<your access token>"
-}
-```
-
-_Request Body_
-```
-not needed
-```
-
-_Response (200)_
-```
-  {
-    "id": 1,
-    "title": "Belajar bikin dokumentasi",
-    "description": "sesuai standar",
-    "status": "Incomplete"  ,
-    "due_date": "2020-05-20T07:15:12.149Z" ,
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
-  }
-```
-
-_Response (400 - Bad Request)_
-```
-{
-  "message": "Invalid request"
-}
-```
----
-
-### PUT /todos/:id
-
-> Update todo WHERE id == req.params.id
+> Update existing todo WHERE id:req.params.id
 
 _Request Header_
 ```
 {
-  "access_token": "<your access token>"
+  "access_token": "<jwt generated token>"
 }
 ```
 
 _Request Body_
 ```
 {
-  "title": "<posted title>",
-  "description": "<posted description>",
-  "status": "<posted status>",
-  "due_date": "<posted due_date>"
+    "title": "Benerin mesin cuci",
+    "description": "benerin lah",
+    "status": "Incomplete",
+    "due_date": "2020-05-20T07:15:12.149Z"
 }
 ```
 
 _Response (200 - OK)_
 ```
 {
-  "title": "<posted name>",
+  "id": <given id by system>,
+  "title": "<posted title>",
   "description": "<posted description>",
   "status": "<posted status>",
-  "due_date": "<posted due_date>",
-  "createdAt": new Date(),
-  "updatedAt": new Date()
+  "due_date": "<posted due_date>"
 }
 ```
 
@@ -180,7 +146,8 @@ _Response (400 - Bad Request)_
   "message": "Invalid requests"
 }
 ```
-### DELETE /todos/:id
+
+### DELETE /mytodos/:id
 
 > Delete todo WHERE id == req.params.id
 
@@ -197,6 +164,7 @@ _Request Body_
 
 _Response (200 - OK)_
 ```
+[1]
 ```
 
 _Response (400 - Bad Request)_
@@ -205,3 +173,139 @@ _Response (400 - Bad Request)_
   "message": "Invalid requests"
 }
 ```
+
+### GET /weather
+
+> Get current weather from Weather Stack
+
+_Request Header_
+```
+{
+  "access_token": "<jwt generated token>"
+}
+```
+
+_Request Body_
+```
+```
+
+_Response (200)_
+```
+  {Data: {data from weather stack}
+  }
+```
+
+_Response (500 - Bad Request)_
+```
+{
+  "message": "Internal Server Error"
+}
+```
+---
+### POST /user/register
+
+> Create new account
+
+_Request Header_
+```
+{
+not needed
+}
+```
+
+_Request Body_
+```
+{
+    username: "user's name",
+    email: "user's email",
+    password: "user's password",
+    city: "user's city"
+}
+```
+
+_Response (201)_
+```
+{
+    username: "user's name",
+    email: "user's email",
+    city: "user's city"
+}
+```
+
+_Response (400 - Bad Request)_
+```
+{
+  "message": "User.password cannot be null"
+}
+```
+_Response (500 - Bad Request)_
+```
+{
+  "message": ["Invalid email format",
+              "Password must be at least 6 characters"]
+}
+```
+---
+### POST /user/login
+
+> user login
+
+_Request Header_
+```
+{
+not needed
+}
+```
+
+_Request Body_
+```
+{
+    "email": "user's email",
+    "password": "user's password"
+}
+```
+
+_Response (200 - OK)_
+```
+{
+  "access_token": "JWT generated token"
+}
+```
+
+_Response (400 - Bad Request)_
+```
+{
+  "message":"Invalid email or password"
+}
+```
+
+### POST /user/google-login
+
+> user login with google OAuth2
+
+_Request Header_
+```
+{
+  google_access_token: "access token given by google"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200 - OK)_
+```
+  {
+    access_token: "JWT generated google payload"
+  }
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "There was an error. Please try again later. That’s all we know."
+}
+```
+---

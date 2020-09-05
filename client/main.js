@@ -364,7 +364,4 @@ $(document).ready(function () {
         afterLogin()
     })
 
-
-
-
 })
