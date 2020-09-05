@@ -40,6 +40,10 @@ module.exports = (sequelize, DataTypes) => {
                     args: true,
                     msg: "Email can't be empty"
                 }
+            },
+            unique: {
+                args: true,
+                msg: 'Email has already been used'
             }
         },
         password: {
@@ -61,6 +65,5 @@ module.exports = (sequelize, DataTypes) => {
             }
         }
     });
-
     return User;
 };

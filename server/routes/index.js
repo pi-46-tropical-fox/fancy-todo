@@ -6,6 +6,7 @@ const { authentication, authorization } = require('../middleware/auth');
 //#################################
 router.post('/register', UserController.register);
 router.post('/login', UserController.login);
+router.post('/googleLogin', UserController.googleLogin)
 
 //Get access_token, put it in headers
 //AUTHENTICATE

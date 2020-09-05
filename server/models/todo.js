@@ -21,10 +21,16 @@ module.exports = (sequelize, DataTypes) => {
         UserId: DataTypes.INTEGER,
         due_date: {
             type: DataTypes.STRING,
+            allowNull: false,
             validate: {
-                isAfter: {
-                    args: new Date().toISOString().split('T')[0],
-                    msg: "Date is not valid"
+                isNotEmpty: (value) => {
+                    if (!value) {
+                        throw new Error('Due date is required');
+                    } else {
+                        if (new Date(value) < new Date()) {
+                            throw new Error('Due date is invalid')
+                        }
+                    }
                 }
             }
         }

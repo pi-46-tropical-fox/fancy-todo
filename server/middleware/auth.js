@@ -3,26 +3,40 @@ const { Todo, User } = require('../models');
 //proses utuk cek token valid atau tidak
 //access token disiman di req.headers
 const authentication = async(req, res, next) => {
-    console.log(req.headers);
-    //assume that this has already been aded to the headers right after logging in
     const { access_token } = req.headers;
     try {
-        //verify token
         const userData = verifyToken(access_token);
-        console.log(userData, '<<< user data dari authentication');
-        //lookup databse for specified user
-        let user = await User.findOne({ where: { username: userData.username } });
-        //conditional
+        let user = await User.findOne({ where: { username: userData.username } })
         if (user) {
             req.userData = userData;
             next()
         } else {
-            throw { message: "User is not authenticated", statusCode: 401 }
+            throw { message: 'User is not authenticated', statusCode: 401 }
         }
-        console.log(userData)
     } catch (err) {
         return next(err)
     }
+
+    // console.log(req.headers);
+    // //assume that this has already been aded to the headers right after logging in
+    // const { access_token } = req.headers;
+    // try {
+    //     //verify token
+    //     const userData = verifyToken(access_token);
+    //     console.log(userData, '<<< user data dari authentication');
+    //     //lookup databse for specified user
+    //     let user = await User.findOne({ where: { username: userData.username } });
+    //     //conditional
+    //     if (user) {
+    //         req.userData = userData;
+    //         next()
+    //     } else {
+    //         throw { message: "User is not authenticated", statusCode: 401 }
+    //     }
+    //     console.log(userData)
+    // } catch (err) {
+    //     return next(err)
+    // }
 }
 
 //req.params will carry Todo's id

@@ -65,6 +65,7 @@ class Controller {
             if (!newTodo[0]) {
                 throw { message: "Todo Not Found", statusCode: 404 };
             } else {
+                console.log('masuk gan di controller')
                 res.status(200).json({ message: "Succesfully update Todo." })
             }
 
