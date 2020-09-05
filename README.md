@@ -401,3 +401,59 @@ Response 500 - Interval Server Error(Failed)
     ]    
 }
 ``` 
+
+# GET /todos
+> Get Popular Movie List
+Request Header
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+Request Body
+```
+Not Needed
+```
+
+Response 200(Success)
+```
+[
+    {
+        "popularity": 1094.47,
+        "vote_count": 141,
+        "video": false,
+        "poster_path": "/uOw5JD8IlD546feZ6oxbIjvN66P.jpg",
+        "id": 718444,
+        "adult": false,
+        "backdrop_path": "/x4UkhIQuHIJyeeOTdcbZ3t3gBSa.jpg",
+        "original_language": "en",
+        "original_title": "Rogue",
+        "genre_ids": [
+            28
+        ],
+        "title": "Rogue",
+        "vote_average": 5.9,
+        "overview": "Battle-hardened O’Hara leads a lively mercenary team of soldiers on a daring mission: rescue hostages from their captors in remote Africa. But as the mission goes awry and the team is stranded, O’Hara’s squad must face a bloody, brutal encounter with a gang of rebels.",
+        "release_date": "2020-08-20"
+    },
+    ...
+]
+```
+
+Response 401 - Unauthorized(Failed)
+```
+{
+    "errors": [
+        "User Not Authenticated"
+    ]    
+}
+``` 
+Response 500 - Interval Server Error(Failed)
+```
+{
+    "errors": [
+        "Interval Server Error"
+    ]    
+}
+``` 
