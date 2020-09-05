@@ -8,28 +8,11 @@
         <link rel="stylesheet" href="./public/style.css">
         <link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@500&family=Courgette&family=Fugaz+One&display=swap" rel="stylesheet">
         <title>Fancy Todo App</title>
-        <style>
-            .element{
-                text-align: center;
-            }
-            .row {
-                padding-left: 150px;
-            }
-            form{
-                margin: 10px 150px;
-            }
-            .button{
-                margin: 20px auto;
-            }
-            button {
-                margin: 5px;
-            }
-        </style>
     </head>
     <body>
         <div id="navbar">
-            <nav class="navbar navbar-expand-lg navbar-light bg-info">
-                <a class="navbar-brand" href="#">Todo App</a>
+            <nav>
+                <p><img src="public/list.png">Todo App</p> 
 
                 <div class="collapse navbar-collapse" id="navLogIn">
                     <ul class="navbar-nav mr-auto">
@@ -57,9 +40,9 @@
                 </div>
                 <div class="col-md-3 button">
                     <button type="submit" class="btn btn-primary btn-sm" >Login</button>
-                    or
+                    <p>or</p>
                     <button class="btn btn-success btn-sm" id="goto-register-btn">Register</button><br>
-                        Login with Google
+                        <p>Login with Google</p>
                     <div class="g-signin2" data-onsuccess="onSignIn"></div>
                 </div>
             </form>

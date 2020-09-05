@@ -20,7 +20,7 @@ form{
     margin: 10px 150px;
 }
 
-.button{
+.button, .g-signin2{
     margin: 20px auto;
 }
 
@@ -30,10 +30,6 @@ form{
 
 .table {
     margin: 20px 0;
-}
-
-#google-btn {
-    padding-left: 30px;
 }
 
 #table-calendar {
@@ -47,10 +43,30 @@ form{
 }
 
 #add-todo-btn {
-    float: right;
+    float: center;
     margin: 10px 0;
+    background-color: #ca9766;
+    border: 1px solid transparent;
 }
 
 .shadow {
     box-shadow: 2px 2px 2px rgba(0.1,0.1,0.1,0.3);
 }
+
+body{
+    background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(wallpaper.jpg);
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    padding: 20px;
+}
+
+p, h2, label, th{
+    color: white
+}
+
+.g-signin2{
+    align-content: center;
+    margin-left: 40px;
+}
+
