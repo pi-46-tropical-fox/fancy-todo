@@ -1,11 +1,13 @@
 const {Task, User} = require('../models')
-const { getCoordinates } = require('../middlewares/geocode')
+const { getCoordinates } = require('../helpers/geocode')
+const { getWeather } = require('../helpers/weatherstack')
 
 
 class TaskController {
     static async activeTasks (req, res, next) {
         try {
-            const tasks = Task.findAll({
+            const tasks = await Task.findAll({
+                order: [['id', 'ASC']],
                 include: [{model: User, attributes: ['username']}]
             })
             
@@ -50,12 +52,50 @@ class TaskController {
             let task = await Task.findOne({
                 where: {
                     id: req.params.id
+                },
+                attributes: ['title', 'description', 'location', 'due_date', 'status', 'latitude', 'longitude']
+            })
+            const {title, description, location, due_date, status, latitude, longitude} = task.dataValues
+
+            let weather
+            weather = await getWeather(latitude, longitude)
+            if (weather.error) {
+                throw {message: weather.error.info, statusCode: weather.error.code}
+            }
+            if (task.due_date == new Date().toISOString().slice(10)) {
+                weather = `Your due date is today. ${weather}`
+            }
+
+            return res.status(200).json({
+                weatherMsg: weather,
+                task: {
+                    title, description, location, due_date, status
                 }
             })
-
-            return res.status(200).json(task)
         } catch (err) {
             return next(err)
+        }
+    }
+
+    static async toggleTask (req, res, next) {
+        try {
+            let task = await task.findOne({
+                where: {
+                    id: req.params.id
+                },
+                attributes: ['status']
+            })
+            task = task.dataValues
+
+            await task.update({
+                status: task.status ? false : true
+            }, {
+                where: {
+                    id: req.params.id
+                }
+            })
+        } catch (err) {
+
         }
     }
 
@@ -64,7 +104,6 @@ class TaskController {
             const data = {
                 title: req.body.title,
                 description: req.body.description,
-                status: false,
                 due_date: req.body.due_date,
                 location: req.body.location
             }

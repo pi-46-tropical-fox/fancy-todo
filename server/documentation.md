@@ -15,7 +15,6 @@
   * `PUT` /todos/:id
   * `PATCH` /todos/:id
   * `DELETE` /tasks/:id
-  * `GET` /completed
 
 &nbsp;
 ### **`POST` /register**
