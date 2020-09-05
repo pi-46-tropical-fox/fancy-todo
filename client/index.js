@@ -106,6 +106,8 @@ function updateTodo(el, id) {
     const due_date = $("#update-form-todo-due-date").val();
     const status = $("#update-form-todo-status").val();
 
+    $("#error-text-update-todo").hide();
+
     $.ajax({
         method: "PUT",
         url: `${url}/todos/${id}`,
@@ -121,6 +123,9 @@ function updateTodo(el, id) {
     }).done((e) => {
         $("#update-todo-modal").modal("toggle");
         addOrUpdateTodoToView(e, el);
+    }).fail(err => {
+        $("#error-text-update-todo").show();
+        $("#error-text-update-todo").html(err.responseJSON.errors.join(" ,"));
     });
 }
 
@@ -351,7 +356,7 @@ $(document).ready(() => {
     });
 
     // Sets the minimal date to today
-    $("#form-todo-due-date").attr("min", new Date().toISOString().split("T")[0]);
+    $("input[type=date]").attr("min", new Date().toISOString().split("T")[0]);
 
     $("#add-todo-form").submit((e) => {
         e.preventDefault();
