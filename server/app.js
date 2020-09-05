@@ -4,7 +4,7 @@ const cors = require('cors');
 const mainRouter = require('./routes');
 const errorHandler = require('./middlewares/errorHandler');
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 const app = express();
 
 if (!process.env.JWT_SECRET) {

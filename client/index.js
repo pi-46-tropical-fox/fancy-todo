@@ -1,4 +1,4 @@
-const url = "http://localhost:1223";
+const url = "http://localhost:3000";
 
 function login() {
     const email = $("#login-email").val();
