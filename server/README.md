@@ -15,6 +15,10 @@ GET /movies
 ```
 
 ## POST /register
+### Request Header 
+```json
+not required
+```
 ### Request Body
 ```json
 {
@@ -43,6 +47,10 @@ GET /movies
 ```
 
 ## POST /login
+### Request Header 
+```json
+not required
+```
 ### Request Body
 ```json
 {
