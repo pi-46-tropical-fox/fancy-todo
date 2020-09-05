@@ -1,6 +1,7 @@
 const {User} = require(`../models`)
 const {access_token, compare} = require(`../helpers`)
-
+const {OAuth2Client} = require('google-auth-library');
+  
 class Controller{
     static register(req, res, next){
         let data = {
@@ -46,6 +47,7 @@ class Controller{
                 }
             })
             .catch(err => {
+                console.log(`Masuk pak Eko dari CATCH`)
                 return next(err)
             })
     }
@@ -78,8 +80,7 @@ class Controller{
             .then(user => {
                 const payload = {email:user.email, id: user.id}
     
-                const access_token = generateToken(payload)
-                console.log(access_token);
+                const access_token = access_token(payload)
                 return res.status(200).json({access_token})
             })
             .catch(err => {

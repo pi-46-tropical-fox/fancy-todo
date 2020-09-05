@@ -76,7 +76,6 @@ class Controller{
     }
 
     static update(req, res, next){
-        console.log(data, `ini dari controller`)
         const id = req.params.id
         const {title, description, due_date} = req.body
         Todo.update({title, description, due_date}, {where: {id}})
@@ -97,7 +96,6 @@ class Controller{
 
     static delete (req, res, next){
         const id = req.params.id
-        console.log(id, `ini dari controller`)
         Todo.destroy({where: {id}})
             .then(data => {
                 return res.status(200).json({
