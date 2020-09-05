@@ -13,6 +13,7 @@
       crossorigin="anonymous"
     />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css" />
     <title>Fancy Todo</title>
   </head>
@@ -63,28 +64,21 @@
               </div>
               <div class="form-group">
                 <label class="col-form-label">Description</label>
-                <textarea placeholder="Dont forget under the bed!" id="form-todo-description" class="form-control"></textarea>
+                <textarea rows="8" placeholder="Dont forget under the bed!" id="form-todo-description" class="form-control"></textarea>
               </div>
               <div class="form-group">
                 <label class="col-form-label">Due date</label>
                 <input required type="date" class="form-control" id="form-todo-due-date" />
               </div>
 
-              <div class="form-check">
-                <input
-                  type="checkbox"
-                  class="form-check-input"
-                  data-toggle="collapse"
-                  href="#add-todo-collapse-custom"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="add-todo-collapse-custom"
-                  id="popcorn-check"
-                />
-                <label class="form-check-label">🍿</label>
+                <button data-toggle="collapse"
+                class="btn btn-outline-danger"
+                href="#add-todo-collapse-custom"
+                role="button"
+                aria-expanded="false"
+                aria-controls="add-todo-collapse-custom"
+                id="popcorn-check">🍿 Watch a Movie</button>
               </div>
-
-            </div>
 
             <p id="error-text-add-todo" class="text-danger"></p>
 
@@ -93,7 +87,7 @@
                 Close
               </button>
               <button type="submit" class="btn btn-primary" id="submit-todo">
-                Add Item 
+                Add Item
               </button>
             </div>
           </form>
@@ -103,7 +97,7 @@
 
     <!-- Search Movie Modal -->
     <div class="modal fade" id="search-movie-modal" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Find Movie</h5>
@@ -112,31 +106,27 @@
             </button>
           </div>
 
-          <form id="add-todo-form">
+          <form id="search-movie">
             <div class="modal-body">
-              <div class="form-group">
-                <label class="col-form-label">Title</label>
-                <input id="form-todo-title" placeholder="Clean my bedroom" required type="text" class="form-control" />
+              <div class="form-inline">
+                <input id="form-movie-title" placeholder="Batman" required type="text" class="form-control" />
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
               </div>
-              <div class="form-group">
-                <label class="col-form-label">Description</label>
-                <textarea placeholder="Dont forget under the bed!" id="form-todo-description" class="form-control"></textarea>
-              </div>
-              <div class="form-group">
-                <label class="col-form-label">Due date</label>
-                <input required type="date" class="form-control" id="form-todo-due-date" />
-              </div>
-
-            </div>
 
             <p id="error-text-add-todo" class="text-danger"></p>
-
           </form>
+
+
+          <div id="movies">
+            <table class="table">
+              <tbody id="movie-container"></tbody>
+            </table>
+          </div>
+        </div>
+
         </div>
       </div>
     </div>
-
-
 
     <!-- Update todo modal -->
     <div class="modal fade" id="update-todo-modal" tabindex="-1" role="dialog" aria-hidden="true">

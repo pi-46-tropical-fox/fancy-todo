@@ -18,6 +18,6 @@ router.get('/todos/:id', authorization, TodoController.getTodoById);
 router.delete('/todos/:id', authorization, TodoController.deleteTodoById);
 router.put('/todos/:id', authorization, TodoController.updateTodoById);
 
-router.get('/movie', MovieController.searchMovieByKeyword);
+router.get('/movies', MovieController.searchMovieByKeyword);
 
 module.exports = router;
