@@ -1,0 +1,26 @@
+.nav{
+    position: absolute;
+    right: 0px;
+    font-size: large;
+}
+
+#form_registration{
+    border: black;
+    margin-bottom: 20px;
+}
+
+#form_login{
+    margin-bottom: 20px;
+}
+
+#ftodoList{
+    margin-bottom: 20px;
+}
+
+.form-row{
+    margin: 20px;
+}
+
+.btn-google {
+    background: url('https://developers-dot-devsite-v2-prod.appspot.com/identity/sign-in/g-normal.png') transparent 5px 50% no-repeat;
+}
