@@ -48,6 +48,10 @@ main > .container {
 
 @tailwind utilities;
 
+nav, footer {
+    @apply shadow-md;
+}
+
 h1 {
     @apply text-4xl;
 }
