@@ -6,16 +6,17 @@ const authentication = async (req, res, next) => {
     const { access_token } = req.headers
     try {
         const userData = verifyToken(access_token)
+        console.log(userData)
         let user = await User.findOne({where: {email: userData.email}})
         if (user) {
             req.userData = userData
             next();
         } else {
-            throw { message: 'User not authenticated' }
+            throw { message: 'User not authenticated', statusCode: 401 }
         }
     }
     catch(err) {
-        return res.status(401).json({message: 'User not Authenticated'})
+        return next(err)
     }
 }
 

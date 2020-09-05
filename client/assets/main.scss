@@ -1,0 +1,46 @@
+@import "./node_modules/bulma/sass/utilities/_all.sass";
+@import "./node_modules/bulma/sass/base/_all.sass";
+@import "./node_modules/bulma/sass/elements/button.sass";
+@import "./node_modules/bulma/sass/elements/container.sass";
+@import "./node_modules/bulma/sass/elements/title.sass";
+@import "./node_modules/bulma/sass/form/_all.sass";
+@import "./node_modules/bulma/sass/components/navbar.sass";
+@import "./node_modules/bulma/sass/layout/hero.sass";
+@import "./node_modules/bulma/sass/layout/section.sass";
+
+// CSS Code
+#box-register, #box-login, #box-dashboard, #box-create, #box-update, #box-movie {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#register ,#login {
+    width: 350px;
+    border: 1px solid hsl(204, 86%, 53%);
+    border-radius: 5px;
+    padding: 20px;
+     .register-form, .login-form {
+        width: 100%;
+        margin: 4px 0;
+    }
+}
+
+#create, #update {
+    width: 450px;
+    border: 1px solid hsl(204, 86%, 53%);
+    border-radius: 5px;
+    padding: 20px;
+     .create-todo, .update-todo {
+        width: 100%;
+        margin: 4px 0;
+    }
+}
+
+.get-todo, .get-movie{
+    th,td {
+        padding: 15px;
+    }
+}

@@ -16,9 +16,38 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   User.init({
-    username: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Username tidak boleh kosong"
+        }
+      }
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isEmail: {
+          args: true,
+          msg: 'Email tidak valid'
+        },
+      },
+      unique: true
+    },
+    password: { 
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: {
+          args: [6],
+          msg: "Password minimal 6 character"
+        }
+      },
+      notEmpty: true
+    }
   }, {
     sequelize,
     modelName: 'User',

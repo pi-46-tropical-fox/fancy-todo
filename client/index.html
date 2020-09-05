@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="49894177923-q0rk661colppnhgkcm6dhi4bk3gueqpo.apps.googleusercontent.com">
+    <link rel="stylesheet" href="assets/main.css">
+    <title>Fancy Todo</title>
+</head>
+<body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div id="navbarBasicExample" class="navbar-menu">
+          <div class="navbar-start">
+            <a href="#" id="nav-home" class="navbar-item">
+                Home
+            </a>
+            <a href="#" id="nav-movie" class="navbar-item">
+                Movie
+            </a>
+            <a href="#" id="nav-create-todo" class="navbar-item">
+                Add Todo
+            </a>
+            <a href="#" id="nav-login" class="navbar-item">
+                Login
+            </a>
+            <a href="#" id="nav-register" class="navbar-item">
+                Register
+            </a>
+            <a href="#" id="nav-logout" class="navbar-item">
+                Logout
+            </a>
+          </div>
+        </div>
+    </nav>
+    <div class="container">
+        <!-- Register Form -->
+        <div id="box-register">
+            <div id="register">
+                <p id="register-err" style="color:red">
+                <form id="form-register">
+                    <div class="field">
+                        <label class="label">Username</label>
+                        <div class="control">
+                            <input id="register-username" class="input" type="text" name="username">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Email</label>
+                        <div class="control">
+                            <input id="register-email" class="input" type="email" name="email">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Password</label>
+                        <div class="control">
+                            <input id="register-password" class="input" type="password" name="password">
+                        </div>
+                    </div>
+                    <button class="button is-info register-form">Register</button>
+                </form>
+            </div>
+        </div>
+        <!-- End Register Form -->
+
+        <!-- Login Form -->
+        <div id="box-login">
+            <div id="login">
+                <p id="login-err" style="color:red"></p>
+                <form id="form-login">
+                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                    <div class="field">
+                        <label class="label">Email</label>
+                        <div class="control">
+                            <input class="input" type="email" name="email" id="login-email">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Password</label>
+                        <div class="control">
+                            <input class="input" type="password" name="password" id="login-password">
+                        </div>
+                    </div>
+                    <button class="button is-info login-form">Login</button>
+                </form>
+            </div>
+        </div>
+        <!-- End Login Form -->
+
+        <!-- Dashboard Todo -->
+        <div id="box-dashboard">
+            <div class="get-todo">
+                <table class="table is-bordered" border="1">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Due Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                    <tbody id="todos">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- End of Dashboard Todo -->
+
+        <!-- Create Todo -->
+        <div id="box-create">
+            <div id="create">
+                <p id="create-err" style="color:red"></p>
+                <h2 class="title">Create Todo</h2>
+                <form id="form-create-todo">
+                    <div class="field">
+                        <label class="label">Title</label>
+                        <div class="control">
+                            <input class="input" type="text" name="title" placeholder="Coding" id="todo-create-title">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Description</label>
+                        <div class="control">
+                          <textarea class="textarea" placeholder="Coding JavaScript" id="todo-create-description"></textarea>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Due Date</label>
+                        <div class="control">
+                            <input class="input" type="date" name="due_date" placeholder="Coding" id="todo-create-due_date">
+                        </div>
+                    </div>
+                    <button class="button is-info create-todo">Submit</button>
+                </form>
+            </div>
+        </div>
+        <!-- End of Create Todo -->
+
+        <!-- Update Todo -->
+        <div id="box-update">
+            <div id="update">
+                <h2 class="title">Update Todo</h2>
+                <form id="update-form">
+                    <div class="field">
+                        <label class="label">Title</label>
+                        <div class="control">
+                            <input  id="toto-update-title"class="input" type="text" name="title" placeholder="Coding">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Description</label>
+                        <div class="control">
+                          <textarea  id="toto-update-description"class="textarea" name="description" placeholder="Coding JavaScript"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="field">
+                        <label class="label">Status</label>
+                        <div class="select" name="status">
+                          <select id="toto-update-status">
+                            <option value="false">False</option>
+                            <option value="true">True</option>
+                          </select>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Due Date</label>
+                        <div class="control">
+                            <input  id="toto-update-due_date"class="input" type="date" name="due_date" placeholder="Coding">
+                        </div>
+                    </div>
+                    <button id="button-update" class="button is-info update-todo">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Dashboard Todo -->
+    <div id="box-movie">
+        <div class="get-movie">
+            <table class="table is-bordered" border="1">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Title</th>
+                        <th>Year</th>
+                        <th>Duration</th>
+                        <th>Rating</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                <tbody id="movies">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- End of Dashboard Todo -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="./assets/main.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+</body>
+</html>

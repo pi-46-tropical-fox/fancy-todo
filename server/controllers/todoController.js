@@ -1,15 +1,15 @@
 const {Todo} = require('../models');
 
 class TodoController {
-    static async show(req, res) {
+    static async show(req, res, next) {
         const data = await Todo.findAll({where: {UserId: req.userData.id}})
         try {
             return res.status(200).json(data)
         } catch(err) {
-            return res.status(500).json({message: err.message})
+            return next(err)
         }
     }
-    static async createTodo(req, res) {
+    static async createTodo(req, res, next) {
         const obj = {
             title: req.body.title,
             description: req.body.description,
@@ -21,29 +21,30 @@ class TodoController {
             const data = await Todo.create(obj)
             return res.status(201).json(data)
         } catch(err) {
-            return res.status(500).json({message: err.message})
+            return next(err)
         }
     }
-    static async getIdTodo(req, res) {
+    static async getIdTodo(req, res, next) {
         try {
             const data = await Todo.findByPk(req.params.id)
             return res.status(200).json(data)
         } catch(err) {
-            return res.status(500).json({message: err.message})
+            return next(err)
         }
     }
     static async updateTodo(req, res) {
-        const obj = {
-            title: req.body.title,
-            description: req.body.description,
-            status: req.body.status,
-            due_date: req.body.due_date
-        }
+        const { id } = req.params
+        const { title, description, status, due_date } = req.body
         try {
-            const data = await Todo.update(obj, {where:{id: req.params.id}})
-            return res.status(200).json(data)
+            const data = await Todo.update({ title, description, status, due_date }, {where:{ id }})
+            console.log(data)
+            if (!data[0]) {
+                return res.status(400).json({message: 'Todo not found'})
+            } else {
+                return res.status(200).json(data)
+            }
         } catch(err) {
-            return res.status(500).json({message: err.message})
+            return next(err)
         }
     }
     static async deleteTodo(req, res) {
@@ -51,7 +52,7 @@ class TodoController {
         try {
             return res.status(200).json(data)
         } catch(err) {
-            return res.status(500).json({message: err.message})
+            return next(err)
         }
     }
 }
