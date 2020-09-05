@@ -89,7 +89,7 @@ Request Header
 Request Body
 ```
 {
-    "id" : "<Id From The Todo Data>"
+    not needed
 }
 ```
 
@@ -277,7 +277,7 @@ Request Header
 Request Body
 ```
 {
-    "id" : "<Id From The Todo Data>"
+    not needed
 }
 ```
 
