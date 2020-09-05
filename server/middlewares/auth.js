@@ -20,7 +20,10 @@ const authorization = async (req, res, next) => {
 	try {
 		const todo = await Todo.findByPk(id);
 
-		if (todo && todo.UserId == req.userData.id) {
+		if(!todo){
+			throw ({ message : 'not found', statusCode : 404})
+		}
+		if (todo.UserId == req.userData.id) {
 			req.todo = todo;
 			next();
 		} else {

@@ -17,13 +17,16 @@ module.exports = (sequelize, DataTypes) => {
 	Todo.init({
 		title: DataTypes.STRING,
 		description: DataTypes.STRING,
-		status: DataTypes.STRING,
+		status: { 
+			type : DataTypes.STRING,
+			default : "Waiting"
+		},
 		due_date: {
 			type : DataTypes.TIME,
 			validate: {
 				afterToday(dueDate){
 					if(dueDate < new Date()){
-						throw new Error('Tanggal tidak bisa sebelum hari ini!')
+						throw new Error('Date must be after today!')
 					}
 				}
 			}
