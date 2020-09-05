@@ -8,7 +8,6 @@ const authentication = (req, res, next) => {
 		const userData = verifyToken(access_token);
 		req.userData = userData;
 
-		console.log(userData, 'Data from the JWT');
 		next();
 	} catch (err) {
 		next(err);
@@ -20,8 +19,8 @@ const authorization = async (req, res, next) => {
 	try {
 		const todo = await Todo.findByPk(id);
 
-		if(!todo){
-			throw ({ message : 'not found', statusCode : 404})
+		if (!todo) {
+			throw ({ message: 'not found', statusCode: 404 });
 		}
 		if (todo.UserId == req.userData.id) {
 			req.todo = todo;

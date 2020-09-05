@@ -16,8 +16,6 @@ function login() {
     })
         .done((res) => {
             setLoginLocalStorage(res);
-
-            console.log(`Login berhasil! Token nya adalah ${res.access_token}`);
             initialize();
         })
         .fail((err) => {
@@ -42,14 +40,15 @@ function onSignIn(googleUser) {
     })
         .done((res) => {
             setLoginLocalStorage(res);
-            console.log(`Login berhasil! Token nya adalah ${res.access_token}`);
             initialize();
         })
-        .fail((err) => {
-            console.error(err);
+        .fail(() => {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Error while signing in with google account!",
+            });
         });
-
-    console.log(googleUser);
 }
 
 function register() {
@@ -90,10 +89,14 @@ function deleteTodo(el) {
         },
     })
         .done(() => {
-            fetchTodos()
+            fetchTodos();
         })
-        .fail((err) => {
-            console.error(err);
+        .fail(() => {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Error while deleting todo item!",
+            });
         });
 }
 
@@ -117,9 +120,6 @@ function updateTodo(el, id) {
         },
     }).done((e) => {
         $("#update-todo-modal").modal("toggle");
-
-        console.log(e);
-
         addOrUpdateTodoToView(e, el);
     });
 }
@@ -148,8 +148,12 @@ function showUpdateModal(el) {
                 updateTodo(el, id);
             });
         })
-        .fail((e) => {
-            console.error(e);
+        .fail(() => {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Error while fetching this todo item!",
+            });
         });
 }
 
@@ -193,7 +197,11 @@ function fetchTodos() {
             res.forEach((e) => addOrUpdateTodoToView(e));
         })
         .fail((err) => {
-            console.log(err);
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Error while fetching todos",
+            });
         });
 }
 
@@ -210,11 +218,10 @@ function shorten(text, len = 50) {
 function watchMovie(movie) {
     $("#search-movie-modal").modal("toggle");
     $("#movie-container").html("");
-    $("#form-movie-title").val('');
+    $("#form-movie-title").val("");
 
     $("#form-todo-title").val(`Watch ${movie.title}`);
     $("#form-todo-description").val(`Watch the movie ${movie.title}\n\n ${movie.infoUrl}`);
-    
 }
 
 function findMovie() {
@@ -231,7 +238,6 @@ function findMovie() {
         },
     })
         .done((res) => {
-            console.log(res);
             $("#movie-container").html("");
 
             res.forEach((e) => {
@@ -261,16 +267,18 @@ function findMovie() {
             });
         })
         .fail((err) => {
-            console.error(err);
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Error while fetching movies!",
+            });
         });
 }
 
 function logout() {
     localStorage.clear();
     const auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(() => {
-        console.log("Logged out from google oauth ");
-    });
+    auth2.signOut();
     initialize();
 }
 
@@ -300,8 +308,6 @@ function addTodo() {
         .fail((err) => {
             $("#error-text-add-todo").show();
             $("#error-text-add-todo").html(err.responseJSON.errors.join(" ,"));
-
-            console.log(err);
         });
 }
 
@@ -335,10 +341,6 @@ $(document).ready(() => {
     $("#search-movie").submit((e) => {
         e.preventDefault();
         findMovie();
-    });
-
-    $("#popcorn-btn").mousedown((e) => {
-        console.log(e);
     });
 
     $("#popcorn-check").click((e) => {

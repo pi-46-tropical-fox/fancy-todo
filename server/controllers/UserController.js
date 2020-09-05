@@ -1,9 +1,9 @@
 const bcrypt = require('bcryptjs');
+const { OAuth2Client } = require('google-auth-library');
 const { User } = require('../models');
 const { generateToken } = require('../helpers/jwt');
-const { OAuth2Client } = require('google-auth-library');
 
-const GOOGLE_OAUTH_CLIENT_ID = process.env.OAUTH_CLIENT_ID
+const GOOGLE_OAUTH_CLIENT_ID = process.env.OAUTH_CLIENT_ID;
 
 class UserController {
 	static async register(req, res, next) {
@@ -16,43 +16,38 @@ class UserController {
 		}
 	}
 
-	static async googleLogin(req, res, next){
+	static async googleLogin(req, res, next) {
 		const client = new OAuth2Client(GOOGLE_OAUTH_CLIENT_ID);
 		const { google_access_token } = req.headers;
 
-		console.log(google_access_token)
-
 		try {
 			const ticket = await client.verifyIdToken({
-				idToken : google_access_token,
-				audience : GOOGLE_OAUTH_CLIENT_ID
-			})
+				idToken: google_access_token,
+				audience: GOOGLE_OAUTH_CLIENT_ID,
+			});
 
-			const payload = ticket.getPayload()
-			console.log(payload)
+			const payload = ticket.getPayload();
 
-			const username = payload.email.split('@')[0] + Math.ceil(Math.random()*100).toString()
+			const username = payload.email.split('@')[0] + Math.ceil(Math.random() * 100).toString();
 
 			let user = await User.findOne({
-				where : {
-					email : payload.email
-				}
-			})
+				where: {
+					email: payload.email,
+				},
+			});
 
-			if(!user){
+			if (!user) {
 				user = await User.create({
-					username, email : payload.email, password : 'a1a1a1a1a1a1'
-				})
+					username, email: payload.email, password: 'a1a1a1a1a1a1',
+				});
 			}
 
 			const access_token = generateToken({ id: user.id });
 
-			res.status(200).json({ access_token, username : user.username , email : user.email });
-
-		} catch(err){
-			next(err)
+			res.status(200).json({ access_token, username: user.username, email: user.email });
+		} catch (err) {
+			next(err);
 		}
-
 	}
 
 	static async login(req, res, next) {
@@ -63,8 +58,8 @@ class UserController {
 					email,
 				},
 			});
-			
-			if(!data){
+
+			if (!data) {
 				throw { message: 'Username/Password not found', statusCode: 400 };
 			}
 
@@ -73,7 +68,7 @@ class UserController {
 			if (pass) {
 				const access_token = generateToken({ id: data.id });
 
-				res.json({ access_token, username : data.username, email });
+				res.json({ access_token, username: data.username, email });
 			} else {
 				throw { message: 'Username/Password not found', statusCode: 400 };
 			}

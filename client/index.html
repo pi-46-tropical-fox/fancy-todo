@@ -13,7 +13,12 @@
       crossorigin="anonymous"
     />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="styles.css" />
     <title>Fancy Todo</title>
   </head>
@@ -71,14 +76,18 @@
                 <input required type="date" class="form-control" id="form-todo-due-date" />
               </div>
 
-                <button data-toggle="collapse"
+              <button
+                data-toggle="collapse"
                 class="btn btn-outline-danger"
                 href="#add-todo-collapse-custom"
                 role="button"
                 aria-expanded="false"
                 aria-controls="add-todo-collapse-custom"
-                id="popcorn-check">🍿 Watch a Movie</button>
-              </div>
+                id="popcorn-check"
+              >
+                🍿 Watch a Movie
+              </button>
+            </div>
 
             <p id="error-text-add-todo" class="text-danger"></p>
 
@@ -112,18 +121,16 @@
                 <input id="form-movie-title" placeholder="Batman" required type="text" class="form-control" />
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
               </div>
+            </div>
 
             <p id="error-text-add-todo" class="text-danger"></p>
           </form>
-
 
           <div id="movies">
             <table class="table">
               <tbody id="movie-container"></tbody>
             </table>
           </div>
-        </div>
-
         </div>
       </div>
     </div>
@@ -279,6 +286,7 @@
       integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
     <script src="./index.js"></script>
   </body>
