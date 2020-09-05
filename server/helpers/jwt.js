@@ -9,4 +9,9 @@ const generateToken = (user) => {
     return access_token
 }
 
-module.exports = { generateToken }
+const verifyToken = (token) => {
+    const verified = jwt.verify(token, secret)
+    return verified
+}
+
+module.exports = { generateToken, verifyToken }

@@ -10,6 +10,7 @@ const authentication = async (req, res, next) => {
 
     try{
         const decoded = verifyToken(access_token)
+        console.log(decoded)
         let user = await User.findOne({
             where: {
                 email: decoded.email
@@ -17,7 +18,8 @@ const authentication = async (req, res, next) => {
         })
         
         if (user) {
-            req.decoded = decoded
+            req.userData = decoded
+            console.log(req.userData)
             next()
         } 
         else {
@@ -25,6 +27,7 @@ const authentication = async (req, res, next) => {
         }
     } 
     catch(err) {
+        console.log(err)
         next(err)
     }
 }

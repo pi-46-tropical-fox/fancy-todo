@@ -1,6 +1,7 @@
 module.exports = function(err, req, res, next) {
     let statusCode = 500
-    let errorCode = 'Unknown_Error'
+    let errorCode = 'UNKNOWN_ERROR'
+    let message = 'Unknown Error'
 
     if(err.name === 'SequelizeValidationError') {
         statusCode = 400
@@ -13,7 +14,7 @@ module.exports = function(err, req, res, next) {
     } 
     else if(err.name === 'EMAIL_ALREADY_EXIST') {
         console.log(err.name)
-        statusCode = 400
+        statusCode = 400                           
         errorCode = 'EMAIL_ALREADY_EXIST'
         message = 'Email Already Exist'
     } 

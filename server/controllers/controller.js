@@ -59,15 +59,10 @@ class Controller {
             status: req.body.status,
             due_date: req.body.due_date
         }
-
+        console.log(dataUpdate, '<<< data update')
         Todo.update(dataUpdate, {where: {id: id}})
         .then(data => {
-            if(data === 1) {
-                return Todo.findByPk(id)
-            } 
-            else {
-                next({name: 'ERROR_NOT_FOUND'})
-            }
+            return Todo.findByPk(id)
         })
         .then(dataEdited => {
             res.status(200).json(dataEdited)
