@@ -19,7 +19,7 @@ function menuList(event){
 
     $.ajax({
         method: 'GET',
-        url: 'http://localhost:3000/todos',
+        url: 'http://localhost:3000/todos/',
         headers:{
             access_token: localStorage.getItem('access_token')
         }
@@ -143,7 +143,7 @@ function addTodo(event){
     console.log(title, description, status, due_date)
     $.ajax({
         method: 'POST',
-        url: 'http://localhost:3000/todos',
+        url: 'http://localhost:3000/todos/',
         data:{
             title,
             description,
@@ -167,29 +167,32 @@ function addTodo(event){
 }
 
 function onSignIn(googleUser) {
-    var google_access_token = googleUser.getAuthResponse().id_token;
-    console.log(google_access_token)
+    let id_token = googleUser.getAuthResponse().id_token
 
     $.ajax({
         method: 'POST',
-        url: 'http://localhost:3000//loginGoogle',
-        headers: {google_access_token}
+        url: `http://localhost:3000/loginGoogle`,
+        data: { id_token }
+      })
+    .done(token => {
+        localStorage.setItem('token', token)
+        showAll()
     })
-    .done(response =>{
-        localStorage.setItem('access_token', response.access_token)
-        afterLogin()
-    })
-    .fail(err=>{
-        console.log(err)
+    .fail(function (result) {
+        console.log(result)
     })
 }
+
+///sign out
 function signOut() {
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
       console.log('User signed out.');
-    });
+      localStorage.removeItem('token');
+      $('#loginRegister').show()
+      $('#main').hide()
+    })
 }
-
 
 $(document).ready(function(){
     if(localStorage.getItem('access_token')){

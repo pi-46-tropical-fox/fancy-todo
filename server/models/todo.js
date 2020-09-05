@@ -45,7 +45,8 @@ module.exports = (sequelize, DataTypes) => {
           msg : 'Status cannot be empty'
       }
     }
-  }
+  },
+  
   }, {
     hooks: {
       beforeCreate: (user, options) => {
