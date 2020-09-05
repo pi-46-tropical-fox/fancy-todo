@@ -12,7 +12,7 @@ class TodoController{
             console.log(err);
             res.status(500).json(err)
         })
-    }
+    }   
 
     static add(req, res){
         let query = {
@@ -22,6 +22,7 @@ class TodoController{
             due_date:req.body.due_date,
             UserId:req.UserId
         }
+        console.log(query);
 
         Todo.create(query)
         .then(data =>{
@@ -50,7 +51,7 @@ class TodoController{
 
     static delete(req, res, next){
     let tempData;
-
+        console.log('ini di delete');
     Todo.findByPk(+req.params.id)
       .then(data => {
         if (!data)
@@ -67,16 +68,16 @@ class TodoController{
       })
   }
 
-    static async updateTodo(req, res, next) {
+    static async update(req, res, next) {
         try {
             const updateTodo = {
                 title: req.body.title,
                 description: req.body.description,
                 status: req.body.status,
                 due_date: req.body.due_date,
-                UserId: req.userData.id
+                UserId: req.UserId
             }
-
+            
             const result = await Todo.update(updateTodo, {
                 where: {
                     id: +req.params.id
@@ -89,6 +90,7 @@ class TodoController{
                 res.status(200).json(todo)
             }
         } catch (err) {
+            console.log(err);
             next(err);
         }
     }

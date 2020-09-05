@@ -4,52 +4,40 @@ const { verifyToken } = require('../helper/jwt')
 const jwt = require('jsonwebtoken')
 
 
-const authentication = (req, res, next) =>{
-    try {
-        if (req.headers.access_token) {
-            let verify = verifyToken(req.headers.access_token)
-            console.log(verify);
-            User.findByPk(verify.id)
-                .then(user => {
-                    if(!user){
-                        throw  ({message:'User Not Found'});
-                    }else{
-                    req.UserId = user.id
-                    next()
-                    }
-                })
-                .catch (err =>{
-                   console.log(err);
-                    return res.status(404).json(err)
-                    //next(err)
-                  //console.log(err);
-                })
+
+const authentication = (req, res, next) => {
+    //console.log('in authentication');
+    const {token} = req.headers
+    //console.log(req.headers);
+    const data = verifyToken (token)
+    //console.log(data);
+    User.findByPk (data.id)
+    .then ( result => {
+        req.UserData = result
+        next ()
+    })
+    .catch (err => {
+        console.log(err, 'author');
+        return res.status (401).json ({message : "Invalid User"})
+    })
+}
+
+const authorization = (req, res, next) => {
+    console.log('in authorization');
+    const {id} = req.UserData
+    User.findByPk (id)
+    .then (data => {
+        if (data && data.id === req.UserData.id ) {
+            next ()
         } else {
-           // console.log(err);
-            throw ({message:'Token Is Required'})
+            return res.status (403).json ({message : "Unauthorized Access"})
         }
-    } 
-    catch (err) {
-      console.log(err);
-        next (err)
-    }
-}
-
-const authoritzation = (req, res, next) =>{
-    const id = req.params.id
-    Todo.findByPk(id)
-        .then(data => {
-            if (data.UserId === req.UserId) {
-                return next()
-            } else {
-                throw err
-            }
-        })
-        .catch(err => {
-            next (err)
-        })
-
+    })
+    .catch (err => {
+        console.log(err, 'auuuut');
+        return res.status (403).json ({message : "Unauthorized Access"})
+    })
 }
 
 
-module.exports = {authentication, authoritzation}
+module.exports = {authentication, authorization}

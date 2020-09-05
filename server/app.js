@@ -1,13 +1,14 @@
 "use strict"
 require('dotenv').config()
 const express = require('express')
-const port = 3001;
+const cors = require('cors')
+const port = 3099;
 const app = express()
 const routes = require('./routes')
 const errHandler = require('./midleware/errorHandler')
 
-console.log(process.env.secret);
-//app.set('')
+
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 

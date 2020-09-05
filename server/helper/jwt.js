@@ -6,14 +6,13 @@ const secret = process.env.secret
 
 
 function generateToken(user){
-    const access_token = jwt.sign({
-        email:user.email, id:user.id}, secret);
+    const access_token = jwt.sign(
+        {email:user.email, id:user.id}, secret);
         return access_token
 }
 
 function verifyToken(token){
-    const verified = jwt.verify(token, secret)
-    return verified
+    return jwt.verify(token, secret)
 }
 
 module.exports= {generateToken, verifyToken}
