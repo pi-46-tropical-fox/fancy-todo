@@ -15,6 +15,7 @@ My Todos App is an application to manage your todos. This app has :
 - DELETE /todos/:id
 - POST /register
 - POST /login
+- GET /foods
 ```
 
 ## RESTful endpoints
@@ -267,6 +268,34 @@ _Response (400 - Bad Request)_
 ```
 {
   "message": "Invalid request"
+}
+```
+---
+### GET /foods
+
+> Get all recommended resto
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200)_
+```
+10 recommended restaurants displayed
+```
+
+_Response (500)_
+```
+{
+  "message": "Internal server error"
 }
 ```
 ---

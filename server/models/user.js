@@ -15,6 +15,9 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       User.hasMany(models.Todo)
     }
+    getFullName () {
+      return `${this.firstName} ${this.lastName}`
+    }
   };
   User.init({
     firstName: {
@@ -54,6 +57,11 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: {
           args: true,
           msg: `Password cannot be empty`
+        },
+        checkPassword(value){
+          if(value.length < 6){
+            throw new Error(`Password at least 6 characters`) 
+          }
         }
       }
     }

@@ -24,6 +24,9 @@ const errHandler = (err, req, res, next) => {
     }else if(err.name === 'ForbidenAccess'){
         statusCode = 403
         errors.push(`Forbiden access`)
+    }else if(err.name === 'apiKeyInvalid'){
+        statusCode = 401
+        errors.push('User not authenticated')
     }else{
         statusCode = 500
         errors.push('Internal server error')
