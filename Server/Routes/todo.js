@@ -9,13 +9,13 @@ todoRoutes.post('/todos', authentication, TodoController.addTodo)
 todoRoutes.get('/todos', authentication, TodoController.readAll)
 
 //Select Todo list Owned by UserId
-todoRoutes.get('/todos/:id', authentication, authorization, TodoController.selectTodo)
+todoRoutes.get('/todos/:title', authentication, TodoController.selectTodo)
 
 //Update Todo list Owned by UserId
-todoRoutes.put('/todos/:id', authentication, authorization, TodoController.updateTodo)
+todoRoutes.put('/todos/:title', authentication, TodoController.updateTodo)
 
 //Delete Todo list Owned by UserId
-todoRoutes.delete('/todos/:id', authentication, authorization, TodoController.deleteTodo)
+todoRoutes.delete('/todos/:title', authentication, TodoController.deleteTodo)
 
 
 module.exports = todoRoutes

@@ -9,6 +9,7 @@ function initial(event) {
     $('#menuTasks').hide()
     $('#editTask').hide()
     $('#addTask').hide()
+    $('#apiNews').hide()
     
 }
 
@@ -432,8 +433,8 @@ function menuTask(event) {
                     ${element.role}
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
-                <a href="#" data-todoId="${element.Todo.id}" onclick="menuEditTask(event)" class="text-indigo-600 hover:text-indigo-900">Edit</a> |
-                <a href="#" data-id="${element.Todo.id}" onclick="deleteTask(event)" class="text-indigo-600 hover:text-indigo-900">Delete</a>
+                <a href="#" data-title="${element.Todo.title}" onclick="menuEditTask(event)" class="text-indigo-600 hover:text-indigo-900">Edit</a> |
+                <a href="#" data-title="${element.Todo.title}" onclick="deleteTask(event)" class="text-indigo-600 hover:text-indigo-900">Delete</a>
                 </td>
             </tr>
             `)
@@ -491,30 +492,281 @@ function submitAddTask(event) {
 }
 
 function menuEditTask(event) {
-    // initial()
-    // $('#navBar').show()
-    // $('#displayUserName').text(localStorage.getItem('user_name'))
-    // $('#diplayUserRole').text(localStorage.getItem('user_role'))
-    // $('#editTask').show()
-    console.log(event.srcElement.dataset.todoId)
+    console.log(event.srcElement.dataset.title)
+
+    $.ajax({
+        method: 'GET',
+        url: `http://localhost:3000/todos/${event.srcElement.dataset.title}`,
+        headers: {
+            access_token: localStorage.getItem('access_token')
+        }
+    })
+    .done(response => {
+        console.log(response, '<<<data')
+        initial()
+        $('#navBar').show()
+        $('#displayUserName').text(localStorage.getItem('user_name'))
+        $('#diplayUserRole').text(localStorage.getItem('user_role'))
+
+        $('#editTask').empty()
+
+        $('#editTask').append(`
+        <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+
+        <div class="max-w-md w-full">
+              <div>
+                   <h2 class="mt-6 text-center text-4xl leading-9 font-extrabold text-gray-900">
+                      Edit Task
+                      </h2>
+              </div><br>
+
+                  <form id="formEditTask" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                      <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+                            Task Name
+                          </label>
+                          <input id="addTaskTitle" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="Task Name">
+                          <p class="text-red-500 text-xs italic">Please fill out this field.</p>
+                        </div>
+                        <div class="w-full md:w-1/2 px-3">
+                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                            Due Date
+                          </label>
+                          <input id="addTaskDueDate" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="date">
+                        </div>
+                      </div>
+                      <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="w-full px-3">
+                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
+                            Description
+                          </label>
+                          <input id="addTaskDescription" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Description">
+                          <p class="text-gray-600 text-xs italic">Elaborate the detail of your task</p>
+                        </div>
+                      </div>
+
+                      <div class="flex items-center justify-between">
+                          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                            Add Task
+                          </button>
+                      </div>
+                  </form>
+          </div>
+      </div>
+        `)
+
+
+
+
+
+
+
+
+        // $('#editTask').append(`
+        // <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        //     <div class="max-w-md w-full">
+        //         <div>
+        //             <h2 class="mt-6 text-center text-4xl leading-9 font-extrabold text-gray-900">
+        //                 Update a Task
+        //                 </h2>
+        //         </div><br>
+
+        //             <form id="editTaskForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        //                 <div class="flex flex-wrap -mx-3 mb-6">
+        //                     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        //                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+        //                         Task Name
+        //                     </label>
+        //                     <input id="editTaskTitle" value="${response.title}" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text">
+        //                     <p class="text-red-500 text-xs italic">Please fill out this field.</p>
+        //                     </div>
+        //                     <div class="w-full md:w-1/2 px-3">
+        //                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+        //                         Due Date
+        //                     </label>
+        //                     <input id="editTaskDueDate" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="date">
+        //                     </div>
+        //                 </div>
+        //                 <div class="flex flex-wrap -mx-3 mb-6">
+        //                     <div class="w-full px-3">
+        //                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
+        //                         Description
+        //                     </label>
+        //                     <input id="editTaskDescription" value="${response.description}" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"type="text">
+        //                     <p class="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p>
+        //                     </div>
+        //                 </div>
+        //                 <div class="flex flex-wrap -mx-3 mb-2">
+        //                     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+        //                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
+        //                         Status
+        //                     </label>
+        //                     <div class="relative">
+        //                         <select id="editTaskStatus" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+        //                         <option value="false">Active</option>
+        //                         <option value="true">Completed</option>
+        //                         </select>
+        //                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+        //                         <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+        //                         </div>
+        //                     </div>
+        //                     </div>
+        //                 </div><br>
+        //                 <div class="flex items-center justify-between">
+        //                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+        //                       Update
+        //                     </button>
+        //                 </div>
+        //             </form>
+        //     </div>
+        // </div>
+        // `)
+        $('#editTask').show()
+
+    })
+    .fail((err) => {
+        console.log(err)
+    })
+}
+
+function submitEditTask(event) {
+    event.preventDefault()
+    console.log('masuk')
+    // let title = $('#editTaskTitle').val()
+    // let description =  $('#editTaskDescription').val()
+    // let due_date = $('#editTaskDueDate').val()
+    // let status =  $('#addTaskStatus').val()
+    // console.log(title, description, due_date, status)
+
+    // let access_token = localStorage.getItem('access_token')
 
     // $.ajax({
-    //     method: 'GET',
-    //     url: `http://localhost:3000/todos/${event.srcElement.dataset.id}`,
+    //     method: 'POST',
+    //     url: 'http://localhost:3000/todos',
+    //     data: {
+    //         title,
+    //         description,
+    //         due_date,
+    //         UserId,
+    //         ProjectId
+    //     },
     //     headers: {
-    //         access_token: localStorage.getItem('access_token')
+    //         access_token
     //     }
     // })
-    // .done(response => {
-    //     console.log(response, '<<<data')
+    // .done((response) => {
+
     // })
+}
+
+function deleteTask(event) {
+    console.log(event.srcElement.dataset.title)
+    $.ajax({
+        method: 'DELETE',
+        url: `http://localhost:3000/todos/${event.srcElement.dataset.title}`,
+        headers: {
+            access_token: localStorage.getItem('access_token')
+        }
+    })
+    .done(response => {
+        console.log(response)
+        menuProject()
+    })
+    .fail(err => {
+        console.log(err)
+    })
+}
+
+function apiNews(event) {
+    initial()
+    $('#navBar').show()
+    $('#displayUserName').text(localStorage.getItem('user_name'))
+    $('#diplayUserRole').text(localStorage.getItem('user_role'))
+
+    $('#apiNews').show()
+
+    $.ajax({
+        method: 'GET',
+        url: 'http://localhost:3000/api/news',
+        headers: {
+            access_token: localStorage.getItem('access_token')
+        }
+    })
+    .done((response) => {
+        console.log(response)
+        $('#apiNews').empty()
+
+        $('#apiNews').append(`
+        <br>
+        <div class="flex mb-4">
+  
+          <div class="w-1/3  h-12">
+            <div class="max-w-sm rounded overflow-hidden shadow-lg">
+            <img class="w-full" src="${response.result[0].urlToImage}" alt="Sunset in the mountains">
+            <div class="px-6 py-4">
+              <div class="font-bold text-xl mb-2">${response.result[0].title}</div>
+              <p class="text-gray-700 text-base">
+              ${response.result[0].description}
+              </p>
+            </div>
+            <div class="px-6 pt-4 pb-2">
+              <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#${response.result[0].author}</span>
+              <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#${response.result[0].source.name}</span>
+              <a href="${response.result[0].url}" class="inline-block bg-red-700 rounded-full px-3 py-1 text-sm font-semibold text-white-900 mr-2 mb-2">Read More</a>
+            </div>
+          </div>
+  
+         </div>
+  
+          <div class="w-1/3  h-12">
+            <div class="max-w-sm rounded overflow-hidden shadow-lg">
+              <img class="w-full" src="${response.result[1].urlToImage}" alt="Sunset in the mountains">
+              <div class="px-6 py-4">
+                <div class="font-bold text-xl mb-2">${response.result[1].title}</div>
+                <p class="text-black-700 text-base">
+                ${response.result[1].description}
+                </p>
+              </div>
+              <div class="px-6 pt-4 pb-2">
+                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#${response.result[1].author}</span>
+                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#${response.result[1].source.name}</span>
+                <a href="${response.result[1].url}"  class="inline-block bg-red-700 rounded-full px-3 py-1 text-sm font-semibold text-white-900 mr-2 mb-2">Read More</a>
+              </div>
+            </div> 
+          </div>
+  
+          <div class="w-1/3  h-12">
+            <div class="max-w-sm rounded overflow-hidden shadow-lg">
+              <img class="w-full" src="${response.result[2].urlToImage}" alt="Sunset in the mountains">
+              <div class="px-6 py-4">
+                <div class="font-bold text-xl mb-2">${response.result[2].title}</div>
+                <p class="text-gray-700 text-base">
+                ${response.result[2].description}
+                </p>
+              </div>
+              <div class="px-6 pt-4 pb-2">
+                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#${response.result[2].author}</span>
+                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#${response.result[2].source.name}</span>
+                <a href="${response.result[2].url}"  class="inline-block bg-red-700 rounded-full px-3 py-1 text-sm font-semibold text-white-900 mr-2 mb-2">Read More</a>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+        `)
+
+        $('#apiNews').show()
+     
+    })
+    .fail((err) => {
+        console.log(err)
+    })
 }
 
 $(document).ready(function() {
     menuLogin()
-    // menuProject()
-    // menuAddProject()
-    // menuEditTask()
+
 
     $('#registerPath').click(menuRegister)
     $('#loginPath').click(menuLogin)
@@ -531,6 +783,11 @@ $(document).ready(function() {
 
     $('#addTaskPath').click(menuAddTask)
     $('#formAddTask').click(submitAddTask)
+
+    $('#formEditTask').click(submitEditTask)
+
+
+    $('#apiExplore').click(apiNews)
 
 
 })

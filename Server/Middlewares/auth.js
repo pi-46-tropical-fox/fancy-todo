@@ -17,7 +17,6 @@ const authentication = async (req, res, next) => {
                     req.userData = userData
                     next()
                 }else {
-                    //INI ERRORNYA KALO GIMANA?
                     throw {message: 'User not authenticated', statusCode: 401}
                 }
             })

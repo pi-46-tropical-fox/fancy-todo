@@ -7,4 +7,5 @@ userRoutes.post('/login', UserController.loginPost)
 
 userRoutes.post('/googleLogin', UserController.googleLogin)
 
+
 module.exports = userRoutes

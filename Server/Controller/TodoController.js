@@ -33,7 +33,12 @@ class TodoController {
     }
 
     static selectTodo(req, res, next) {
-        Todo.findByPk(req.params.id)
+        Todo.findOne({
+            where: {
+                title: req.params.title
+            },
+            include: [User, Project]
+        })
             .then(data => {
                 return res.status(200).json(data)
             })
@@ -65,12 +70,14 @@ class TodoController {
     }
 
     static deleteTodo(req, res, next) {
-        Todo.destroy({where: {id: req.params.id}})
+        Todo.destroy({where: {
+            title: req.params.title
+        }})
             .then(data => {
                 if(!data) {
-                    return res.status(404).json(data)
+                    throw{message: 'Todo not found', statusCode: 404}
                 }else {
-                    return res.status(200).json(data)
+                    return res.status(200).json({message: "Sucessfully deleted!" })
                 }
             })
             .catch(err => {
