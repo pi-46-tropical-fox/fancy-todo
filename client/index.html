@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Infinite Todos</title>
-    
+    <head>
+    <link rel="icon" type= 'image/png' href="./asset/icon.png">
+    <title>FANCY TODOS</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,7 +18,7 @@
     <!--INI NAVBAR YANG TERBAIK HARUS PANJANG COMMENT LINENYA BIAR GA BINGUNG GUSTI-->
 
     <nav id="navbar" class="navbar navbar-expand-md  fixed-top ">  
-        <a class="navbar-brand mb-0 h1" href="/"><img height="40px" width="40px" src="https://arnoldtherigan15.github.io/Arnold_Hacktiv8/images/title.png"> Infinite Todos</a>
+        <a class="navbar-brand mb-0 h1" href="/"><img height="40px" width="40px" src="https://arnoldtherigan15.github.io/Arnold_Hacktiv8/images/title.png"> Fancy Todo</a>
         <div class="collapse navbar-collapse " id="navbarSupportedContent">     
             <ul class="navbar-nav mr-auto">       
                 <li class="nav-item"> 
@@ -26,7 +26,7 @@
                 </li>
             </ul> 
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="search by title" aria-label="Search" id="searching">
+                <input class="form-control mr-sm-2" type="text" placeholder="search by title" aria-label="Search" id="searching">`
                 <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
             </form>
         </div>
@@ -41,16 +41,17 @@
                 <div class="col-sm-4 offset-sm-4">
                     <div id="loginForm">
                         <form class="text-center p-5">
-                            <h1><img src="https://img.icons8.com/ios/60/000000/infinity-large-filled.png"></h1>
-                            <p class="h4 mb-4">Sign in</p>
+                            <h1 style= "text-align-last: center;"><img src="https://icons.iconarchive.com/icons/sonya/swarm/256/Cat-icon.png"></h1>
+                            <h2 style="color: white;">Fancy Todo App</h2>
+                            <p class="h4 mb-4" style="color: white;">Sign in</p>
                             <input type="email" id="email" class="form-control mb-4" placeholder="E-mail">
                             <input type="password" id="password" class="form-control mb-4" placeholder="Password">
                             <button class="btn btn-info btn-block my-4" type="submit" id="login">Sign in</button>
-                            <p>Not a member?
+                            <p style = "color:aliceblue">Not a member?
                                 <a href="" id="regisButton">Register</a>
                             </p>
                         
-                            <p>or sign in with:</p>
+                            <p style="color: aqua;">or sign in with:</p>
                             <div class="g-signin2 center" data-onsuccess="onSignIn" style="position: relative;"></div>
                             <br>
                             <div id="fb-root">
@@ -90,6 +91,9 @@
                     <!--INI LIST TODO ATAU MAIN WEBSITENYA-->
                     <div id="todolist" class="list-group">
                     </div>
+                </div>
+                <div id="hero" class="heroku">
+
                 </div>
             </div>
 

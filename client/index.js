@@ -16,7 +16,7 @@ $(document).ready(()=>{
     $("#regisButton").click(afterRegis)
 
 
-    $('#submitEdit').click(submitAdd)
+    $('#submitEdit').click(submitEdit)
     $('#submitAdd').click(submitAdd)
     $('#logoutbtn').click(sideLogout)
 
@@ -372,7 +372,7 @@ function submitAdd() {
     let due_date = $('#duedate').val()
 
         
-    if (title != '' && description != '' && due_date != '') {
+    if (title != '' && description != '' && due_date != '' && status != "") {
         $.ajax({
             method: "POST",
             url: `${baseUrl}/todos`,
@@ -408,7 +408,7 @@ function submitAdd() {
     } else {
         swal.fire({
             type: "error",
-
+            title: "please complete the form"
         })
     }
 }
