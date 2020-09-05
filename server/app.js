@@ -1,5 +1,6 @@
 require('dotenv').config()
 const express = require('express')
+const cors = require('cors')
 const app = express()
 const port = process.env.PORT || 3000
 const routes = require('./routes')
@@ -11,6 +12,7 @@ app
 // first, use needed modules for processing requests
 .use(express.urlencoded({ extended: true }))
 .use(express.json())
+.use(cors())
 // ...and then import needed routes
 .use(routes)
 .use(errHandler)
