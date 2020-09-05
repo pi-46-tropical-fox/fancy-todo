@@ -10,16 +10,17 @@ class CalendarController {
         })
 
         .then (response => {
-            let holidays = []
+            // let holidays = []
             
-            response.data.forEach(el => {
-                holidays.push (el.date)
-                holidays.push (el.localName)
-            })
+            // response.data.forEach(el => {
+            //     holidays.push (el.date)
+            //     holidays.push (el.localName)
+            // })
 
-            console.log (holidays)
+            // console.log (holidays)
+            // console.log (response)
             
-            return res.status (200).json ({message : "Success, Displaying Public Holidays"})
+            return res.status (200).json (response.data)
         })
 
         .catch (err => {
@@ -35,16 +36,16 @@ class CalendarController {
         })
 
         .then (response => {
-            let holidays = []
+            // let holidays = []
             
-            response.data.forEach(el => {
-                holidays.push (el.date)
-                holidays.push (el.localName)
-            })
+            // response.data.forEach(el => {
+            //     holidays.push (el.date)
+            //     holidays.push (el.localName)
+            // })
 
-            console.log (holidays)
+            // console.log (holidays)
             
-            return res.status (200).json ({message : "Success, Displaying Public Holidays"})
+            return res.status (200).json (response.data)
         })
 
         .catch (err => {
@@ -60,16 +61,16 @@ class CalendarController {
         })
 
         .then (response => {
-            let holidays = []
+            // let holidays = []
             
-            response.data.forEach(el => {
-                holidays.push (el.date)
-                holidays.push (el.localName)
-            })
+            // response.data.forEach(el => {
+            //     holidays.push (el.date)
+            //     holidays.push (el.localName)
+            // })
 
-            console.log (holidays)
+            // console.log (holidays)
             
-            return res.status (200).json ({message : "Success, Displaying Public Holidays"})
+            return res.status (200).json (response.data)
         })
 
         .catch (err => {
@@ -84,8 +85,8 @@ class CalendarController {
         })
 
         .then (response => {
-            console.log (response.data)
-            return res.status (200).json ({message : "Success, Displaying Long Weekends 2020"})
+            // console.log (response.data)
+            return res.status (200).json (response.data)
         })
 
         .catch (err => {
@@ -101,8 +102,8 @@ class CalendarController {
         })
 
         .then (response => {
-            console.log (response.data)
-            return res.status (200).json ({message : "Success, Displaying Long Weekends 2021"})
+           // console.log (response.data)
+           return res.status (200).json (response.data)
         })
 
         .catch (err => {
@@ -118,8 +119,8 @@ class CalendarController {
         })
 
         .then (response => {
-            console.log (response.data)
-            return res.status (200).json ({message : "Success, Displaying Long Weekends 2022"})
+           // console.log (response.data)
+           return res.status (200).json (response.data)
         })
 
         .catch (err => {
