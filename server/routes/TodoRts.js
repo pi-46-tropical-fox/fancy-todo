@@ -7,6 +7,8 @@ routes.post(`/`, authentication, TodoCtr.create)
 
 // Get all todo
 routes.get(`/`, authentication, TodoCtr.getAll)
+// Get by id
+routes.get(`/:id`, authentication, TodoCtr.getOne)
 
 // Update todo
 routes.put(`/:id`, authentication, authorization,  TodoCtr.update)

@@ -1,0 +1,209 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    color: black;
+}
+
+body{
+    background-color:	#fb9fa4;
+}
+
+.btn{
+    min-width: 100px;
+    min-height: 30px;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+}
+
+.login-container,
+.register-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.input-container input{
+    margin: 15px 0;
+    padding-left: 10px;
+    border-radius: 5px;
+    border: none;
+    height: 30px;
+    width: 300px;
+}
+
+.image{
+    width: 100%;
+}
+
+.login-form-wrapper,
+.register-form-wrapper{
+    display: flex;
+    justify-content: center;
+    width: 65vw;
+}
+
+.image-container-login{
+    width: 50vw;
+    border-right: 3px solid #FF7F50;
+}
+
+.image-container-register{
+    width: 50vw;
+    border-left: 3px solid #FF7F50;
+}
+
+.login-form,
+.register-form{
+    width: 50vw;
+}
+
+.login-form{
+    margin-left: 20px;
+}
+.login-form .btn{
+    margin: 20px 0;
+}
+
+.sosmed-signin{
+    margin: 15px;
+}
+
+.input{
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+/* HOME */
+.home{
+    display: flex;
+    flex-direction: column;
+}
+
+.logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+}
+
+.content-container{
+    display: flex;
+    justify-content: space-between;
+    height: 86vh;
+}
+
+.left-content-container{
+    display: flex;
+    justify-content: center;
+    width: 50vw;
+    border-right: 2px solid #FF7F50;
+}
+
+.left-content-wrapper{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+.profile-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #FF7F50;
+    /* box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.15); */
+    color: white;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 15px;
+}
+
+.profile-logo-container{
+    display: flex;
+    width: 80%;
+}
+
+.profile-logo{
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.add-review-container{
+    height: 220px;
+}
+
+.add-review-input{
+    width: 97.8%;
+    height: 25px;
+    margin-bottom: 20px;
+    border: none;
+    padding-left: 10px;
+    border-radius: 5px;
+}
+
+.add-review-textarea{
+    width: 97.7%;
+    height: 70px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    padding-left: 10px;
+    border: none;
+}
+
+.list-review-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.title-list{
+    margin-bottom: 20px;
+}
+
+.title-list{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.table-list{
+    display: flex;
+    justify-content: space-around;
+}
+
+.list-head{
+    width: 100%;
+    height: 70px;
+    border-bottom: 1.5px solid #FF7F50;
+}
+
+.table-head{
+    padding: 15px 0;
+    border-bottom: 1.5px solid #FF7F50;
+}
+
+.right-content{
+    width: 50vw;
+}
+
+tr {
+    border-bottom: 1.5px solid #FF7F50;
+}
+
+table {
+    margin-top: 10px;
+    border-collapse: collapse; 
+    border-bottom: 1.5px solid #FF7F50;
+}
+
+span {
+    height: 100px;
+}

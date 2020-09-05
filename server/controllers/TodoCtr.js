@@ -50,7 +50,33 @@ class Controller{
             })
     }
 
+    static getOne(req, res, next){
+        let id = req.params.id
+        Todo.findOne({
+            include: [User], 
+            where: {
+                    id
+                },
+            })
+            .then(data => {
+                if(data < 1){
+                    return res.status(204).json({
+                        message: "Empty Todo List"
+                    })
+                } else {
+                    return res.status(201).json({
+                        message: "Successfully get One Todo List",
+                        data
+                    })
+                }
+            })
+            .catch(err => {
+                return next(err)
+            })
+    }
+
     static update(req, res, next){
+        console.log(data, `ini dari controller`)
         const id = req.params.id
         const {title, description, due_date} = req.body
         Todo.update({title, description, due_date}, {where: {id}})
@@ -71,6 +97,7 @@ class Controller{
 
     static delete (req, res, next){
         const id = req.params.id
+        console.log(id, `ini dari controller`)
         Todo.destroy({where: {id}})
             .then(data => {
                 return res.status(200).json({

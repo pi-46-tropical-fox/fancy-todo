@@ -1,5 +1,5 @@
 const {User} = require(`../models`)
-const {access_token, bcrypt} = require(`../helpers`)
+const {access_token, compare} = require(`../helpers`)
 
 class Controller{
     static register(req, res, next){
@@ -34,7 +34,7 @@ class Controller{
                     throw errorMessage
                 }
                 
-                const isValid = bcrypt(password, data.password)
+                const isValid = compare(password, data.password)
                 if(isValid){
                     const token = access_token(username, data.id)
                     return res.status(200).json({
@@ -49,6 +49,44 @@ class Controller{
                 return next(err)
             })
     }
+
+    static logingoogle(req, res, next){
+            const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
+            const { google_access_token } = req.headers
+            let email_google;
+            client.verifyIdToken({
+                idToken: google_access_token,
+                audience: process.env.GOOGLE_CLIENT_ID
+            })
+            .then(ticket => {
+                return ticket.getPayload()
+            })
+            .then(payload => {
+                email_google = payload.email
+                return User.findOne({where:{email:payload.email}})
+            })
+            .then(user => {
+                if (!user) {
+                    return User.create({
+                        email: email_google,
+                        password: 'password'
+                    })
+                } else {
+                    return user
+                }
+            })
+            .then(user => {
+                const payload = {email:user.email, id: user.id}
+    
+                const access_token = generateToken(payload)
+                console.log(access_token);
+                return res.status(200).json({access_token})
+            })
+            .catch(err => {
+                next(err)
+                console.log(err);
+            })
+        }
 }
 
 module.exports = Controller
