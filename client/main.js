@@ -69,6 +69,9 @@ function mainMenu (event){
     $('#todos').empty()
 
 
+    
+
+
     $.ajax({
         method: "GET",
         url: `http://localhost:${port}/todos`,
@@ -177,7 +180,31 @@ function logoutMenu (event){
     $('#edit').hide()
     $('#add').hide()
     localStorage.clear()
+    
+
+    $.ajax({
+        method: "GET",
+        url: `http://localhost:${port}/quotes`,
+        
+    })
+
+        .done(response => {
+
+            $('#quotes').append(`
+                <h5 class="card-title">Quote of the day</h5>
+                <p class="card-text">${response.quoteText}</p>
+                <p class="card-text"><small class="text-dark">--${response.quoteAuthor}--</small></p>
+            `)
+
+        })
+
+        .fail(err => {
+            console.log(err)
+        })
+    
     signOut()
+
+
 }
 
 
