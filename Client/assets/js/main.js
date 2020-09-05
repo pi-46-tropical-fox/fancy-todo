@@ -10,6 +10,7 @@ function initial(event) {
     $('#editTask').hide()
     $('#addTask').hide()
     $('#apiNews').hide()
+    $('#error').hide()
     
 }
 
@@ -43,7 +44,13 @@ function submitLogin(event) {
         menuProject()
     })
     .fail((err) => {
-        console.log(err)
+        let result = []
+        err.responseJSON.errors.forEach(element => {
+           result.push(element) 
+        });
+        console.log(result, "<<result")
+        $('#errorHandler').text(result)
+        $('#error').show()
     })
 
 }
@@ -84,6 +91,8 @@ function submitRegister(event) {
     })
     .fail((err) => {
         console.log(err)
+        $('#errorHandler').text(err.responseText)
+        $('#error').show()
     })
 }
 
@@ -198,6 +207,13 @@ function menuProject(event) {
     })
     .fail((err) => {
         console.log(err)
+        let result = []
+        err.responseJSON.errors.forEach(element => {
+           result.push(element) 
+        });
+        console.log(result, "<<result")
+        $('#errorHandler').text(result)
+        $('#error').show()
     })
 }
 
@@ -238,6 +254,8 @@ function submitAddProject(event) {
     })
     .fail((err) => {
         console.log(err)
+        $('#errorHandler').text(err.responseText)
+        $('#error').show()
     })
 }
 
@@ -297,6 +315,8 @@ function menuEditProject(event) {
     })
     .fail(err => {
         console.log(err)
+        $('#errorHandler').text(err.responseText)
+        $('#error').show()
     })
 }
 
@@ -327,6 +347,8 @@ function submitEditProject(event) {
     })
     .fail((err) => {
         console.log(err)
+        $('#errorHandler').text(err.responseText)
+        $('#error').show()
     })
 }
 
@@ -345,6 +367,8 @@ function deleteProject(event) {
     })
     .fail(err => {
         console.log(err)
+        $('#errorHandler').text(err.responseText)
+        $('#error').show()
     })
 }
 
@@ -488,6 +512,8 @@ function submitAddTask(event) {
     })
     .fail((err) => {
         console.log(err)
+        $('#errorHandler').text(err.responseText)
+        $('#error').show()
     })
 }
 
@@ -509,58 +535,6 @@ function menuEditTask(event) {
         $('#diplayUserRole').text(localStorage.getItem('user_role'))
 
         $('#editTask').empty()
-
-    //     $('#editTask').append(`
-    //     <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-
-    //     <div class="max-w-md w-full">
-    //           <div>
-    //                <h2 class="mt-6 text-center text-4xl leading-9 font-extrabold text-gray-900">
-    //                   Edit Task
-    //                   </h2>
-    //           </div><br>
-
-    //               <form id="formEditTask" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-    //                   <div class="flex flex-wrap -mx-3 mb-6">
-    //                     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-    //                       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
-    //                         Task Name
-    //                       </label>
-    //                       <input id="addTaskTitle" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="Task Name">
-    //                       <p class="text-red-500 text-xs italic">Please fill out this field.</p>
-    //                     </div>
-    //                     <div class="w-full md:w-1/2 px-3">
-    //                       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
-    //                         Due Date
-    //                       </label>
-    //                       <input id="addTaskDueDate" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="date">
-    //                     </div>
-    //                   </div>
-    //                   <div class="flex flex-wrap -mx-3 mb-6">
-    //                     <div class="w-full px-3">
-    //                       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
-    //                         Description
-    //                       </label>
-    //                       <input id="addTaskDescription" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Description">
-    //                       <p class="text-gray-600 text-xs italic">Elaborate the detail of your task</p>
-    //                     </div>
-    //                   </div>
-
-    //                   <div class="flex items-center justify-between">
-    //                       <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-    //                         Add Task
-    //                       </button>
-    //                   </div>
-    //               </form>
-    //       </div>
-    //   </div>
-    //     `)
-
-
-
-
-
-
 
 
         $('#editTask').append(`
@@ -627,37 +601,47 @@ function menuEditTask(event) {
     })
     .fail((err) => {
         console.log(err)
+        $('#errorHandler').text(err.responseText)
+        $('#error').show()
     })
 }
 
 function submitEditTask(event) {
     event.preventDefault()
     console.log('masuk')
-    // let title = $('#editTaskTitle').val()
-    // let description =  $('#editTaskDescription').val()
-    // let due_date = $('#editTaskDueDate').val()
-    // let status =  $('#addTaskStatus').val()
-    // console.log(title, description, due_date, status)
+    let title = $('#editTaskTitle').val()
+    let description =  $('#editTaskDescription').val()
+    let due_date = $('#editTaskDueDate').val()
+    let status =  $('#addTaskStatus').val()
+    console.log(title, description, due_date, status)
 
-    // let access_token = localStorage.getItem('access_token')
+    let access_token = localStorage.getItem('access_token')
 
-    // $.ajax({
-    //     method: 'POST',
-    //     url: 'http://localhost:3000/todos',
-    //     data: {
-    //         title,
-    //         description,
-    //         due_date,
-    //         UserId,
-    //         ProjectId
-    //     },
-    //     headers: {
-    //         access_token
-    //     }
-    // })
-    // .done((response) => {
-
-    // })
+    $.ajax({
+        method: 'PUT',
+        url: `http://localhost:3000/todos/${title}`,
+        data: {
+            title,
+            description,
+            due_date,
+            status
+        },
+        headers: {
+            access_token
+        }
+    })
+    .done((response) => {
+        $('#editTaskTitle').val('')
+        $('#editTaskDescription').val('')
+        $('#editTaskDueDate').val('')
+        $('#addTaskStatus').val('')
+        menuProject()
+    })
+    .fail((err) => {
+        console.log(err)
+        $('#errorHandler').text(err.responseText)
+        $('#error').show()
+    })
 }
 
 function deleteTask(event) {
@@ -675,6 +659,8 @@ function deleteTask(event) {
     })
     .fail(err => {
         console.log(err)
+        $('#errorHandler').text(err.responseText)
+        $('#error').show()
     })
 }
 
@@ -764,6 +750,7 @@ function apiNews(event) {
     })
 }
 
+
 $(document).ready(function() {
     menuLogin()
 
@@ -784,7 +771,6 @@ $(document).ready(function() {
     $('#formAddTask').click(submitAddTask)
 
     $('#editTaskForm').click(submitEditTask)
-
 
     $('#apiExplore').click(apiNews)
 
