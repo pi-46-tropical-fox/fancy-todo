@@ -4,19 +4,18 @@ const { generateToken } = require('../helpers/token')
 const { OAuth2Client } = require('google-auth-library');
 
 class Controller {
-    static async register(req, res) {
+    static async register(req, res, next) {
         try {
             const { email, password } = req.body
             await User.create({ email, password })
 
             res.status(201).json(email)
         } catch (err) {
-            console.log(err);
-            res.status(500).json({ msg: 'Interval Server Error' })
+            next(err)
         }
     }
 
-    static async login(req, res) {
+    static async login(req, res, next) {
         try {
             const { email, password } = req.body
             const found = await User.findOne({ where: { email } })
@@ -30,18 +29,17 @@ class Controller {
                         else res.status(200).json(data)
                     })
                 } else {
-                    res.status(401).json({ msg: 'Email / Password Salah' })
+                    throw { message : 'Email / Password Salah', statusCode : 401 }
                 }
             } else {
-                res.status(401).json({ msg: 'Email / Password Salah' })
+                throw { message : 'Email / Password Salah', statusCode : 401 }
             }
         } catch (err) {
-            res.status(500).json({ msg: 'Interval Server Error' })
+            next(err)
         }
     }
 
     static async googleLogin(req, res) {
-        console.log(req.headers)
         try {
             const client = new OAuth2Client(process.env.CLIENT_ID);
             const { id_token } = req.headers
@@ -79,7 +77,7 @@ class Controller {
                 await User.create(userCred)
             }
         } catch(err) {
-            console.log(err)
+            next(err)
         }
     }
 }

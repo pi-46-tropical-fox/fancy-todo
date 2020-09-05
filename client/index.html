@@ -74,7 +74,7 @@
         <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Movie Recommendation</a>
+                    <a class="nav-link" href="#" id="movie-list">Movie Recommendation</a>
                 </li>
             </ul>
         </div>
@@ -82,7 +82,7 @@
         <div class="mx-auto order-0">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#" style="font-size: 20px;">Beranda</a>
+                    <a class="nav-link" href="#" style="font-size: 20px;" id="home">Beranda</a>
                 </li>
             </ul>
         </div>
@@ -105,6 +105,7 @@
     <div id="edit-card" style="display: flex;justify-content: center;">
         <div style="padding: 2em;background-color: #f2f0f0;border-radius: 1em;margin-top: 2em;">
             <form id="editTodos">
+                <div id="error-edit" style="color: red;font-size: 15px;line-height: 2px;"></div>
                 <div class="form-group">
                     <input type="text" class="form-control" id="title-edit" placeholder="What Do You Want To Do?">
                 </div>
@@ -126,11 +127,16 @@
         </div>
     </div>
 
+    <!-- Movies Card -->
+
+    <div id="movie-card" class="d-flex flex-wrap" style="justify-content: center;">
+    </div>
+
     <!-- Card Todos -->
     <div id="todo-card" style="display: flex;justify-content: center;">
-        <div id="error-list"></div>
         <div id="todo-list">
             <div style="padding: 2em;background-color: #f2f0f0;border-radius: 1em;margin-top: 2em;">
+                <div id="error-list" style="color: red;font-size: 15px;line-height: 2px;"></div>
                 <form id="addTodos">
                     <div class="form-group">
                         <input type="text" class="form-control" id="title" placeholder="What Do You Want To Do?">

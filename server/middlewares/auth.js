@@ -11,30 +11,33 @@ const authentication = async (req, res, next) => {
                 email : userData.email
             }
         })
-        console.log(userData);
 
         if(findUser) {
             req.userData = userData
             next()
         } else {
-            throw { msg : 'User Not Authenticated'}
+            throw { message : 'User Not Authenticated', statusCode : 401}
         }
     } catch(err) {
-        res.status(401).json({msg : 'User Not Authenticated'})
+        next(err)
     }
-}
+} 
 
 const authorization = async (req, res, next) => {
     try {
         const TodoFound = await Todo.findByPk(req.params.id)
 
-        if(TodoFound.UserId == req.userData.id) {
-            next()
+        if(TodoFound === null) {
+            throw { message : '404 Not Found', statusCode : 404 }
         } else {
-            res.status(403).json({msg : 'Forbidden Access'})    
-        }
+            if(TodoFound.UserId == req.userData.id) {
+                next()
+            } else {
+                throw { message : 'Forbidden Access', statusCode : 403 }
+            }
+        } 
     } catch (err) {
-        res.status(403).json({msg : 'Forbidden Access'})
+        next(err)
     }
 }
 

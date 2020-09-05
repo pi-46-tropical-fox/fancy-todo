@@ -1,7 +1,7 @@
 const axios = require('axios')
 
 class Controller {
-    static async getTrending(req, res) {
+    static async getTrending(req, res, next) {
         try {
             const response = await axios.get('https://api.themoviedb.org/3/movie/popular', {
                 params : {
@@ -13,7 +13,7 @@ class Controller {
 
             res.status(200).json(response.data.results)
         } catch(err) {
-            res.status(500).json('Interval Server Error')
+            next(err)
         }
     }
 }

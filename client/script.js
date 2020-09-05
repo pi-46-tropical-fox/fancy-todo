@@ -87,7 +87,8 @@ const loginPost = (event) => {
             afterLogin()
         })
         .fail(err => {
-            console.log(err.responseJSON.msg)
+            // console.log(err.responseJSON.msg)
+            console.log(err)
         })
 }
 
@@ -117,7 +118,7 @@ const postTodo = (event) => {
             afterLogin()
         })
         .fail(err => {
-            err.responseJSON.forEach(el => {
+            err.responseJSON.errors.forEach(el => {
                 setTimeout(() => {
                     $('#error-list').append(`
                 <p>${el}</p
@@ -146,7 +147,7 @@ const registerPost = (event) => {
             beforeLogin()
         })
         .fail(err => {
-            console.log(err.responseJSON.msg)
+            console.log(err)
         })
 }
 
@@ -227,7 +228,13 @@ const submitEdit = (event) => {
             afterLogin()
         })
         .fail(err => {
-            console.log(err)
+            err.responseJSON.errors.forEach(el => {
+                setTimeout(() => {
+                    $('#error-edit').append(`
+                <p>${el}</p
+                `)
+                }, 1000)
+            })
         })
 }
 
@@ -240,9 +247,40 @@ function onSignIn(googleUser) {
         headers: {id_token}
     })
     .done(res => {
-        console.log(res);
         localStorage.setItem('access_token', res.access_token)
         afterLogin()
+    })
+    .fail(err => {
+        console.log(err)
+    })
+}
+
+const getPopularMovie = (event) => {
+    event.preventDefault()
+    $('#movie-card').empty()
+    $('#todo-card').hide()
+    $('#todos-card').hide()
+    $('#edit-card').hide()
+
+    $.ajax({
+        method: 'GET',
+        url : 'http://localhost:3000/movies',
+        headers : {
+            access_token : localStorage.getItem('access_token')
+        }
+    })
+    .done(res => {
+        res.forEach(data => {
+            $('#movie-card').append(`
+            <div class="card" style="width: 18rem;margin:0.4em;">
+                <img class="card-img-top" src="https://image.tmdb.org/t/p/w500/${data.poster_path}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">${data.title}</h5>
+                    <p class="card-text" style="white-space:nowrap;overflow:hidden">${data.overview}</p>
+                </div>
+            </div>
+            `)
+        })
     })
     .fail(err => {
         console.log(err)
@@ -259,6 +297,7 @@ $(document).ready(() => {
     $('#sign-up').click(showRegisterForm)
     $('#log-in').click(showLoginForm)
     $('#logout').click(logout)
+    $('#movie-list').click(getPopularMovie)
 
     $('#formLogin').submit(loginPost)
     $('#formRegister').submit(registerPost)

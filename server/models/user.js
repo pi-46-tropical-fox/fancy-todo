@@ -20,13 +20,18 @@ module.exports = (sequelize, DataTypes) => {
       type : DataTypes.STRING,
       validate : {
         isEmail : true,
-        notEmpty: true
-      }
+        notEmpty: true,
+      },
+      unique : true
     },
     password: {
       type : DataTypes.STRING,
       validate : {
-        notEmpty : true
+        notEmpty : {
+          args : true,
+          msg : 'Password Tidak Boleh Kosong'
+        },
+        min: 6
       }
     }
   }, {
