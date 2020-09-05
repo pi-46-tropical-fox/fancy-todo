@@ -5,6 +5,8 @@ function home (event) {
     $('#todo-list').hide();
     $('#todo-add').hide();
     $('#logout-page').hide();
+    $('#publicHoliday_list').hide();
+    $('#longWeekend_list').hide();
 }
 
 function login (event) {
@@ -15,6 +17,8 @@ function login (event) {
     $('#todo-list').hide();
     $('#todo-add').hide();
     $('#logout-page').hide();
+    $('#publicHoliday_list').hide();
+    $('#longWeekend_list').hide();
 }
 
 function logout (event) {
@@ -24,6 +28,8 @@ function logout (event) {
     $('#todo-list').hide();
     $('#todo-add').hide();
     $('#logout-page').show();
+    $('#publicHoliday_list').hide();
+    $('#longWeekend_list').hide();
     beforeLogin ()
     localStorage.clear ()
     localStorage.removeItem ('token')
@@ -37,6 +43,8 @@ function register (event) {
     $('#todo-list').hide();
     $('#todo-add').hide();
     $('#logout-page').hide();
+    $('#publicHoliday_list').hide();
+    $('#longWeekend_list').hide();
 }
 
 function todoList (event) {
@@ -47,6 +55,8 @@ function todoList (event) {
     $('#todo-add').hide();
     $('#logout-page').hide();
     $('#todo-task').empty()
+    $('#publicHoliday_list').hide();
+    $('#longWeekend_list').hide();
 
     $.ajax ({
         method : "GET",
@@ -85,10 +95,15 @@ function todoAdd (event) {
     $('#todo-list').hide();
     $('#todo-add').show();
     $('#logout-page').hide();
+    $('#publicHoliday_list').hide();
+    $('#longWeekend_list').hide();
+
 }
 
 function beforeLogin () {
     $('#nav-home').show ()
+    $('#nav-calendar').show ()
+    $('#nav-long-weekends').show ()
     $('#nav-login').show ()
     $('#nav-register').show ()
     $('#nav-todo').hide ()
@@ -98,6 +113,8 @@ function beforeLogin () {
 
 function afterLogin () {
     $('#nav-home').show ()
+    $('#nav-calendar').show ()
+    $('#nav-long-weekends').show ()
     $('#nav-login').hide ()
     $('#nav-register').hide ()
     $('#nav-todo').show ()
@@ -244,6 +261,81 @@ function addTask (event) {
 
 }
 
+function publicHoliday_list (event) {
+    $('#home').hide();
+    $('#form-login').hide();
+    $('#form-register').hide();
+    $('#todo-list').hide();
+    $('#todo-add').hide();
+    $('#logout-page').hide();
+    $('#publicHoliday_list').show();
+    $('#longWeekend_list').hide();
+
+    $.ajax ({
+        method : "GET",
+        url : "http://localhost:3000/calendars/holidays2020",
+        
+    })
+        .done ((res) => {
+            // console.log (res)
+            res.forEach (el =>{
+                $("#publicHoliday").append (`
+                <div class="col-3">
+          <div class="card">
+            <img src="./assets/img/holiday_2.svg" class="card-img-top" alt="Public Holiday>
+            <div class="card-body">
+              <h5 class="card-title">Hari : ${el.localName}</h5>
+              <p class="card-text">Tanggal: ${el.date}</p>
+            </div>
+          </div>
+          <br><br>           
+              `)
+            })
+            
+        })
+        .fail ((err) => {
+            console.log (err)
+        })
+}
+
+function longWeekend_list (event) {
+    $('#home').hide();
+    $('#form-login').hide();
+    $('#form-register').hide();
+    $('#todo-list').hide();
+    $('#todo-add').hide();
+    $('#logout-page').hide();
+    $('#publicHoliday_list').hide();
+    $('#longWeekend_list').show();
+
+    $.ajax ({
+        method : "GET",
+        url : "http://localhost:3000/calendars/longweekends2020",
+        
+    })
+        .done ((res) => {
+            // console.log (res)
+            res.forEach (el =>{
+                $("#longWeekend").append (`
+                <div class="col-3">
+          <div class="card">
+            <img src="./assets/img/holiday_1.svg" class="card-img-top" alt="Long Weekend>
+            <div class="card-body">
+              <p class="card-text">Tanggal Mulai: ${el.startDate}</p>
+              <p class="card-text">Tanggal Akhir: ${el.endDate}</p>
+              <p class="card-text">Jumlah Hari: ${el.dayCount}</p>
+            </div>
+          </div>
+          <br><br>           
+              `)
+            })
+            
+        })
+        .fail ((err) => {
+            console.log (err)
+        })
+}
+
 
 
 $(document).ready(() => {
@@ -261,6 +353,8 @@ $(document).ready(() => {
     // home ()
 
     $('#nav-home').click (home)
+    $('#nav-calendar').click (publicHoliday_list)
+    $('#nav-long-weekends').click (longWeekend_list)
     $('#nav-login').click (login)
     $('#nav-register').click (register)
     $('#nav-todo').click (todoList)
