@@ -32,8 +32,8 @@ class UserController {
                 const isValid = validateUser(password, user.password)
 
                 if (isValid) {
-                    const token = generateToken(user)
-                    return res.status(200).json({token})
+                    const access_token = generateToken(user)
+                    return res.status(200).json({access_token})
                 } else {
                     throw { message : "Invalid username or password" , statusCode : 400}
                 }
@@ -74,8 +74,8 @@ class UserController {
             }
         })
         .then ( user => {
-            const token = generateToken(user)
-            return res.status(200).json({token})
+            const access_token = generateToken(user)
+            return res.status(200).json({access_token})
         })
         .catch( err => {
             console.log(err)

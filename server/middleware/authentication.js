@@ -5,7 +5,7 @@ function authentication (req, res, next) {
     console.log(req.headers)
     
 
-    const payload = verifyToken(req.headers.token)
+    const payload = verifyToken(req.headers.access_token)
     console.log(payload)
     User.findByPk(payload.id)
         .then( user => {

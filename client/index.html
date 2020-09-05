@@ -20,54 +20,71 @@
     <section class="Home mt-5">
       <div class="container" id="home">
         <div class="jumbotron info">
-          <h1 class="display-4">Fancy Todo</h1>
-          <p class="lead">Manage your activity.</p>
-          <hr class="my-4">
-          <p>Please login first.</p>
-          <a class="btn btn-primary btn-lg" href="#" role="button" id="loginButton">Login</a>
-          <p class="mt-3">Don't have account? <a href="#" class="registerClick">Register</a></p>
-          <p>Or Login with your google account</p>
-          <div class="g-signin2" data-onsuccess="onSignIn"></div>
-          <a href="#" onclick="signOut();">Sign out</a>
+          <div class="row justify-content-center">
+            <h1 class="display-4">Fancy Todo</h1>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-md-5">
+              <p class="lead">Manage your daily activity.</p>
+              <hr class="my-4">
+              <form class="bg-light p-5" method="post" action="#" id="loginForm">
+                <div class="form-group">
+                  <label for="email">Email address</label>
+                  <input type="email" name= "email" class="form-control" id="email" aria-describedby="emailHelp">
+                  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                </div>
+                <div class="form-group">
+                  <label for="password">Password</label>
+                  <input type="password" name = "password" class="form-control" id="password">
+                </div>
+                <button type="submit" class="btn btn-primary" id="submitLogin">Login</button>
+                <div class="mt-3">
+                  <p>Don't have account? <a href="#" id="registerButton">Register</a></p>
+                </div>
+                <p>Or Login with your google account</p>
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                <a href="#" onclick="signOut();">Sign out</a>
+              </form>
+          </div>
+          <div class="col-md-5 mt-5" >
+            <!-- <div class="card text-center">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">This card has a regular title and short paragraphy of text below it.</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+              </div>
+            </div> -->
+            <div class="card text-white bg-success mb-3" style="max-width: 540px;">
+              <div class="row no-gutters">
+                <div class="col-md-4 mt-4">
+                  <img src="https://cdn2.iconfinder.com/data/icons/business-filled-outline-style-1-set-1/256/27-512.png" class="card-img" alt="...">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">Quote of the day</h5>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <p class="card-text"><small class="text-dark">Last updated 3 mins ago</small></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Login Form -->
-    <section class= "login mt-5">
-      <div class="container bg-light" id="loginForm">
-        <div>
-          <h1 class="pt-5 text-center">Login Form</h1>
-        </div>
-        <form class="bg-light p-5" method="post" action="#">
-          <div class="form-group">
-            <label for="email">Email address</label>
-            <input type="email" name= "email" class="form-control" id="email" aria-describedby="emailHelp">
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-          </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" name = "password" class="form-control" id="password">
-          </div>
-          <button type="submit" class="btn btn-primary" id="submitLogin">Submit</button>
-          <div class="mt-3">
-            <p>Don't have account? <a href="#" class="registerClick">Register</a></p>
-          </div>
-          
-        </form>
-      </div>
-    </section>
-
+    
     <!-- register Form -->
     <section class= "register mt-5">
-      <div class="container bg-light" id="registerForm">
+      <div class="container bg-light" id="register">
         <div>
           <h1 class="pt-5 text-center">Register Form</h1>
         </div>
-        <form class="bg-light p-5" method="post" action="#">
+        <form class="bg-light p-5" method="post" action="#" id="registerForm">
           <div class="form-group">
             <label for="registerName">Name</label>
-            <input type="password" name="username" class="form-control" id="registerName">
+            <input type="text" name="username" class="form-control" id="registerName">
           </div>
           <div class="form-group">
             <label for="registerEmail">Email address</label>
@@ -80,7 +97,7 @@
           </div>
           <button type="submit" class="btn btn-primary" id="submitRegister">Submit</button>
           <div class="mt-3">
-            <p>Already have account? <a href="#" id="loginButton2">Login</a></p>
+            <p>Already have account? <a href="#" id="loginButton">Login</a></p>
           </div>
 
         </form>
@@ -91,85 +108,97 @@
 
     <section class="main">
       <div class="container bg-light mt-5 mb-5 p-5" id="main">
-        <div class="row justify-content-center mb-5">
+        <div class="row justify-content-center">
           <h1>Fancy Todo</h1>
         </div>
+        <div class="row justify-content-center mb-3" id="logedEmail">
+          <!-- <p class="card-text">Welcome  <a href="#" id="logoutButton">Logout</a></p> -->
+        </div>
         <div class="row justify-content-center">
-          <div class="col-md-5">
-            <div class="loginInfo">
-              <div class="card w-75">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                  <a href="#" class="btn btn-primary" id="logoutButton">Logout</a>
-                </div>
-              </div>
-            </div>
-            <div class="todoList mt-5">
-              <div class="card w-75">
-                <div class="card-body">
-                  <h5 class="card-title" name="title">title</h5>
-                  <p class="card-text" name="description">description.</p>
-                  <a href="#" class="btn btn-primary" id="editButton">Edit</a>
-                  <a href="#" class="btn btn-primary" id="deleteButton">Delete</a>
-                </div>
-              </div>
-            </div>
+          <p><a href="#" id="logoutButton">Logout</a></p>
+        </div>
+        <div class="row">
+          <div class="mt-3 mb-3">
+            <a class="btn btn-primary btn-lg" href="#" role="button" id="addButton">Add Todo</a>
           </div>
-          <div class="col-md-5">
-            <div class="addForm">
-              <div>
-                <h3 class="text-center">Add Activity</h3>
-              </div>
-              <form class="bg-light p-5">
-                <div class="form-group" method="post" action="#"> 
-                  <label for="title">Title</label>
-                  <input type="password" name="title "class="form-control" id="title">
-                </div>
-                <div class="form-group">
-                  <label for="description">Description</label>
-                  <input type="email" name="description" class="form-control" id="description">
-                </div>
-                <div class="form-group">
-                  <label for="due_date">Due_date</label>
-                  <input type="date" name="due_date" class="form-control" id="due_date">
-                </div>
-                <button type="submit" class="btn btn-primary" id="addButton">Add</button>
-      
-              </form>
-            </div>            
-          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">No</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Due Date</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody id="todos">
+              <!-- <tr > -->
+                <!-- <th scope="row">1</th>
+                <td>title</td>
+                <td>description</td>
+                <td>due_date</td>
+                <td>status</td>
+                <td>action</td> -->
+              <!-- </tr> -->
+            </tbody>
+              
+          </table>    
         </div>
       </div>
     </section>
 
+    <!-- edit Form -->
     <section class="editForm">
-      <div class="container bg-light mt-5 mb-5 p-5" id="editForm">
+      <div class="container bg-light mt-5 mb-5 p-5" id="edit">
         <div>
           <h1 class="text-center">Edit Activity</h1>
         </div>
-        <form class="bg-light p-5" method="post" action="#"> 
+        <form class="bg-light p-5" method="post" action="#" id="editForm"> 
           <div class="form-group">
             <label for="title">Title</label>
-            <input type="password" name="title "class="form-control" id="title">
+            <input type="text" name="title "class="form-control" id="editTitle">
           </div>
           <div class="form-group">
             <label for="description">Description</label>
-            <input type="email" name="description" class="form-control" id="description">
+            <input type="text" name="description" class="form-control" id="editDescription">
+          </div>
+          <div class="form-group">
+            <label for="due_date">Due_date</label>
+            <input type="date" name="due_date" class="form-control" id="editDue_date">
+          </div>
+          <div class="form-group">
+            <label for="status">Status</label>
+            <select class="form-control" id="editStatus">
+              <option name="false">False</option>
+              <option name="true">True</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary" >Edit</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- add Form -->
+    <section class="addForm">
+      <div class="container bg-light mt-5 mb-5 p-5" id="add">        
+        <div>
+          <h3 class="text-center">Add Todo</h3>
+        </div>
+        <form class="bg-light p-5" id="addForm">
+          <div class="form-group" method="post" action="#"> 
+            <label for="title">Title</label>
+            <input type="text" name="title "class="form-control" id="title">
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" name="description" class="form-control" id="description">
           </div>
           <div class="form-group">
             <label for="due_date">Due_date</label>
             <input type="date" name="due_date" class="form-control" id="due_date">
           </div>
-          <div class="form-group">
-            <label for="status">Status</label>
-            <select id="status" class="form-control">
-              <option>Choose...</option>
-              <option name="true">Done</option>
-              <option name="false">On Progress</option>
-            </select>
-          </div>
-          <button type="submit" class="btn btn-primary" id="editSubmit">Edit</button>
+          <button type="submit" class="btn btn-primary" >Add</button>
         </form>
       </div>
     </section>
