@@ -1,4 +1,5 @@
 function loginMenu(event) {
+  $("#quotes-day").hide();
   $("#form-login").show();
   $("#form-register").hide();
   $("#form-add-todo").hide();
@@ -8,6 +9,7 @@ function loginMenu(event) {
 }
 
 function registerMenu(event) {
+  $("#quotes-day").hide();
   $("#form-login").hide();
   $("#form-register").show();
   $("#form-add-todo").hide();
@@ -17,6 +19,7 @@ function registerMenu(event) {
 }
 
 function addMenu(event) {
+  $("#quotes-day").hide();
   $("#form-login").hide();
   $("#form-register").hide();
   $("#form-add-todo").show();
@@ -53,7 +56,8 @@ function editMenu(event) {
     .fail((err) => {
       console.log(err);
     })
-
+  
+  $("#quotes-day").hide();
   $("#form-login").hide();
   $("#form-register").hide();
   $("#form-add-todo").hide();
@@ -70,8 +74,11 @@ function listMenu(event) {
   $("#todo-list").show();
   $("#form-todo-list").hide();
   $("#form-edit-todo").hide();
+  $("#quotes-day").hide();
   
   $("#your-todo").empty();
+
+  getQuotes();
 
   $.ajax({
     method: "GET",
@@ -112,6 +119,7 @@ function logoutMenu(event) {
   $("#todo-list").hide();
   $("#form-todo-list").hide();
   $("#form-edit-todo").hide();
+  $("#quotes-day").hide();
   localStorage.clear();
   signOut();
   beforeLogin();
@@ -124,12 +132,14 @@ function initContent(event) {
   $("#todo-list").hide();
   $("#form-todo-list").hide();
   $("#form-edit-todo").hide();
+  $("#quotes-day").hide();
 
   $("#weather-forecast").empty();
   getWeather();
 }
 
 function beforeLogin() {
+  $("#errorAlert").hide();
   $("#error-edit").hide();
   $("#error-login").hide();
   $("#error-register").hide();
@@ -141,9 +151,11 @@ function beforeLogin() {
   $("#nav-logout").hide();
   $("#email-user").text("");
   $("#google-photo").empty();
+  $("#quotes-day").hide();
 }
 
 function afterLogin() {
+  $("#errorAlert").hide();
   $("#error-edit").hide();
   $("#error-login").hide();
   $("#error-register").hide();
@@ -153,6 +165,7 @@ function afterLogin() {
   $("#nav-home").show();
   $("#nav-add").show();
   $("#nav-logout").show();
+  $("#quotes-day").hide();
 }
 
 function loginForm(event) {
@@ -250,12 +263,7 @@ function onSignIn(googleUser) {
     })
     .fail((err) => {
       console.log(err, "<<<< error in onSignIn");
-      $("#errorAlert").show();
-      err.responseJSON.errors.forEach((error) => {
-        $("#errorAlert").append(`
-        <p>${error}</p>
-        `);
-      });
+      
     })
 }
 
@@ -274,6 +282,7 @@ function getWeather() {
   })
     .done((response) => {
       console.log(response);
+      $("#weather-forecast").empty();
       $("#weather-forecast").append(`
         <h5 class="card-title"><span><img src="${response.current.weather_icons[0]}" alt="weather-icon" class="rounded-circle" width="35rem" /></span>  Today's Weather</h5>
         <h6 class="card-text">${response.location.localtime}<h6>
@@ -283,12 +292,7 @@ function getWeather() {
     })
     .fail((err) => {
       console.log(err, "<<<< error in getWeather");
-      $("#errorAlert").show();
-      err.responseJSON.errors.forEach((error) => {
-        $("#errorAlert").append(`
-        <p>${error}</p>
-        `);
-      });
+      
     })
 }
 
@@ -391,16 +395,28 @@ function deleteTodo(event) {
     })
     .fail((err) => {
       console.log(err, "<<<< error in deleteTodo");
-      $("#errorAlert").show();
-      err.responseJSON.errors.forEach((error) => {
-        $("#errorAlert").append(`
-        <p>${error}</p>
-        `);
-      });
+      
     })
 }
 
-
+function getQuotes(event) {
+  $.ajax({
+    method: "GET",
+    url: "http://localhost:3000/thirdparty/quotes",
+  })
+    .done((response) => {
+      console.log(response);
+      $("#quotes-day").empty();
+      $("#quotes-day").show();
+      $("#quotes-day").append(`
+        <p class="mx-auto"><em>"${response.quote.body}"<em><strong>  -${response.quote.author} <strong></p>
+      `);
+    })
+    .fail((err) => {
+      console.log(err, "<<<< error in getQuotes");
+      
+    })
+}
 
 $(document).ready(() => {
   initContent();

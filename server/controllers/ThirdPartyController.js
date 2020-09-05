@@ -13,6 +13,17 @@ class ThirdPartyController {
     }
   }
 
+  static async getQuotes(req, res, next) {
+    const url = `https://favqs.com/api/qotd`;
+    try {
+      const quotes = await axios.get(url);
+      return res.status(200).json(quotes.data);
+    } catch (err) {
+      console.log("<<<< error in getQuotes ThirdPartyController");
+      return next(err);
+    }
+  }
+
 }
 
 module.exports = ThirdPartyController;

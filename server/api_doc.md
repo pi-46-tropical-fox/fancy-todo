@@ -482,6 +482,8 @@ _Response(500 - Internal Server Error)_
   ]  
 }
 ```
+
+#### _for more information about google oAuth please visit https://developers.google.com/gdata/docs/auth/overview_
 ---
 ### GET /thirdparty/weather
 
@@ -550,6 +552,55 @@ _Response (500 - Internal Server Error)_
   ]  
 }
 ```
+
+#### _for more information regarding error messages please visit https://weatherstack.com/documentation#api_error_codes_
+---
+### GET /thirdparty/quotes
+
+> Get motivational quotes of the day
+
+_Request Header_
+```
+not needed
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200 - OK)_
+```
+{
+  "qotd_date": "2020-09-06T00:00:00.000+00:00",
+  "quote": {
+    "id": 62443,
+    "dialogue": false,
+    "source": "A Feast for Crows",
+    "context": "Victarion Greyjoy, the Iron Captain",
+    "private": false,
+    "tags": [],
+    "url": "https://favqs.com/quotes/george-r-r-martin/62443-every-man-sho-",
+    "favorites_count": 1,
+    "upvotes_count": 0,
+    "downvotes_count": 0,
+    "author": "George R.R. Martin",
+    "author_permalink": "george-r-r-martin",
+    "body": "Every man should lose a battle in his youth, so he does not lose a war when he is old."
+  }
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "errors": [
+    "<some messages regarding server error>"
+  ]  
+}
+```
+
+#### _for more information regarding error messages please visit https://favqs.com/api#collapseErrorCodes_
 ---
 ### References
 - https://gist.github.com/iros/3426278#file-example-md
