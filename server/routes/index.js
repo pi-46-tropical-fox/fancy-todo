@@ -9,6 +9,6 @@ const authentication = require('../middleware/authentication')
 // })
 
 router.use('/', UserRoute)
-router.use('/todos', authentication, authorization, TodoRoute)
+router.use('/todos', authorization, TodoRoute)
 
 module.exports = router

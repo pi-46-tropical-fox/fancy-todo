@@ -1,29 +1,33 @@
-# fancy-todo
-Membuat sebuah website untuk me-manage hal - hal menarik untuk dilakukan
+Fancy Todo is an application to manage your todo list. 
 
-# My todos App Server
-My todos App is an application to manage your todos. This app has : 
-* RESTful endpoint for asset's CRUD operation
+This app is created using :
+* REST API
+* ExpressJS
+* Postgres
+* Sequelize
+
+This app has :
+* RESTful endpoint for todo's CRUD operation
 * JSON formatted response
+* detectlanguage API
 
-&nbsp;
 
-## Endpoints
-```
-- GET /todos
-- POST /todos
-- GET /todos/:id
-- PUT /todos/:id
-- PATCH /todos/:id
-- DELETE /todos:id
-- POST /register
-- POST /login
-```
+## REST Endpoints Table:
 
-## RESTful endpoints
+Route | Method | Request(s) | Response(s) | Description
+---|---|---|---|---
+`/todos` | GET | **Headers**<br>token: `String`<br>**Body**<br> not needed | **Success**<br>`200` All todos displayed<br>**Fail**<br>`500` Internal Server Error | Get all todos
+`/todos` | POST | **Headers**<br>token: `String`<br>**Body**<br>title: `String`<br>description: `String`<br>status: `Boolean`<br>dueDate: `Date` | **Success**<br>`201` New todo created<br>**Fail**<br>`400` Validation error messages<br>`500` Internal Server Error | Create a todo
+`/todos/:id` | GET | **Headers**<br>token:`String`<br>**Body**<br> not needed  | **Success**<br>`200` Todo displayed<br>**Fail**<br>`404` Todo not found<br>`500` Internal Server Error | Get one todo
+`/todos/:id` | PUT | **Headers**<br>token: `String`<br>**Body**<br>title: `String`<br>description: `String`<br>status: `Boolean`<br>dueDate: `Date` | **Success**<br>`200` Edited todo displayed<br>**Fail**<br>`404` Todo not found<br>`400` Validation error messages<br>`500` Internal Server Error | Update one todo
+`/todos/:id` | DELETE | **Headers**<br>token:`String`<br>**Body**<br> not needed  | **Success**<br>`200` Deleted todo displayed<br>**Fail**<br>`404` Todo not found<br>`500` Internal Server Error | Delete a todo
+`/register` | POST | **Body**<br>email: `String`<br>password: `String`<br>username: `String` | **Success**<br>`201` New user created<br>**Fail**<br>`400` Validation error messages<br>`500` Internal Server Error | Register user
+`/login` | POST | **Body**<br>email: `String`<br>password: `String` | **Success**<br>`200` Get token for user<br>**Fail**<br>`401` Validation error messages<br>`500` Internal Server Error | Login user
+
+
 ### GET /todos
+> Get all Todos
 
-> Get all todos
 _Request Header_
 ```
 {
@@ -36,37 +40,35 @@ _Request Body_
 not needed
 ```
 
-_Response (200)_
-```
-[
-  {
-    "id": 1,
-    "name": "Adiet Alimudin",
-    "description": "Membuat todos",
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
-  },
-  {
-    "id": 2,
-    "name": "Lorem ipsum",
-    "description": "mittagsessen"
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
-  }
-]
-```
-
-_Response (400 - Bad Request)_
+_Response (200 - OK)_
 ```
 {
-  "message": "Invalid request"
+    "todos": [
+        {
+            "id": 1,
+            "title": "Belajar Rest API",
+            "description": "Materi baru REST API",
+            "status": false,
+            "due_date": "2020-09-30T00:00:00.000Z",
+            "createdAt": "2020-09-30T11:04:24.354Z",
+            "updatedAt": "2020-09-30T11:04:24.354Z"
+        },
+        {
+            "id": 2,
+            "title": "Makan siang",
+            "description": "Makan siang jam 13.00",
+            "status": false,
+            "due_date": "2020-09-30T00:00:00.000Z",
+            "createdAt": "2020-09-30T11:04:55.855Z",
+            "updatedAt": "2020-09-30T11:04:55.855Z"
+        }
+    ]
 }
 ```
 
----
 ### POST /todos
+> Create a Todo
 
-> Create new asset
 _Request Header_
 ```
 {
@@ -77,157 +79,226 @@ _Request Header_
 _Request Body_
 ```
 {
-  "title": "<name to get insert into>",
-  "description": "<description to get insert into>"
-  "status": "<status to get insert into>",
-  "due_date": "<due_date to get insert into>"
+  "title": "Todo Title",
+  "description": "Todo Description",
+  "status": "true/false",
+  "due_date": "2020-09-05",
 }
 ```
 
-_Response (201 - Created)_
+_Response (201 - CREATED)_
 ```
 {
-  "id": <given id by system>,
-  "title": "<posted title>",
-  "description": "<posted description>",
-  "status": "<posted status>",
-  "due_date": "<posted due_date>",
-  "createdAt": "2020-03-20T07:15:12.149Z",
-  "updatedAt": "2020-03-20T07:15:12.149Z",
-}
-```
-
-_Response (400 - Bad Request)_
-```
-{
-  "message": "Invalid requests"
-}
-```
-
----
-### GET /todos/:id
-
-> Get todos by Id
-_Request Header_
-```
-not needed
-```
-_Request Body_
-```
-not needed
-```
-
-_Response (200)_
-```
-[
-  {
-        "id": <todos id>,
-        "title": "<todos title>",
-        "description": "<todos description>",
-        "status": "<todos status>",
-        "due_date": "<todos due_date>",
-        "createdAt": "2020-04-27T13:15:33.821Z",
-        "updatedAt": "2020-04-27T13:39:19.162Z"
+    "todo": {
+        "id": 2,
+        "title": "Makan siang",
+        "description": "Makan siang di warteg",
+        "status": false,
+        "due_date": "2020-09-30T00:00:00.000Z",
+        "updatedAt": "2020-09-30T11:04:55.855Z",
+        "createdAt": "2020-09-30T11:04:55.855Z"
     }
-]
-```
-
-_Response (404 - Error Not Found)_
-```
-{
-  "message": "<returned error message>"
 }
 ```
 
----
+_Response (400 - BAD REQUEST)_
+```
+{
+    "message": "Title cannot be empty"
+}
+```
+
+### GET /todos/:id
+> Get one Todo
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200 - OK)_
+```
+{
+    "todo": {
+        "id": 2,
+        "title": "Makan siang",
+        "description": "Makan siang jam 13.00",
+        "status": false,
+        "due_date": "2020-09-30T00:00:00.000Z",
+        "createdAt": "2020-09-30T11:04:55.855Z",
+        "updatedAt": "2020-09-30T11:04:55.855Z"
+    }
+}
+```
+
+_Response (404 - NOT FOUND)_
+```
+{
+    "message": "To Do not found"
+}
+```
+
 ### PUT /todos/:id
+> Update one Todo
 
-> Update todos by Id
 _Request Header_
 ```
-not needed
+{
+  "access_token": "<your access token>"
+}
 ```
+
 _Request Body_
 ```
 {
-  "title": "<title to get update into>",
-  "description": "<description to get update into>",
-  "status": "<status to get update into>",
-  "due_date": "<due_date to get update into>"
+  "title": "Todo Title",
+  "description": "Todo Description",
+  "status": "true/false",
+  "due_date": "2020-09-30",
 }
 ```
 
-_Response (200)_
+_Response (201 - CREATED)_
 ```
 {
-  "id": <given id by system>,
-  "title": "<todos updated title>",
-  "description": "<todos updated description>",
-  "status": "<todos updated status>",
-  "due_date": "<todos updated due_date>",
-  "createdAt": "2020-04-27T13:15:33.821Z",
-  "updatedAt": "2020-04-27T13:39:19.162Z"
+    "hasil": {
+        "id": 2,
+        "title": "Makan siang",
+        "description": "Makan siang jam 13.00",
+        "status": true,
+        "due_date": "2020-09-30T00:00:00.000Z",
+        "createdAt": "2020-09-30T11:04:55.855Z",
+        "updatedAt": "2020-09-30T11:23:15.249Z"
+    }
 }
 ```
 
-_Response (400 - Validation Error)_
+_Response (400 - BAD REQUEST)_
 ```
 {
-  "validation error": "<returned validation error>"
+    "message": "Title cannot be empty"
 }
 ```
 
-_Response (404 - Error Not Found)_
+_Response (404 - NOT FOUND)_
 ```
 {
-  "message": "<returned error message>"
+    "message": "To Do not found"
 }
 ```
 
-
-_Response (500 - Internal Server Error)_
-```
-{
-  "message": "<returned error message>"
-}
-```
-
----
 ### DELETE /todos/:id
+> Get one Todo
 
-> Delete todos by Id
 _Request Header_
 ```
-not needed
+{
+  "access_token": "<your access token>"
+}
 ```
+
 _Request Body_
 ```
 not needed
 ```
 
-_Response (200)_
+_Response (200 - OK)_
 ```
 {
-  "id": <given id by system>,
-  "title": "<todos deleted title>",
-  "description": "<todos deleted description>",
-  "status": "<todos deleted status>",
-  "due_date": "<todos deleted due_date>",
-  "createdAt": "2020-04-27T13:15:33.821Z",
-  "updatedAt": "2020-04-27T13:39:19.162Z"
+    "todo": {
+        "id": 2,
+        "title": "Makan siang",
+        "description": "Makan siang di warteg",
+        "status": false,
+        "due_date": "2020-09-30T00:00:00.000Z",
+        "createdAt": "2020-09-30T11:04:55.855Z",
+        "updatedAt": "2020-09-30T11:04:55.855Z"
+    }
 }
 ```
 
-_Response (404 - Error Not Found)_
+_Response (404 - NOT FOUND)_
 ```
 {
-  "message": "<returned error message>"
+    "message": "To Do not found"
 }
 ```
 
-_Response (500 - Internal Server Error)_
+### POST /register
+> Register new user
+
+_Request Header_
 ```
 {
-  "message": "<returned error message>"
+  not needed
+}
+```
+
+_Request Body_
+```
+{
+  "email": "johndoe@mail.com",
+  "password": "userpassword",
+  "username": "John Doe"
+}
+```
+
+_Response (201 - CREATED)_
+```
+{
+    "id": 13,
+    "email": "johndoe@mail.com",
+    "password": "$2a$10$sZgmpxQxqU/IUxnXkpZ0H.qLW1LcekI3ZUpBVSMUDLjDlz4Q9OTwS",
+    "username": "John Doe",
+    "updatedAt": "2020-09-04T09:55:16.638Z",
+    "createdAt": "2020-09-04T09:55:16.638Z"
+}
+
+```
+
+_Response (400 - BAD REQUEST)_
+```
+{
+    "message": "Email cannot be empty"
+}
+```
+
+### POST /login
+> User login
+
+_Request Header_
+```
+{
+  not needed
+}
+```
+
+_Request Body_
+```
+{
+  "email": "johndoe@mail.com",
+  "password": "userpassword"
+}
+```
+
+_Response (200 - OK)_
+```
+{
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJhZGlldDMzYWxpbXVkaW5AZ21haWwuY29tIiwiaWF0IjoxNTk5MjU3ODU4fQ.4StXeoLpHd7uZonVcf6ef1LnVXAkpXQH-rzngah2Vg0"
+}
+
+```
+
+_Response (400 - BAD REQUEST)_
+```
+{
+"message": "wrong password"
 }
 ```

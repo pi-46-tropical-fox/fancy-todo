@@ -1,3 +1,4 @@
+require('dotenv').config()
 const { User } = require('../models')
 const { generateToken } = require('../helper/jwt')
 const { comparePassword } = require('../helper/bcrypt')

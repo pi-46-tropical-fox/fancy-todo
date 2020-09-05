@@ -1,22 +1,90 @@
-.nav{
-    position: absolute;
-    right: 0px;
-    font-size: large;
-}
+/* GLOBAL */
+body {
+    background: rgb(248, 248, 248);
+  }
+  *{
+    padding: 0;
+    margin:0;
+  }
 
-#form_registration{
-    border: black;
-    margin-bottom: 20px;
-}
+  button{
+    width: 100px;
+    padding:2px 10px !important;
+  }
+  table{
+    text-align: center;
+  }
+  #table-head{
+    font-size: 0.9em !important;
+  }
+  #table-body{
+    font-size:0.9em !important ;
+  }
+  #addTodo, #edit-form{
+    padding: 10px 20px;
+    background: rgb(196, 196, 196);
+  }
 
-#form_login{
-    margin-bottom: 20px;
-}
+  /* TOGGLE */
+  #title{
+    margin: 20px auto;
+    text-align: center;
+  }
 
-#ftodoList{
-    margin-bottom: 20px;
-}
+  /* LOGIN SECTION */
+  #form_login{
+    background: white;
+    padding: 20px 40px;
+    border-radius: 5px;
+    box-shadow: rgba(128, 128, 128, 0.459) 3px 3px;
+    margin: 20px auto;
+    width: 500px;
+  }
 
-.form-row{
-    margin: 20px;
-}
+  /* REGISTER SECTION */
+  #dataRegister{
+    background: white;
+    padding: 20px 40px;
+    border-radius: 5px;
+    box-shadow: rgba(128, 128, 128, 0.459) 3px 3px;
+    margin: 20px auto;
+    width: 500px;
+  }
+  
+  
+  /* TODO SECTION */
+  #todoList{
+    background: white;
+    padding: 20px 40px;
+    border-radius: 5px;
+    box-shadow: rgba(128, 128, 128, 0.459) 3px 3px;
+    margin: 50px auto;
+    width: 500px;
+  }
+  .todo-section h2{
+    margin: 20px auto;
+    text-align: center;
+  }
+  /* #addTodo{
+    margin:  20px auto;
+  } */
+  #add-form button{
+    margin: 10px auto;
+  }
+  
+  #edit-form{
+    margin:  20px auto;
+  }
+  #edit-form button{
+    margin: 10px auto;
+  }
+  #google{
+    text-align: center;
+    margin: auto;
+    width: 110px;
+  }
+  
+  .checked{
+    background: rgb(129, 129, 129);
+  }
+  

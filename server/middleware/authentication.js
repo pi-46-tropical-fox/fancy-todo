@@ -1,3 +1,4 @@
+require('dotenv').config()
 const { verifyToken } = require('../helper/jwt')
 const { User } = require('../models')
 
