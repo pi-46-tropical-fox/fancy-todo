@@ -184,6 +184,10 @@ function onSignIn(googleUser) {
     .done (res => {
         console.log (res)
         localStorage.setItem ("token", res.token)
+        // localStorage.setItem ("usernameAccount", res.given_name)
+        // console.log (localStorage.token)
+
+        // $("#username_account").text (localStorage.usernameAccount)
         home ()
         afterLogin ()
         home ()
@@ -201,11 +205,51 @@ function signOut() {
     });
 }
 
+function addTask (event) {
+    event.preventDefault ()
+
+    const title = $("#title").val ()
+    const description = $("#description").val ()
+    const status = $("#status").val ()
+    const due_date = $("#due_date").val ()
+
+    $.ajax ({
+        method : "POST",
+        url : "http://localhost:3000/todos",
+        headers : {
+            token : localStorage.getItem ("token")
+        },
+        data : {
+            title,
+            description,
+            status,
+            due_date
+        }
+    })
+
+    .done ((res) => {
+        $("#title").val ()
+        $("#title").val ()
+        $("#title").val ()
+        $("#title").val ()
+
+        todoList ()
+    })
+
+    .fail ((err) => {
+        console.log (err)
+    })
+
+
+
+}
+
 
 
 $(document).ready(() => {
     if (localStorage.getItem ("token")) {
         afterLogin ()
+        // $("#username_account").text (localStorage.username-account)
         home ()
 
     } else {
@@ -224,5 +268,6 @@ $(document).ready(() => {
     $('#nav-logout').click (logout)
     $('#loginForm').submit (loginForm)
     $('#registerForm').submit (registerForm)
+    $("#addTask").submit (addTask)
 
 })
