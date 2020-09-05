@@ -1,9 +1,9 @@
 const projectRoutes = require('express').Router()
 const ProjectController = require('../Controller/ProjectController')
-const { authentication, authorization, createProjectAuthr } = require('../Middlewares/auth')
+const { authentication, createProjectAuthr } = require('../Middlewares/auth')
 
 //Create Project
-projectRoutes.post('/projects', authentication, ProjectController.addProject)
+projectRoutes.post('/projects', authentication, createProjectAuthr, ProjectController.addProject)
 
 //Show All Project
 projectRoutes.get('/projects', authentication, ProjectController.readAllProjects)
@@ -12,9 +12,9 @@ projectRoutes.get('/projects', authentication, ProjectController.readAllProjects
 projectRoutes.get('/projects/:id',  authentication, ProjectController.selectProject)
 
 //Update Project Owned by Authorized Project Manager
-projectRoutes.put('/projects/:id',  authentication, ProjectController.updateProject)
+projectRoutes.put('/projects/:id',  authentication, createProjectAuthr, ProjectController.updateProject)
 
 //Delete Project Owned by Authorized Project Manager
-projectRoutes.delete('/projects/:id', authentication, ProjectController.deleteProject)
+projectRoutes.delete('/projects/:id', authentication, createProjectAuthr, ProjectController.deleteProject)
 
 module.exports = projectRoutes

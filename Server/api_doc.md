@@ -1,5 +1,5 @@
 # Fancy Todo App Server
-Fancy Todo adalah aplikasi berbasis port yang bertujuan untuk mempermudah kolaborasi dan komunikasi antar anggota tim. 
+Fancy Todo adalah Single Page Application (SPA) yang bertujuan untuk mempermudah kolaborasi dan komunikasi antar anggota tim. 
 Aplikasi ini memiliki konfigurasi dan fitur sebagai berikut : 
 * RESTful endpoint dengan operasi CRUD.
 * Format respon berupa JSON.
@@ -15,14 +15,27 @@ Constraint Aplikasi:
 
 &nbsp;
 
+## Depedencies
+* axios
+* bcryptjs
+* cors
+* dotenv
+* express
+* google-auth-library
+* jsonwebtoken
+* pg
+* sequelize
+* tailwindcss
+
 ## Endpoints
 * POST /register
 * POST /login
+* POST /googleLogin
 * POST /todos
 * GET /todos
-* GET /todos/:id
-* PUT /todos/:id
-* DELETE /todos/:id
+* GET /todos/:title
+* PUT /todos/:title
+* DELETE /todos/:title
 * POST /projects
 * GET /projects
 * GET /projects/:id
@@ -111,11 +124,49 @@ _Response (400 - Bad request)_
 }
 ```
 
+### POST /googleLogin
+
+> OAuth Login by google
+  - password akan disetup secara default oleh server dan di "hash"menggunakan bcrypjtjs sebelum disimpan dalam database
+  - User yang login dengan google OAuth akan otomatis diassign dengan role "Team Member"
+  - User yang login dengan google tidak dapat membuat project / task
+
+
+_Request Header_
+```json
+{
+  "google_access_token": "<your google access token>"
+}
+```
+
+_Request Body_
+```
+none
+```
+
+_Response (200 - Ok)_
+```json
+{
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ey",
+    "id": 10,
+    "name": "Viona Moudiani",
+    "role": "Team Member"
+}
+```
+
+_Response (400 - Bad request)_
+```json
+{
+  "message": "Bad request"
+}
+```
+
 
 ### POST /todos
 
 > Create a new todo/task
   - Title, description, status dan due date harus diisi
+  - Title sangat disarankan agar 3 kata atau lebih
   - Due date harus setelah 5 September 2020
   - User harus login terlebih dahulu untuk mengakses laman ini
   - UserId dan ProjectId akan otomatis terisi berdasarkan id User dan pada project apa user menambahkan task. Ketika mengakses laman, UserId dan ProjectId akan terekam pada local storage.
@@ -235,7 +286,7 @@ _Response (500 - Internal server error)_
 ```
 
 
-### GET /todos/:id
+### GET /todos/:title
 
 > Get a todo list that owned by certain user
 Desc: 
@@ -256,7 +307,7 @@ no need
 
 _Request Params_
 ```
-todos id
+todos title
 ```
 
 _Response (200 - Ok)_
@@ -296,7 +347,7 @@ _Response (404 - Not Found)_
 ```
 
 
-### PUT /todos/:id
+### PUT /todos/:title
 
 > Update a spesific todo
   - User harus login terlebih dahulu untuk mengakses laman ini
@@ -311,7 +362,7 @@ _Request Header_
 
 _Request Params
 ```
-todos id
+todos title
 ```
 
 _Request Body_
@@ -368,7 +419,7 @@ _Response (500 - Internal server error)_
 ```
 
 
-### Delete /todos/:id
+### Delete /todos/:title
 
 > Delete a todo owned by an authorized User
   - User harus login untuk mengakses laman ini
@@ -384,7 +435,7 @@ _Request Header_
 
 _Request Params
 ```
-todos id
+todos title
 ```
 
 _Request Body_

@@ -510,118 +510,118 @@ function menuEditTask(event) {
 
         $('#editTask').empty()
 
+    //     $('#editTask').append(`
+    //     <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+
+    //     <div class="max-w-md w-full">
+    //           <div>
+    //                <h2 class="mt-6 text-center text-4xl leading-9 font-extrabold text-gray-900">
+    //                   Edit Task
+    //                   </h2>
+    //           </div><br>
+
+    //               <form id="formEditTask" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    //                   <div class="flex flex-wrap -mx-3 mb-6">
+    //                     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+    //                       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+    //                         Task Name
+    //                       </label>
+    //                       <input id="addTaskTitle" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="Task Name">
+    //                       <p class="text-red-500 text-xs italic">Please fill out this field.</p>
+    //                     </div>
+    //                     <div class="w-full md:w-1/2 px-3">
+    //                       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+    //                         Due Date
+    //                       </label>
+    //                       <input id="addTaskDueDate" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="date">
+    //                     </div>
+    //                   </div>
+    //                   <div class="flex flex-wrap -mx-3 mb-6">
+    //                     <div class="w-full px-3">
+    //                       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
+    //                         Description
+    //                       </label>
+    //                       <input id="addTaskDescription" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Description">
+    //                       <p class="text-gray-600 text-xs italic">Elaborate the detail of your task</p>
+    //                     </div>
+    //                   </div>
+
+    //                   <div class="flex items-center justify-between">
+    //                       <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+    //                         Add Task
+    //                       </button>
+    //                   </div>
+    //               </form>
+    //       </div>
+    //   </div>
+    //     `)
+
+
+
+
+
+
+
+
         $('#editTask').append(`
         <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-md w-full">
+                <div>
+                    <h2 class="mt-6 text-center text-4xl leading-9 font-extrabold text-gray-900">
+                        Update a Task
+                        </h2>
+                </div><br>
 
-        <div class="max-w-md w-full">
-              <div>
-                   <h2 class="mt-6 text-center text-4xl leading-9 font-extrabold text-gray-900">
-                      Edit Task
-                      </h2>
-              </div><br>
-
-                  <form id="formEditTask" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                      <div class="flex flex-wrap -mx-3 mb-6">
-                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
-                            Task Name
-                          </label>
-                          <input id="addTaskTitle" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="Task Name">
-                          <p class="text-red-500 text-xs italic">Please fill out this field.</p>
+                    <form id="editTaskForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                        <div class="flex flex-wrap -mx-3 mb-6">
+                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+                                Task Name
+                            </label>
+                            <input id="editTaskTitle" value="${response.title}" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text">
+                            <p class="text-red-500 text-xs italic">Please fill out this field.</p>
+                            </div>
+                            <div class="w-full md:w-1/2 px-3">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                                Due Date
+                            </label>
+                            <input id="editTaskDueDate" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="date">
+                            </div>
                         </div>
-                        <div class="w-full md:w-1/2 px-3">
-                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
-                            Due Date
-                          </label>
-                          <input id="addTaskDueDate" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="date">
+                        <div class="flex flex-wrap -mx-3 mb-6">
+                            <div class="w-full px-3">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
+                                Description
+                            </label>
+                            <input id="editTaskDescription" value="${response.description}" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"type="text">
+                            <p class="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p>
+                            </div>
                         </div>
-                      </div>
-                      <div class="flex flex-wrap -mx-3 mb-6">
-                        <div class="w-full px-3">
-                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
-                            Description
-                          </label>
-                          <input id="addTaskDescription" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Description">
-                          <p class="text-gray-600 text-xs italic">Elaborate the detail of your task</p>
+                        <div class="flex flex-wrap -mx-3 mb-2">
+                            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
+                                Status
+                            </label>
+                            <div class="relative">
+                                <select id="editTaskStatus" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                <option value="false">Active</option>
+                                <option value="true">Completed</option>
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                                </div>
+                            </div>
+                            </div>
+                        </div><br>
+                        <div class="flex items-center justify-between">
+                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                              Update
+                            </button>
                         </div>
-                      </div>
-
-                      <div class="flex items-center justify-between">
-                          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                            Add Task
-                          </button>
-                      </div>
-                  </form>
-          </div>
-      </div>
+                    </form>
+            </div>
+        </div>
         `)
-
-
-
-
-
-
-
-
-        // $('#editTask').append(`
-        // <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-        //     <div class="max-w-md w-full">
-        //         <div>
-        //             <h2 class="mt-6 text-center text-4xl leading-9 font-extrabold text-gray-900">
-        //                 Update a Task
-        //                 </h2>
-        //         </div><br>
-
-        //             <form id="editTaskForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        //                 <div class="flex flex-wrap -mx-3 mb-6">
-        //                     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-        //                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
-        //                         Task Name
-        //                     </label>
-        //                     <input id="editTaskTitle" value="${response.title}" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text">
-        //                     <p class="text-red-500 text-xs italic">Please fill out this field.</p>
-        //                     </div>
-        //                     <div class="w-full md:w-1/2 px-3">
-        //                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
-        //                         Due Date
-        //                     </label>
-        //                     <input id="editTaskDueDate" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="date">
-        //                     </div>
-        //                 </div>
-        //                 <div class="flex flex-wrap -mx-3 mb-6">
-        //                     <div class="w-full px-3">
-        //                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
-        //                         Description
-        //                     </label>
-        //                     <input id="editTaskDescription" value="${response.description}" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"type="text">
-        //                     <p class="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p>
-        //                     </div>
-        //                 </div>
-        //                 <div class="flex flex-wrap -mx-3 mb-2">
-        //                     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-        //                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
-        //                         Status
-        //                     </label>
-        //                     <div class="relative">
-        //                         <select id="editTaskStatus" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-        //                         <option value="false">Active</option>
-        //                         <option value="true">Completed</option>
-        //                         </select>
-        //                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-        //                         <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-        //                         </div>
-        //                     </div>
-        //                     </div>
-        //                 </div><br>
-        //                 <div class="flex items-center justify-between">
-        //                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-        //                       Update
-        //                     </button>
-        //                 </div>
-        //             </form>
-        //     </div>
-        // </div>
-        // `)
         $('#editTask').show()
 
     })
@@ -767,7 +767,6 @@ function apiNews(event) {
 $(document).ready(function() {
     menuLogin()
 
-
     $('#registerPath').click(menuRegister)
     $('#loginPath').click(menuLogin)
 
@@ -784,7 +783,7 @@ $(document).ready(function() {
     $('#addTaskPath').click(menuAddTask)
     $('#formAddTask').click(submitAddTask)
 
-    $('#formEditTask').click(submitEditTask)
+    $('#editTaskForm').click(submitEditTask)
 
 
     $('#apiExplore').click(apiNews)
