@@ -34,10 +34,19 @@ function afterLogin() {
 }
 
 function addForm(event) {
+    event.preventDefault();
     $('#nav-signout').show();
     $('#nav-signin').hide();
     $('#nav-register').hide();
-    event.preventDefault();
+    if ($('#title-add').val().length < 1 ||
+    $('#description-add').val().length < 1 ||
+    $('#due_date-add').val().length < 1) {
+        Swal.fire(`Fill all the fields please!`)
+        return
+    }
+    if (new Date($('#due_date-add').val()) < new Date()) {
+        Swal.fire(`The date cannot before from today!`)
+    }
     $.ajax({
         method: 'POST',
         url: 'http://localhost:3000/todos',
@@ -59,7 +68,6 @@ function addForm(event) {
 }
 
 function todoList() {
-
     $('#signin-form').hide();
     $('#register-form').hide();
     $('#todo-list').show();
@@ -196,7 +204,15 @@ function getTodo(event){
 
 function updateTodo(event) {
     event.preventDefault();
-    console.log(event.srcElement.dataset.id);
+    if ($('#title-edit').val().length < 1 ||
+    $('#description-edit').val().length < 1 ||
+    $('#due_date-edit').val().length < 1) {
+        Swal.fire(`Fill all the fields please!`)
+        return
+    }
+    if (new Date($('#due_date-edit').val()) < new Date()) {
+        Swal.fire(`The date cannot before from today!`)
+    }
     $.ajax({
         method: 'PUT',
         url: `http://localhost:3000/todos/${localStorage.getItem(`id`)}`,
@@ -220,6 +236,7 @@ function updateTodo(event) {
 }
 
 function deleteTodo(event) {
+    event.preventDefault();
     console.log(event.srcElement.dataset.id);
     // const todoId = event.target.id
     $.ajax({
@@ -231,6 +248,7 @@ function deleteTodo(event) {
     })
 
     .done((response) => {
+        event.preventDefault();
         console.log(response);
     })
     .fail((err) => {
