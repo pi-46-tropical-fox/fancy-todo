@@ -11,6 +11,11 @@ class UserController {
     static async register(req,res,next) {
         try {
             const {username,email,password} = req.body
+            console.log(username);
+            if (username.includes(' ')) {
+                throw {statusCode: 400, msg: "invalid username(must alphanumeric)"}
+            }
+
             const user = await User.create({username,email,password})
             let payload = {email: user.email, id: user.id}
             const access_token = generateToken(payload)
@@ -59,11 +64,16 @@ class UserController {
             })
             let payload = ticket.getPayload();
             email_by_google = payload.email
+            let tempUsername = email_by_google.split('@')
+
+            let username = tempUsername[0]
+
             let user = await User.findOne({
                 where: {email: payload.email}
             })
             if(!user) {
                 var userObj = {
+                    username,
                     email: email_by_google,
                     password: 'accessbygoogle'
                 }
@@ -75,8 +85,9 @@ class UserController {
                 id: user.id
                 }
             const access_token = generateToken(payloadGoogle)
-            console.log(access_token);
-            return res.status(200).json({access_token})
+
+            return res.status(200).json({access_token,email_by_google,username})
+            
         }catch(err) {
             console.log(err);
         }

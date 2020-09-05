@@ -4,43 +4,44 @@ class TodoController {
 
     static async getTodos(req,res,next) {
         try {
-           const todos = await Todo.findAll()
+           const todos = await Todo.findAll({
+            include: [User]
+        })
            return res.status(200).json(todos)
         } catch(err) {
             return next(err)
         }
     }
-    // "id": 2,
-    // "username": "test_baru",
-    // "email": "testbaru5123@mail.com",
-    // "password": "$2b$10$zAsQdwqcdHrAwrq1k41lEu0ZpfDAZbXaPsXEOHUA/JvApowjZSKP6",
-    // "createdAt": "2020-09-04T15:44:45.943Z",
-    // "updatedAt": "2020-09-04T15:44:45.943Z",
-    // "Todos": [
-    //     {
-    //         "id": 4,
-    //         "title": "makan",
-    //         "description": "nasi padang",
-    //         "status": "sudah",
-    //         "due_date": "2020-10-01T10:47:59.101Z",
-    //         "UserId": 2,
-    //         "createdAt": "2020-09-04T15:52:18.729Z",
-    //         "updatedAt": "2020-09-04T15:52:18.729Z"
-    //     },
 
     static async getMyTodos(req,res,next) {
         try {
-
            const user = await User.findOne({
                where: {username: req.query.q},
                include: [Todo]
            })
 
-           return res.status(200).json(user)
+
+           return res.status(200).json(user.Todos)
         } catch(err) {
             return next(err)
         }
     }
+
+    static async joinOtherUser(req,res,next) {
+        try {
+           const todo = await Todo.findOne({
+               where: {id: req.params.id},
+               include: [User]
+           })
+           console.log(todo);
+
+        //    return res.status(200).json(user.Todos)
+        } catch(err) {
+            return next(err)
+        }
+    }
+
+    
 
     static createTodo (req,res,next) {
         const todo = { 
