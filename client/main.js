@@ -68,7 +68,26 @@ function mainMenu (event){
     $('#logedEmail').empty()
     $('#todos').empty()
 
+    $.ajax({
+        method: "GET",
+        url: `http://localhost:${port}/quotes`,
+        
+    })
 
+        .done(response => {
+            $('#quotes2').empty()
+
+            $('#quotes2').append(`
+                <h5 class="card-title">Quote of the day</h5>
+                <p class="card-text">${response.quoteText}</p>
+                <p class="card-text"><small class="text-dark">--${response.quoteAuthor}--</small></p>
+            `)
+
+        })
+
+        .fail(err => {
+            console.log(err)
+        })
     
 
 
@@ -189,6 +208,7 @@ function logoutMenu (event){
     })
 
         .done(response => {
+            $('#quotes').empty()
 
             $('#quotes').append(`
                 <h5 class="card-title">Quote of the day</h5>
