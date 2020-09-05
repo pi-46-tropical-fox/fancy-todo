@@ -17,7 +17,7 @@ const errHandler = (err, req, res, next) => {
 			status_code = 400;
 			break;
 		case "JsonWebTokenError" :
-			errors.push("The user is not authenticated");
+			errors.push("The user is not authenticated.");
 			status_code = 401;
 			break;
 		default :

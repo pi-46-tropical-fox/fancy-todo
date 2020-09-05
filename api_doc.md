@@ -311,6 +311,13 @@ _Response (200 - OK)_
 }
 ```
 
+_Response (400 - Bad Request)_
+```
+[
+  "The todo with id <todo id> was not found."
+]
+```
+
 _Response (401 - Unauthorized)_
 ```
 [
@@ -360,6 +367,13 @@ _Response (200 - OK)_
   "createdAt": "2020-01-28T07:15:12.149Z",
   "updatedAt": "2020-01-28T07:15:12.149Z",
 }
+```
+
+_Response (400 - Bad Request)_
+```
+[
+  "The todo with id <todo id> was not found."
+]
 ```
 
 _Response (401 - Unauthorized)_
