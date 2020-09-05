@@ -15,6 +15,8 @@ Make a website to manage interesting things to do. This app has :
  - DELETE /todos/:id
  - POST /user/register
  - POST /user/login
+ - POST /user/googleLogin
+ - GET thirdparty/weather
 ```
 
 ### POST /todos
@@ -51,17 +53,39 @@ _Response (201 - Created)_
 }
 ```
 
-_Response (400 - Bad Request)_
+_Response (400 - Bad request)_
 ```
 {
-  "message": "Bad Request"
+  "errors": [
+    "<error messages regarding constraints and validations>"
+  ]
 }
 ```
 
-_Response(500 - Internal Server Error)_
+_Response (401 - Unauthorized)_
 ```
 {
-  "message": "Internal Server Error"
+  "errors": [
+    "User is not authenticated"
+  ]
+}
+```
+
+_Response (404 - Not found)_
+```
+{
+  "errors": [
+    "Not Found"
+  ]
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "errors": [
+    "<some messages regarding server error>"
+  ]
 }
 ```
 ---
@@ -72,7 +96,7 @@ _Response(500 - Internal Server Error)_
 _Request Header_
 ```
 {
-  "access_token": "<your accsess token>"
+  "access_token": "<your access token>"
 }
 ```
 
@@ -81,7 +105,7 @@ _Request Body_
 not needed
 ```
 
-_Response (200)_
+_Response (200 - OK)_
 ```
 [
   {
@@ -105,10 +129,39 @@ _Response (200)_
 ]
 ```
 
+_Response (400 - Bad request)_
+```
+{
+  "errors": [
+    "<error messages regarding constraints and validations>"
+  ]
+}
+```
+
+_Response (401 - Unauthorized)_
+```
+{
+  "errors": [
+    "User is not authenticated"
+  ]
+}
+```
+
+_Response (404 - Not found)_
+```
+{
+  "errors": [
+    "Not Found"
+  ]
+}
+```
+
 _Response (500 - Internal Server Error)_
 ```
 {
-  "message": "Internal Server Error"
+  "errors": [
+    "<some messages regarding server error>"
+  ]
 }
 ```
 ---
@@ -119,7 +172,7 @@ _Response (500 - Internal Server Error)_
 _Request Header_
 ```
 {
-  "access_token": "<your accsess token>"
+  "access_token": "<your access token>"
 }
 ```
 
@@ -128,7 +181,7 @@ _Request Body_
 not needed
 ```
 
-_Response (200)_
+_Response (200 - OK)_
 ```
 {
   "id": <requested id>,
@@ -141,10 +194,39 @@ _Response (200)_
 }
 ```
 
+_Response (400 - Bad request)_
+```
+{
+  "errors": [
+    "<error messages regarding constraints and validations>"
+  ]
+}
+```
+
+_Response (401 - Unauthorized)_
+```
+{
+  "errors": [
+    "User is not authenticated"
+  ]
+}
+```
+
 _Response (404 - Not found)_
 ```
 {
-  "message": "Not found"
+  "errors": [
+    "Not Found"
+  ]
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "errors": [
+    "<some messages regarding server error>"
+  ]
 }
 ```
 ---
@@ -155,7 +237,7 @@ _Response (404 - Not found)_
 _Request Header_
 ```
 {
-  "access_token": "<your accsess token>"
+  "access_token": "<your access token>"
 }
 ```
 
@@ -169,7 +251,7 @@ _Request Body_
 }
 ```
 
-_Response (200)_
+_Response (200 - OK)_
 ```
 [
   {
@@ -187,21 +269,36 @@ _Response (200)_
 _Response (400 - Bad request)_
 ```
 {
-  "message": "Bad Request"
+  "errors": [
+    "<error messages regarding constraints and validations>"
+  ]
+}
+```
+
+_Response (401 - Unauthorized)_
+```
+{
+  "errors": [
+    "User is not authenticated"
+  ]
 }
 ```
 
 _Response (404 - Not found)_
 ```
 {
-  "message": "Not found"
+  "errors": [
+    "Not Found"
+  ]
 }
 ```
 
 _Response (500 - Internal Server Error)_
 ```
 {
-  "message": "Internal Server Error"
+  "errors": [
+    "<some messages regarding server error>"
+  ]
 }
 ```
 ---
@@ -212,7 +309,7 @@ _Response (500 - Internal Server Error)_
 _Request Header_
 ```
 {
-  "access_token": "<your accsess token>"
+  "access_token": "<your acsess token>"
 }
 ```
 
@@ -221,22 +318,35 @@ _Request Body_
 not needed
 ```
 
-_Response (200)_
+_Response (200 - OK)_
 ```
 1
+```
+
+_Response (401 - Unauthorized)_
+```
+{
+  "errors": [
+    "User is not authenticated"
+  ]
+}
 ```
 
 _Response (404 - Not found)_
 ```
 {
-  "message": "Not found"
+  "errors": [
+    "Not Found"
+  ]
 }
 ```
 
 _Response (500 - Internal Server Error)_
 ```
 {
-  "message": "Internal Server Error"
+  "errors": [
+    "<some messages regarding server error>"
+  ]
 }
 ```
 ---
@@ -246,9 +356,7 @@ _Response (500 - Internal Server Error)_
 
 _Request Header_
 ```
-{
-  "access_token": "<your access token>"
-}
+not needed
 ```
 
 _Request Body_
@@ -263,7 +371,7 @@ _Request Body_
 _Response (201 - Created)_
 ```
 {
-  "username": "<posted username>",
+  "access_token": "<your access token>",
   "email": "<posted email>"
 }
 ```
@@ -271,20 +379,67 @@ _Response (201 - Created)_
 _Response (400 - Bad Request)_
 ```
 {
-  "message": "Bad Request"
+  "errors": [
+    "<error messages regarding constraints and validations>"
+  ]
 }
 ```
 
 _Response(500 - Internal Server Error)_
 ```
 {
-  "message": "Internal Server Error"
+  "errors": [
+    "<some messages regarding server error>"
+  ] 
 }
 ```
 ---
 ### POST /user/login
 
-> Create new todo
+> Logged in an existing user and authenticate his/her credentials
+
+_Request Header_
+```
+not needed
+```
+
+_Request Body_
+```
+{
+  "username": "<username to get insert into>",
+  "email": "<email to get insert into>",
+}
+```
+
+_Response (200 - OK)_
+```
+{
+  "access_token": "<your access token>",
+  "email": "<your_email@provider.domain>"
+}
+```
+
+_Response (400 - Bad Request)_
+```
+{
+  "errors": [
+    "Invalid email or password"
+  ]
+}
+```
+
+_Response(500 - Internal Server Error)_
+```
+{
+  "errors": [
+    "<some messages regarding server error>"
+  ] 
+}
+```
+---
+### POST /user/googleLogin
+
+> Create new user using google sign in if it is not exists in the database
 
 _Request Header_
 ```
@@ -301,27 +456,102 @@ _Request Body_
 }
 ```
 
-_Response (201 - Created)_
+_Response (200 - OK)_
 ```
 {
-  "accessToken": "<your access token>"
+  "access_token": "<your access token>",
+  "avatar": "<your gogle profile picture>",
+  "email": "<your google email>"
 }
 ```
 
-_Response (400 - Bad Request)_
+_Response (403 - Forbidden)_
 ```
 {
-  "message": "Bad Request"
+  "errors": [
+    "The verifyIdToken method requires an ID Token"
+  ]
 }
 ```
 
 _Response(500 - Internal Server Error)_
 ```
 {
-  "message": "Internal Server Error"
+  "errors": [
+    "<some messages regarding server error>"
+  ]  
+}
+```
+---
+### GET /thirdparty/weather
+
+> Get information about current weather in local area
+
+_Request Header_
+```
+not needed
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200 - OK)_
+```
+{
+  "request": {
+    "type": "City",
+    "query": "Denpasar, Indonesia",
+    "language": "en",
+    "unit": "m"
+  },
+  "location": {
+    "name": "Denpasar",
+    "country": "Indonesia",
+    "region": "Bali",
+    "lat": "-8.650",
+    "lon": "115.217",
+    "timezone_id": "Asia/Makassar",
+    "localtime": "2020-09-05 14:05",
+    "localtime_epoch": 1599314700,
+    "utc_offset": "8.0"
+  },
+  "current": {
+    "observation_time": "06:05 AM",
+    "temperature": 30,
+    "weather_code": 113,
+    "weather_icons": [
+      "https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0001_sunny.png"
+    ],
+    "weather_descriptions": [
+      "Sunny"
+    ],
+    "wind_speed": 13,
+    "wind_degree": 140,
+    "wind_dir": "SE",
+    "pressure": 1008,
+    "precip": 0,
+    "humidity": 55,
+    "cloudcover": 0,
+    "feelslike": 32,
+    "uv_index": 7,
+    "visibility": 10,
+    "is_day": "yes"
+  }
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "errors": [
+    "<some messages regarding server error>"
+  ]  
 }
 ```
 ---
 ### References
-https://gist.github.com/iros/3426278#file-example-md
-https://github.com/Sursev07/documentation-example
+- https://gist.github.com/iros/3426278#file-example-md
+- https://github.com/Sursev07/documentation-example
+- https://www.markdownguide.org/basic-syntax

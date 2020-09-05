@@ -275,7 +275,7 @@ function getWeather() {
     .done((response) => {
       console.log(response);
       $("#weather-forecast").append(`
-        <h5 class="card-title">Today's Weather</h5>
+        <h5 class="card-title"><span><img src="${response.current.weather_icons[0]}" alt="weather-icon" class="rounded-circle" width="35rem" /></span>  Today's Weather</h5>
         <h6 class="card-text">${response.location.localtime}<h6>
         <h6 class="card-text">${response.request.query}<h6>
         <h6 class="card-text">Temp: ${response.current.temperature}&#8451; ${response.current.weather_descriptions[0]}</h6>
