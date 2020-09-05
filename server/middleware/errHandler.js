@@ -35,14 +35,6 @@ function errHandler(err, req, res, next) {
     fs.appendFileSync(errorsPath, errorMsg)
 
     if(!process.env.DEBUG) delete error.stack
-             
-    
-    // if(Array.isArray(err.msg)){
-    //     msg = err.msg.map(message => message)
-    // } else {
-    //     msg.push(err.msg)
-    // }
-    
 
     res.status(code).json(error)
 }
