@@ -1,32 +1,43 @@
+# Fancy-Todo
 Fancy Todo App Server
 Fancy Todo App is an application to manage your assets. This app has :
 
+&nbsp;
+
+## Endpoints
 ````
-ENDPOINTS
-POST /register
-POST /login
-POST /todos
-GET /todos
-GET /todos/:id
-PUT /todos/:id
-DELETE /todos/:id
+- POST /register
+- POST /login
+- POST /todos
+- GET /todos
+- GET /todos/:id
+- PUT /todos/:id
+- DELETE /todos/:id
 ````
 
-RESTful endpoints
-POST /register
-Create new user to database
-Request Header
+## RESTful endpoints
 
-{
-  "access_token": "<your access token>"
-}
-Request Body
+## POST /register
+
+> Create new user to database
+
+_Request Header_
+
+```
+not needed
+```
+
+_Request Body_
+```json
 
 {
   "email": "<email to get insert into>",
   "password": "<password to get insert into>",
 }
-Response (201 - Created)
+
+```
+_Response (201 - Created)_
+```json
 
 {
   "id": <given id by system>,
@@ -35,53 +46,56 @@ Response (201 - Created)
   "createdAt": "2020-03-20T07:15:12.149Z",
   "updatedAt": "2020-03-20T07:15:12.149Z",
 }
-Response (500 - Internal server error)
+```
 
-POST /login
-Login to todos
+_Response (500 - Internal server error)_
 
-Request Header
+### POST /login
 
-{
-  "access_token": "<your access token>"
-}
+> Login to todos
 
-Request Body
+_Request Header_
+```
+not needed
+```
 
+_Request Body_
+```json
 {
   "email": "<email to get insert into>",
   "password": "<password to get insert into>",
 }
+```
 
-Response (200)
-[
-  {
-    "id": 1,
-    "email": "<user email>",
-    "password": "<user password>",
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
-  },
-]
+_Response (200)_
+```json
+{
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJmYXVkemFuIiwiaWF0IjoxNTk4OTU1OTk2fQ.-bZ3Gi4AXPQMtrHfbxJ605On57u4gRXfU0ok88aIW94"
+}
+```
 
-Response (400 - Invalid email/password)
-OR
-Response (500 - Internal server error)
+_Response (400 - Invalid email/password)_
+_OR_
+_Response (500 - Internal server error)_
 
 
-GET /todos
-Get all todos
+### GET /todos
+> Get all todos
 
-Request Header
-
+_Request Header_
+```json
 {
   "access_token": "<your access token>"
 }
-Request Body
+```
 
+_Request Body_
+```
 not needed
-Response (200)
+```
 
+_Response (200)_
+```json
 [
   {
     "id": 1,
@@ -100,26 +114,32 @@ Response (200)
     "updatedAt": "2020-03-20T07:15:12.149Z",
   },
 ]
-Response (500 - Internal server error)
+```
+
+_Response (500 - Internal server error)_
 
 
-POST /todos
-Create new todos
+### POST /todos
+> Create new todos
 
-Request Header
-
+_Request Header_
+```json
 {
   "access_token": "<your access token>"
 }
-Request Body
+```
 
+_Request Body_
+```json
 {
   "title": "<name to get insert into>",
   "description": "<description to get insert into>",
   "due_date": "<due_date to get insert into>"
 }
-Response (201 - Created)
+```
 
+_Response (201 - Created)_
+```json
 {
   "id": <given id by system>,
   "title": "<posted title>",
@@ -128,25 +148,33 @@ Response (201 - Created)
   "createdAt": "2020-03-20T07:15:12.149Z",
   "updatedAt": "2020-03-20T07:15:12.149Z",
 }
-Response (400 - Bad Request)
+```
+
+_Response (400 - Bad Request)_
+```json
 
 {
   "message": "Invalid requests"
 }
+```
 
-GET /todos/:id
-Find detail todo by ID
-Request Header
+### GET /todos/:id
+> Find detail todo by ID
 
+_Request Header_
+```json
 {
   "access_token": "<your access token>"
 }
+```
 
-Request Body
-
+_Request Body_
+```
 not needed
-Response(200)
+```
 
+_Response(200)_
+```json
 [
   {
     "id": 1,
@@ -157,27 +185,32 @@ Response(200)
     "updatedAt": "2020-03-20T07:15:12.149Z",
   },
 ]
+```
 
-Response (404 - Not Found)
+_Response (404 - Not Found)_
 
-PUT /todos/:id
-Update todo by ID
-Request Header
+### PUT /todos/:id
 
+> Update todo by ID
+
+_Request Header_
+```json
 {
   "access_token": "<your access token>"
 }
+```
 
-Request Body
-
+_Request Body_
+```json
 {
   "title": "<name to get insert into>",
   "description": "<description to get insert into>",
   "due_date": "<due_date to get insert into>"
 }
+```
 
-Response (200)
-
+_Response (200)_
+```json
 {
   "id": <selected id>,
   "title": "<updated title>",
@@ -186,26 +219,34 @@ Response (200)
   "createdAt": "2020-03-20T07:15:12.149Z",
   "updatedAt": "2020-03-20T07:15:12.149Z",
 }
+```
 
-Error response:
-Response (400 - Bad request)
-OR
-Response (404 - Not Found)
-OR
-Response (500 - Internal Server Error)
+> Error response:
+_Response (400 - Bad request)_
+_OR_
+_Response (404 - Not Found)_
+_OR_
+_Response (500 - Internal Server Error)_
 
 
-DELETE /todos/:id
-Delete todo data by ID
-Request Header
+### DELETE /todos/:id
 
+> Delete todo data by ID
+
+_Request Header_
+```json
 {
   "access_token": "<your access token>"
 }
+```
 
-Request Body
+_Request Body_
+```
 not needed
-Response(200)
+```
+
+_Response(200)_
+```json
 
 [
   {
@@ -217,9 +258,10 @@ Response(200)
     "updatedAt": "2020-03-20T07:15:12.149Z",
   },
 ]
+```
 
-Error response:
-Response (404 - Not Found)
-OR
-Response (500 - Internal Server Error)
+> Error response:
+_Response (404 - Not Found)_
+_OR_
+_Response (500 - Internal Server Error)_
 

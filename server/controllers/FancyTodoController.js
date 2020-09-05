@@ -1,13 +1,18 @@
-const { Todo } = require('../models')
+const { Todo, User } = require('../models')
 
 class FancyTodoController {
     static show(req, res, next) {
-        Todo.findAll()
+        // console.log(req.userData, '<<< userdata');
+        Todo.findAll({
+            where:{
+                UserId: req.userData.id 
+            }
+        })
         .then(data => {
+            // console.log(data, '<<< show');
             return res.status(200).json(data)
         })
         .catch(err => {
-            // return res.status(500).json(err)
             return next(err)
         })
     }
@@ -24,7 +29,6 @@ class FancyTodoController {
             return res.status(201).json(data)
         })
         .catch(err => {
-            // return res.status(400).json({message: `Invalid requests`})
             return next(err)
         })
     }
@@ -34,7 +38,6 @@ class FancyTodoController {
             return res.status(200).json(data)
         })
         .catch(err => {
-            // return res.status(404).json(err)
             return next(err)
         })
     }
@@ -45,12 +48,11 @@ class FancyTodoController {
             status: req.body.status,
             due_date: req.body.due_date
         }
-        Todo.update(params, {where: {id: req.params.id}, returning: true})
+        Todo.update(params, {where: {id: req.userData.id}, returning: true})
         .then(data => {
             return res.status(200).json(data)
         })
         .catch(err => {
-            // return res.status(400).json(err)
             return next(err)
         })
 
@@ -67,7 +69,6 @@ class FancyTodoController {
             return res.status(200).json(data)
         })
         .catch(err => {
-            // return res.status(404).json(err)
             return next(err)
         })
 

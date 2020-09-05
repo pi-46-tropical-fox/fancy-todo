@@ -11,7 +11,9 @@ const authentication = async (req, res, next) => {
             }
         })
         if (user) {
+            // console.log(user);
             req.userData = userData
+            // console.log(userData);
             next()
         } else {
             throw { message: 'Doesnt recognize User!', statusCode: 401 }

@@ -15,10 +15,6 @@ function errHandler (err, req, res, next) {
             errors.push('Doesnt recognize User!')
             statusCode = 401
             break;
-        // case 'JsonWebTokenError':
-        //     errors.push('Doesnt recognize User!')
-        //     statusCode = 401
-        //     break;
         default:
             errors.push(err.message)
             statusCode = err.statusCode || 500
