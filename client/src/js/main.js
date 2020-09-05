@@ -365,7 +365,30 @@ function formRegister(event) {
 		});
 }
 
+function googleSign(googleUser) {
+	var id_token = googleUser.getAuthResponse().id_token;
+	$.ajax({
+		method: 'POST',
+		url: 'http://localhost:3000/googleSign',
+		data: { token: id_token }
+	})
+		.done(result => {
+			localStorage.setItem('access_token', result.access_token);
+			afterLogin();
+		})
+		.fail(err => {
+			showPage('page-login');
+			console.log(err);
+			Swal.fire({
+				icon: 'error',
+				title: 'Invalid email or password!',
+			});
+		})
+}
+
 function logout() {
+	var auth2 = gapi.auth2.getAuthInstance();
+	auth2.signOut().then();
 	localStorage.clear();
 
 	beforeLogin();
