@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 
 //register 
 const createHash = (password) =>{
-    return bcrypt.hashSync(password, bcrypt.genSaltSync({salat:10})) 
+    return bcrypt.hashSync(password, bcrypt.genSaltSync({salt:10})) 
 }
 
 

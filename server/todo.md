@@ -1,4 +1,4 @@
-## Get(todos/) for showing list data 
+## Get(todos ) for showing list data 
 
 Response(200)
 [
@@ -27,7 +27,7 @@ Response(400)
   "message": "Invalid request"
 }
 
-## Post(todos/add) for adding data into database
+## Post(todos add) for adding data into database
 
 Request Header
 
@@ -60,7 +60,9 @@ Response (400 - Bad Request)
   "message": "Invalid requests"
 }
 
-## PUT(todos/edit/:id) for editing data
+
+
+## PUT(todos edit) for editing data
 
 Request Body
 
@@ -88,7 +90,7 @@ Response (400 - Bad Request)
   "message": "Invalid requests"
 }
 
-## delete(todos/delete/:id)
+## delete(todos delete)
 
 Request Header
 
@@ -112,6 +114,101 @@ Response (400 - Bad Request)
 
 
 
+
+## User Register
+
+Request Header{
+  not needed
+}
+
+Request Body{
+  email : <email to get insert into>
+  password : <password>
+  username : <username>
+}
+
+Response (201 - Created)
+
+{
+    "id": <given id by system>,
+    "email": <posted email>
+    "password": <poseted password>
+    "username" : <posted username>
+    "createdAt": "2020-03-20T07:15:12.149Z",
+    "updatedAt": "2020-03-20T07:15:12.149Z",
+}
+
+Response(401 - Error)
+{
+  "msg": "Invalid email or password"
+}
+Response (400 - Bad Request)
+
+{
+  "message": "Invalid requests"
+}
+
+
+## User Login
+
+Request Header{
+  not needed
+}
+
+Request Body{
+  email : <email to get insert into>
+  password : <password>
+}
+
+Response (201 - Created)
+
+{
+    "id": <given id by system>,
+    "email": <posted email>
+    "password": <poseted password>
+    "createdAt": "2020-03-20T07:15:12.149Z",
+    "updatedAt": "2020-03-20T07:15:12.149Z",
+}
+
+Response(401 - Error)
+{
+  "msg": "Invalid email or password"
+}
+Response (400 - Bad Request)
+
+{
+  "message": "Invalid requests"
+}
+
+## User Login Usign Google Account
+
+Request Header{
+  access_token : <google access token>
+}
+
+Request Body{
+  not needed
+}
+
+Response (201 - Created)
+
+{
+    "id": <given id by system>,
+    "email": <posted email>
+    "password": <posted password>
+    "createdAt": "2020-03-20T07:15:12.149Z",
+    "updatedAt": "2020-03-20T07:15:12.149Z",
+}
+
+Response(401 - Error)
+{
+  "msg": "Invalid email or password"
+}
+Response (400 - Bad Request)
+
+{
+  "message": "Invalid requests"
+}
 
 
 

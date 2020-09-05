@@ -12,7 +12,7 @@ function errHandler(err,req,res,next){
             statusCode = 400
             break;
         case "JsonWebTokenError":
-            errors.push('Error dah pokoknya')
+            errors.push('Jwt tidak masuk')
             statusCode = 401
             break;
         default:

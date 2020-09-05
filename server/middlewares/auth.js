@@ -3,9 +3,9 @@ const { Todo, User } = require('../models')
 
 
 const authentication  = async (req,res,next) =>{
-    const { acces_token } = req.headers
+    const { access_token } = req.headers
     try {
-        const userData = verifyToken(acces_token)
+        const userData = verifyToken(access_token)
         let user = await User.findOne({where:{email:userData.email}})
         if(user){
             req.userData = userData

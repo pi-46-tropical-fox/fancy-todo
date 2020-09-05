@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="google-signin-client_id" content="360618096035-a5q6u0qccpe42ucf0rsvf14387mpg3qg.apps.googleusercontent.com">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
@@ -41,8 +42,9 @@
               aria-disabled="true"
               >Disabled</a
             >
-            <form class="form-inline my-2 my-lg-0" id="logout">
+            <form class="form-inline my-2 my-lg-0" id="log-out">
                 <button id="logout" class="btn btn-outline-success my-2 my-sm-0" type="submit" >Logout</button>
+                <a href="#" onclick="signOut();">Sign out</a>
               </form>
           </div>
         </div>
@@ -51,10 +53,10 @@
     <section>
       <div class="register">
         <h1>Register</h1>
-        <form>
+        <form action="" method="POST" id="formRegister"> 
           <div class="form-register">
             <label for="">Username</label>
-            <input type="email" class="form-control" id="username" />
+            <input type="text" class="form-control" id="username" />
           </div>
           <div class="form-register">
             <label for="exampleInputEmail1">Email address</label>
@@ -77,67 +79,85 @@
       </div>
     </section><br>
     <section>
-    <div class="login">
-        <form action="" method="POST" id="formLogin">
-          <h1>Login</h1>
-          <div class="form-login">
-            <label for="">Email address</label>
-            <input
-              type="email"
-              class="form-control"
-              id="email"
-              aria-describedby="emailHelp"
-            />
+    <div>
+      <div>
+        <div>
+          <div class="login">
+              <form action="" method="POST" id="formLogin">
+                <h1>Login</h1>
+                <div class="form-login">
+                  <label for="">Email address</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    aria-describedby="emailHelp"
+                  />
+                </div>
+                <div class="form-login">
+                  <label for="exampleInputPassword1">Password</label>
+                  <input type="password" class="form-control" id="password" />
+                </div>
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                <button type="submit" class="btn btn-primary">Login</button>
+              </form>
           </div>
-          <div class="form-login">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="password" />
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+        </div>
+      </div>
     </div>
     </section>
     <br>
     <br>
     <section>
-        <div class="todo">
-            <button id='add-todo' type="button" class="btn btn-outline-primary btn-lg">Add</button>
-            <div class="card text-center">
-              <div class="card-header">
-                <ul class="nav nav-pills card-header-pills">
-                  <li class="nav-item">
-                    <a class="nav-link active" href="#">Todo List</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Done</a>
-                  </li>
-                  <li class="nav-item">
-                    <a
-                      class="nav-link disabled"
-                      href="#"
-                      tabindex="-1"
-                      aria-disabled="true"
-                      >Disabled</a
-                    >
-                  </li>
-                </ul>
+      <div>
+        <div>
+          <div>
+            <div class="todo">
+                <button id='add-todo' type="button" class="btn btn-outline-primary btn-lg">Add</button>
+                <div class="card text-center" >
+                  <div class="card-header">
+                    <ul class="nav nav-pills card-header-pills">
+                      <li class="nav-item">
+                        <a class="nav-link active" href="#">Todo List</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#">Done</a>
+                      </li>
+                      <li class="nav-item">
+                        <a
+                          class="nav-link disabled"
+                          href="#"
+                          tabindex="-1"
+                          aria-disabled="true"
+                          >Disabled</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="card-body" id="todo-list">
+                  <h5 class="card-title">Title:</h5>
+                  <p class="card-text" >
+                    With supporting text below as a natural lead-in to additional
+                    content.
+                  </p>
+                  <p class="card-text" >
+                    With supporting text below as a natural lead-in to additional
+                    content.
+                  </p>
+                  <a href="#" class="btn btn-primary" id="edit-todo">Edit</a>
+                  <a href="#" class="btn btn-primary" id="delete-todo">Delete</a>
+                </div>
               </div>
-              <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">
-                  With supporting text below as a natural lead-in to additional
-                  content.
-                </p>
-                <a href="#" class="btn btn-primary" id="edit-todo">Edit</a>
-                <a href="#" class="btn btn-primary" id="delete-todo">Delete</a>
-              </div>
-            </div>
-          </section>
+            </section>
+          </div>
+          </div>
         </div>
+      </div>
     <section>
         <div class="add">
             <h1>Add</h1>
-            <form>
+            <form action="" method="POST" id="formAdd">
                 <div class="form-add">
                     <label for="">Todo</label>
                     <input type="text" class="form-control" id="Todo" />
@@ -152,7 +172,7 @@
                 </div>
                 <div class="form-add">
                     <label for="">Date</label>
-                    <input type="date" class="form-control" id="description" />
+                    <input type="date" class="form-control" id="date" />
                 </form>
             </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -162,22 +182,22 @@
     <section>
         <div class="edit">
             <h1>Edit</h1>
-            <form>
+            <form method="POST">
                 <div class="form-edit">
                     <label for="">Todo</label>
-                    <input type="text" class="form-control" id="Todo" />
+                    <input type="text" class="form-control" id="editTodo" />
                 </div>
                 <div class="form-edit">
                     <label for="">Description</label>
                     <input
                         type="text"
                         class="form-control"
-                        id="description"
+                        id="editDescription"
                     />
                 </div>
                 <div class="form-edit">
                     <label for="">Date</label>
-                    <input type="date" class="form-control" id="description" />
+                    <input type="date" class="form-control" id="editDate" />
                 </div>
                 <div>
                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -201,5 +221,6 @@
     integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
     crossorigin="anonymous"
   ></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script src="/client/main.js"></script>
 </html>
