@@ -4,7 +4,12 @@ class TodoController {
 	static async list(req, res, next) {
 		const { id } = req.userData;
 		try {
-			const todos = await Todo.findAll({ where: { UserId: id } });
+			const todos = await Todo.findAll({
+				where: { UserId: id },
+				order: [
+					['due_date', 'ASC'],
+				],
+			});
 
 			return res.status(200).json(todos);
 		} catch (error) {

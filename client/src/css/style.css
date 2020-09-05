@@ -1,0 +1,22 @@
+.form-container-register,
+.form-container-login {
+	max-width: 500px;
+}
+
+/* .todo-container {
+	display: flex;
+	flex-direction: column;
+	align-self: center;
+} */
+
+.todo-card {
+	max-width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 20px;
+}
+
+#button-add {
+	margin-left: auto;
+	margin-right: auto;
+}
