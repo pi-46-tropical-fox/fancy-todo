@@ -31,6 +31,18 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Project Description is required!'
         }
       }
+    },
+    due_date: {
+      type: DataTypes.DATE,
+      validate: {
+        notEmpty: {
+          msg: 'Due Date is required!'
+        },
+        isAfter: {
+          args: "2020-09-05",
+          msg: "Due Date must be after 5 Sept 2020!"
+        }
+      }
     }
   }, {
     sequelize,

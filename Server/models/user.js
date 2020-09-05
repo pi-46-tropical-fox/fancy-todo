@@ -60,6 +60,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    pictureUrl: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'User',

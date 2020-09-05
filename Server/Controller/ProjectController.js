@@ -4,7 +4,8 @@ class ProjectController {
     static addProject(req, res, next) {
         let projectObj= {
             projectName: req.body.projectName,
-            projectDescription: req.body.projectDescription
+            projectDescription: req.body.projectDescription,
+            due_date: req.body.due_date
         }
 
         Project.create(projectObj)
@@ -47,6 +48,7 @@ class ProjectController {
         let projectObj={
             projectName: req.body.projectName,
             projectDescription: req.body.projectDescription,
+            due_date: req.body.due_date,
             updatedAt: new Date()
         }
         Project.update(projectObj, {

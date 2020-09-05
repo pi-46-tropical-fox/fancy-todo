@@ -9,7 +9,8 @@ class UserController {
             name: req.body.name,
             email: req.body.email,
             password: req.body.password,
-            role: req.body.role
+            role: req.body.role,
+            pictureUrl: req.body.pictureUrl ||'./assets/img/dummyDp.png'
         }
 
         User.create(userObj)
@@ -38,8 +39,8 @@ class UserController {
 
                 if(flag) {
                     const access_token = generateToken(data)
-    
-                    return res.status(200).json({access_token})
+                    const {id, name, role} = data
+                    return res.status(200).json({access_token, id, name, role})
                 }else {
                     throw {message: 'Invalid name or password', statusCode: 400}
                 }
@@ -89,9 +90,10 @@ class UserController {
             }
         })
         .then(user => {
-            const token = generateToken(user)
+            const access_token = generateToken(user)
+            const {name, role} = user
             
-            return res.status(200).json({token})
+            return res.status(200).json({access_token, name, role})
         })
         .catch(err => {
             console.log(err)
