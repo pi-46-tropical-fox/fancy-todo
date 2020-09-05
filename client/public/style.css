@@ -1,0 +1,72 @@
+body{
+    background-color: rgb(251, 251, 251);
+    font-family: 'Baloo Paaji 2', cursive;
+}
+
+.element{
+    margin-top: 20px;
+    text-align: center;
+}
+
+.row {
+    padding-left: 150px;
+}
+
+button {
+    margin: 5px;
+}
+
+form{
+    margin: 10px 150px;
+}
+
+.button, .g-signin2{
+    margin: 20px auto;
+}
+
+.col-md-3 p {
+    margin: 30px 0 10px 0;
+}
+
+.table {
+    margin: 20px 0;
+}
+
+#table-calendar {
+    font-family: 'Baloo Paaji 2', cursive;
+    font-size: 18px;
+}
+
+.logo {
+    font-family: 'Fugaz One', cursive;
+    font-size: 25px;
+}
+
+#add-todo-btn {
+    float: center;
+    margin: 10px 0;
+    background-color: #ca9766;
+    border: 1px solid transparent;
+}
+
+.shadow {
+    box-shadow: 2px 2px 2px rgba(0.1,0.1,0.1,0.3);
+}
+
+body{
+    background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(wallpaper.jpg);
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    padding: 20px;
+}
+
+p, h2, label, th{
+    color: white
+}
+
+.g-signin2{
+    align-content: center;
+    margin-left: 40px;
+}
+

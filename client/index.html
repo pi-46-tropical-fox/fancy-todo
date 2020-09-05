@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="google-signin-client_id" content="172492056477-ienlvp6jtlt2asgk07hn4o680gla6jb1.apps.googleusercontent.com">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="./public/style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@500&family=Courgette&family=Fugaz+One&display=swap" rel="stylesheet">
+        <title>Fancy Todo App</title>
+    </head>
+    <body>
+        <div id="navbar">
+            <nav>
+                <p><img src="public/list.png">Todo App</p> 
+
+                <div class="collapse navbar-collapse" id="navLogIn">
+                    <ul class="navbar-nav mr-auto">
+                    </ul>
+                    <button id="logout" class="btn btn-success my-2 my-sm-0" type="submit">Log Out</button>
+                </div>
+            </nav>
+        </div>
+
+        <div id="login" class="element">
+            <form class="form-login">
+                <h2>Login</h2>
+                <div id="messageLogin" class="alert alert-danger" role="alert">
+                    <p id="errLogin"></p>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <label>Email address</label>
+                        <input id="inputEmail" name="email" type="text" class="form-control" placeholder="Email">
+                    </div>
+                    <div class="col-md-5">
+                        <label>Password</label>
+                        <input id="inputPassword" name="password" type="password" class="form-control" placeholder="Password">
+                    </div>
+                </div>
+                <div class="col-md-3 button">
+                    <button type="submit" class="btn btn-primary btn-sm" >Login</button>
+                    <p>or</p>
+                    <button class="btn btn-success btn-sm" id="goto-register-btn">Register</button><br>
+                        <p>Login with Google</p>
+                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                </div>
+            </form>
+        </div>
+
+        <div id="register" class="element">
+            <form class="form-register">
+                <h2>Register</h2>
+                <div id="messageRegist" class="alert alert-danger" role="alert">
+                    <p id="errRegist"></p>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <label>Email address</label>
+                        <input id="registEmail" name="email" type="text" class="form-control" placeholder="Email">
+                    </div>
+                    <div class="col-md-5">
+                        <label>Password</label>
+                        <input id="registPassword" name="password" type="password" class="form-control" placeholder="Password">
+                    </div>
+                </div>
+                <div class="col-md-3 button" >
+                    <button type="submit" class="btn btn-primary btn-sm" id="register-btn">Register</button>
+                    <button class="btn btn-danger btn-sm" id="cancel-register-btn">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="todo-list" class="element">
+            <div id="message"></div>    
+            <h2>Todo List</h2>
+
+            <button class="btn btn-primary btn-sm" id="add-todo-btn">Add Todo</button>
+            <table class="table table-striped" id="table-todo">
+                <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Due Date</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div id="edit-todo" class="element">
+            <h2>Edit Todo</h2>
+            <div id="editMsg" class="alert alert-danger" role="alert">
+                <p id="errEditMsg"></p>
+            </div>
+            <form class="form-edit-todo">
+                <div class="form-group">
+                    <label for="edit-title">Title</label>
+                    <input type="text" class="form-control" id="edit-title" name="edit-title" aria-describedby="emailHelp" placeholder="Title">
+                </div>
+                <div class="form-group">
+                    <label for="edit-description">Description</label>
+                    <input type="text" class="form-control" id="edit-description" placeholder="Description">
+                </div>
+                <div class="form-group">
+                    <label for="edit-status">Status</label>
+                    <select name="status" id="statusEdit">
+                        <option value="">-- choose --</option>
+                        <option value="true">true</option>
+                        <option value="false">false</option>
+                    </select>
+                    
+                </div>
+                <div class="form-group">
+                    <label for="edit-due_date">Due Date</label>
+                    <input type="date" class="form-control" id="edit-due_date" placeholder="Due_date">
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                <button class="btn btn-danger btn-sm" id="cancel-edit-btn">Cancel</button>
+            </form>
+        </div>
+
+        <div id="add-todo" class="element">
+            <h2>Add Todo</h2>
+            <div id="msgAdd" class="alert alert-danger" role="alert">
+                <p id="errAddMsg"></p>
+            </div>
+            <form class="form-add-todo">
+                <div class="form-group">
+                    <label for="add-title">Title</label>
+                    <input type="text" class="form-control" id="add-title" name="title" placeholder="Enter Todo Title">
+                </div>
+                <div class="form-group">
+                    <label for="add-description">Description</label>
+                    <input type="text" class="form-control" id="add-description" name="description" placeholder="Todo Description">
+                </div>
+                <!--<div class="form-group">
+                    <label for="add-status">Status</label>
+                    <select name="status" id="statusAdd">
+                        <option value="">-- choose --</option>
+                        <option value="true">true</option>
+                        <option value="false">false</option>
+                    </select>
+                </div>-->
+                <div class="form-group">
+                    <label for="add-due_date">Due Date</label>
+                    <input type="date" class="form-control" id="add-due_date" name="due_date" placeholder="Due Date">
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                <button class="btn btn-danger btn-sm" id="cancel-add-btn">Cancel</button>
+            </form>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <!-- Optional JavaScript -->
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="index.js"></script>
+    </body>
+</html>
