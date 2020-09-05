@@ -150,6 +150,38 @@
                     <button type="submit" class="btn btn-primary" style="margin: 20px;">Add Todo</button>
                   </form>
             </div>
+
+            <div id="editTodo">
+                <form id="dataEditTodo">
+                    <h3 align='center'>Edit Your Todo</h3>
+                    <div class="form-row" id="atas">
+                      <div class="form-group col-md-6">
+                        <label for="title">Title</label>
+                        <input type="text" class="form-control" id="title" value="">
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="description">Description</label>
+                        <input type="text" class="form-control" id="description">
+                      </div>
+                    </div>
+                    <div class="form-row" id="bawah">
+                      <div class="form-group col-md-4">
+                        <label for="status">Status</label>
+                        <select id="status" class="form-control">
+                          <option value="" selected>Choose...</option>
+                          <option value="false">Pending</option>
+                          <option value="true">Complete</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label for="due_date">Date</label>
+                        <input type="date" class="form-control" id="due_date" name="due_date" min="2020-06-08">
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin: 20px;">Edit Todo</button>
+                  </form>
+            </div>
+
             <div id="card_resto">
             </div>
         </main>

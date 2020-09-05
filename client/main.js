@@ -16,6 +16,7 @@ function menuList(event){
     $("#todoList").show()
     $("#addTodo").hide()
     $("#card_resto").hide()
+    $(`div#editTodo`).hide()
 
     $('#listTodo').empty()
 
@@ -42,7 +43,7 @@ function menuList(event){
                 <td>${el.status}</td>
                 <td>${el.due_date.toString().substring(0,10)}</td>
                 <td>
-                    <button type="submit" class="btn btn-primary">EDIT</button>
+                    <button type="submit" class="btn btn-primary" id="editTodo${el.id}">EDIT</button>
                     <button type="submit" class="btn btn-primary" class="test" id="delTodo${el.id}" value="${el.id}">DEL</button>
                 </td>
             </tr>
@@ -64,7 +65,31 @@ function menuList(event){
                 .fail(err =>{
                     console.log(err)
                 })
-            }) 
+            })
+            $(`#editTodo${el.id}`).click(function(event){
+                $("#form_registration").hide()
+                $("#form_login").hide()
+                $("#todoList").hide()
+                $("#addTodo").hide()
+                $("#card_resto").hide()
+                $(`div#editTodo`).show()
+
+                let id = $(`#delTodo${el.id}`).val()
+                console.log('edit ', id)
+                $.ajax({
+                    method: 'GET',
+                    url: `http://localhost:3000/todos/${id}`,
+                    headers: {
+                        access_token: localStorage.getItem('access_token')
+                    }
+                })
+                .done(result=>{
+                    console.log(result)
+                })
+                .fail(err=>{
+                    console.log(err)
+                })
+            })
         })   
         
     })
