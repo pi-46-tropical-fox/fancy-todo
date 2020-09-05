@@ -16,6 +16,7 @@ const beforeLogin = (event) => {
     $('#form-register').hide()
     $('#form-login').show()
     $('nav').hide()
+    $('#movie-card').empty()
     $('#todo-card').hide()
     $('#edit-card').hide()
 }
@@ -63,7 +64,6 @@ const afterLogin = (event) => {
 }
 
 const logout = (event) => {
-    $('#movie-card').hide()
     beforeLogin()
     localStorage.clear()
     const auth2 = gapi.auth2.getAuthInstance();
@@ -173,7 +173,7 @@ const deletes = (event) => {
         method: 'DELETE',
         url: `http://localhost:3000/todos/${event.srcElement.dataset.id}`,
         headers: {
-            access_token: localStorage.getItem('access_tken')
+            access_token: localStorage.getItem('access_token')
         }
     })
         .done(res => {

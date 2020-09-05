@@ -39,7 +39,7 @@ class Controller {
         }
     }
 
-    static async googleLogin(req, res) {
+    static async googleLogin(req, res, next) {
         try {
             const client = new OAuth2Client(process.env.CLIENT_ID);
             const { id_token } = req.headers
@@ -71,10 +71,19 @@ class Controller {
             } else {
                 const userCred = {
                     email : payload.email,
-                    password : 'cred1234'
+                    password : process.env.GOOGLE_PASS_CRED
                 }
 
-                await User.create(userCred)
+                const user = await User.create(userCred)
+                
+                // diulang supaya klo user google blm ada bisa langsung masuk tanpa reload
+                generateToken({email : user.email, id : user.id}, (err, data) => {
+                    if(err) {
+                        throw err
+                    } else {
+                        res.status(200).json(data)
+                    }
+                })
             }
         } catch(err) {
             next(err)

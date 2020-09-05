@@ -4,6 +4,7 @@ const errHandler = (err, req, res, next) => {
     // console.log(err)
 
     switch (err.name) {
+        case 'SequelizeUniqueConstraintError':
         case 'SequelizeValidationError':
             err.errors.forEach(error => {
                 errors.push(error.message)
