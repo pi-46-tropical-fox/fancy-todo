@@ -1,7 +1,8 @@
 const { User } = require('../models')
 const { generateToken } = require('../helpers/jwt')
 const bcrypt = require('bcrypt')
-
+//verify google login
+const {OAuth2Client} = require('google-auth-library');
 class UserController {
 
   static register(req, res, next) {
@@ -42,6 +43,29 @@ class UserController {
       .catch(err => {
         return next(err)
       })
+  }
+  static googleLogin(req, res, next) {
+    const client = new OAuth2Client(process.env.CLIENT_ID);
+    const {google_access_token} = req.headers
+    client.verifyIdToken({
+      idToken: google_access_token,
+      audience: process.env.CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
+      // Or, if multiple clients access the backend:
+      //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+    })
+    .then(ticket => {
+      return payload = ticket.getPayload();
+    })
+    .then(payload => {
+      console.log(payload);
+      // email = payload.email
+      // return User.findOne({
+      //   where: { email }
+      // })
+    })
+    .catch(err => {
+      console.log(err);
+    })
   }
 }
 

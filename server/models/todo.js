@@ -31,7 +31,10 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    status: DataTypes.BOOLEAN,
+    status: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
     due_date: {
       type: DataTypes.DATE,
       validate: {
@@ -39,8 +42,8 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Due Date required!'
         },
         isAfter: {
-          args: "2020-09-01",
-          msg: "Due Date must be after 1 Sept 2020!"
+          args: "2020-09-05",
+          msg: "Due Date must be after 5 Sept 2020!"
         }
       }
     },

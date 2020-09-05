@@ -7,7 +7,9 @@ body {
 }
 
 .brand-logo {
-  font-weight: 600;
+  font-weight: 500;
+  font-size: large;
+  font-family: 'Great Vibes', cursive;
 }
 
 a {
@@ -21,3 +23,5 @@ a {
 .sub-title {
   font-family: 'Montserrat', sans-serif;
 }
+
+

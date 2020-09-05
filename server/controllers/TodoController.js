@@ -3,7 +3,7 @@ const {Todo} = require('../models');
 class TodoController {
 
   static createTodo(req, res, next) {
-    // console.log(req.userData, 'ini di create book');
+    console.log(req.userData, 'ini di create book');
     var todo = {
       title: req.body.title,
       description: req.body.description,

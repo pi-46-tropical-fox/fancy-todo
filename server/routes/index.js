@@ -6,17 +6,15 @@ const {authentication, authorization} = require('../middlewares/auth')
 
 router.post('/register', UserController.register);
 router.post('/login', UserController.login);
+router.post('/googleLogin', UserController.googleLogin)
 
-router.use(authentication);
-router.use(authorization);
+router.get('/todos', authentication, TodoController.getTodos);
+router.post('/todos', authentication, TodoController.createTodo);
 
-router.get('/todos', TodoController.getTodos);
-router.post('/todos', TodoController.createTodo);
+router.get('/todos/:id', authentication, authorization, TodoController.getTodoById);
+router.put('/todos/:id', authentication, authorization, TodoController.updateTodo);
 
-router.get('/todos/:id', TodoController.getTodoById);
-router.put('/todos/:id', TodoController.updateTodo);
-
-router.delete('/todos/:id', TodoController.deleteTodo);
+router.delete('/todos/:id', authentication, authorization, TodoController.deleteTodo);
 
 //get list zomato
 

@@ -4,41 +4,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-signin-scope" content="profile email">
+  <meta name="google-signin-client_id" content="1015364203373-eckuq7gjp9qa6611htsguurnk5hu53fi.apps.googleusercontent.com">
+  <script src="https://apis.google.com/js/platform.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
   <link rel="stylesheet" href="css/style.css">
   <title>Fancy Todos</title>
 </head>
 
 <body>
-  <nav>
+  <nav class="navbar">
     <div class="nav-wrapper blue darken-4">
       <a href="#" class="brand-logo center">Fancy Todo</a>
       <ul id="nav-mobile" class="left hide-on-med-and-down">
-        <li><a href="">Home</a></li>
-        <li><a href="">Add Todo</a></li>
-        <li><a href="">Logout</a></li>
+        <li><a id="nav-login" href="#">Login</a></li>
+        <li><a id="nav-home" href="#">Home</a></li>
+        <li><a id="nav-add-todo" href="#">Add Todo</a></li>
+        <li><a id="nav-logout" href="#" >Logout</a></li>
       </ul>
     </div>
   </nav>
 
-  <div class="register">
+  <div id="register">
     <center>
       <img class="responsive-img" style="width: 250px;" src="" />
       <div class="section"></div>
-
       <h5 class="sub-title">Create your account</h5>
       <div class="section"></div>
-
       <div class="container">
         <div class="z-depth-1 grey lighten-4 row"
           style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
 
-          <form class="col s12" method="post">
+          <form class="col s12" method="post" id="registerForm">
             <div class='row'>
               <div class='input-field'>
-                <input class='validate' type='text' name='name' id='name' />
-                <label for='name'>Enter your name</label>
+                <input class='validate' type='text' name='name' id='name-register' />
+                <label for='name-register'>Enter your name</label>
               </div>
             </div>
 
@@ -67,26 +70,28 @@
     </center>
   </div>
 
-  <div class="login">
+  <div id="login">
     <center>
       <img class="responsive-img" style="width: 250px;" src="" />
+      <div class="section"></div>
       <h5 class="sub-title">Please login to your account</h5>
+      <div class="section"></div>
       <div class="container">
         <div class="z-depth-1 grey lighten-4 row"
           style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
 
-          <form class="col s12" method="post">
+          <form class="col s12" method="post" id="loginForm">
             <div class='row'>
               <div class='input-field col s12'>
-                <input class='validate' type='email' name='email' id='email' />
-                <label for='email'>Enter your email</label>
+                <input class='validate' type='email' name='loginEmail' id='loginEmail' />
+                <label for='loginEmail'>Enter your email</label>
               </div>
             </div>
 
             <div class='row'>
               <div class='input-field col s12'>
-                <input class='validate' type='password' name='password' id='password' />
-                <label for='password'>Enter your password</label>
+                <input class='validate' type='password' name='loginPassword' id='loginPassword' />
+                <label for='loginPassword'>Enter your password</label>
               </div>
               <label style='float: right;'>
               </label>
@@ -99,57 +104,55 @@
               </div>
             </center>
           </form>
+          <p>or</p>
           <center>
             <div class='row'>
-              <button type='submit' name='btn_login' class='button col s12 btn btn-large blue darken-4'>Google</button>
+              <div class="g-signin2" data-onsuccess="onSignIn"></div>
             </div>
+            <a href="#" onclick="googleSignOut();">Sign out</a>
           </center>
         </div>
       </div>
-      <a href="/register">Create account</a>
+      <a href="#" id="nav-register">Create account</a>
     </center>
   </div>
   <center>
-    <div class="content">
+    <div id="add-todo">
       <h5 class="sub-title">Add Todo</h5>
       <div class="z-depth-1 grey lighten-4 row"
         style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
-        <form class="col s12" method="post">
+        <form class="col s12" method="post" id="add-form">
           <div class='row'>
             <div class='input-field col s12'>
-              <input class='validate' type='text' name='title' id='title' />
-              <label for='title'>Enter your title</label>
+              <input class='validate' type='text' name='input-title' id='input-title' />
+              <label for='input-title'>Enter your title</label>
             </div>
           </div>
           <div class='row'>
             <div class='input-field col s12'>
-              <input class='validate' type='text' name='description' id='description' />
-              <label for='description'>Enter description</label>
+              <input class='validate' type='text' name='input-description' id='input-description' />
+              <label for='input-description'>Enter description</label>
             </div>
           </div>
           <div class='row'>
-            <label for='due_date'>Enter due date</label>
+            <label for='input-date'>Enter due date</label>
             <div class='input-field col s12'>
-              <input class='validate' type='date' name='due_date' id='due_date' />
+              <input class='validate' type='date' name='input-date' id='input-date' />
             </div>
           </div>
           <div class='row'>
             <div class='input-field col s12'>
-              <option value="">
-                <label>
-                  <input type="radio" class="with-gap">
-                </label>
-              </option>
+              <button type='submit' class='button btn blue darken-4'>Add Todo</button>
             </div>
           </div>
         </form>
       </div>
   </center>
   <center>
-    <div id="services">
+    <div id="todo-list">
       <div class="container">
         <h5 class="sub-title">Todo List</h5>
-          <table class="highlight">
+          <table>
               <thead>
                   <tr>
                       <th>#</th>
@@ -157,30 +160,10 @@
                       <th>Description</th>
                       <th>Status</th>
                       <th>Due Date</th>
+                      <th colspan="2">Action</th>
                   </tr>
               </thead>
-              <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Watch Movie</td>
-                    <td>Watch movie after finish your challenge</td>
-                    <td>false</td>
-                    <td>05-09-2020</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Learn jquery</td>
-                    <td>Learn jquery with hacktiv8</td>
-                    <td>false</td>
-                    <td>05-09-2020</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>Holiday</td>
-                    <td>Go to Bali's white beaches</td>
-                    <td>false</td>
-                    <td>10-09-2020</td>
-                  </tr>
+              <tbody id="table-todo">
               </tbody>
           </table><br>
           <!-- <button type='submit' name='btn_login' class='button pink darken-1 col s12 btn btn-large'><a
@@ -188,9 +171,48 @@
       </div>
   </div>
   </center>
+  <center>
+    <div id="edit-todo">
+      <h5 class="sub-title">Edit Todo</h5>
+      <div class="z-depth-1 grey lighten-4 row"
+        style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+        <form class="col s12" method="post" id="add-form">
+          <div class='row'>
+            <div class='input-field col s12'>
+              <input class='validate' type='text' name='edit-title' id='edit-title' />
+              <label for='edit-title'>Enter your title</label>
+            </div>
+          </div>
+          <div class='row'>
+            <div class='input-field col s12'>
+              <input class='validate' type='text' name='edit-description' id='edit-description' />
+              <label for='edit-description'>Enter description</label>
+            </div>
+          </div>
+          <div class='row'>
+            <div class='input-field col s12'>
+              <input class='validate' type='text' name='edit-status' id='edit-status' />
+              <label for='edit-status'>Enter status</label>
+            </div>
+          </div>
+          <div class='row'>
+            <label for='input-date'>Enter due date</label>
+            <div class='input-field col s12'>
+              <input class='validate' type='date' name='edit-date' id='edit-date' />
+            </div>
+          </div>
+          <div class='row'>
+            <div class='input-field col s12'>
+              <button type='submit' class='button btn blue darken-4'>Edit Todo</button>
+            </div>
+          </div>
+        </form>
+      </div>
+  </center>
 
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+  <script src="./main.js"></script>
 </body>
 
 </html>
