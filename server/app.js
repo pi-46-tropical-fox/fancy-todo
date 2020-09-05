@@ -8,9 +8,10 @@ const errHandler = require('./middlewares/errHandler')
 
 // console.log(process.env.SECRET)
 
+app.use(cors())
+app.options('*', cors())
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
-app.use(cors())
 
 //errorhandler harus di use paling terakhir
 app.use('/', router)

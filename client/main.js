@@ -38,9 +38,10 @@ function afterLogin() {
     $('#form-register').hide()
     $('#form-add-todo').hide()
     $('#form-edit-todo').hide()
-    $('#list-todo').show()
     $('#editTodo').show()
+    $('#listTodo').show()
     todoList()
+    weather()
 }
 
 function navbarAdd() {
@@ -73,6 +74,60 @@ function editTodo(idTodo) {
     })
 }
 
+function deleteOutstandingTodo(idTodo) {
+    $.ajax({
+        method: 'DELETE',
+            url: `http://localhost:3000/mytodos/${idTodo}`,
+            headers: {
+                access_token: localStorage.getItem('access_token')
+            }
+    })
+    .done(response => {
+        console.log(response)
+    })
+    .fail(err => {
+        console.log(err)
+    })
+    event.preventDefault()
+    afterLogin()
+}
+
+function deleteCompletedTodo(idTodo) {
+    $.ajax({
+        method: 'DELETE',
+            url: `http://localhost:3000/mytodos/${idTodo}`,
+            headers: {
+                access_token: localStorage.getItem('access_token')
+            }
+    })
+    .done(response => {
+        console.log(response)
+    })
+    .fail(err => {
+        console.log(err)
+    })
+    event.preventDefault()
+    afterLogin()
+}
+
+function completeTodo(idTodo) {
+    $.ajax({
+        method: 'PUT',
+            url: `http://localhost:3000/mytodos/complete/${idTodo}`,
+            headers: {
+                access_token: localStorage.getItem('access_token')
+            }
+    })
+    .done(response => {
+        console.log(response)
+    })
+    .fail(err => {
+        console.log(err)
+    })
+    event.preventDefault()
+    afterLogin()
+}
+
 function todoList() {
     $.ajax({
         method: 'GET',
@@ -87,7 +142,7 @@ function todoList() {
                 if (data.status == 'complete') {
                     $('#completed-todos').append(`
                     <div class="card-header bg-primary" id="todoTitle">${data.title}
-                        <button type="submit" class="btn btn-info float-right mr-2" id="delete-outstanding-todo">Delete</button>
+                        <button type="submit" class="btn btn-info float-right mr-2" onclick="deleteCompletedTodo(${data.id})">Delete</button>
                     </div>
                         <div class="card-body">
                             <h5 class="card-title" id="todoDueDate">${data.due_date}</h5>
@@ -97,9 +152,9 @@ function todoList() {
                 else {
                     $('#outstanding-todos').append(`
                     <div class="card-header bg-primary" id="todoTitle">${data.title}
-                        <button class="btn btn-info float-right mr-2" id="complete-outstanding-todo">Complete</button>
+                        <button class="btn btn-info float-right mr-2" onclick="completeTodo(${data.id})">Complete</button>
                         <button class="btn btn-info float-right mr-2" onclick="editTodo(${data.id})">Edit</button>
-                        <button class="btn btn-info float-right mr-2" id="delete-outstanding-todo">Delete</button>
+                        <button class="btn btn-info float-right mr-2" onclick="deleteOutstandingTodo(${data.id})">Delete</button>
                     </div>
                     <div class="card-body">
                             <h5 class="card-title" id="todoDueDate">${data.due_date}</h5>
@@ -134,6 +189,31 @@ function onSignIn(googleUser) {
         .fail((err) => {
             console.log(err);
         })
+}
+
+function weather() {
+    $.ajax({
+        method: 'GET',
+        url: 'http://localhost:3000/weather',
+        headers: {
+            access_token: localStorage.getItem('access_token')
+        }
+    })
+    .done(response => {
+        console.log(response)
+        $('#weather-card').append(`
+        <div class="card p-4 rounded-lg" style="width: 18rem;">
+        <h3>Today's Weather</h3><br>
+            <img src="${response.data.current.weather_icons[0]}" class="card-img-top" style="height:10em">
+            <div class="card-body">
+                <h5 class="card-title">${response.data.current.weather_descriptions[0]}</h5>
+                <p class="card-text">${response.data.location.localtime}</p>
+            </div>
+        </div>`)
+    })
+    .fail((err) => {
+        console.log(err);
+    })
 }
 
 $(document).ready(function () {
@@ -268,11 +348,11 @@ $(document).ready(function () {
                 title, description, status, due_date
             },
             headers: {
-                access_token: localStorage.access_token
+                access_token: localStorage.getItem('access_token')
             }
         })
             .done(response => {
-                console.log(headers)
+                // console.log(headers)
                 $('#edittodoTitle').val('')
                 $('#edittodoDescription').val('')
                 $('#edittodoDueDate').val('')

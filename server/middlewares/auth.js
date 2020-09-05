@@ -24,11 +24,12 @@ const authentication = async (req, res, next) => {
 }
 
 const authorization = async (req, res, next) => {
-    const { todoId } = req.params
-    console.log(todoId, '<<<di authorization')
+    const { idTodo } = req.params
+    console.log(idTodo, '<<<di authorization')
     try {
-        const todo = await Todo.findByPk(todoId)
-        console.log(todoId, 'ini req.userData di authorization')
+        const todo = await Todo.findByPk(idTodo)
+        console.log(req.userData.id, '<<<ini req.userData di authorization')
+        console.log(todo.UserId, '<<<ini todo.UserId')
         if (todo && todo.UserId === req.userData.id) {
             next()
         } else {

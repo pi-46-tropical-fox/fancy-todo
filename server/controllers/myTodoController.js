@@ -36,7 +36,7 @@ class MyTodoController {
     }
 
     static updateTodo(req, res, next) {
-        console.log(req.params.todoId, '<<<<<<<<<<<reqparams')
+        console.log(req.params.idTodo, '<<<<<<<<<<<reqparams')
         let params = {
             title: req.body.title,
             description: req.body.description,
@@ -57,8 +57,26 @@ class MyTodoController {
                 })
     }
 
+    static completeTodo(req, res, next) {
+        let params = {
+            status: 'complete'
+        }
+            Todo.update(params, {
+                where: {
+                    id: req.params.idTodo
+                    }
+            })
+                .then(data => {
+                    return res.status(200).json({data})
+                })
+                .catch(err => {
+                    return next(err)
+                    // return res.status(500).json({ message: err.message })
+                })
+    }
+
     static deleteTodo(req, res, next) {
-        Todo.destroy({ where: { id: req.params.todoId } })
+        Todo.destroy({ where: { id: req.params.idTodo } })
             .then(data => {
                 return res.status(200).json(data)
             })
