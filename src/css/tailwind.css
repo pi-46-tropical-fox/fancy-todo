@@ -1,9 +1,154 @@
 /* purgecss start ignore */
 @tailwind base;
+
+nav, footer {
+    position: fixed;
+    width: 100vw;
+    display: flex;
+
+    z-index: 5
+}
+
+nav {
+    top: 0;
+}
+
+footer {
+    bottom: 0;
+}
+
+main {
+    height: 100vh;
+}
+
+main > .container {
+    max-width: 1200px;
+}
+
 @tailwind components;
 
+.tab {
+    @apply flex;
+    @apply justify-between;
+}
 
+#auth > .card {
+    width: 400px;
+}
 
+#auth > .card > * {
+    @apply w-full;
+}
+
+#auth > .card .tab a {
+    @apply border-b-2;
+}
 
 /* purgecss end ignore */
+
 @tailwind utilities;
+
+h1 {
+    @apply text-4xl;
+}
+
+h3 {
+    @apply text-xl;
+}
+
+#logo h3, #logo-login h1 {
+    font-family: 'Pacifico', cursive;
+}
+
+.info{
+    @apply bg-blue-700;
+    @apply text-white;
+}
+
+.danger{
+    @apply bg-red-700;
+    @apply text-white;
+}
+
+.warning{
+    @apply bg-yellow-700;
+    @apply text-white;
+}
+
+.success{
+    @apply bg-green-700;
+    @apply text-white;
+}
+
+.btn{
+    @apply px-4 py-2;
+    @apply rounded-md;
+    @apply transition-all;
+    @apply duration-100;
+}
+
+.btn:hover{
+    @apply bg-opacity-75;
+}
+
+.btn:active{
+    @apply bg-opacity-50;
+    @apply opacity-75;
+}
+
+.card {
+    @apply p-8;
+    @apply mx-auto;
+    @apply shadow-md;
+    @apply w-auto;
+}
+
+.modal {
+    @apply opacity-0;
+    @apply pointer-events-none;
+    @apply fixed;
+    @apply w-full h-full;
+    @apply top-0 left-0;
+    @apply flex;
+    @apply items-center justify-center;
+}
+
+.modal-overlay {
+    @apply absolute;
+    @apply w-full h-full;
+    @apply bg-gray-900;
+    @apply opacity-50;
+}
+
+.modal-close {
+    @apply absolute;
+    @apply top-0 right-0;
+    @apply cursor-pointer;
+    @apply flex flex-col;
+    @apply items-center;
+    @apply mt-4 mr-4;
+    @apply text-white text-sm;
+    @apply z-50
+}
+
+.modal-content {
+    @apply py-4 px-6;
+    @apply text-left;
+}
+
+.modal-title {
+    @apply flex;
+    @apply justify-between items-center;
+    @apply pb-3;
+}
+
+.modal-title > .title {
+    @apply text-2xl;
+    @apply font-bold;
+}
+
+.modal-footer {
+    @apply flex;
+    @apply justify-end;
+    @apply pt-2;
+}
