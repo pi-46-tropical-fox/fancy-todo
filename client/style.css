@@ -24,12 +24,6 @@ body {
 
 }
 
-#todo-list {
-    position: absolute;               
-    top: 50%;
-    left: 50%;
-    transform: translate( -25%, -60%);
-}
 
 #todo-add {
     position: absolute;               
