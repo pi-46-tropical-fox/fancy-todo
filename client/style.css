@@ -1,0 +1,33 @@
+body {
+    background-color: #99CCFF;
+}
+
+#home {
+    position: absolute;               
+    top: 50%;
+    left: 50%;
+    transform: translate( -40%, -20%);
+}
+
+#form-login {
+    position: absolute;               
+    top: 50%;
+    left: 50%;
+    transform: translate( -15%, -60%);
+}
+
+#form-register {
+    position: absolute;               
+    top: 50%;
+    left: 50%;
+    transform: translate( -15%, -60%);
+
+}
+
+
+#todo-add {
+    position: absolute;               
+    top: 50%;
+    left: 50%;
+    transform: translate( -15%, -60%);
+}
