@@ -125,9 +125,27 @@ const checkAuth = () => {
 const showMain = () => {
     $('#auth').hide()
     $('nav').show()
+
+    $('#name').text(localStorage.getItem('name'))
     $('#main').show()
 
+    showAvatar(localStorage.getItem('picture'))
+
+    showQuote()
     getTodos()
+}
+
+const showAvatar = (avatar) => {
+    if(avatar){
+        $('#avatar').css('background-image', `url(${avatar})`)
+        $('#avatar').css('background-size', 'cover')
+    } else {
+        $('#avatar').css('background-color', '#777')
+    }
+}
+
+const hideAvatar = () => {
+    $('#avatar').removeAttr('style')
 }
 
 const showLogin = () => {
@@ -142,6 +160,9 @@ const showLoginForm = (e) => {
 
     $('#register').hide()
     $('#login').show()
+    
+    $('#register-tab').removeClass('active')
+    $('#login-tab').addClass('active')
 }
 
 const showRegisterForm = (e) => {
@@ -149,25 +170,32 @@ const showRegisterForm = (e) => {
     
     $('#login').hide()
     $('#register').show()
+
+    $('#login-tab').removeClass('active')
+    $('#register-tab').addClass('active')
 }
 
 const init = () => {
+    hideAvatar()
     $('nav').hide()
     $('#main').hide()
     $('#auth').hide()
     checkAuth()
 }
 
-
 // Todos
 
 const getTodos = () => {
-    let access_token = localStorage.getItem('access_token')
+    let { access_token, id } = getCurrentAuth()
+
     $.ajax({
         method: 'GET',
         url: `${baseUrl}/todos`,
         headers: {
             access_token
+        },
+        data: {
+            id
         }
     })
     .done(data => {
@@ -176,8 +204,7 @@ const getTodos = () => {
 }
 
 const postTodo = () => {
-    let access_token = localStorage.getItem('access_token')
-    let id = localStorage.getItem('id')
+    let { access_token, id } = getCurrentAuth()
 
     let data = {
         id,
@@ -211,16 +238,18 @@ const editTodo = (todo) => {
     toggleModal()
 }
 
+const markAsDone = () => {
+    let { access_token, id } = getCurrentAuth()
+}
+
 const updateTodo = () => {
-    let access_token = localStorage.getItem('access_token')
-    let id = localStorage.getItem('id')
+    let { access_token, id } = getCurrentAuth()
 
     let data = {
         id,
         title: $('#title').val(),
         description: $('#description').val(),
         due_date: $('#due_date').val(),
-        status: 'pending',
         code: $('#code').val()
     }
 
@@ -239,7 +268,37 @@ const updateTodo = () => {
     })
 }
 
+const getCurrentAuth = () => {
+    let data = {
+        access_token: localStorage.getItem('access_token'),
+        id: localStorage.getItem('id')
+    }
+
+    return data
+}
+
 // 3rd Party APIs
+
+const showQuote = () => {
+    let { access_token } = getCurrentAuth()
+
+    $.ajax({
+        method: 'GET',
+        url: `${baseUrl}/api/quote`,
+        headers: { access_token },
+    })
+    .done((data) => {
+        $('#quote').text(`"${data.en}"`)
+        $('#quoteAuthor').text(`-- ${data.author}`)
+    })
+    .fail(err => {
+        Swal.fire('Oops!', err.responseJSON.msg.join('<br>'), 'error')
+    })
+}
+
+const getWallpaper = () => {
+    // 
+}
 
 // main function
 
