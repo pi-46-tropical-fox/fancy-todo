@@ -4,7 +4,6 @@
 nav, footer {
     position: fixed;
     width: 100vw;
-    display: flex;
 
     z-index: 5
 }
@@ -21,47 +20,73 @@ main {
     height: 100vh;
 }
 
-main > .container {
-    max-width: 1200px;
-}
-
 @tailwind components;
 
-.tab {
-    @apply flex;
-    @apply justify-between;
+body {
+    @apply bg-gray-200;
+    @apply overflow-hidden;
+}
+
+#auth, #main {
+    @apply w-screen h-screen;
+}
+
+#auth {
+    @apply flex flex-col;
+    @apply justify-center items-center align-middle;
 }
 
 #auth > .card {
     width: 400px;
+    @apply grid gap-4;
 }
 
-#auth > .card > * {
-    @apply w-full;
+.tab-wrapper {
+    @apply flex;
+    @apply justify-center;
 }
 
-#auth > .card .tab a {
+#auth > .card > .tab-wrapper .tab {
     @apply border-b-2;
+    @apply px-8 py-2;
+    @apply mx-4;
+}
+
+#auth > .card > .tab-wrapper .tab.active {
+    @apply bg-gray-200;
 }
 
 /* purgecss end ignore */
 
 @tailwind utilities;
 
+nav, .card {
+    @apply bg-white;
+}
+
+.container {
+    max-width: 1200px;
+    @apply mx-auto;
+}
+
 nav, footer {
     @apply shadow-md;
 }
 
 h1 {
-    @apply text-4xl;
+    @apply text-6xl;
 }
 
 h3 {
-    @apply text-xl;
+    @apply text-2xl;
 }
 
 #logo h3, #logo-login h1 {
     font-family: 'Pacifico', cursive;
+}
+
+#quote, #quoteAuthor {
+    @apply text-gray-600;
 }
 
 .info{
@@ -102,9 +127,9 @@ h3 {
 
 .card {
     @apply p-8;
-    @apply mx-auto;
-    @apply shadow-md;
+    @apply shadow-lg;
     @apply w-auto;
+    @apply rounded-lg;
 }
 
 .modal {
@@ -155,4 +180,14 @@ h3 {
     @apply flex;
     @apply justify-end;
     @apply pt-2;
+}
+
+input {
+    @apply my-2;
+}
+
+input:not([type=checkbox]):not([type=submit]):not([type=radio]) {
+    @apply h-12;
+    @apply w-full;
+    @apply text-lg;
 }
