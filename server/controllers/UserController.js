@@ -36,13 +36,13 @@ class UserController {
 	}
 
 	static async googleLogin(req, res, next) {
-		const client = new OAuth2Client(process.env.CLIENT_ID);
+		const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 		const { google_access_token } = req.headers;
 		async function verify() {
 			try {
 				const ticket = await client.verifyIdToken({
 					idToken: google_access_token,
-					audience: process.env.CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
+					audience: process.env.GOOGLE_CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
 					// Or, if multiple clients access the backend:
 					//[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
 				});
