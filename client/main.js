@@ -273,23 +273,25 @@ function signOut() {
     })
 }
 
-function weathers () {
+function weathers (e) {
+    e.preventDefault()
+    const kota = $('#searchCity').val()
+    
     $.ajax({
-        url: "http://localhost:3000/weathers",
+        url: `http://localhost:3000/weathers?city=${kota}`,
         method: "get"
 
     })
     .done(response => {
-        console.log(response.current, "<<<<<<<<<<<< hasil weathers")
+        console.log(response, "<<<<<<<<<<<< hasil weathers")
 
-        $('#weather').append(`
-        <marquee scrolldelay="100" bgcolor="grey">Welcome Jakarta, Observasi Pukul: ${response.current.observation_time}, Suhu: ${response.current.temperature} derajat</marquee>
-        `)
-        
+        $('#weather').text(`Welcome ${kota}, Observasi Pukul: ${response.current.observation_time}, Suhu: ${response.current.temperature} derajat, result: ${response.current.weather_descriptions[0]}`)
     })
     .fail(err => {
         console.log(err)
     })
+
+    $('#searchCity').val('')
 }
 
 $(document).ready(function() {
@@ -311,5 +313,6 @@ $(document).ready(function() {
     $('#registerForm').submit(registerForm)
     $('#addTodo').submit(addTodo)
     // $('#buttonDelete').click(deleteTodo)
-    weathers()
+    // weathers()
+    $('#submitWeather').submit(weathers)
 })
