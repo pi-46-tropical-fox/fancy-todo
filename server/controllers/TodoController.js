@@ -47,7 +47,7 @@ Hello ${user.username}, here is your new todo :
 		try {
 			const user = await User.findOne({ where: { id: UserId } });
 			if (!user) {
-				throw { message: `The user with id ${todo_id} was not found.`, status_code: 400 };
+				throw { message: `The user with id ${UserId} was not found.`, status_code: 400 };
 			} else {
 				const todos = await Todo.findAll({ where: { UserId } });
 				return res.status(200).json(todos);

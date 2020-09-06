@@ -313,4 +313,39 @@ const logout = event => {
 	$("#menu-edit-todo").hide();
 	nav_before_login();
 	localStorage.clear(); // or localStorage.removeItem("access_token") to remove access_token only
+	signOut(); // Google account sign out
 };
+
+// Google account sign in
+function onSignIn(googleUser) {
+	const profile = googleUser.getBasicProfile();
+	console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+	console.log('Name: ' + profile.getName());
+	console.log('Image URL: ' + profile.getImageUrl());
+	console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+
+	// get google access token (id token) after sign in
+	const google_access_token = googleUser.getAuthResponse().id_token;
+	console.log('Google Access Token (ID Token): ' + google_access_token);
+
+	// verify token in server-side
+	$.ajax({
+		method: "POST",
+		url: "http://localhost:3000/googleLogin",
+		headers: { google_access_token }
+	})
+		.done(response => {
+			localStorage.setItem("access_token", response.access_token);
+			localStorage.setItem("UserId", response.UserId);
+			all_todos();
+		})
+		.fail(err => console.log(err));
+}
+
+// Google account sign out
+function signOut() {
+    const auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+    	console.log('User signed out.');
+    });
+}

@@ -5,6 +5,7 @@ const { authentication, authorization_1, authorization_2 } = require("../middlew
 
 router.post("/register", UserController.register);
 router.post("/login", UserController.login);
+router.post("/googleLogin", UserController.googleLogin);
 
 router.use(authentication);
 router.post("/todos", TodoController.createTodo);
