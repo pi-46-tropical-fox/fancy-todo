@@ -9,6 +9,7 @@
 
     <meta name="google-signin-client_id" content="58820793100-ld40iv2c2dbem6upd459qrtj0r4hl9c2.apps.googleusercontent.com">
 
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/main.css">
 </head>
@@ -16,15 +17,22 @@
 <body class="bing-wallpapers">
     <!-- NAV COMPONENT -->
     <nav>
-        <div id="nav-menu">=
-            <div id="menu-contents">
-                <a href="#" onclick="signOut(event)"><span>Sign Out</span></a>
+        <div class="container">
+            <div class="flex justify-between items-center py-2">
+                <div class="h-full w-16" id="nav-menu">
+                    <i id="menu-btn" class="la la-bars"></i>
+                </div>
+                <div id="logo">
+                    <h3>Todoers!</h3>
+                </div>
+                <div class="rounded-full h-8 w-8" id="avatar">
+                </div>
             </div>
         </div>
-        <div id="logo">
-            <h1>Todoers!</h1>
+
+        <div class="fixed" id="menu-contents">
+            <a href="#" onclick="signOut(event)"><span>Sign Out</span></a>
         </div>
-        <div id="avatar">Avatar</div>
     </nav>
     <!-- End: NAV COMPONENT -->
 
@@ -34,13 +42,21 @@
         <!-- AUTH: Login & Register -->
         <div id="auth">
             <!-- Logo, Big -->
-            <div id="logo-login">
-                <h3>Todoers!</h3>
+            <div class="mb-8" id="logo-login">
+                <h1>Todoers!</h1>
             </div>
             <div class="card">
-                <div class="tab wrapper">
-                    <div id="login-tab"><a href="#" onclick="showLoginForm(event)">Login</a></div>
-                    <div id="register-tab"><a href="#" onclick="showRegisterForm(event)">Register</a></div>
+                <div class="tab-wrapper">
+                    <a href="#" onclick="showLoginForm(event)">
+                        <span class="tab active" id="login-tab">
+                            Login
+                        </span>
+                    </a>
+                    <a href="#" onclick="showRegisterForm(event)">
+                        <span class="tab" id="register-tab">
+                            Register
+                        </span>
+                    </a>
                 </div>
                 <div class="wrapper">
                     <div id="login">
@@ -51,8 +67,8 @@
                             <div class="form-group">
                                 <input type="password" name="password" id="login-password" placeholder="Password" />
                             </div>
-                            <div class="form-group">
-                                <input type="submit" value="Login" />
+                            <div class="form-group text-center">
+                                <input type="submit" class="btn info" value="Login" />
                             </div>
                         </form>
                     </div>
@@ -67,14 +83,15 @@
                             <div class="form-group">
                                 <input type="password" name="password" id="reg-password" placeholder="Password" />
                             </div>
-                            <div class="form-group">
-                                <input type="submit" value="Register" />
+                            <div class="form-group text-center">
+                                <input type="submit" class="btn info" value="Register" />
                             </div>
                         </form>
                     </div>
                 </div>
-                <div class="wrapper">
-                    <div class="g-signin2" data-onsuccess="googleLogin"></div>
+                <div class="wrapper text-center">
+                    <span class="block mb-4">Or sign in using your Google account</span>
+                    <div class="g-signin2 flex justify-center" data-onsuccess="googleLogin"></div>
                     <!-- <a href="#" id="sign-out" onclick="signOut">Sign Out</a> -->
                 </div>
             </div>
@@ -82,24 +99,33 @@
         <!-- End: AUTH: Login & Register -->
 
         <!-- MAIN: Todo List -->
-        <div id="main">
+        <div class="pt-16" id="main">
 
-            <div class="container">
+            <div class="container mx-auto grid grid-cols-3 gap-4">
 
                 <!-- Greeting Card -->
-                <div id="greeting" class="card">
+                <div id="greeting" class="card grid gap-4">
                     <!--  -->
-                    Welcome, <span id="name"></span>
+                    <div class="section">
+                        <span class="block">Welcome,</span>
+                        <span class="block text-2xl" id="name"></span>
+                    </div>
 
-                    <span id="quote"></span>
-                    <span id="quoteAuthor"></span>
+                    <div class="section">
+                        <span class="block" id="quote"></span>
+                        <span class="block" id="quoteAuthor"></span>
+                    </div>
 
-                    <a href="#" class="btn info" onclick="toggleModal">Add new Todo</a>
+                    <div class="section">
+                        <span class="block">
+                            <a href="#" class="btn info" onclick="toggleModal">Add new Todo</a>
+                        </span>
+                    </div>
                 </div>
                 <!-- End: Greeting Card -->
 
                 <!-- Todo List Card -->
-                <div id="todo" class="card">
+                <div id="todo" class="card col-span-2">
 
                     <!--  -->
                     <div class="list">
@@ -178,7 +204,11 @@
     
     <!-- FOOTER COMPONENT -->
     <footer>
-        Made with &hearts; by Eas, for Hacktiv8 project.
+        <div class="container">
+            <span class="block mx-auto" id="about">
+                Made with &hearts; by Eas, for Hacktiv8 project.
+            </span>
+        </div>
     </footer>
     <!-- End: FOOTER COMPONENT -->
 
