@@ -25,7 +25,7 @@ class UserController {
 					throw { message: "The Email or Password is invalid.", status_code: 400 };
 				} else {
 					const access_token = generate_jwt_token(user);
-					return res.status(200).json({ access_token });
+					return res.status(200).json({ access_token, UserId: user.id });
 				}
 			}
 		} catch(err) {

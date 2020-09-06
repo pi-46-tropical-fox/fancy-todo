@@ -18,124 +18,125 @@
     <body>
   	<!-- nav-bar -->
   	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-	    <a class="navbar-brand" href="#">Fancy Todo</a>
+	    <span class="navbar-brand" href="#">Fancy Todo</span>
 	    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 	    	<span class="navbar-toggler-icon"></span>
 	    </button>
 	    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 	    	<div class="navbar-nav">
-	    		<a class="nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-	    		<a class="nav-link" href="#">Login</a>
-			    <a class="nav-link" href="#">Register</a>
-			    <a class="nav-link" href="#">All Todos</a>
-			    <a class="nav-link" href="#">My Todos</a>
-			    <a class="nav-link" href="#">Add Todo</a>
-			    <a class="nav-link" href="#">Edit Todo</a>
-			    <a class="nav-link" href="#">Delete Todo</a>
+	    		<a class="nav-link" id="nav-home" href="#" style="display: none;">Home</a>
+	    		<a class="nav-link" id="nav-login" href="#" style="display: none;">Login</a>
+			    <a class="nav-link" id="nav-register" href="#" style="display: none;">Register</a>
+			    <a class="nav-link" id="nav-all-todos" href="#" style="display: none;">Home</a>
+			    <a class="nav-link" id="nav-my-todos" href="#" style="display: none;">My Todos</a>
+			    <a class="nav-link" id="nav-add-todo" href="#" style="display: none;">Add Todo</a>
+			    <a class="nav-link" id="nav-logout" href="#" style="display: none;">Logout</a>
 	    	</div>
 		</div>
 	</nav>
 
-	<h1>Fancy Todo</h1><hr>
+	<!-- home -->
+	<div class="container mt-3" id="home" style="display: none;">
+		<h1>Welcome!</h1>
+		<p>Please login to proceed, or register if you don't have any account yet.</p>
+		<button type="button" class="btn btn-primary" id="home-login">Login</button>
+		<button type="button" class="btn btn-secondary" id="home-register">Register</button>
+	</div>
 
 	<!-- login-form -->
-	<form>
-		<div class="container mt-5" id="form-login">
-			<div class="row ">
-				<div class="col-6">
-					<div class="card">
-						<div class="card-body">
-							<h2 class="card-title">Login</h2><hr>
-							<form>
-								<div class="form-group row">
-									<label for="login-email" class="col-sm-3 col-form-label">Email :</label>
-									<div class="col-sm-9">
-										<input type="email" class="form-control" id="login-email">
-									</div>
+	<div class="container mt-3" id="menu-login" style="display: none;">
+		<div class="row ">
+			<div class="col-6">
+				<div class="card">
+					<div class="card-body">
+						<h1 class="card-title">Login</h1><hr>
+						<form id="form-login">
+							<div class="form-group row">
+								<label for="login-email" class="col-sm-3 col-form-label">Email :</label>
+								<div class="col-sm-9">
+									<input type="email" class="form-control" id="login-email">
 								</div>
-								<div class="form-group row">
-									<label for="login-password" class="col-sm-3 col-form-label">Password :</label>
-									<div class="col-sm-9">
-										<input type="password" class="form-control" id="login-password">
-									</div>
+							</div>
+							<div class="form-group row">
+								<label for="login-password" class="col-sm-3 col-form-label">Password :</label>
+								<div class="col-sm-9">
+									<input type="password" class="form-control" id="login-password">
 								</div>
-								<div class="form-group row">
-									<div class="col-sm-5 ml-auto">
-										<input type="submit" class="form-control btn btn-success" value="Login">
-									</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-sm-5 ml-auto">
+									<input type="submit" class="form-control btn btn-success" value="Login">
 								</div>
-							</form>
-						</div>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
-	</form>
+	</div>
 
 	<!-- register-form -->
-	<form>
-		<div class="container mt-5" id="form-login">
-			<div class="row">
-				<div class="col-6">
-					<div class="card">
-						<div class="card-body">
-							<h2 class="card-title">Register</h2><hr>
-							<form>
-								<div class="form-group row">
-									<label for="register-username" class="col-sm-3 col-form-label">Username :</label>
-									<div class="col-sm-9">
-										<input type="text" class="form-control" id="register-username">
-									</div>
-								</div>
-								<div class="form-group row">
-									<label for="register-email" class="col-sm-3 col-form-label">Email :</label>
-									<div class="col-sm-9">
-										<input type="email" class="form-control" id="register-email">
-									</div>
-								</div>
-								<div class="form-group row">
-									<label for="register-password" class="col-sm-3 col-form-label">Password :</label>
-									<div class="col-sm-9">
-										<input type="password" class="form-control" id="register-password">
-									</div>
-								</div>
-								<div class="form-group row">
-									<div class="col-sm-5 ml-auto">
-										<input type="submit" class="form-control btn btn-success" value="Register">
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</form>
-
-	<!-- Add Todo -->
-	<div class="container mt-5" id="form-add-todo">
+	<div class="container mt-3" id="menu-register" style="display: none;">
 		<div class="row">
 			<div class="col-6">
 				<div class="card">
 					<div class="card-body">
-						<h2 class="card-title">Add Todo</h2>
-						<form>
+						<h1 class="card-title">Register</h1><hr>
+						<form id="form-register">
 							<div class="form-group row">
-								<label for="add-input-title" class="col-sm-3 col-form-label">Title</label>
+								<label for="register-username" class="col-sm-3 col-form-label">Username :</label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" id="add-input-title">
+									<input type="text" class="form-control" id="register-username">
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="add-input-description" class="col-sm-3 col-form-label">Description</label>
+								<label for="register-email" class="col-sm-3 col-form-label">Email :</label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" id="add-input-description">
+									<input type="email" class="form-control" id="register-email">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="register-password" class="col-sm-3 col-form-label">Password :</label>
+								<div class="col-sm-9">
+									<input type="password" class="form-control" id="register-password">
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-sm-5 ml-auto">
+									<input type="submit" class="form-control btn btn-success" value="Register">
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Add Todo -->
+	<div class="container mt-3" id="menu-add-todo" style="display: none;">
+		<div class="row">
+			<div class="col-6">
+				<div class="card">
+					<div class="card-body">
+						<h1 class="card-title">Add Todo</h1>
+						<form id="form-add-todo">
+							<div class="form-group row">
+								<label for="add-todo-title" class="col-sm-3 col-form-label">Title</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="add-todo-title">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="add-todo-description" class="col-sm-3 col-form-label">Description</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="add-todo-description">
 								</div>
 							</div>
 						    <div class="form-group row">
-								<label for="add-input-due-date" class="col-sm-3 col-form-label">Due Date</label>
+								<label for="add-todo-due-date" class="col-sm-3 col-form-label">Due Date</label>
 								<div class="col-sm-9">
-									<input width="276" id="add-input-due-date">
+									<input width="276" id="add-todo-due-date">
 								</div>
 							</div>
 						    <div class="form-group row">
@@ -151,54 +152,42 @@
 	</div>
 
 	<!-- Edit Todo -->
-	<div class="container mt-5" id="form-add-todo">
+	<div class="container mt-3" id="menu-edit-todo" style="display: none;">
 		<div class="row">
 			<div class="col-6">
 				<div class="card">
 					<div class="card-body">
-						<h2 class="card-title">Edit Todo</h2>
-						<form>
+						<h1 class="card-title">Edit Todo</h1>
+						<form id="form-edit-todo">
 							<div class="form-group row">
-								<label for="edit-input-title" class="col-sm-3 col-form-label">Title</label>
+								<label for="edit-todo-title" class="col-sm-3 col-form-label">Title</label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" id="edit-input-title">
+									<input type="text" class="form-control" name="title" id="edit-todo-title">
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="edit-input-description" class="col-sm-3 col-form-label">Description</label>
+								<label for="edit-todo-description" class="col-sm-3 col-form-label">Description</label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" id="edit-input-description">
+									<input type="text" class="form-control" name="description" id="edit-todo-description">
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="edit-input-due-date" class="col-sm-3 col-form-label">Due Date</label>
+								<label for="edit-todo-status" class="col-sm-3 col-form-label">Status</label>
 								<div class="col-sm-9">
-									<input width="276" id="edit-input-due-date">
+									<select class="custom-select" id="edit-todo-status">
+									  	<option selected disabled>--- Status ---</option>
+									  	<option value="ongoing">Ongoing</option>
+									  	<option value="pending">Pending</option>
+									  	<option value="done">Done</option>
+									</select>
 								</div>
-							</div>
-							<div class="form-group row">
-						    	<legend class="col-form-label col-sm-2 pt-0">Status</legend>
-						    	<div class="col-sm-10" id="edit-input-status">
-						      		<div class="form-check">
-						        		<input class="form-check-input" type="radio" name="gridRadios" value="ongoing" checked>
-						        		<label class="form-check-label" for="gridRadios1">
-						            		ongoing
-						          		</label>
-						        	</div>
-						        	<div class="form-check">
-						        		<input class="form-check-input" type="radio" name="gridRadios" value="pending">
-						        		<label class="form-check-label" for="gridRadios1">
-						            		pending
-						          		</label>
-						        	</div>
-						        	<div class="form-check">
-						        		<input class="form-check-input" type="radio" name="gridRadios" value="done">
-						        		<label class="form-check-label" for="gridRadios1">
-						            		done
-						          		</label>
-						        	</div>
-						      	</div>
 						    </div>
+							<div class="form-group row">
+								<label for="edit-todo-due-date" class="col-sm-3 col-form-label">Due Date</label>
+								<div class="col-sm-9">
+									<input width="276" name="due_date" id="edit-todo-due-date">
+								</div>
+							</div>
 						    <div class="form-group row">
 								<div class="col-sm-5 ml-auto">
 									<input type="submit" class="form-control btn btn-success" value="Update">
@@ -212,109 +201,19 @@
 	</div>
 
 	<!-- All Todos -->
-	<div class="container mt-5" id="all-todos">
-		<div class="row">
-			<div class="col-12">
-				<h2 class="text-center">All Todos</h2>
-			</div>
-		</div>
-		<div class="row row-cols-1 row-cols-md-2">
-		  	<div class="col-6 mb-4">
-		    	<div class="card">
-		      		<div class="card-body">
-		        		<h3 class="card-title">Title</h3>
-		        		<p class="card-text">Description :</p>
-		        		<p class="card-text">Status :</p>
-		        		<p class="card-text">Due Date :</p>
-		        		<div class="col-sm-4 ml-auto">
-		        			<button type="button" class="btn btn-warning">Edit</button>
-		        			<button type="button" class="btn btn-danger">Delete</button>
-		        		</div>
-		      		</div>
-		    	</div>
-		  	</div>
-		  	<div class="col-6 mb-4">
-		    	<div class="card">
-		      		<div class="card-body">
-		        		<h3 class="card-title">Title</h3>
-		        		<p class="card-text">Description :</p>
-		        		<p class="card-text">Status :</p>
-		        		<p class="card-text">Due Date :</p>
-		        		<div class="col-sm-4 ml-auto">
-		        			<button type="button" class="btn btn-warning">Edit</button>
-		        			<button type="button" class="btn btn-danger">Delete</button>
-		        		</div>
-		      		</div>
-		    	</div>
-		  	</div>
-		  	<div class="col-6 mb-4">
-		    	<div class="card">
-		      		<div class="card-body">
-		        		<h3 class="card-title">Title</h3>
-		        		<p class="card-text">Description :</p>
-		        		<p class="card-text">Status :</p>
-		        		<p class="card-text">Due Date :</p>
-		        		<div class="col-sm-4 ml-auto">
-		        			<button type="button" class="btn btn-warning">Edit</button>
-		        			<button type="button" class="btn btn-danger">Delete</button>
-		        		</div>
-		      		</div>
-		    	</div>
-		  	</div>
-		</div>
+	<div class="container mt-3" id="menu-all-todos" style="display: none;">
+		<h1 class="text-center">All Todos :</h1>
+		<div class="row row-cols-1 row-cols-md-2" id="get-all-todos"></div>
 	</div>
 
 	<!-- My Todos -->
-	<div class="container mt-5" id="all-todos">
+	<div class="container mt-3" id="menu-my-todos" style="display: none;">
 		<div class="row">
 			<div class="col-12">
-				<h2 class="text-center">My Todos</h2>
+				<h1 class="text-center">My Todos :</h1>
 			</div>
 		</div>
-		<div class="row row-cols-1 row-cols-md-2">
-		  	<div class="col-6 mb-4">
-		    	<div class="card">
-		      		<div class="card-body">
-		        		<h3 class="card-title">Title</h3>
-		        		<p class="card-text">Description :</p>
-		        		<p class="card-text">Status :</p>
-		        		<p class="card-text">Due Date :</p>
-		        		<div class="col-sm-4 ml-auto">
-		        			<button type="button" class="btn btn-warning">Edit</button>
-		        			<button type="button" class="btn btn-danger">Delete</button>
-		        		</div>
-		      		</div>
-		    	</div>
-		  	</div>
-		  	<div class="col-6 mb-4">
-		    	<div class="card">
-		      		<div class="card-body">
-		        		<h3 class="card-title">Title</h3>
-		        		<p class="card-text">Description :</p>
-		        		<p class="card-text">Status :</p>
-		        		<p class="card-text">Due Date :</p>
-		        		<div class="col-sm-4 ml-auto">
-		        			<button type="button" class="btn btn-warning">Edit</button>
-		        			<button type="button" class="btn btn-danger">Delete</button>
-		        		</div>
-		      		</div>
-		    	</div>
-		  	</div>
-		  	<div class="col-6 mb-4">
-		    	<div class="card">
-		      		<div class="card-body">
-		        		<h3 class="card-title">Title</h3>
-		        		<p class="card-text">Description :</p>
-		        		<p class="card-text">Status :</p>
-		        		<p class="card-text">Due Date :</p>
-		        		<div class="col-sm-4 ml-auto">
-		        			<button type="button" class="btn btn-warning">Edit</button>
-		        			<button type="button" class="btn btn-danger">Delete</button>
-		        		</div>
-		      		</div>
-		    	</div>
-		  	</div>
-		</div>
+		<div class="row row-cols-1 row-cols-md-2" id="get-my-todos"></div>
 	</div>
 
     <!-- Optional JavaScript -->
@@ -323,10 +222,10 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <script>
-        $('#add-input-due-date').datepicker({
+        $('#add-todo-due-date').datepicker({
             uiLibrary: 'bootstrap4'
         });
-        $('#edit-input-due-date').datepicker({
+        $('#edit-todo-due-date').datepicker({
             uiLibrary: 'bootstrap4'
         });
     </script>

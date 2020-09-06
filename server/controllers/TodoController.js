@@ -7,10 +7,10 @@ const mailgun = require("mailgun-js")({apiKey: api_key, domain: domain});
 
 class TodoController {
 	static async createTodo(req, res) {
-		const { title, description, status, due_date } = req.body;
+		const { title, description, due_date } = req.body;
 		const UserId = req.user.id;
 		try {
-			const new_todo = await Todo.create({ title, description, status, due_date, UserId });
+			const new_todo = await Todo.create({ title, description, due_date, UserId });
 			const user = await User.findByPk(UserId);
 			const data = {
 				from: `Fancy Todo <alf.tirta@gmail.com>`,
@@ -35,28 +35,29 @@ Hello ${user.username}, here is your new todo :
 
 	static async readTodos(req, res) {
 		try {
-			const todos = await Todo.findAll();
+			const todos = await Todo.findAll({ include: [ User ] });
 			return res.status(200).json(todos);
 		} catch(err) {
 			return next(err);
 		}
 	}
 
-	static async readTodoById(req, res) {
-		const todo_id = +req.params.id;
+	static async readTodosByUserId(req, res) {
+		const UserId = +req.params.id;
 		try {
-			const todo = await Todo.findOne({ where: { id: todo_id } });
-			if (!todo) {
-				throw { message: `The todo with id ${todo_id} was not found.`, status_code: 400 };
+			const user = await User.findOne({ where: { id: UserId } });
+			if (!user) {
+				throw { message: `The user with id ${todo_id} was not found.`, status_code: 400 };
 			} else {
-				return res.status(200).json(todo);
+				const todos = await Todo.findAll({ where: { UserId } });
+				return res.status(200).json(todos);
 			}
 		} catch(err) {
 			return next(err);
 		}
 	}
 
-	static async updateTodoById(req, res) {
+	static async updateTodoByTodoId(req, res) {
 		const todo_id = +req.params.id;
 		const { title, description, status, due_date } = req.body;
 		try {
@@ -69,7 +70,7 @@ Hello ${user.username}, here is your new todo :
 			if (!updated_todo) {
 				throw { message: `The todo with id ${todo_id} was not found.`, status_code: 400 };
 			} else {
-				return res.status(200).json(todo);
+				return res.status(200).json(updated_todo);
 			}
 			return res.status(200).json(updated_todo[1][0]);
 		} catch(err) {
@@ -77,7 +78,7 @@ Hello ${user.username}, here is your new todo :
 		}
 	}
 
-	static async deleteTodoById(req, res) {
+	static async deleteTodoByTodoId(req, res) {
 		const todo_id = +req.params.id;
 		try {
 			const deleted_todo = await Todo.findByPk(todo_id);

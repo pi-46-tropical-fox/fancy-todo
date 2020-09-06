@@ -314,7 +314,7 @@ _Response (200 - OK)_
 _Response (400 - Bad Request)_
 ```
 [
-  "The todo with id <todo id> was not found."
+  "The user with id <todo id> was not found."
 ]
 ```
 

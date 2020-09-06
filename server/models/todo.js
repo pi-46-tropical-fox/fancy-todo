@@ -27,5 +27,8 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Todo',
   });
+  Todo.beforeCreate((todo, options) => {
+    todo.status = "ongoing";
+  });
   return Todo;
 };

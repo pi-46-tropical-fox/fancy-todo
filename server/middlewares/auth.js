@@ -22,7 +22,21 @@ const authentication = async (req, res, next) => {
 	}
 }
 
-const authorization = async (req, res, next) => {
+const authorization_1 = async (req, res, next) => {
+	const user_id = +req.params.id;
+	try {
+		const user = await User.findByPk(user_id);
+		if (user_id && user.id === req.user.id) {
+			return next();
+		} else {
+			throw { message: "The user is not authorized.", status_code: 403 };
+		}
+	} catch(err) {
+		return next(err);
+	}
+}
+
+const authorization_2 = async (req, res, next) => {
 	const todo_id = +req.params.id;
 	try {
 		const todo = await Todo.findByPk(todo_id);
@@ -36,4 +50,4 @@ const authorization = async (req, res, next) => {
 	}
 }
 
-module.exports = { authentication, authorization };
+module.exports = { authentication, authorization_1, authorization_2 };
