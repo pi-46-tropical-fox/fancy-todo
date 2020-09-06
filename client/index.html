@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="862818756617-9bt6br3mh4p0vpsiaco6ic202ao6hfn0.apps.googleusercontent.com">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- Login Form -->
+    <div id="form-login" style="display: flex;justify-content: center;">
+        <form style="background-color: #d9dadb;padding:2em 3em;margin-top: 4em;border-radius: 1em;" id="formLogin">
+            <div style="display: flex;flex-direction: row;margin-bottom: 2.5em;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/GNOME_Todo_icon_2019.svg/1024px-GNOME_Todo_icon_2019.svg.png"
+                    style="width: 4em;" alt="">
+                <h3 style="margin-top: 1em;">Todolify</h3>
+            </div>
+            <div id="error-login" style="color: red;font-size: 15px;line-height: 2px;"></div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control col-12" id="loginEmail" aria-describedby="emailHelp"
+                    placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control col-12" id="loginPass" placeholder="Password">
+            </div>
+            <div>
+                <button type="submit" class="btn btn-secondary col-12" style="margin-top: 2em;">Sign In</button>
+            </div>
+
+            <div style="margin-top: 1em;font-size: 14px;text-align: center;">
+                <p>Don't Have An Account?<a href="#" id="sign-up"> Sign Up</a></p>
+            </div>
+
+            <hr style="margin:2em 0;">
+
+            <p style="text-align: center;">Or With</p>
+            <div class="g-signin2" data-onsuccess="onSignIn" style="display: flex;justify-content: center;"></div>
+        </form>
+    </div>
+
+    <div id="form-register" style="display: flex;justify-content: center;">
+        <form style="background-color: #d9dadb;padding:2em 3em;margin-top: 4em;border-radius: 1em;" id="formRegister">
+            <div style="display: flex;flex-direction: row;margin-bottom: 2.5em;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/GNOME_Todo_icon_2019.svg/1024px-GNOME_Todo_icon_2019.svg.png"
+                    style="width: 4em;" alt="">
+                <h3 style="margin-top: 1em;">Todolify</h3>
+            </div>
+            <div id="error-register" style="color: red;font-size: 15px;line-height: 2px;"></div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control col-12" id="registEmail" aria-describedby="emailHelp"
+                    placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control col-12" id="registPass" placeholder="Password">
+            </div>
+            <div>
+                <button type="submit" class="btn btn-secondary col-12" style="margin-top: 2em;">Sign Up</button>
+            </div>
+            <div style="margin-top: 1em;font-size: 14px;text-align: center;">
+                <p>Already Have An Account?<a href="#" id="log-in"> Sign In</a></p>
+            </div>
+        </form>
+    </div>
+
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Todolify</a>
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="movie-list">Movie Recommendation</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mx-auto order-0">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" style="font-size: 20px;" id="home">Beranda</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <ul class="navbar-nav ml-auto dropdown">
+                <li>
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        User
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#" id="logout">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="edit-card" style="display: flex;justify-content: center;">
+        <div style="padding: 2em;background-color: #f2f0f0;border-radius: 1em;margin-top: 2em;">
+            <form id="editTodos">
+                <div id="error-edit" style="color: red;font-size: 15px;line-height: 2px;"></div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="title-edit" placeholder="What Do You Want To Do?">
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" id="description-edit" rows="3"
+                        placeholder="The Description"></textarea>
+                </div>
+
+                    <input type="radio" id="done-update" value="true" name="status">
+                    <label for="done-update">Done</label><br>
+                    <input type="radio" id="undone-update"value="" name="status">
+                    <label for="undone-update">Undone</label><br>
+
+                <div style="display: flex;justify-content: space-between;">
+                    <button class="btn btn-secondary" type="submit" id="edit-btn">Kirimkan</button>
+                    <input class="form-control col-8" type="date" id="date-edit">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Movies Card -->
+
+    <div id="movie-card" class="d-flex flex-wrap" style="justify-content: center;">
+    </div>
+
+    <!-- Card Todos -->
+    <div id="todo-card" style="display: flex;justify-content: center;">
+        <div id="todo-list">
+            <div style="padding: 2em;background-color: #f2f0f0;border-radius: 1em;margin-top: 2em;">
+                <div id="error-list" style="color: red;font-size: 15px;line-height: 2px;"></div>
+                <form id="addTodos">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="title" placeholder="What Do You Want To Do?">
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" id="description" rows="3"
+                            placeholder="The Description"></textarea>
+                    </div>
+
+                    <div style="display: flex;justify-content: space-between;">
+                        <input class="form-control col-8" type="date" id="due_date">
+                        <button class="btn btn-secondary" type="submit">Kirimkan</button>
+                    </div>
+                </form>
+            </div>
+            <hr style="margin: 2em 0;">
+            <div id="error-delete"></div>
+            <div id="todos-card"></div>
+        </div>
+    </div>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
