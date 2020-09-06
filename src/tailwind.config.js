@@ -3,6 +3,9 @@ module.exports = {
     '../client/index.html',
     '../client/**/*.js'
   ],
+  future: {
+    removeDeprecatedGapUtilities: true,
+  },
   theme: {
     extend: {},
   },
