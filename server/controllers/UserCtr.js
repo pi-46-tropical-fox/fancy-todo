@@ -55,7 +55,7 @@ class Controller{
     static logingoogle(req, res, next){
             const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
             const { google_access_token } = req.headers
-            let email_google;
+            let email_google, username
             client.verifyIdToken({
                 idToken: google_access_token,
                 audience: process.env.GOOGLE_CLIENT_ID
@@ -65,12 +65,14 @@ class Controller{
             })
             .then(payload => {
                 email_google = payload.email
+                username = payload.name
                 return User.findOne({where:{email:payload.email}})
             })
             .then(user => {
                 if (!user) {
                     return User.create({
                         email: email_google,
+                        username,
                         password: 'password'
                     })
                 } else {
@@ -78,10 +80,8 @@ class Controller{
                 }
             })
             .then(user => {
-                const payload = {email:user.email, id: user.id}
-    
-                const access_token = access_token(payload)
-                return res.status(200).json({access_token})
+                const token = access_token(user.username, user.id)
+                return res.status(200).json({access_token: token})
             })
             .catch(err => {
                 next(err)

@@ -78,7 +78,7 @@ class Controller{
     static update(req, res, next){
         const id = req.params.id
         const {title, description, due_date} = req.body
-        Todo.update({title, description, due_date}, {where: {id}})
+            Todo.update({title, description, due_date}, {where: {id}})
             .then(data => {
                 return res.status(201).json({
                     message: "Successfully update todo",
