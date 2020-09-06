@@ -60,6 +60,7 @@ class AuthController {
             const data = {
                 access_token: generateToken(tokenData),
                 name: user.name,
+                picture: payload.picture,
                 username: user.username
             }
 
