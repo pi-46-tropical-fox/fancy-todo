@@ -1,5 +1,5 @@
 function errHandler(err, req, res, next) {
-  console.log(err.errors, `>>>>>>> Menampilkan hasil error yang muncul`);
+  // console.log(err.errors, `>>>>>>> Menampilkan hasil error yang muncul`);
   console.log(err, `>>>>>>> Menampilkan hasil error yang muncul`);
 
   let statusCode = 500;

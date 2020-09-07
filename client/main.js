@@ -1,3 +1,4 @@
+const baseUrl = 'http://localhost:3000'
 let todo = []
 function tgl(date) {
     return new Date(date).toISOString().split("T")[0]
@@ -34,7 +35,7 @@ function menuList(event) {
 
     $.ajax({
         method: "GET",
-        url: 'http://localhost:3000/todos',
+        url: `${baseUrl}/todos`,
         headers: {
             acces_token: localStorage.getItem('acces_token')
         }
@@ -56,7 +57,7 @@ function menuList(event) {
         })
     })
     .fail(err => {
-        console.log(err)
+        showErr(err)
     })
 }
 
@@ -68,7 +69,6 @@ function menuLogout(event) {
     localStorage.clear()
     signOut()
     beforeLogin()
-    // localStorage.removeItem('acces_token')
 }
 
 function initContent() {
@@ -102,7 +102,7 @@ function loginForm(event) {
 
         $.ajax({
             method: 'POST',
-            url: 'http://localhost:3000/login',
+            url: `${baseUrl}/login`,
             data: {
                 email,password
             }
@@ -113,7 +113,12 @@ function loginForm(event) {
             afterLogin()
         })
         .fail(err => {
-            console.log(err)
+            showErr(err)
+        })
+        .always(_ => {
+            $('#loginEmail').val("")
+            $('#loginPassword').val("")
+
         })
 }
 
@@ -124,20 +129,26 @@ function registerForm(event) {
 
     $.ajax({
         method:'POST',
-        url: 'http://localhost:3000/register',
+        url: `${baseUrl}/register`,
         data: {
             email,
             password
         }
     })
     .done(response => {
-        $('#registerEmail').val('')
-        $('#registerPassword').val('')
-           
-        afterLogin()
+        Swal.fire(
+            'Good job!',
+            `${response.email} telah ditambahkan`,
+            'success'
+            )
+            menuLogin()
     })
     .fail(err => {
-        console.log(err)
+        showErr(err)
+    })
+    .always(_ => {
+        $('#registerEmail').val("")
+        $('#loginPassword').val("")
     })
 }
 
@@ -151,7 +162,7 @@ function addTodo(even) {
 
     $.ajax({
         method: 'POST',
-        url :'http://localhost:3000/todos',
+        url :`${baseUrl}/todos`,
         data: {
             title,
             description,
@@ -171,20 +182,20 @@ function addTodo(even) {
         menuList()
     })
     .fail(err => {
-        console.log(err)
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong!',
-            footer: '<a href>Why do I have this issue?</a>'
-          })
+        showErr(err)
+    })
+    .always(_ => {
+        $('#inputTitle').val('')
+        $('#inputDescription').val('')
+        $('#inputStatus').val('')
+        $('#inputDueDate').val('')
     })
 }
 
 function deleteTodo(id) {
 
     $.ajax({
-        url: `http://localhost:3000/todos/${id}`,
+        url: `${baseUrl}/todos/${id}`,
         method: 'delete',
         headers: {
             acces_token: localStorage.getItem('acces_token')
@@ -195,13 +206,7 @@ function deleteTodo(id) {
         menuList()
     })
     .fail(err => {
-        console.log(err)
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong!',
-            footer: '<a href>Why do I have this issue?</a>'
-          })
+        showErr(err)
     })
 }
 
@@ -215,7 +220,7 @@ function deleteTodo(id) {
 //         const due_date = $('#updateDueDate').val(todo[0].due_date)
 
 //         $.ajax({
-//             url: `http://localhost:3000/todos/${id}`,
+//             url: `${baseUrl}/todos/${id}`,
 //             method: "put",
 //             data: {
 //                 title,description,status,due_date,UserId
@@ -245,11 +250,15 @@ function onSignIn(googleUser) {
 
     $.ajax({
         method: 'POST',
-        url:'http://localhost:3000/googleLogin',
+        url:`${baseUrl}/googleLogin`,
         headers:{google_access_token}
     })
     .done(response => {
-        console.log(response)
+        Swal.fire(
+            'Good job!',
+            `${response.email} telah login`,
+            'success'
+            )
 
         localStorage.setItem('acces_token',response.acces_token)
         localStorage.setItem('email_user',response.email)
@@ -262,7 +271,7 @@ function onSignIn(googleUser) {
         afterLogin()
     })
     .fail(err => {
-        console.log(err)
+        showErr(err)
     })
 }
 
@@ -278,7 +287,7 @@ function weathers (e) {
     const kota = $('#searchCity').val()
     
     $.ajax({
-        url: `http://localhost:3000/weathers?city=${kota}`,
+        url: `${baseUrl}/weathers?city=${kota}`,
         method: "get"
 
     })
@@ -288,10 +297,19 @@ function weathers (e) {
         $('#weather').text(`Welcome ${kota}, Observasi Pukul: ${response.current.observation_time}, Suhu: ${response.current.temperature} derajat, result: ${response.current.weather_descriptions[0]}`)
     })
     .fail(err => {
-        console.log(err)
+        showErr(err)
     })
 
     $('#searchCity').val('')
+}
+
+function showErr(err) {
+    // console.log(err.responseJSON.errors)
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: err.responseJSON.errors.join(',')                
+      })
 }
 
 $(document).ready(function() {
