@@ -1,10 +1,11 @@
 if(process.env.NODE_ENV === 'development') require('dotenv').config()
+
 const express = require('express')
+const routes = require('./routes')
+const errHandler = require('./middleware/errHandler')
 const app = express()
 const cors = require('cors')
 const port = process.env.PORT || 3000
-const routes = require('./routes')
-const errHandler = require('./middleware/errHandler')
 
 // Trying the method chaining for the first time...
 
