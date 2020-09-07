@@ -12,3 +12,4 @@
     {
         "production":{ "use_env_variable": "DATABASE_URL"}
     }
+DONT FORGET TO GIT ADD, GIT COMMIT, GIT PUSH
