@@ -1,0 +1,5 @@
+1. Install heroku
+2. Type in "heroku login"
+3. Type in "heroku create <app name>"
+4. Type in "git push heroku master" >>> If pwd already looks like server folder"
+    - type in "git subtree push --prefix <folder-name> heroku master"
