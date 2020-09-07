@@ -3,12 +3,6 @@
 	max-width: 500px;
 }
 
-/* .todo-container {
-	display: flex;
-	flex-direction: column;
-	align-self: center;
-} */
-
 .todo-card {
 	max-width: 800px;
 	margin-left: auto;

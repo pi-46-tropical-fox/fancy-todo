@@ -6,6 +6,6 @@ routes.post('/register', UserController.register);
 
 routes.post('/login', UserController.login);
 
-routes.post('/googleLogin', UserController.googleLogin);
+routes.post('/googleSign', UserController.googleLogin);
 
 module.exports = routes;

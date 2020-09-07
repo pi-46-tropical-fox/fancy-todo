@@ -31,7 +31,79 @@ function showTodoList() {
 		}
 	})
 		.done(response => {
-			listTodo(response);
+			console.log(response);
+			response.forEach(todo => {
+				if (todo.status === 'todo') {
+					$('#todo-container').append(`
+			<div class="card todo-card todo" id="${todo.id}">
+						<header class="card-header">
+							<p class="card-header-title">
+								${todo.title}
+							</p>
+							<a class="card-header-icon">
+								<span class="icon">
+									<i class="fas fa-calendar"></i>
+								</span>
+								<time datetime="${new Date(todo.due_date).toISOString().split('T')[0]}">${new Date(todo.due_date).toDateString()}</time>
+							</a>
+							<a class="card-header-icon" onclick="updateFormTodo(${todo.id})">
+								<span class="icon has-text-info">
+									<i class="fas fa-edit"></i>
+								</span>
+							</a>
+							<a class="card-header-icon" onclick="deleteTodo(${todo.id})">
+								<span class="icon has-text-danger">
+									<i class="fas fa-trash"></i>
+								</span>
+							</a>
+							<a class="card-header-icon" onclick="doneTodo(${todo.id})">
+								<span class="icon has-text-success">
+									<i class="fas fa-check-circle"></i>
+								</span>
+							</a>
+						</header>
+						<div class="card-content">
+							<div class="content">
+								${todo.description}
+								<br>
+							</div>
+						</div>
+					</div>
+			`);
+				} else {
+					$('#todo-container').append(`
+			<div class="card todo-card todo" id="${todo.id}">
+						<header class="card-header">
+							<p class="card-header-title">
+								${todo.title}
+							</p>
+							<a class="card-header-icon">
+								<span class="icon">
+									<i class="fas fa-calendar"></i>
+								</span>
+								<time datetime="${new Date(todo.due_date).toISOString().split('T')[0]}">${new Date(todo.due_date).toDateString()}</time>
+							</a>
+							<a class="card-header-icon mr-4">
+									<span class="icon has-text-danger">
+										<span class="tag is-success is-small">Done</span>
+									</span>
+								</a>
+							<a class="card-header-icon" onclick="deleteTodo(${todo.id})">
+								<span class="icon has-text-danger">
+									<i class="fas fa-trash"></i>
+								</span>
+							</a>
+						</header>
+						<div class="card-content">
+							<div class="content">
+								${todo.description}
+								<br>
+							</div>
+						</div>
+					</div>
+			`);
+				}
+			});
 		})
 		.fail(err => {
 			errHandler(err.responseJSON.errors[0]);
@@ -42,79 +114,9 @@ function showTodoList() {
 
 /* SECTION: Components */
 
-function listTodo(todos) {
-	todos.forEach(todo => {
-		if (todo.status === 'todo') {
-			$('#todo-container').append(`
-	<div class="card todo-card todo" id="${todo.id}">
-				<header class="card-header">
-					<p class="card-header-title">
-						${todo.title}
-					</p>
-					<a class="card-header-icon">
-						<span class="icon">
-							<i class="fas fa-calendar"></i>
-						</span>
-						<time datetime="${new Date(todo.due_date).toISOString().split('T')[0]}">${new Date(todo.due_date).toDateString()}</time>
-					</a>
-					<a class="card-header-icon" onclick="updateFormTodo(${todo.id})">
-						<span class="icon has-text-info">
-							<i class="fas fa-edit"></i>
-						</span>
-					</a>
-					<a class="card-header-icon" onclick="deleteTodo(${todo.id})">
-						<span class="icon has-text-danger">
-							<i class="fas fa-trash"></i>
-						</span>
-					</a>
-					<a class="card-header-icon" onclick="doneTodo(${todo.id})">
-						<span class="icon has-text-success">
-							<i class="fas fa-check-circle"></i>
-						</span>
-					</a>
-				</header>
-				<div class="card-content">
-					<div class="content">
-						${todo.description}
-						<br>
-					</div>
-				</div>
-			</div>
-	`);
-		} else {
-			$('#todo-container').append(`
-	<div class="card todo-card todo" id="${todo.id}">
-				<header class="card-header">
-					<p class="card-header-title">
-						${todo.title}
-					</p>
-					<a class="card-header-icon">
-						<span class="icon">
-							<i class="fas fa-calendar"></i>
-						</span>
-						<time datetime="${new Date(todo.due_date).toISOString().split('T')[0]}">${new Date(todo.due_date).toDateString()}</time>
-					</a>
-					<a class="card-header-icon mr-4">
-							<span class="icon has-text-danger">
-								<span class="tag is-success is-small">Done</span>
-							</span>
-						</a>
-					<a class="card-header-icon" onclick="deleteTodo(${todo.id})">
-						<span class="icon has-text-danger">
-							<i class="fas fa-trash"></i>
-						</span>
-					</a>
-				</header>
-				<div class="card-content">
-					<div class="content">
-						${todo.description}
-						<br>
-					</div>
-				</div>
-			</div>
-	`);
-		}
-	});
+function refreshTodoList() {
+	$('#todo-container > .todo').remove();
+	showTodoList();
 }
 
 function updateFormTodo(id) {
@@ -127,7 +129,7 @@ function updateFormTodo(id) {
 	})
 		.done(todo => {
 			$(`#${id}`).replaceWith(`
-			<div class="card todo-card" id=${id}>
+			<div class="card todo-card" id="form-update-todo-wrapper">
 				<form id="form-update-todo" onsubmit="updateTodo(${id})">
 					<header class="card-header">
 						<p class="card-header-title">
@@ -136,7 +138,7 @@ function updateFormTodo(id) {
 						<a href="#" class="card-header-icon">
 							<input name="due-date" type="date" class="input" value="${new Date(todo.due_date).toISOString().split('T')[0]}">
 						</a>
-						<a class="card-header-icon mr-4" onclick="cancelUpdate()">
+						<a class="card-header-icon mr-4" onclick="cancelUpdate(${id})">
 							<span class="icon has-text-danger">
 								<span class="tag is-danger is-medium">Cancel</span>
 							</span>
@@ -154,13 +156,12 @@ function updateFormTodo(id) {
 				</form>
 			</div>
 		`);
-			showTodoList();
 		})
 }
 
 function cancelUpdate() {
-	$('#todo-container > .todo').remove();
-	showTodoList();
+	$(`#form-update-todo-wrapper`).remove();
+	refreshTodoList();
 }
 
 /* !SECTION: End of Components */
@@ -186,8 +187,7 @@ function createTodo(event) {
 			$('#card-form-add-todo').fadeOut();
 			$('#card-form-add-todo').hide();
 			$('#button-add').show();
-			$('#todo-container > .todo').remove();
-			showTodoList();
+			refreshTodoList();
 
 			$('#form-add-todo input[name=title]').val('');
 			$('#form-add-todo input[name=due-date]').val('');
@@ -214,9 +214,8 @@ function updateTodo(id) {
 		}
 	})
 		.done(response => {
-			$(`#${id}`).hide();
-			$('#todo-container > .todo').remove();
-			showTodoList();
+			$(`#form-update-todo-wrapper`).remove();
+			refreshTodoList();
 		})
 		.fail(err => {
 			errHandler({ name: 'validation', errors: err.responseJSON.errors });
@@ -232,8 +231,7 @@ function deleteTodo(id) {
 		}
 	})
 		.done(response => {
-			$('#todo-container > .todo').remove();
-			showTodoList();
+			refreshTodoList();
 		})
 		.fail(err => {
 			errHandler(err.responseJSON.errors[0]);
@@ -264,8 +262,7 @@ function doneTodo(id) {
 			})
 				.done(response => {
 					$(`#${id}`).hide();
-					$('#todo-container > .todo').remove();
-					showTodoList();
+					refreshTodoList();
 				})
 				.fail(err => {
 					errHandler({ name: 'validation', errors: err.responseJSON.errors });
@@ -282,6 +279,7 @@ function doneTodo(id) {
 
 function beforeLogin() {
 	showPage('page-home');
+	$('#todo-container > .todo').remove();
 
 	// hide nav
 	$('#nav-item-user').hide();
@@ -294,13 +292,13 @@ function beforeLogin() {
 
 function afterLogin() {
 	showPage('page-dashboard');
-	showTodoList();
-
+	refreshTodoList();
 
 	//hide nav
 	$('#nav-item-login').hide();
 	$('#nav-item-register').hide();
 	$('#nav-item-logout').show();
+	$('#nav-item-holidays').show();
 }
 
 function checkAccessToken() {
@@ -328,7 +326,6 @@ function formLogin(event) {
 		})
 		.fail(err => {
 			showPage('page-login');
-			console.log(err);
 			Swal.fire({
 				icon: 'error',
 				title: 'Invalid email or password!',
@@ -344,14 +341,12 @@ function formRegister(event) {
 	event.preventDefault();
 	const email = $('#form-register input[name=email]').val();
 	const password = $('#form-register input[name=password]').val();
-	console.log(email, password);
 	$.ajax({
 		url: 'http://localhost:3000/register',
 		method: 'POST',
 		data: { email, password },
 	})
 		.done(result => {
-			console.log('berhasil register', result);
 			localStorage.setItem('access_token', result.access_token);
 			showPage('page-home');
 		})
@@ -366,11 +361,11 @@ function formRegister(event) {
 }
 
 function googleSign(googleUser) {
-	var id_token = googleUser.getAuthResponse().id_token;
+	const id_token = googleUser.getAuthResponse().id_token;
 	$.ajax({
 		method: 'POST',
 		url: 'http://localhost:3000/googleSign',
-		data: { token: id_token }
+		headers: { google_access_token: id_token }
 	})
 		.done(result => {
 			localStorage.setItem('access_token', result.access_token);
@@ -378,7 +373,6 @@ function googleSign(googleUser) {
 		})
 		.fail(err => {
 			showPage('page-login');
-			console.log(err);
 			Swal.fire({
 				icon: 'error',
 				title: 'Invalid email or password!',
@@ -427,7 +421,7 @@ function errHandler({ name, message, errors }) {
 
 /* !SECTION: End of Error Handler */
 
-function holidays() {
+function fetchHolidays() {
 	$.ajax({
 		method: "get",
 		url: "http://localhost:3000/holidays",
@@ -456,7 +450,7 @@ $(document).ready(function () {
 	$('#nav-item-register').on('click', { page: 'page-register' }, showPageOnClick);
 	$('#nav-item-login').on('click', { page: 'page-login' }, showPageOnClick);
 	$('#nav-item-logout').on('click', logout);
-	$('#nav-item-holidays').on('click', holidays);
+	$('#nav-item-holidays').on('click', fetchHolidays);
 
 	// form handler
 	$('#form-login').on('submit', formLogin);
@@ -476,10 +470,7 @@ $(document).ready(function () {
 		$('#card-form-add-todo').hide();
 		$('#button-add').show();
 	});
-	$('#button-edit-form').on('click', function () {
-		console.log('clicked');
-		console.log($(this));
-	});
+	$('#get-started').on('click', { page: 'page-register' }, showPageOnClick);
 
 	//form listener
 	$('#form-add-todo').submit(createTodo);
