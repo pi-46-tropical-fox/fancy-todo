@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       validate: {
         isDate(values) {
-          if (values.toISOString().split("T")[0] < new Date().toISOString().split("T")[0]) {
+          if (values < new Date()) {
             throw new Error(`Invalid date input`)
           }
         }

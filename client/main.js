@@ -1,52 +1,32 @@
-function loginMenu(event) {
-    $('#signin-form').show();
-    $('#register-form').hide();
-
+function beforeLogin(event) {
+    $('#login-page').show();
+    $('#register-page').hide();
+    $('#navbar-logout').hide();
+    $('#home-page').hide();
+    $('#go-to-register').on('click', function(event) {
+        $('#login-page').hide();
+        $('#register-page').show();
+        $('#navbar-logout').hide();
+        $('#home-page').hide();
+    })
 }
 
-function registerMenu(event) {
-    $('#signin-form').hide();
-    $('#register-form').show();
+function afterRegister(event) {
+    $('#login-page').show();
+    $('#register-page').hide();
+    $('#navbar-logout').hide();
+    $('#home-page').hide();
 }
 
-function beforeLogin() {
-    $('#nav-signin').show();
-    $('#nav-register').show();
-    $('#nav-add').hide();
-    $('#nav-signout').hide();
-    $('#todo-list').hide();
-    $('#addForm').hide();
-
-}
-
-function afterRegister() {
-    $('#nav-signin').show();
-    $('#nav-register').show();
-    $('#nav-signout').hide()
-    $('#signin-form').hide();
-}
-
-function afterLogin() {
-    $('#nav-signin').hide();
-    $('#nav-register').hide();
-    $('#nav-signout').show()
-    $('#signin-form').hide();
+function afterLogin(event) {
+    $('#login-page').hide();
+    $('#register-page').hide();
+    $('#navbar-logout').show();
+    $('#home-page').show();
 }
 
 function addForm(event) {
     event.preventDefault();
-    $('#nav-signout').show();
-    $('#nav-signin').hide();
-    $('#nav-register').hide();
-    if ($('#title-add').val().length < 1 ||
-    $('#description-add').val().length < 1 ||
-    $('#due_date-add').val().length < 1) {
-        Swal.fire(`Fill all the fields please!`)
-        return
-    }
-    if (new Date($('#due_date-add').val()) < new Date()) {
-        Swal.fire(`The date cannot before from today!`)
-    }
     $.ajax({
         method: 'POST',
         url: 'http://localhost:3000/todos',
@@ -59,19 +39,24 @@ function addForm(event) {
             access_token: localStorage.getItem('access_token')
         }
     })
-    .done((response) => {
+    .done(response => {
+        event.preventDefault();
         console.log(response);
+        todoList();
     })
     .fail((err) => {
-        console.log(err);
+        Swal.fire(
+            {
+                icon: 'error',
+                titleText: 'Validation error',
+                html: err.responseJSON.errors.join('<br/>')
+            }
+        );
     })
 }
 
-function todoList() {
-    $('#signin-form').hide();
-    $('#register-form').hide();
-    $('#todo-list').show();
-    // $('#add-form').hide();
+
+function todoList(event) {
     $.ajax({
         method: 'GET',
         url: 'http://localhost:3000/todos',
@@ -80,18 +65,25 @@ function todoList() {
         }
     })
 
-    .done((response) => {
-        // console.log(response[0]);
+    .done(response => {
+        $('.container').empty()
         response.forEach(el => {
-            $('#list').append(
+            $('.container').append(
                 `
-                <td scope="row">${el.title}</td>
-                <td>${el.description}</td>
-                <td>${el.due_date}</td>
-                <td>
-                <a href="#" data-id="${el.id}" onClick="getTodo(event)">Edit</a>
-                <a href="#" data-id="${el.id}" onClick="deleteTodo(event)">Delete</a>
-                </td>
+                <div class="row">
+                <div class="card" style="width: 18rem;">
+                  <div class="card-body">
+                    <h5 class="card-title">${el.title}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">${el.due_date.split('T')[0]}</h6>
+                    <p class="card-text">${el.description}</p>
+                    <div class="pencetan">
+                    <a href="#" class="card-link" data-id="${el.id}" onClick="getTodo(event)">Edit</a>
+                    <a href="#" class="card-link" data-id="${el.id}" onClick="deleteTodo(event)">Delete</a>
+                  </div>
+                  </div>
+                </div>
+                </div>
+                </div>
                 
                 `
             )
@@ -107,8 +99,8 @@ function todoList() {
 
 function loginForm(event) {
     event.preventDefault();
-    const email = $('#signInEmail').val()
-    const password = $('#signInPassword').val()
+    const email = $('#email-login').val()
+    const password = $('#password-login').val()
 
     $.ajax({
         method: 'POST',
@@ -119,9 +111,14 @@ function loginForm(event) {
         }
     })
     .done((response) => {
-        $('signInEmail').val();
-        $('signInPassword').val();
+        event.preventDefault();
+        $('email-login').val();
+        $('password-login').val();
         localStorage.setItem('access_token', response.access_token);
+        Swal.fire(
+            'Success!',
+            'success'
+        )
         afterLogin();
     })
     .fail((err) => {
@@ -130,14 +127,14 @@ function loginForm(event) {
             'please check again',
             'error'
         )
-        $('#signin-form').show();
+        $('#login-page').show();
     })
 }
 
 function registerForm(event) {
     event.preventDefault();
-    const email = $('#registerEmail').val();
-    const password = $('#registerPassword').val();
+    const email = $('#email-register').val();
+    const password = $('#pass-register').val();
 
     $.ajax({
         method: 'POST',
@@ -148,24 +145,31 @@ function registerForm(event) {
         }
     })
     .done((response) => {
-        $('registerEmail').val();
-        $('registerPassword').val();
+        event.preventDefault();
+        $('email-register').val();
+        $('pass-register').val();
         Swal.fire(
             'Success!',
             'success'
         )
-        $('#signin-form').show();
-        $('#register-form').hide();
+        afterRegister();
     })
     .fail((err) => {
         console.log(err);
+        Swal.fire(
+            {
+                icon: 'error',
+                titleText: 'Validation error',
+                html: err.responseJSON.errors.join('<br/>')
+            }
+        );
+        $('#register-page').show();
     })
 }
 
 function getTodo(event){
     event.preventDefault();
-    $('#addForm').hide();
-    
+    localStorage.setItem('id', event.srcElement.dataset.id)
     $.ajax({
         method: 'GET',
         url: `http://localhost:3000/todos/${event.srcElement.dataset.id}`,
@@ -175,25 +179,22 @@ function getTodo(event){
     })
     .done((response) => {
         console.log(response);
-        localStorage.setItem('id', response.id)
         let date = response.due_date.split('T')[0]
-        $('#tampungEdit').append(
+        $('#edit-form').empty()
+        $('#edit-form').append(
             `
-            <form id="edit-form">
-      <div class="form-group">
-        <label for="title-edit">Title</label>
-        <input type="text" class="form-control" id="title-edit" value="${response.title}">
-      </div>
-      <div class="form-group">
-        <label for="description-edit">Description</label>
-        <input type="text" class="form-control" id="description-edit" value="${response.description}">
-      </div>
-      <div class="form-group">
-        <label for="due_date-edit">Due Date</label>
-        <input type="date" class="form-control" id="due_date-edit" value="${date}">
-      </div>
-      <button type="submit" class="btn btn-primary" id="editSubmit" onClick="updateTodo(event)">Submit</button>
-    </form>
+            <h1>Edit ToDo</h1>
+            <hr>
+                <label>Title :</label>
+                <input type="text"   id="title-edit" value="${response.title}">
+                <br>
+                <label>Desc :</label>
+                <input type="text"  id="description-edit" value="${response.description}">
+                <br>
+                <label>Due Date :</label>
+                <input type="date"  id="due_date-edit" value="${date}">
+                <br>
+                <button class="btn btn-dark" data-id="${response.id}" onClick="updateTodo(event)" type="submit">Add</button>
             `
         )
     })
@@ -204,18 +205,10 @@ function getTodo(event){
 
 function updateTodo(event) {
     event.preventDefault();
-    if ($('#title-edit').val().length < 1 ||
-    $('#description-edit').val().length < 1 ||
-    $('#due_date-edit').val().length < 1) {
-        Swal.fire(`Fill all the fields please!`)
-        return
-    }
-    if (new Date($('#due_date-edit').val()) < new Date()) {
-        Swal.fire(`The date cannot before from today!`)
-    }
+
     $.ajax({
         method: 'PUT',
-        url: `http://localhost:3000/todos/${localStorage.getItem(`id`)}`,
+        url: `http://localhost:3000/todos/${localStorage.getItem('id')}`,
         data: {
             title: $('#title-edit').val(),
             description: $('#description-edit').val(),
@@ -231,14 +224,18 @@ function updateTodo(event) {
         todoList();
     })
     .fail((err) => {
-        console.log(err);
+        Swal.fire(
+            {
+                icon: 'error',
+                titleText: 'Validation error',
+                html: err.responseJSON.errors.join('<br/>')
+            }
+        );
     })
 }
 
 function deleteTodo(event) {
     event.preventDefault();
-    console.log(event.srcElement.dataset.id);
-    // const todoId = event.target.id
     $.ajax({
         method: 'DELETE',
         url: `http://localhost:3000/todos/${event.srcElement.dataset.id}`,
@@ -248,8 +245,8 @@ function deleteTodo(event) {
     })
 
     .done((response) => {
-        event.preventDefault();
         console.log(response);
+        todoList();
     })
     .fail((err) => {
         console.log(err);
@@ -288,6 +285,7 @@ function signOut() {
 }
 
 function weatherpost(){
+
     $.ajax({
         method: 'GET',
         url: 'http://localhost:3000/weather',
@@ -297,6 +295,8 @@ function weatherpost(){
     })
 
     .done(response => {
+
+        $('#post-container').empty();
         console.log(response);
             $('#post-container').append(`
             <div class="card">
@@ -319,8 +319,8 @@ function weatherpost(){
 
 function menuLogout(event) {
     event.preventDefault();
-    $('#signin-form').show();
-    $('#register-form').hide();
+    $('#login-page').show();
+    $('#register-page').hide();
     beforeLogin();
     signOut()
     localStorage.clear();
@@ -331,18 +331,14 @@ $(document).ready(function() {
     if (localStorage.getItem('access_token')) {
         afterLogin();
         todoList();
-    } else {
         weatherpost();
-        afterRegister();
+    } else {
         beforeLogin();
-        loginMenu();
     }
-    $('#nav-signin').click(loginMenu);
-    $('#nav-register').click(registerMenu);
-    $('#signin-form').submit(loginForm);
-    $('#register-form').submit(registerForm);
     $('#add-form').submit(addForm)
-    $('#nav-signout').click(menuLogout)
+    $('#login-page').submit(loginForm);
+    $('#register-page').submit(registerForm);
+    $('#navbar-logout').click(menuLogout)
     
 
 })

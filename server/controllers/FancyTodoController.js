@@ -48,7 +48,7 @@ class FancyTodoController {
             status: req.body.status,
             due_date: req.body.due_date
         }
-        Todo.update(params, {where: {id: req.userData.id}, returning: true})
+        Todo.update(params, {where: {id: req.params.id}, returning: true})
         .then(data => {
             return res.status(200).json(data)
         })

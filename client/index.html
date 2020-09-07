@@ -7,116 +7,112 @@
     <meta name="google-signin-client_id" content="807199705023-io4hcqj2u8eefvrnljnucrfriekdjp98.apps.googleusercontent.com">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <title>Welcome to Fancy-Todo!</title>
+    <link rel="stylesheet" href="style.css">
+
+    <title>Fancy Todo!</title>
   </head>
   <body>
-    <!-- NavBar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
-        <a class="navbar-brand" href="#">Fancy-Todo</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item active" id="nav-register">
-              <a class="nav-link" href="#">Register</a>
-            </li>
-            <li class="nav-item active" id="nav-signin">
-              <a class="nav-link" href="#">Sign In</a>
-            </li>
-            <li class="nav-item active" id="nav-signout">
-                <a class="nav-link" href="#">Sign Out</a>
-              </li>
-          </ul>
-        </div>
+
+    <!--navbar-->
+    <section id="navbar-logout">
+      <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand">Fancy Todo</a>
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
       </nav>
-      <br>
+    </section>
 
-      <!-- Form Sign In-->
-      <div class="container-md border 1">
-        <form id="signin-form">
-          <h3>Login</h3>
-        <div class="form-group" id="signin-form">
-          <label for="signInEmail">Email address</label>
-          <input type="email" class="form-control" id="signInEmail" aria-describedby="emailHelp">
-          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-        </div>
-        <div class="form-group">
-          <label for="signInPassword">Password</label>
-          <input type="password" class="form-control" id="signInPassword">
-        </div>
-        <span>You can login with your google account:</span>
+
+    <!--logn form-->
+    <section id="login-page">
+      <div class="login-page-left">
+          <img src="logo2.png" alt="login page">
+      </div>
+      <div class="login-page-right">
+          <h1>Fancy Todo</h1>
+          <form id="submit-login">
+              <label>Email</label>
+              <input type="email"  id="email-login">
+              <label>Password</label>
+              <input type="password"  id="password-login">
+              
+              <span>Don't have an account?</span>
+              <a href="#" id="go-to-register">Register Now!</a>
+              Or
+              <span>You can login with your google account:</span>
         <div class="g-signin2" data-onsuccess="onSignIn"></div>
-        <button type="submit" class="btn btn-primary">Login</button>
-      </form>
-    </div>
-    <br>
+              <button class="login-btn" type="submit">Login</button>
+          </form>
+      </div>
+  </section>
 
-      <!-- Form Register-->
-      <div class="container-md border 1">
-        <form id="register-form">
-          <h3>Register</h3>
-          <div class="form-group">
-            <label for="registerEmail">Email address</label>
-            <input type="email" class="form-control" id="registerEmail" aria-describedby="emailHelp">
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-          </div>
-          <div class="form-group">
-            <label for="registerPassword">Password</label>
-            <input type="password" class="form-control" id="registerPassword">
-          </div>
-          <button type="submit" class="btn btn-primary">Register</button>
+
+  <!--main page-->
+
+  <section id="home-page">
+    <div class="home-page-left">
+       <!--cards add-->
+       <div class="container">
+       
+    </div>
+    <div class="home-page-right">
+      <form id="add-form">
+        <h1>Add ToDo</h1>
+        <hr>
+            <label>Title :</label>
+            <input type="text"   id="title-add">
+            <br>
+            <label>Desc :</label>
+            <input type="text"  id="description-add">
+            <br>
+            <label>Due Date :</label>
+            <input type="date"  id="due_date-add">
+            <br>
+            <button class="btn btn-dark"  type="submit">Add</button>
         </form>
-      </div>
-
-      <!-- LIST TODOS -->
-      <div id="todo-list" class="container md-5">
-        <h2 class="font-weight-bold text-center">Todo List</h2>
-    <br />
-    <table class="table table-striped" id="todo-list">
-        <thead>
-            <tr>
-                <th scope="col">Title</th>
-                <th scope="col">Description</th>
-                <th scope="col">Date</th>
-                <th scope="col">Options</th>
-              </tr>
-        </thead>
-        <tbody id="list">
-        </tbody>
-    </table>
-    <div class="col-7" id="todo-list">
-        <a class="btn btn-primary btn-md" href="#" role="button" id="add-todo">Add New Todo To List</a> 
     </div>
-    </div>
+    <!-- EDIT-->
+      <form id="edit-form">
+       
+        </form>
 
-    <!--ADD FORM-->
-    <div id="addForm">
-    <form id="add-form">
-      <div class="form-group">
-        <label for="title-add">Title</label>
-        <input type="text" class="form-control" id="title-add">
-      </div>
-      <div class="form-group">
-        <label for="description-add">Description</label>
-        <input type="text" class="form-control" id="description-add">
-      </div>
-      <div class="form-group">
-        <label for="due_date-add">Due Date</label>
-        <input type="date" class="form-control" id="due_date-add">
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-  </div>
+        <!--WEATHER-->
+        <div class="home-page-bottom">
+        <div class="col">
+          <div class="card">
+              <div class="card-header">
 
-    <!-- EDIT/UPDATE -->
-    <div id="tampungEdit">
-    
-  </div>
+                <div class="columns" id="post-container">
+                </div>
 
-  <!-- WEATHER-->
-  <div class="columns" id="post-container">
+              </div>
+            </div>
+        </div>
+      </div>
+
+  
+</section>
+
+<!--register-->
+<section id="register-page">
+  <div class="register-page-left">
+      <img src="logo2.png" alt="register page">
   </div>
+  <div class="login-page-right">
+      <h1>Register</h1>
+      <form id="submit-register">
+          <label>Email</label>
+          <input type="email" id="email-register" >
+          <label>Password</label>
+          <input type="password" id="pass-register">
+          <button class="login-btn" id="pass-register" type="submit">Register</button>
+      </form>
+  </div>
+</section>
+
+
+
+
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

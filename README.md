@@ -48,7 +48,20 @@ _Response (201 - Created)_
 }
 ```
 
-_Response (500 - Internal server error)_
+_Response (400 - Bad Request)_
+```json
+{
+  "message": "Please input email format!, Password minimum 4 characters!"
+}
+
+```
+
+_Response (500 - Internal Error Server)_
+```json
+{
+  "message": "Internal Server Error"
+}
+```
 
 ### POST /login
 
@@ -74,9 +87,19 @@ _Response (200)_
 }
 ```
 
-_Response (400 - Invalid email/password)_
-_OR_
+_Response (400 - Bad Request)_
+```json
+{
+  "message": "Invalid email or password"
+}
+```
+
 _Response (500 - Internal server error)_
+```json
+{
+  "message": "Internal Server Error"
+}
+```
 
 
 ### GET /todos
@@ -116,7 +139,19 @@ _Response (200)_
 ]
 ```
 
+_Response (401 - Not Authenticated)_
+```json
+{
+  "message": "Doesnt recognize User!"
+}
+```
+
 _Response (500 - Internal server error)_
+```json
+{
+  "message": "Internal Server Error"
+}
+```
 
 
 ### POST /todos
@@ -149,12 +184,17 @@ _Response (201 - Created)_
   "updatedAt": "2020-03-20T07:15:12.149Z",
 }
 ```
-
+_Response (401 - Not Authenticated)_
+```json
+{
+  "message": "Doesnt recognize User!"
+}
+```
 _Response (400 - Bad Request)_
 ```json
 
 {
-  "message": "Invalid requests"
+  "message": "Invalid date input, Input your todo title please!, Please input your todo description"
 }
 ```
 
@@ -186,8 +226,18 @@ _Response(200)_
   },
 ]
 ```
-
+_Response (401 - Not Authenticated)_
+```json
+{
+  "message": "Doesnt recognize User!"
+}
+```
 _Response (404 - Not Found)_
+```json
+{
+  "message": "Not Found"
+}
+```
 
 ### PUT /todos/:id
 
@@ -223,10 +273,25 @@ _Response (200)_
 
 > Error response:
 _Response (400 - Bad request)_
-_OR_
+```json
+{
+  "message": "Invalid date input, Input your todo title please!, Please input your todo description"
+}
+```
+
 _Response (404 - Not Found)_
-_OR_
+```json
+{
+  "message": "Not Found"
+}
+```
+
 _Response (500 - Internal Server Error)_
+```json
+{
+  "message": "Internal Server Error"
+}
+```
 
 
 ### DELETE /todos/:id
@@ -262,5 +327,15 @@ _Response(200)_
 
 > Error response:
 _Response (404 - Not Found)_
-_OR_
+```json
+{
+  "message": "Not Found"
+}
+```
+
 _Response (500 - Internal Server Error)_
+```json
+{
+  "message": "Internal Server Error"
+}
+```
