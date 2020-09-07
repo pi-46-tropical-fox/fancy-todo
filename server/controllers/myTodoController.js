@@ -35,6 +35,17 @@ class MyTodoController {
             })
     }
 
+    static oneTodo(req, res, next) {
+        Todo.findByPk(req.params.idTodo)
+        .then(data => {
+            return res.status(200).json({data})
+        })
+        .catch(err => {
+            return next(err)
+            // return res.status(500).json({ message: err.message })
+        })
+    }
+
     static updateTodo(req, res, next) {
         console.log(req.params.idTodo, '<<<<<<<<<<<reqparams')
         let params = {

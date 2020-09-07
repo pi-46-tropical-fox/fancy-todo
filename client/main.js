@@ -39,7 +39,7 @@ function afterLogin() {
     $('#form-add-todo').hide()
     $('#form-edit-todo').hide()
     $('#editTodo').show()
-    $('#listTodo').show()
+    $('#list-todo').show()
     todoList()
     weather()
 }
@@ -70,7 +70,21 @@ function editTodo(idTodo) {
     $('#editTodo').hide()
 
     $.ajax({
-        headers:localStorage.setItem('idTodo', idTodo)
+        method: 'GET',
+        url: `http://localhost:3000/mytodos/${idTodo}`,
+        headers: {
+            access_token: localStorage.getItem('access_token')
+        }
+    })
+    .done(response => {
+        console.log(response)
+        $('#edittodoTitle').val(response.data.title)
+        $('#edittodoDescription').val(response.data.description)
+        $('#edittodoDueDate').val(response.data.due_date.split('T')[0])
+        localStorage.setItem('idTodo', idTodo)
+    })
+    .fail(err => {
+        console.log(err.responseJSON)
     })
 }
 
@@ -138,6 +152,8 @@ function todoList() {
     })
         .done(response => {
             console.log(response)
+            $('#completed-todos').empty()
+            $('#outstanding-todos').empty()
             response.forEach(data => {
                 if (data.status == 'complete') {
                     $('#completed-todos').append(`
@@ -185,6 +201,7 @@ function onSignIn(googleUser) {
             localStorage.setItem('access_token', res.access_token)
             $('#search-result').empty()
             $('#restaurant-result').empty()
+            afterLogin()
         })
         .fail((err) => {
             console.log(err);
@@ -201,6 +218,7 @@ function weather() {
     })
     .done(response => {
         console.log(response)
+        $('#weather-card').empty()
         $('#weather-card').append(`
         <div class="card p-4 rounded-lg" style="width: 18rem;">
         <h3>Today's Weather</h3><br>
@@ -239,6 +257,10 @@ $(document).ready(function () {
     })
 
     $('#navbar-logout').click(event => {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+        console.log('User signed out.');
+    });
         localStorage.clear()
         beforeLogin()
     })
@@ -270,11 +292,11 @@ $(document).ready(function () {
                 $('#loginPassword').val('')
                 localStorage.setItem('access_token', response.access_token)
                 // console.log(response)
+                afterLogin()
             })
             .fail((err) => {
-                console.log(err)
+                console.log(err.responseJSON)
             })
-        afterLogin()
     })
 
     $('#form-register').submit(event => {
@@ -298,11 +320,11 @@ $(document).ready(function () {
                 $('#registerCity').val('')
                 localStorage.setItem('access_token', response.access_token)
                 // console.log(response)
+                initContent()
             })
             .fail((err) => {
                 console.log(err)
             })
-        initContent()
     })
 
     $('#form-add-todo').submit(event => {
@@ -327,11 +349,11 @@ $(document).ready(function () {
                 $('#todoTitle').val('')
                 $('#todoDescription').val('')
                 $('#todoDueDate').val('')
+                afterLogin()
             })
             .fail(err => {
                 console.log(err)
             })
-        afterLogin()
     })
 
     $('#form-edit-todo').submit(event => {
@@ -356,12 +378,12 @@ $(document).ready(function () {
                 $('#edittodoTitle').val('')
                 $('#edittodoDescription').val('')
                 $('#edittodoDueDate').val('')
-                localStorage.removeItem(idTodo)
+                localStorage.removeItem('idTodo')
+                afterLogin()
             })
             .fail(err => {
                 console.log(err)
             })
-        afterLogin()
     })
 
 })
