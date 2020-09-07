@@ -39,3 +39,5 @@ https://abdul-fancy-todo.herokuapp.com/ deployed to Heroku
 10. masuk ke setting , reveal config vars, lalu isi yg diperlukan (ex SECRET, API_KEY)
 
 11. pindah ke overview, configure add-on, lalu cari heroku postgres
+
+12. masuk ke bash heroku >> heroku run bash
