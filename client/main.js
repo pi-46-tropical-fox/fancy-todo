@@ -1,3 +1,5 @@
+const baseUrl = "https://fancytodo-app.herokuapp.com"
+
 function home (event) {
     $('#home').show();
     $('#form-login').hide();
@@ -62,7 +64,7 @@ function todoList (event) {
 
     $.ajax ({
         method : "GET",
-        url : "http://localhost:3000/todos",
+        url : baseUrl + "/todos",
         headers : {
             token : localStorage.getItem ("token")
         }
@@ -133,7 +135,7 @@ function loginForm (event) {
 
         $.ajax ({
             method : "POST",
-            url : "http://localhost:3000/users/login",
+            url : baseUrl + "/users/login",
             data : {
                 email,
                 password
@@ -166,7 +168,7 @@ function registerForm (event) {
 
         $.ajax ({
             method : "POST",
-            url : "http://localhost:3000/users/register",
+            url : baseUrl + "/users/register",
             data : {
                 username,
                 email,
@@ -196,7 +198,7 @@ function onSignIn(googleUser) {
 
     $.ajax ({
         method : "POST",
-        url : "http://localhost:3000/users/googleLogin",
+        url : baseUrl + "/users/googleLogin",
         headers : {google_id_token}
     })
 
@@ -234,7 +236,7 @@ function addTask (event) {
 
     $.ajax ({
         method : "POST",
-        url : "http://localhost:3000/todos",
+        url : baseUrl + "/todos",
         headers : {
             token : localStorage.getItem ("token")
         },
@@ -276,7 +278,7 @@ function publicHoliday_list (event) {
 
     $.ajax ({
         method : "GET",
-        url : "http://localhost:3000/calendars/holidays2020",
+        url : baseUrl + "/calendars/holidays2020",
         
     })
         .done ((res) => {
@@ -314,7 +316,7 @@ function longWeekend_list (event) {
 
     $.ajax ({
         method : "GET",
-        url : "http://localhost:3000/calendars/longweekends2020",
+        url : baseUrl + "/calendars/longweekends2020",
         
     })
         .done ((res) => {
