@@ -100,7 +100,7 @@ class TodoController {
         try {
 
             await Todo.destroy({where: {id: req.params.id}})
-            res.status(200).json({message: "Berhasil dihapus"})
+            res.status(200).json({message:'Sukses delete'})
             
          } catch (err) {
             return next(err)
