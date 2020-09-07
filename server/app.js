@@ -12,7 +12,7 @@ const router = require('./routes');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors())
-router.get('/', (req, res) => {
+app.get('/', (req, res) => {
     res.send("halo")
 })
 app.use(routes);
