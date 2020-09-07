@@ -1,3 +1,5 @@
+'use strict'
+
 function errorHandler (err, req, res, next) {
 
   let errors = []

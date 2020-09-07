@@ -100,7 +100,7 @@ function loginSubmit (event) {
     $('#login-email').val('')
     $('#login-password').val('')
     localStorage.setItem('access_token', response.access_token)
-    // menus()
+    $('#modal-welcome').show()
     afterLogin()
 
   })
@@ -377,8 +377,19 @@ function getWeather(event) {
     console.log(res.current);
     $('#weather-temp').html(res.current.temperature + `&#8451;`)
     $('#weather-desc').text(res.current.weather_descriptions)
+    
     $('#weather-location').text(res.location.name)
     $('#weather-pressure').text('Air Pressure: '+res.current.pressure)
+
+    console.log(res.current.weather_descriptions[0],"<<<<<<<<");
+    let iconWeather = res.current.weather_descriptions[0]
+    
+    $('#weather-image').empty()
+    $('#weather-image').append(`
+    
+    <img id="weather-image" src="./assets/${iconWeather}.svg" style="max-width: 10%">
+    `)
+    
   })
   .fail(err => console.log(err))
 }
