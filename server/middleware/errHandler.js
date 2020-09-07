@@ -29,7 +29,7 @@ const errHandler = (err, req, res, next) => {
         errors.push('User not authenticated')
     }else{
         statusCode = 500
-        errors.push('Internal server error')
+        errors.push(err)
     }
     res.status(statusCode).json({errors})
 }
