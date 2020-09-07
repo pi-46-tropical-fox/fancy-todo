@@ -1,3 +1,5 @@
+const baseUrl = 'https://abdul-fancy-todo.herokuapp.com'
+
 logout = () => {
     $('.msg').empty()
     signOut()
@@ -17,7 +19,7 @@ allTodoList = () => {
     $('.msg').empty()
     $.ajax({
         method: 'GET',
-        url: 'http://localhost:3000/todos',
+        url: `${baseUrl}/todos`,
         headers: {
             access_token: localStorage.getItem('access_token')
         }
@@ -82,7 +84,7 @@ loginForm = e => {
     const password = $('#password-login').val()
     $.ajax({
         method: 'POST',
-        url: 'http://localhost:3000/login',
+        url: `${baseUrl}/login`,
         data: {
             email,
             password
@@ -110,7 +112,7 @@ registerForm = e => {
     const password = $('#password-register').val()
     $.ajax({
         method: 'POST',
-        url: 'http://localhost:3000/register',
+        url: `${baseUrl}/register`,
         data: {
             firstName,
             lastName,
@@ -141,7 +143,7 @@ todoCreateForm = e => {
     const due_date = $('#due_date').val()
     $.ajax({
         method: 'POST',
-        url: 'http://localhost:3000/todos',
+        url: `${baseUrl}/todos`,
         headers: {
             access_token: localStorage.getItem('access_token')
         },
@@ -175,7 +177,7 @@ getResto = e => {
     const location_id = $('#location_id').val()
     $.ajax({
         method: 'GET',
-        url: `http://localhost:3000/foods?name=${name}&location_id=${location_id}`,
+        url: `${baseUrl}/foods?name=${name}&location_id=${location_id}`,
         headers: {
             access_token: localStorage.getItem('access_token')
         }
@@ -212,7 +214,7 @@ function onSignIn(googleUser) {
     const google_access_token = googleUser.getAuthResponse().id_token;
     $.ajax({
         method: 'POST',
-        url: 'http://localhost:3000/googleLogin',
+        url: `${baseUrl}/googleLogin`,
         headers: {
             google_access_token
         }
@@ -276,7 +278,7 @@ $(document).ready(() => {
         $('.msg').empty()
         $.ajax({
             method: 'GET',
-            url: `http://localhost:3000/todos/${id}`,
+            url: `${baseUrl}/todos/${id}`,
             headers: {
                 access_token: localStorage.getItem('access_token')
             }
@@ -314,7 +316,7 @@ $(document).ready(() => {
                 const status = $('#edit-status').val()
                 $.ajax({
                     method: 'PUT',
-                    url: `http://localhost:3000/todos/${id}`,
+                    url: `${baseUrl}/todos/${id}`,
                     headers: {
                         access_token: localStorage.getItem('access_token')
                     },
@@ -345,7 +347,7 @@ $(document).ready(() => {
     deleteTodo = (id) => {
         $.ajax({
             method: 'DELETE',
-            url: `http://localhost:3000/todos/${id}`,
+            url: `${baseUrl}/todos/${id}`,
             headers: {
                 access_token: localStorage.getItem('access_token')
             }

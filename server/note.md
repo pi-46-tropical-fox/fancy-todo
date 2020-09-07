@@ -1,4 +1,4 @@
-# Deploy Server
+# Deploy Server Heroku
 
 1. ke config/config.json
 ```json
@@ -45,3 +45,23 @@ https://abdul-fancy-todo.herokuapp.com/ deployed to Heroku
 13. npm install -g sequelize-cli
 
 14. sequelize db:migrate
+
+# Deploy Client Firebase
+
+1. buat project di console.firebase.google.com
+
+2. sudo npm install -g firebase-tools
+
+3. masuk ke folder client
+
+4. firebase init
+ - pilih hosting
+ - use an existing project
+ - select project
+ - what do u want to use as your public directory? . 
+ - Configure as a single-page app (rewrite all urls to /index.html)? y
+ - File ./index.html already exists. Overwrite? N
+
+ 5. pastikan client sudah ready dan tidak ada bug
+
+ 6. bikin baseUrl https://abdul-fancy-todo.herokuapp.com, ganti semua localhost
