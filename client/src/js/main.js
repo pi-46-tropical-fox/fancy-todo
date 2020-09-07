@@ -1,3 +1,5 @@
+const baseUrl = 'https://fancy-todo-bdh8.herokuapp.com'
+
 function navBurgerToggle() {
 	// Check for click events on the navbar burger icon
 	$('.navbar-burger').click(function () {
@@ -25,13 +27,12 @@ function showPageOnClick(event) {
 function showTodoList() {
 	$.ajax({
 		method: "get",
-		url: "http://localhost:3000/todos",
+		url: `${baseUrl}/todos`,
 		headers: {
 			access_token: localStorage.getItem('access_token')
 		}
 	})
 		.done(response => {
-			console.log(response);
 			response.forEach(todo => {
 				if (todo.status === 'todo') {
 					$('#todo-container').append(`
@@ -122,7 +123,7 @@ function refreshTodoList() {
 function updateFormTodo(id) {
 	$.ajax({
 		method: "get",
-		url: `http://localhost:3000/todos/${id}`,
+		url: `${baseUrl}/todos/${id}`,
 		headers: {
 			access_token: localStorage.getItem('access_token')
 		}
@@ -172,7 +173,7 @@ function createTodo(event) {
 	event.preventDefault();
 	$.ajax({
 		method: "post",
-		url: "http://localhost:3000/todos",
+		url: `${baseUrl}/todos`,
 		data: {
 			title: $('#form-add-todo input[name=title]').val(),
 			due_date: $('#form-add-todo input[name=due-date]').val(),
@@ -202,7 +203,7 @@ function updateTodo(id) {
 	event.preventDefault();
 	$.ajax({
 		method: "put",
-		url: `http://localhost:3000/todos/${id}`,
+		url: `${baseUrl}/todos/${id}`,
 		data: {
 			title: $('#form-update-todo input[name=title]').val(),
 			due_date: $('#form-update-todo input[name=due-date]').val(),
@@ -225,7 +226,7 @@ function updateTodo(id) {
 function deleteTodo(id) {
 	$.ajax({
 		method: "delete",
-		url: `http://localhost:3000/todos/${id}`,
+		url: `${baseUrl}/todos/${id}`,
 		headers: {
 			access_token: localStorage.getItem('access_token')
 		}
@@ -241,7 +242,7 @@ function deleteTodo(id) {
 function doneTodo(id) {
 	$.ajax({
 		method: "get",
-		url: `http://localhost:3000/todos/${id}`,
+		url: `${baseUrl}/todos/${id}`,
 		headers: {
 			access_token: localStorage.getItem('access_token')
 		}
@@ -249,7 +250,7 @@ function doneTodo(id) {
 		.done(todo => {
 			$.ajax({
 				method: "put",
-				url: `http://localhost:3000/todos/${todo.id}`,
+				url: `${baseUrl}/todos/${todo.id}`,
 				data: {
 					title: todo.title,
 					due_date: todo.due_date,
@@ -316,7 +317,7 @@ function formLogin(event) {
 	const email = $('#form-login input[name=email]').val();
 	const password = $('#form-login input[name=password]').val();
 	$.ajax({
-		url: 'http://localhost:3000/login',
+		url: `${baseUrl}/login`,
 		method: 'POST',
 		data: { email, password },
 	})
@@ -342,7 +343,7 @@ function formRegister(event) {
 	const email = $('#form-register input[name=email]').val();
 	const password = $('#form-register input[name=password]').val();
 	$.ajax({
-		url: 'http://localhost:3000/register',
+		url: `${baseUrl}/register`,
 		method: 'POST',
 		data: { email, password },
 	})
@@ -364,7 +365,7 @@ function googleSign(googleUser) {
 	const id_token = googleUser.getAuthResponse().id_token;
 	$.ajax({
 		method: 'POST',
-		url: 'http://localhost:3000/googleSign',
+		url: `${baseUrl}/googleSign`,
 		headers: { google_access_token: id_token }
 	})
 		.done(result => {
@@ -424,7 +425,7 @@ function errHandler({ name, message, errors }) {
 function fetchHolidays() {
 	$.ajax({
 		method: "get",
-		url: "http://localhost:3000/holidays",
+		url: `${baseUrl}/holidays`,
 		headers: {
 			access_token: localStorage.getItem('access_token')
 		}
