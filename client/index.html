@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Fancy Todo App</title>
+	<link rel="shortcut icon" href="./src/assets/favicon.svg" type="image/x-icon" />
+
+	<meta name="google-signin-client_id" content="786843240281-hhfa78makvjhfp502s6dq2qg8i2uio20.apps.googleusercontent.com">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css" />
+	<link rel="stylesheet" href="./src/css/style.css" />
+</head>
+
+<body class="has-navbar-fixed-top">
+	<nav class="navbar is-fixed-top is-light" role="navigation" aria-label="main navigation">
+		<div class="navbar-brand">
+			<a class="navbar-item" href="/">
+				<img src="./src/assets/logo.svg" />
+			</a>
+
+			<a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
+			</a>
+		</div>
+
+		<div id="navbarBasicExample" class="navbar-menu">
+			<div class="navbar-start">
+				<a id="nav-item-todo" class="navbar-item">Todo</a>
+				<a id="nav-item-holidays" class="navbar-item">Holidays</a>
+			</div>
+
+			<div class="navbar-end">
+				<div class="navbar-item">
+					<div class="buttons">
+						<a id="nav-item-register" class="button is-primary">
+							<strong>Register</strong>
+						</a>
+						<a id="nav-item-login" class="button is-light">Log in</a>
+						<!-- <a id="nav-item-user" class="button is-light">
+								<span class="icon">
+									<i class="fas fa-user"></i>
+								</span>
+								<span>email@email.com</span>
+							</a> -->
+						<button id="nav-item-logout" class="button is-danger is-outlined">Log out</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<section id="page-register" class="section">
+		<div class="container form-container form-container-register">
+			<form id="form-register">
+				<div class="field">
+					<label class="label">Email</label>
+					<div class="control has-icons-left has-icons-right">
+						<input class="input" name="email" type="email" />
+						<span class="icon is-small is-left">
+							<i class="fas fa-envelope"></i>
+						</span>
+					</div>
+				</div>
+
+				<div class="field">
+					<label class="label">Password</label>
+					<div class="control has-icons-left has-icons-right">
+						<input class="input" name="password" type="password" />
+						<span class="icon is-small is-left">
+							<i class="fas fa-lock"></i>
+						</span>
+					</div>
+				</div>
+
+				<div class="control">
+					<button type="submit" class="button is-primary is-fullwidth mb-4">Register</button>
+					<p>Or</p>
+					<div class="g-signin2" data-onsuccess="googleSign"></div>
+				</div>
+			</form>
+		</div>
+	</section>
+
+	<section id="page-login" class="section">
+		<div class="container form-container form-container-login">
+			<form id="form-login">
+				<div class="field">
+					<label class="label">Email</label>
+					<div class="control has-icons-left has-icons-right">
+						<input name="email" class="input" type="email" />
+						<span class="icon is-small is-left">
+							<i class="fas fa-envelope"></i>
+						</span>
+					</div>
+				</div>
+
+				<div class="field">
+					<label class="label">Password</label>
+					<div class="control has-icons-left has-icons-right">
+						<input name="password" class="input" type="password" />
+						<span class="icon is-small is-left">
+							<i class="fas fa-lock"></i>
+						</span>
+					</div>
+				</div>
+
+				<div class="control">
+					<button type="submit" class="button is-primary is-fullwidth mb-4">Login</button>
+					<p>Or</p>
+					<div class="g-signin2" data-onsuccess="googleSign"></div>
+				</div>
+			</form>
+		</div>
+	</section>
+
+	<section id="page-home" class="section">
+		<div class="container has-text-centered">
+			<h1 class="title">Welcome to fancy todo</h1>
+			<h2 class="subtitle">A simple todo to make your day fancy!</h2>
+			<div class="column"><button class="button is-primary is-large" id="get-started">Get started</button></div>
+			<img src="./src/assets/undrawco_todo_list.svg" alt="illustration todo-list" width="800px">
+		</div>
+	</section>
+
+	<section id="page-dashboard" class="section">
+		<div class="container todo-container" id="todo-container">
+			<div class="hero">
+				<div class="hero-body">
+					<div class="container has-text-centered">
+						<h1 class="title">
+							Todo
+						</h1>
+						<button class="button" id="button-add">
+							<span class="icon">
+								<i class="fas fa-plus"></i>
+							</span>
+							<span>Add</span>
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="card todo-card" id="card-form-add-todo">
+				<form id="form-add-todo">
+					<header class="card-header">
+						<p class="card-header-title">
+							<input name="title" type="text" class="input" placeholder="title">
+						</p>
+						<a href="#" class="card-header-icon">
+							<input name="due-date" type="date" class="input">
+						</a>
+						<a class="card-header-icon mr-4" id="form-add-todo-cancel">
+							<span class="icon has-text-danger">
+								<span class="tag is-danger is-medium">Cancel</span>
+							</span>
+						</a>
+						<div class="card-header-icon mr-4">
+							<button class="button is-primary" type="submit">Save</button>
+						</div>
+					</header>
+					<div class="card-content">
+						<div class="content">
+							<textarea name="description" class="textarea" placeholder="description..."></textarea>
+							<br>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.1/dist/sweetalert2.all.min.js"></script>
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
+	<script src="./src/js/main.js"></script>
+	<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</body>
+
+</html>
