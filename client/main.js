@@ -1,55 +1,101 @@
 const baseUrl = 'http://localhost:3000'
 
+$(document).ready(function () {
+  
+  if (localStorage.access_token !== undefined || localStorage.token !== undefined) {
+    afterLogin()
+  } else {
+    beforeLogin()
+  }
 
+  $('#nav-login').click(function () {
+    beforeLogin()
+  })
 
-function beforeLogin (event) {
-  $('#register-form').hide()
-  $('#nav-logout').hide()
-  $('#dashboard').hide()
-  $('#nav-todo-list').hide()
+  $('#nav-register').click(function () {
+    registerForm()
+  })
 
-  $('#nav-register').show()
+  $('#nav-logout').click(function (event) {
+    event.preventDefault()
+    optionLogout()
+  })
+
+  $('#register-not-have-button').click(function () {
+    registerForm()
+  })
+
+  $('#login-have-button').click(function () {
+    beforeLogin()
+  })
+
+  $('#login-form').submit(function (event) {
+    event.preventDefault()
+    loginSubmit(event)
+  })
+  
+  $('#register-form').submit(function (event) {
+    event.preventDefault()
+    registerSubmit(event)
+  })
+
+  $('#created-save').click(function () {
+    // event.preventDefault()
+    createTodo()
+  })
+  
+
+  // $('#nav-add-photo').click(function () {
+  //   addPhotoForm()
+  // })
+
+  // $('#add-submit').click(function () {
+  //   addPhotoSubmit()
+  //   afterLogin()
+  // })
+
+})
+
+function beforeLogin () {
   $('#nav-login').show()
-  $('#login-form').show()
-  
-}
-
-function loginForm(event) {
+  $('#nav-register').show()
   $('#nav-logout').hide()
   $('#nav-todo-list').hide()
+
+  $('#weather').hide()
   $('#login-form').show()
-  $('#login-option').show()
+
   $('#register-form').hide()
   $('#dashboard').hide()
-
 }
 
-function registerForm(event) {
-  $('#register-form').show()
-  $('#register-option').show()
-  $('#login-form').hide()
-  $('#nav-todo-list').hide()
-  $('#nav-logout').hide()
-  $('#dashboard').hide()
-}
-
-function menuList(event) {
-  $('#nav-register').hide()
+function afterLogin () {
   $('#nav-login').hide()
+  $('#nav-register').hide()
   $('#nav-logout').show()
-  
-  $('#register-form').hide()
-  $('#register-option').hide()
+  $('#nav-todo-list').show()
+
+  $('#weather').show()
   $('#login-form').hide()
+  $('#register-form').hide()
   $('#dashboard').show()
 
+  menus()
 }
 
-function logoutForm(event) {
-  beforeLogin()
+function registerForm () {
+  $('#nav-login').show()
+  $('#nav-register').show()
+  $('#nav-logout').hide()
+  $('#nav-todo-list').hide()
+
+  $('#weather').hide()
+  $('#login-form').hide()
+  $('#register-form').show()
+  $('#dashboard').hide()
 }
 
-function login () {
+function loginSubmit (event) {
   $.ajax({
     method: 'POST',
     url: `${baseUrl}/users/login`,
@@ -63,7 +109,8 @@ function login () {
     $('#login-email').val('')
     $('#login-password').val('')
     localStorage.setItem('access_token', response.access_token)
-    menus()
+    // menus()
+    afterLogin()
     console.log(response);
     $('.msg').append(`<div class="alert alert-success" role="alert">Login success!</div>`)
 
@@ -73,7 +120,7 @@ function login () {
   })
 }
 
-function register () {
+function registerSubmit (event) {
   $.ajax({
     method: 'POST',
     url: `${baseUrl}/users/register`,
@@ -83,58 +130,27 @@ function register () {
       password: $('#register-password').val()
     }
   })
-  
   .done(function (response) {
     $('#register-name').val('')
     $('#register-email').val('')
     $('#register-password').val('')
     localStorage.setItem('access_token', response.access_token)
+    beforeLogin()
     console.log(response);
   })
   .fail(err => {
-    console.log(err)
+    console.log(err.responseJSON)
   })
-}
-
-
-function googleSignin(googleUser) {
-  var google_access_token = googleUser.getAuthResponse().id_token;
-
-  $.ajax({
-      method: 'POST',
-      url: 'http://localhost:3000/googleLogin',
-      headers: {
-          google_access_token
-      }
-  })
-  .done((response) => {
-      console.log('response >>', response, '<<< response')
-      localStorage.setItem('access_token', response.token)
-      menus()
-  })
-  .fail((err) => {
-      console.log(err)
-  })
-}
-function googleSignOut() {
-  var auth2 = gapi.auth2.getAuthInstance();
-  auth2.googleSignOut().then(function () {
-    console.log('User signed out.');
-  });
 }
 
 function optionLogout(event) {
-  // event.preventDefault()
+
   localStorage.clear()
-  // googleSignOut()
+  googleSignOut()
+  beforeLogin()
 }
 
-function menus(event) {
-  // initial()
-  // navbarAfterLogin()
-  // $('#dashboard').show()
-  menuList()
-  getWeather()
+function menus() {
 
   const access_token =localStorage.getItem('access_token')
 
@@ -162,19 +178,62 @@ function menus(event) {
           <td>${status}</td>
           <td>${date}</td>
           <td>
-            <a href="#" data-id="${element.id}" onclick="showDelete(${element.id})">Delete</a> | <a href="#" data-id="${element.id}" onclick="editTodoForm(event)">Edit</a>
+            <button type="button" class="btn btn-danger btn-block" 
+              data-toggle="modal" data-target="#deleteModal" 
+              id="buttonDelete" data-id="${element.id}" onclick="showDelete(${element.id})"
+              ><i class="fas fa-trash-alt"></i> Delete
+            </button>
+             
+            <button type="button" class="btn btn-primary btn-block" 
+              data-toggle="modal" data-target="#editModal" data-id="${element.id}" 
+              onclick="editTodoForm(event)"><i 
+              class="fas fa-edit"></i> Edit
+            </button>
           </td>
         </tr>
       `)
     });
   })
   .fail((err) => {
+    console.log(err.responseJSON)
+  })
+}
+
+function showDelete (id) {
+  $('#login-form').hide()
+  $('#register-form').hide()
+  $('#createModal').hide()
+  $('#deleteModal').show()
+  $('#deleteModalFooter').empty().append(`
+    <button type="button" class="btn btn-success" id="yesDeleteModal" 
+      onclick="deleteTodo('${id}')" 
+      data-dismiss="modal">Yes
+    </button>
+    <button type="button" class="btn btn-danger" 
+      data-dismiss="modal">Cancel
+    </button>
+    `
+    )
+}
+
+function deleteTodo(id) {
+  $.ajax({
+    method: 'DELETE',
+    url: `${baseUrl}/todos/${id}`,
+    headers: {
+      access_token: localStorage.getItem('access_token')
+    }
+  })
+  .done(response => {
+    console.log(response)
+    menus()
+  })
+  .fail(err => {
     console.log(err)
   })
 }
 
 function createTodo(event) {
-
   $.ajax({
     method: 'POST',
     url: `${baseUrl}/todos`,
@@ -197,10 +256,9 @@ function createTodo(event) {
     menus()
   })
   .fail((err) => {
-    console.log(err)
+    console.log(err.responseJSON)
   })
 }
-
 
 function editTodoForm(event) {
   console.log(event.srcElement.dataset.id)
@@ -247,7 +305,7 @@ function editTodoForm(event) {
   )
   })
   .fail(err => {
-    console.log(err);
+    
   })
 }
 
@@ -271,96 +329,137 @@ function submitEditTodo(event) {
     menus()
   })
   .fail(err => {
-    console.log(err)
+    console.log(err.responseJSON)
   })
 
 }
 
-function showDelete (id) {
-  $('#login-form').hide()
-  $('#register-form').hide()
-  $('#createModal').hide()
-  $('#deleteModal').show()
-  $('#deleteModalFooter').empty().append(`
-    <button type="button" class="btn btn-success" id="yesDeleteModal" onclick="deleteTodo('${id}')" data-dismiss="modal">Yes</button>
-    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>`
-  )
-}
-
-function deleteTodo(id) {
+function onSignIn (googleUser) {
+  const profile = googleUser.getBasicProfile()
+  const id_token = googleUser.getAuthResponse().id_token
+  console.log(profile, 'profile client');
+  console.log(id_token, 'id_token client');
   
   $.ajax({
-    method: 'DELETE',
-    url: `http://localhost:3000/todos/${id}`,
+    url: `${baseUrl}/users/googleLogin`,
+    method: 'POST',
     headers: {
-      access_token: localStorage.getItem('access_token')
+      id_token: id_token
     }
   })
-  .done(response => {
-    console.log(response)
-    menus()
-  })
-  .fail(err => {
-    console.log(err)
-  })
+    .done(function (response) {
+      console.log(response)
+      localStorage.setItem('token', response.token)
+      console.log('User successfully signed in')
+      afterLogin()
+    })
+    .fail(err => {
+      console.log(err)
+    })
 }
 
-function getWeather(event) {
-  $.ajax({
-    method: 'GET',
-    url: `${baseUrl}/weather`,
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`
-    }
-  })
-  .done(res => {
-    console.log(res.current);
-    $('#weather-temp').html(res.current.temperature + `&#8451;`)
-    $('#weather-desc').text(res.current.weather_descriptions)
-    $('#weather-location').text(res.location.name)
-    $('#weather-pressure').text('Air Pressure: '+res.current.pressure)
-  })
-  .fail(err => console.log(err))
+// function googleSignin(googleUser) {
+//   var { google_access_token } = googleUser.getAuthResponse().id_token;
+//   console.log(google_access_token, 'di client');
+
+//   $.ajax({
+//     method: 'POST',
+//     url: `${baseUrl}/users/googleLogin`,
+//     headers: {
+//       google_access_token
+//     }
+//   })
+//   .done((response) => {
+//     console.log('response >>', response, '<<< response')
+//     localStorage.setItem('access_token', response.token)
+//     menus()
+//   })
+//   .fail((err) => {
+//     console.log(err)
+//   })
+// }
+
+function googleSignOut(event) {
+  var auth2 = gapi.auth2.getAuthInstance();
+  auth2.signOut().then(function () {
+    // console.log(localStorage);
+    // localStorage.clear()
+    console.log('User signed out.');
+  });
 }
 
 
-$(document).ready(function () {
+
+
+
+
+
+
+
+
+
+
+
+// function getWeather(event) {
+//   $.ajax({
+//     method: 'GET',
+//     url: `${baseUrl}/weather`,
+//     headers: {
+//       Authorization: `Bearer ${localStorage.getItem('access_token')}`
+//     }
+//   })
+//   .done(res => {
+//     console.log(res.current);
+//     $('#weather-temp').html(res.current.temperature + `&#8451;`)
+//     $('#weather-desc').text(res.current.weather_descriptions)
+//     $('#weather-location').text(res.location.name)
+//     $('#weather-pressure').text('Air Pressure: '+res.current.pressure)
+//   })
+//   .fail(err => console.log(err))
+// }
+
+
+// $(document).ready(function () {
   
-  beforeLogin()
-
-  $('#nav-login').click(loginForm)
-  $('#register-not-have-button').click(registerForm)
+//   if (localStorage.access_token !== undefined) {
+//     afterLogin()
+//   } else {
+//     beforeLogin()
+//   }
   
-  $('#nav-register').click(registerForm)
-  $('#login-have-button').click(loginForm)
 
-  $('#nav-logout').click(function () {
-    
-    optionLogout()
-    beforeLogin()
-    // googleSignOut()
-    // loginForm()
-  })
+//   // $('#nav-login').click(loginForm)
+//   // $('#register-not-have-button').click(registerForm)
+  
+//   // $('#nav-register').click(registerForm)
+//   // $('#login-have-button').click(loginForm)
 
-  $('#nav-todo-list').click(function () {
-    menus()
-  })
+//   $('#nav-logout').click(function () {
+//     optionLogout()
+//   })
+//   //   beforeLogin()
+//     // googleSignOut()
+//     // loginForm()
 
-  $('#created-save').click(function () {
-    createTodo()
-  })
+//   $('#nav-todo-list').click(function () {
+//     menus()
+//   })
 
-  $('#login-submit').click(function () {
-    event.preventDefault()
-    login()
-  })
+//   $('#created-save').click(function () {
+//     createTodo()
+//   })
 
-  $('#register-submit').click(function () {
-    event.preventDefault()
-    register()
-    loginForm()
-  })
+//   $('#login-submit').submit(function (event) {
+//     event.preventDefault()
+//     login()
+//   })
 
-})
+//   $('#register-submit').submit(function (event) {
+//     event.preventDefault()
+//     register()
+//     // loginForm()
+//   })
+
+// })
 
 

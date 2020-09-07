@@ -3,6 +3,7 @@
 const { User } = require('../models')
 const { checkPassword } = require('../helpers/bcryptjs')
 const { generateToken } = require('../helpers/jwt')
+const { OAuth2Client } = require('google-auth-library')
 
 class UserController {
 // Static method for register new "user" 
@@ -41,39 +42,42 @@ class UserController {
   }
 
   static googleLogin(req,res,next) {
+    let payload = null
     const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
-    const {google_access_token} = req.headers
-    let email_google = ''
+    // let email_google = ''
+    // console.log(req.headers.id_token);
+    // console.log(process.env.GOOGLE_CLIENT_ID);
+
     client.verifyIdToken({
-      idToken: google_access_token,
+      idToken: req.headers.id_token,
       audience: process.env.GOOGLE_CLIENT_ID
     })
-    .then(ticket => {
-      return ticket.getPayload()
+    .then((ticket) => {
+      payload = ticket.getPayload()
+      return User.findOne({ email: payload.email })
     })
-    .then(payload => {
-      // console.log(payload);
-      email_google = payload.email
-      return User.findOne({where:{email:payload.email}})
-    })
-    .then(user => {
-      if (!user) {
-        let params = {
-          email: email_google,
-          password: 'defaultgoogle'
-        }
-        return User.create(params)
-      } else {
+    .then((user) => {
+      if (user) {
+        console.log('User is already registered in the server')
         return user
+      } else {
+        console.log('Create new user!')
+        return User.create({
+          username: payload.name,
+          email: payload.email,
+          password: 's4mu3l91rs4n6'
+        })
       }
     })
-    .then(user => {
-      const accessToken = jwt.sign({email: user.email, id: user.id}, secret)
-      res.status(200).json({accessToken: accessToken})
+    .then((user) => {
+      payload = { id: user._id, email: user.email }
+      const token = generateToken(payload)
+      res.status(201).json({
+        message: 'Successfully logged in', token
+      })
     })
-    .catch(err => console.log(err))
+    .catch(next)
   }
-
 }
 
 

@@ -21,31 +21,20 @@
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
       <ul class="navbar-nav" id="content-nav">
+
+      <!-- BEFORE LOGIN -->
         <li class="nav-item">
           <a class="nav-link" href="#" id="nav-login">Login</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#" id="nav-register">Register</a>
         </li>
+      
+      <!-- AFTER LOGIN -->
         <li class="nav-item">
-          <a class="nav-link" href="#" id="nav-logout">Logout</a>
+          <a class="nav-link" href="#" id="nav-logout" >Logout</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" id="nav-todo-list">To-Do List</a>
-        </li>
-        <li>
-          <div class="weather col-sm" id="weather">
-            <div class="card">
-              <!-- <img id="weather-image" src="" class="card-img-top" alt="weather-icon"> -->
-              <div class="card-body">
-                <h2 class="card-title" id="weather-temp"></h5>
-                <h5 class="card-subtitle mb-2" id="weather-location"></h6>
-                <h5 class="card-subtitle mb-2 text-muted" id="weather-desc"></h6>
-                <p class="card-text" id="weather-pressure"></p>
-              </div>
-            </div>
-          </div>
-        </li>
+        
       </ul>
     </div>
   </nav>
@@ -53,28 +42,39 @@
 <!-- LOGO HEADER -->
   <header id="heading">
     <div class="container" id="giphy">
-      <img src="https://i.imgur.com/hJ2DFpN.png" style="max-width: 40%" />
+      <img src="./assets/undraw_taking_notes_tjaf.png" style="max-width: 40%" />
       <h1>To Do!</h1>
       <h5>Remind me anywhere, anytime, anyplace</h5>
     </div>
     </header>
   
+    <div class="weather col-sm" id="weather">
+      <div class="card">
+        <img id="weather-image" src="" class="card-img-top" alt="weather-icon">
+        <div class="card-body">
+          <h2 class="card-title" id="weather-temp"></h5>
+          <h5 class="card-subtitle mb-2" id="weather-location"></h6>
+          <h5 class="card-subtitle mb-2 text-muted" id="weather-desc"></h6>
+          <p class="card-text" id="weather-pressure"></p>
+        </div>
+      </div>
+    </div>
 
 <!-- LOGIN FORM -->
   <div class="container" id="login-form">
     <h4>Login</h4>
     <div id="errorLogin"></div>
     <div id="emailLogin">
-      <form>
+      <form id="login-submit">
         <div id="form-login" class="form-group">
           <label for="login-email">Email:</label>
-          <input type="email" class="form-control" id="login-email" placeholder="Enter email" name="email">
+          <input type="email" required class="form-control" id="login-email" placeholder="Enter email" name="email">
         </div>
         <div class="form-group">
           <label for="login-password">Password:</label>
-          <input type="password" class="form-control" id="login-password" placeholder="Enter password" name="password">
+          <input type="password" required class="form-control" id="login-password" placeholder="Enter password" name="password">
         </div>
-        <p> <button id="login-submit" type="submit" class="btn btn-primary">Login</button></p>
+        <p> <button type="submit" class="btn btn-primary">Login</button></p>
       </form>
     </div>
 
@@ -92,22 +92,22 @@
 <!-- REGISTER FORM -->
   <div class="container" id="register-form">
     <div id="registerContent">
-      <form>
+      <form id="register-submit">
         <h4>Register</h4>
         <div id="errorRegister"></div>
         <div class="form-group">
           <label for="register-name">Name:</label>
-          <input type="text" class="form-control" id="register-name" placeholder="Enter name" name="name">
+          <input type="text" required class="form-control" id="register-name" placeholder="Enter name" name="name">
         </div>
         <div class="form-group">
           <label for="register-email">Email:</label>
-          <input type="email" class="form-control" id="register-email" placeholder="Enter email" name="email">
+          <input type="email" required class="form-control" id="register-email" placeholder="Enter email" name="email">
         </div>
         <div class="form-group">
           <label for="register-password">Password:</label>
           <input type="password" class="form-control" id="register-password" placeholder="Enter password" name="password">
         </div>
-        <button id="register-submit" type="submit" class="btn btn-primary mb-2">Register</button>
+        <button  type="submit" class="btn btn-primary mb-2">Register</button>
       </form>
     </div>
     <p>Already have an account? Click here to <a href="#" id="login-have-button">login.</a></p>
@@ -115,8 +115,12 @@
 
 <!-- DASHBOARD -->
 <div class="container" id="dashboard">
-  <p id="createNew"><button type="button" id="#createTodoButton" class="btn btn-light" data-toggle="modal"
-    data-target="#createModal"><i class="fas fa-edit"></i> Create new to-do</button></p>
+  <p id="createNew"> 
+    <button type="button" id="#createTodoButton" class="btn btn-light" 
+      data-toggle="modal" data-target="#createModal">
+      <i class="fas fa-edit"></i> Create new to-do
+    </button>
+  </p>
   <div class="table-responsive" id="todo-table">
     <table class="table" style="color:black">
       <thead id="todo-header">
@@ -137,13 +141,21 @@
           <td></td>
           <td>09/09/2020</td>
           <td>
-          <button type="button" class="btn btn-success btn-block" value="Done" onclick="done()"
-            id="buttonDone"><i class="fas fa-thumbs-up"></i> Done</button>
-          <button type="button" class="btn btn-warning btn-block" data-toggle="modal"
-            data-target="#editModal"><i class="fas fa-edit"></i> Edit</button>
-          <button type="button" class="btn btn-danger btn-block" data-toggle="modal"
-            data-target="#deleteModal" id="buttonDelete"><i class="fas fa-trash-alt"></i>
-            Delete</button>
+            <button type="button" class="btn btn-success btn-block" 
+              value="Done" onclick="done()"
+              id="buttonDone"><i class="fas fa-thumbs-up"></i> Done
+            </button>
+
+            <button type="button" class="btn btn-warning btn-block" 
+            data-toggle="modal" data-target="#editModal"><i 
+            class="fas fa-edit"></i> Edit
+            </button>
+
+            <button type="button" class="btn btn-danger btn-block" 
+            data-toggle="modal" data-target="#deleteModal" 
+            id="buttonDelete"><i class="fas fa-trash-alt"></i> Delete
+            </button>
+
           </td>
         </tr>
       </tbody>
@@ -158,48 +170,61 @@
     <div class="modal-content">
 
     <!-- Modal Header -->
-    <div class="modal-header" style="color: #000000">
-        <h4 class="modal-title"><i class="fas fa-edit"></i> Create to-do</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-    </div>
+      <div class="modal-header" data-toggle="modal" style="color: #000000">
+        <h4 class="modal-title">
+          <i class="fas fa-edit"></i> Create to-do
+        </h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
 
           <!-- Modal body -->
-    <div class="modal-body" style="color: #000000">
-      <div class="container">
-        <form>
-          <div class="form-group" style="color: #000000">
-            <label for="add-title">To-Do:</label>
-            <input type="text" class="form-control" id="add-title" placeholder="Enter task"
-                name="title">
-          </div>
-          <div class="form-group" style="color: #000000">
-            <label for="add-description">Description:</label>
-            <textarea class="form-control" rows="5" id="add-description"
+      <form id="create-todo">
+        <div class="modal-body" style="color: #000000">
+          <div class="container">
+          
+
+            <div class="form-group" style="color: #000000">
+              <label for="add-title">To-Do:</label>
+              <input type="text" class="form-control" id="add-title" 
+              placeholder="Enter task" name="title">
+            </div>
+
+            <div class="form-group" style="color: #000000">
+              <label for="add-description">Description:</label>
+              <textarea class="form-control" rows="5" id="add-description"
                 placeholder="Enter description" name="description"></textarea>
-          </div>
-          <div class="form-group" style="color: #000000">
-            <label for="add-due_date">Date:</label>
-            <input type="date" class="form-control" id="add-due_date" name="date">
-          </div>
-          <div class="form-check-inline">
-            <label class="form-check-label" for="add-status"
-            style="color: #000000">Urgent:</label>
+            </div>
+
+            <div class="form-group" style="color: #000000">
+              <label for="add-due_date">Date:</label>
+              <input type="date" class="form-control" id="add-due_date" name="date">
+            </div>
+
+            <div class="form-check-inline">
+              <label class="form-check-label" for="add-status"
+              style="color: #000000">Urgent:</label>
               <div class="container" style="color: #000000">
                 <input type="checkbox" class="form-check-input" name="status"
                 id="add-status" style="color: #000000">Yes
               </div>
+            </div>
           </div>
-        </form>
-      </div>
-    </div>
+        </div>
+      
 
-          <!-- Modal footer -->
-          <div class="modal-footer">
-              <button type="button" class="btn btn-success" id="created-save"
-                data-dismiss="modal">Save</button>
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-          </div>
-      </div>
+    <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success" 
+          id="created-save" data-dismiss="modal">Save
+          </button>
+          <button type="button" class="btn btn-danger" 
+            data-dismiss="modal">Cancel
+          </button>
+        </div>
+    </form>
+    </div>
   </div>
 </div>
 
@@ -254,7 +279,7 @@
 
 
 <!-- DELETE POPUP -->
-<div class="modal" id="deleteModal" style="color: #000000;">
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true" style="color: #000000;">
   <div class="modal-dialog">
     <div class="modal-content">
 

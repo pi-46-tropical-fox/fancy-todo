@@ -2,10 +2,15 @@ function errorHandler (err, req, res, next) {
 
   let errors = []
   let statusCode = 500
-  if (err.name === 'SequelizeValidationError') {
+  console.log(err.name, "<<<<<<<<");
+  console.log(err);
+
+  // SequelizeUniqueConstraintError --register
+  if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
     err.errors.forEach(error => {
       errors.push(error.message)
     });
+    console.log(errors);
     statusCode = 400
   } 
   if (err.name === 'JsonWebTokenError') {
