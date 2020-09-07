@@ -4,8 +4,8 @@ const TodoRoute = require('./TodoRoute')
 const authorization = require('../middleware/authorization')
 const authentication = require('../middleware/authentication')
 
-router.get('/', (req, res) => {
-    res.send('Welcome to My Apps')
+router.get('/', (req, res, next) => {
+    res.json({message:'Welcome to My Apps'})
 })
 
 router.use('/', UserRoute)
