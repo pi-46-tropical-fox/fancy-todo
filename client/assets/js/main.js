@@ -77,6 +77,7 @@ afterLogin = () => {
     $('#todo-edit-form').hide()
     $('#food-form').hide()
     $('#resto-container').empty()
+    allTodoList()
 }
 loginForm = e => {
     e.preventDefault()
@@ -95,7 +96,6 @@ loginForm = e => {
         $('#password-login').val('')
         localStorage.setItem('access_token', res.access_token)
         afterLogin()
-        allTodoList()
         $('.msg').append(`<div class="alert alert-success" role="alert">Login success!</div>`)
     })
     .fail(err => {
@@ -127,7 +127,6 @@ registerForm = e => {
         $('#password-register').val('')
         localStorage.setItem('access_token', res.access_token)
         afterLogin()
-        allTodoList()
         $('.msg').append(`<div class="alert alert-success" role="alert">Account created successfully!</div>`)
     })
     .fail(err => {
@@ -154,7 +153,7 @@ todoCreateForm = e => {
         }
     })
     .done(res => {
-        allTodoList()
+        afterLogin()
         $('.msg').append(`<div class="alert alert-success" role="alert">Todo created successfully!</div>`)
     })
     .fail(err => {
@@ -222,7 +221,6 @@ function onSignIn(googleUser) {
     .done(res => {
         localStorage.setItem('access_token', res.access_token)
         afterLogin()
-        allTodoList()
         $('.msg').append(`<div class="alert alert-success" role="alert">Succes get in with Google!</div>`)
     })
     .fail(err => {
