@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="google-signin-client_id" content="347093637379-k5mh1k0uhjbmvmp9i9e56bppg8goftu7.apps.googleusercontent.com">
+	<title>Todo App</title>
+
+	
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#">Todo App</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		  	<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link" id="nav-register" href="#">Register</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="nav-login" href="#">Login</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="nav-todo" href="#">Todo List</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="nav-add" href="#">Add Todo</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="nav-logout" href="#">Logout</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	
+	<div class="container">
+		<!-- <h1>Hello, world!</h1> -->
+
+		<!-- Register Form -->
+		<form id="registerForm" style="max-width: 60%;" class="mx-auto">
+			<h1 class="display-1">Register</h1>
+			<br>
+			<div class="form-group">
+				<label for="registerEmail">Email address</label>
+				<input type="email" class="form-control" id="registerEmail" aria-describedby="emailHelp">
+				<!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+			</div>
+			<div class="form-group">
+				<label for="registerPassword">Password</label>
+				<input type="password" class="form-control" id="registerPassword">
+			</div>
+			<!-- <div class="form-group form-check">
+				<input type="checkbox" class="form-check-input" id="exampleCheck1">
+				<label class="form-check-label" for="exampleCheck1">Check me out</label>
+			</div> -->
+			<button type="submit" class="btn btn-primary">Register</button>
+		</form>
+
+
+		<!-- Login Form -->
+		<form id="loginForm" style="max-width: 60%;" class="mx-auto">
+			<h1 class="display-1">Login</h1>
+			<br>
+			<div class="form-group">
+				<label for="InputEmail">Email address</label>
+				<input type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp">
+				<!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+			</div>
+			<div class="form-group">
+				<label for="InputPassword">Password</label>
+				<input type="password" class="form-control" id="InputPassword">
+			</div>
+			<!-- <div class="form-group form-check">
+				<input type="checkbox" class="form-check-input" id="exampleCheck1">
+				<label class="form-check-label" for="exampleCheck1">Check me out</label>
+			</div> -->
+			<button type="submit" class="btn btn-primary">Login</button>
+			<hr>
+			<div class="g-signin2" data-onsuccess="onSignIn"></div>
+			<!-- <a href="#" onclick="signOut();">Sign out</a> -->
+		</form>
+
+		
+		<!-- Todo List w/ Delete Button -->
+		<div id="todolist">
+			<br>
+			<div class="row">
+				<h1 class="display-1 col-sm">To-Do</h1>
+			
+				<div class="weather col-sm" id="weather">
+					<div class="card">
+						<!-- <img id="weather-image" src="" class="card-img-top" alt="weather-icon"> -->
+						<div class="card-body">
+							<h2 class="card-title" id="weather-temp"></h5>
+							<h5 class="card-subtitle mb-2" id="weather-location"></h6>
+							<h5 class="card-subtitle mb-2 text-muted" id="weather-desc"></h6>
+							<p class="card-text" id="weather-pressure"></p>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<br>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th scope="col">Title</th>
+						<th scope="col">Description</th>
+						<th scope="col">Status</th>
+						<th scope="col">Due-Date</th>
+						<th scope="col" colspan="2">Action</th>
+					</tr>
+				</thead>
+				<tbody id="todoTable">
+					<!-- <tr>
+						<td>Test Title</th>
+						<td>Test Description</td>
+						<td>Done</td>
+						<td>2020/10/07</td>
+						<td><a href="/edit/" class="text-center">Edit</a></td>
+						<td><a href="/delete/" class="text-center">Delete</a></td>
+					</tr> -->
+				</tbody>
+			</table>
+		</div>
+		
+		<!-- Add Todo -->
+		<form id="addForm" style="max-width: 60%;" class="mx-auto">
+			<h1 class="display-1">Add Todo</h1>
+			<br>
+			<div class="form-group">
+				<label for="InputTitle">Title</label>
+				<input type="text" class="form-control" id="InputTitle">
+			</div>
+			<div class="form-group">
+				<label for="InputDesc">Description</label>
+				<input type="text" class="form-control" id="InputDesc">
+			</div>
+			<div class="form-group">
+				<label for="InputStatus">Status</label>
+				<input type="text" class="form-control" id="InputStatus">
+			</div>
+			<div class="form-group">
+				<label for="InputDate">Due Date</label>
+				<input type="date" class="form-control" id="InputDate">
+			</div>
+			
+			<button type="submit" class="btn btn-primary">Add Todo</button>
+		</form>
+
+		<!-- Edit Todo -->
+		<form id="editForm" style="max-width: 60%;" class="mx-auto">
+			<h1 class="display-1">Edit Todo</h1>
+			<br>
+			<div class="form-group">
+				<label for="EditTitle">Title</label>
+				<input type="text" class="form-control" id="EditTitle">
+			</div>
+			<div class="form-group">
+				<label for="EditDesc">Description</label>
+				<input type="text" class="form-control" id="EditDesc">
+			</div>
+			<div class="form-group">
+				<label for="EditStatus">Status</label>
+				<input type="text" class="form-control" id="EditStatus">
+			</div>
+			<div class="form-group">
+				<label for="EditDate">Due Date</label>
+				<input type="date" class="form-control" id="EditDate">
+			</div>
+			<div class="form-group">
+				<label for="EditId">User ID</label>
+				<input type="text" class="form-control" id="EditId" disabled>
+			</div>
+			
+			<button type="submit" class="btn btn-primary">Edit Todo</button>
+		</form>
+
+	</div>
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+	<script src="./main.js"></script>
+  </body>
+</body>
+</html>
