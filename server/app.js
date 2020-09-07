@@ -10,9 +10,9 @@ const errHandler = require('./middleware/errHandler')
 
 app
 // first, use needed modules for processing requests
+.use(cors())
 .use(express.urlencoded({ extended: false }))
 .use(express.json())
-.use(cors())
 // ...and then import needed routes
 .use(routes)
 .use(errHandler)
