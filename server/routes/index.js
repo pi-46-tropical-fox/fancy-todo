@@ -5,7 +5,7 @@ const authorization = require('../middleware/authorization')
 const authentication = require('../middleware/authentication')
 
 router.get('/', (req, res) => {
-    res.redirect('/login')
+    res.send('Welcome to My Apps')
 })
 
 router.use('/', UserRoute)
