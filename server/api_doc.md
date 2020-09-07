@@ -54,7 +54,10 @@ _Response (201 - Created)_
 _Response (400 - Bad Request)_
 ```
 {
-  "message": "Invalid requests"
+  "errors": [
+    Title must not empty!
+    Minimum due date is today!
+  ]
 }
 ```
 ---
@@ -101,10 +104,12 @@ _Response (200 - OK)_
 ]
 ```
 
-_Response (500 - Internal Server Error)_
+_Response (401 - Unauthorized)_
 ```
 {
-  "message": "internal server errors"
+  "errors": [
+    User is not authenticated
+  ]
 }
 ```
 ---
@@ -143,7 +148,9 @@ _Response (200 - OK)_
 _Response (404 - Not found)_
 ```
 {
-  "message": "todo not found"
+  "errors": [
+    "Todo not found"
+  ]
 }
 ```
 ---
@@ -185,7 +192,9 @@ _Response (200 - OK)_
 _Response (404 - Not Found)_
 ```
 {
-  "message": "todo not found"
+  "errors": [
+    Todo not found
+  ]
 }
 ```
 ---
@@ -215,7 +224,9 @@ todo has been successfully deleted
 _Response (404 - Not found)_
 ```
 {
-  "message": "todo not found"
+  "errors": [
+    Todo not found
+  ]
 }
 ```
 ---
@@ -253,7 +264,11 @@ _Response (201 - Created)_
 _Response (400 - Bad Request)_
 ```
 {
-  "message": "Invalid requests"
+  "errors": [
+    Username must be unique
+    Email must be unique
+    Minimum password is six characters
+  ]
 }
 ```
 ---
@@ -281,8 +296,11 @@ not needed
 
 _Response (400 - Bad Request)_
 ```
-{
-  "message": "Invalid requests"
+{  
+  errors: [
+    Invalid email or password
+  ]
+
 }
 ```
 ---

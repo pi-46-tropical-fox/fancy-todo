@@ -1,3 +1,5 @@
+'use strict'
+
 const baseUrl = 'http://localhost:3000'
 
 $(document).ready(function () {
@@ -40,19 +42,8 @@ $(document).ready(function () {
   })
 
   $('#created-save').click(function () {
-    // event.preventDefault()
     createTodo()
   })
-  
-
-  // $('#nav-add-photo').click(function () {
-  //   addPhotoForm()
-  // })
-
-  // $('#add-submit').click(function () {
-  //   addPhotoSubmit()
-  //   afterLogin()
-  // })
 
 })
 
@@ -111,12 +102,10 @@ function loginSubmit (event) {
     localStorage.setItem('access_token', response.access_token)
     // menus()
     afterLogin()
-    console.log(response);
-    $('.msg').append(`<div class="alert alert-success" role="alert">Login success!</div>`)
 
   })
   .fail(err => {
-    console.log(err)
+    showError(err.responseJSON)
   })
 }
 
@@ -136,10 +125,9 @@ function registerSubmit (event) {
     $('#register-password').val('')
     localStorage.setItem('access_token', response.access_token)
     beforeLogin()
-    console.log(response);
   })
   .fail(err => {
-    console.log(err.responseJSON)
+    showError(err.responseJSON)
   })
 }
 
@@ -162,7 +150,8 @@ function menus() {
     }
   })
   .done((response) => {
-    console.log(response)
+    // event.preventDefault()
+    getWeather()
     $('#todo-list').empty()
     let counter = 1
     response.forEach(element => {
@@ -195,7 +184,7 @@ function menus() {
     });
   })
   .fail((err) => {
-    console.log(err.responseJSON)
+    showError(err.responseJSON)
   })
 }
 
@@ -225,11 +214,10 @@ function deleteTodo(id) {
     }
   })
   .done(response => {
-    console.log(response)
     menus()
   })
   .fail(err => {
-    console.log(err)
+    showError(err.responseJSON)
   })
 }
 
@@ -256,7 +244,7 @@ function createTodo(event) {
     menus()
   })
   .fail((err) => {
-    console.log(err.responseJSON)
+    showError(err.responseJSON)
   })
 }
 
@@ -305,7 +293,7 @@ function editTodoForm(event) {
   )
   })
   .fail(err => {
-    
+    showError(err.responseJSON)
   })
 }
 
@@ -325,11 +313,11 @@ function submitEditTodo(event) {
     }
   })
   .done(response => {
-    console.log(response)
+    // console.log(response)
     menus()
   })
   .fail(err => {
-    console.log(err.responseJSON)
+    showError(err.responseJSON)
   })
 
 }
@@ -354,112 +342,44 @@ function onSignIn (googleUser) {
       afterLogin()
     })
     .fail(err => {
-      console.log(err)
+      showError(err.responseJSON)
     })
 }
 
-// function googleSignin(googleUser) {
-//   var { google_access_token } = googleUser.getAuthResponse().id_token;
-//   console.log(google_access_token, 'di client');
-
-//   $.ajax({
-//     method: 'POST',
-//     url: `${baseUrl}/users/googleLogin`,
-//     headers: {
-//       google_access_token
-//     }
-//   })
-//   .done((response) => {
-//     console.log('response >>', response, '<<< response')
-//     localStorage.setItem('access_token', response.token)
-//     menus()
-//   })
-//   .fail((err) => {
-//     console.log(err)
-//   })
-// }
-
-function googleSignOut(event) {
+function googleSignOut (event) {
   var auth2 = gapi.auth2.getAuthInstance();
   auth2.signOut().then(function () {
-    // console.log(localStorage);
-    // localStorage.clear()
-    console.log('User signed out.');
+    
+  console.log('User signed out.');
   });
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-// function getWeather(event) {
-//   $.ajax({
-//     method: 'GET',
-//     url: `${baseUrl}/weather`,
-//     headers: {
-//       Authorization: `Bearer ${localStorage.getItem('access_token')}`
-//     }
-//   })
-//   .done(res => {
-//     console.log(res.current);
-//     $('#weather-temp').html(res.current.temperature + `&#8451;`)
-//     $('#weather-desc').text(res.current.weather_descriptions)
-//     $('#weather-location').text(res.location.name)
-//     $('#weather-pressure').text('Air Pressure: '+res.current.pressure)
-//   })
-//   .fail(err => console.log(err))
-// }
-
-
-// $(document).ready(function () {
+function showError (err) {
+  $('#errorModal').modal('show')
   
-//   if (localStorage.access_token !== undefined) {
-//     afterLogin()
-//   } else {
-//     beforeLogin()
-//   }
-  
+  $('#list-error').empty()
+  err.errors.forEach(el => {
+    $('#list-error').append(`
+    <li class="list-group"><p style="color:red;">${el}</p></li>
+    `)
+  })
+}
 
-//   // $('#nav-login').click(loginForm)
-//   // $('#register-not-have-button').click(registerForm)
-  
-//   // $('#nav-register').click(registerForm)
-//   // $('#login-have-button').click(loginForm)
-
-//   $('#nav-logout').click(function () {
-//     optionLogout()
-//   })
-//   //   beforeLogin()
-//     // googleSignOut()
-//     // loginForm()
-
-//   $('#nav-todo-list').click(function () {
-//     menus()
-//   })
-
-//   $('#created-save').click(function () {
-//     createTodo()
-//   })
-
-//   $('#login-submit').submit(function (event) {
-//     event.preventDefault()
-//     login()
-//   })
-
-//   $('#register-submit').submit(function (event) {
-//     event.preventDefault()
-//     register()
-//     // loginForm()
-//   })
-
-// })
-
+function getWeather(event) {
+  $.ajax({
+    method: 'GET',
+    url: `${baseUrl}/todos/weather`,
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`
+    }
+  })
+  .done(res => {
+    console.log(res.current);
+    $('#weather-temp').html(res.current.temperature + `&#8451;`)
+    $('#weather-desc').text(res.current.weather_descriptions)
+    $('#weather-location').text(res.location.name)
+    $('#weather-pressure').text('Air Pressure: '+res.current.pressure)
+  })
+  .fail(err => console.log(err))
+}
 
