@@ -14,6 +14,7 @@ function onSignIn(googleUser) {
     .done( response => {
         console.log(response)
         localStorage.setItem('access_token', response.access_token)
+        localStorage.setItem('username', response.username)
         mainMenu()        
     })
     .fail( err => {
@@ -67,6 +68,12 @@ function mainMenu (event){
     $('#add').hide()
     $('#logedEmail').empty()
     $('#todos').empty()
+    
+    if(localStorage.getItem('username')){
+        $('#logedEmail').append(`
+        <h5 class="card-text">Welcome : ${localStorage.getItem('username')}</h5>
+        `)
+    }
 
     $.ajax({
         method: "GET",
@@ -100,10 +107,8 @@ function mainMenu (event){
     })
 
         .done(response => {
-            console.log(response)
-            $('#logedEmail').append(`
-            <h5 class="card-text">Welcome : ${response[0].User.username}</h5>
-            `)
+            console.log(response, '<<<<<---------- ini response')
+            
 
             response.forEach( (element,index) => {
                 $('#todos').append(`
@@ -113,14 +118,22 @@ function mainMenu (event){
                         <td>${element.description}</td>
                         <td>${element.due_date.split('T')[0]}</td>
                         <td><p class="badge badge-secondary">${element.status}</p></td>
-                        <td><a href='#' data-id= ${element.id} class="badge badge-info" onclick="editClick(event)">Edit</a> <a href='#' data-id= ${element.id} class="badge badge-danger" onclick="deleteClick(event)">Delete</a></td>
+                        <td><a href='#' data-id= ${element.id} class="badge badge-info" onclick="editClick(event)">Edit</a> <a href='#' data-id= ${element.id} class="badge badge-danger" onclick="deleteClick(event)" id="delete">Delete</a></td>
                     </tr>
                 `)
             })
         })
 
         .fail(err => {
-            console.log(err)
+            let errors = err.responseJSON.errors
+            console.log(errors)
+            $('#errorMessageShowTodo').empty()
+
+            errors.forEach(error => {
+                $('#errorMessageShowTodo').append(`
+                    <h5 class="text-danger">${error}</h5>
+                `)
+            })
         })
     
 }
@@ -143,7 +156,9 @@ function editClick(event) {
             $('#editForm').empty()
 
             $('#editForm').append(`
-            
+                <div class="errorMessageEdit" id="errorMessageEdit">
+                    <!-- <p>message</p> -->
+                </div>
                 <div class="form-group">
                     <label for="title">Title</label>
                     <input type="text" name="title" class="form-control" id="editTitle" value="${response.title}">
@@ -176,20 +191,39 @@ function editClick(event) {
 
 function deleteClick(event) {
     event.preventDefault()
-    $.ajax({
-        method: 'DELETE',
-        url: `http://localhost:3000/todos/${event.srcElement.dataset.id}`,
-        headers: {
-            access_token: localStorage.getItem('access_token')
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {          
+        
+            $.ajax({
+                method: 'DELETE',
+                url: `http://localhost:3000/todos/${event.srcElement.dataset.id}`,
+                headers: {
+                    access_token: localStorage.getItem('access_token')
+                }
+            })
+            .done(response => {
+                console.log(response)
+                mainMenu()
+            })
+            .fail(err => {
+                console.log(err)
+            })
+            Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+            )
         }
-    })
-    .done(response => {
-        console.log(response)
-        mainMenu()
-    })
-    .fail(err => {
-        console.log(err)
-    })
+  })
 }
 
 function logoutMenu (event){
@@ -254,10 +288,27 @@ $(document).ready( ()=> {
                 $('#email').val('')
                 $('#password').val('')
                 localStorage.setItem('access_token', response.access_token)
+                localStorage.setItem('username', response.username)
                 mainMenu()
             })
             .fail((err) => {
-                console.log(err)
+                
+                Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Invalid Username or Password!',
+                
+                })
+
+                let errors = err.responseJSON.errors
+                console.log(errors)
+                $('#errorMessageLogin').empty()
+
+                errors.forEach(error => {
+                    $('#errorMessageLogin').append(`
+                        <h5 class="text-danger">${error}</h5>
+                    `)
+                })
             })
 
     })
@@ -277,10 +328,23 @@ $(document).ready( ()=> {
                 $('#registerName').val('')
                 $('#email').val('')
                 $('#password').val('')
-                loginMenu()
+                logoutMenu()
+                Swal.fire(
+                    'Congratulation!',
+                    'You have already registered!',
+                    'success'
+                  )
             })
             .fail((err) => {
-                console.log(err)
+                let errors = err.responseJSON.errors
+                console.log(errors)
+                $('#errorMessageRegister').empty()
+
+                errors.forEach(error => {
+                    $('#errorMessageRegister').append(`
+                        <h5 class="text-danger">${error}</h5>
+                    `)
+                })
             })
     })
 
@@ -303,7 +367,15 @@ $(document).ready( ()=> {
                 mainMenu()
             })
             .fail((err) => {
-                console.log(err)
+                let errors = err.responseJSON.errors
+                console.log(errors)
+                $('#errorMessageAdd').empty()
+
+                errors.forEach(error => {
+                    $('#errorMessageAdd').append(`
+                        <h5 class="text-danger">${error}</h5>
+                    `)
+                })
             })
 
 
@@ -325,7 +397,15 @@ $(document).ready( ()=> {
                 mainMenu()
             })
             .fail((err) => {
-                console.log(err)
+                let errors = err.responseJSON.errors
+                console.log(errors)
+                $('#errorMessageEdit').empty()
+
+                errors.forEach(error => {
+                    $('#errorMessageEdit').append(`
+                        <h5 class="text-danger">${error}</h5>
+                    `)
+                })
             })
 
 

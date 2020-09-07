@@ -60,10 +60,13 @@ _Response (200 - Ok)_
 ]
 ```
 
-_Response (500 - Internal server error)_
+_Response (401 - User not authenticated  or 404 - Data not Found)_
 ```
 {
-  "message": "Internal server error"
+    "errors": [
+        "User not authenticated"    
+        "Data not found",
+    ]
 }
 ```
 ---
@@ -92,18 +95,22 @@ _Response (201 - Created)_
 {
   "id": <given id by system>,
   "title": "<todo name>",
-    "description": "<todo description>",
-    "status": false,
-    "due_date": "<todo due date>",
+  "description": "<todo description>",
+  "status": false,
+  "due_date": "<todo due date>",
   "createdAt": "given date by system",
   "updatedAt": "given date by system",
 }
 ```
 
-_Response (500 - Internal server error)_
+_Response (400 - Bad Request)_
 ```
 {
-  "message": "Internal server error"
+    "errors": [
+        "Title cannot empty",
+        "Description cannot empty",
+        "Cannot enter date before today"
+    ]
 }
 ```
 
@@ -112,17 +119,17 @@ _Response (500 - Internal server error)_
 Find detail todo by Id
 
 _Request Header_
-
+```
 {
   "access_token": "<your access token>"
 }
-
+```
 _Request Body_
-
+```
 not needed
-
+```
 _Response (200 - Ok)_
-
+```
 [
   {
     "id": 1,
@@ -134,29 +141,37 @@ _Response (200 - Ok)_
     "updatedAt": "2020-03-20T07:15:12.149Z",
   },
 ]
-
+```
 _Response (404 - Data not found)_
+```
+{
+    "errors": [
+        "Data not found",
+    ]
+}
+```
+
 
 ### PUT /todos/:id
 Update todo by ID
 
 _Request Header_
-
+```
 {
   "access_token": "<your access token>"
 }
-
+```
 _Request Body_
-
+```
 {
   "title": "<name to get insert into>",
   "description": "<description to get insert into>",
   "status": "<status to get insert into>",
   "due_date": "<due_date to get insert into>"
 }
-
+```
 _Response (200 - ok)_
-
+```
 {
   "id": <selected id>,
   "title": "<updated todo title>",
@@ -166,25 +181,32 @@ _Response (200 - ok)_
   "createdAt": "2020-03-20T07:15:12.149Z",
   "updatedAt": "2020-03-20T07:15:12.149Z",
 }
-
-_Response (404 - Data not found)_
+```
+_Response (403 - Forbidden Access)_
+```
+{
+    "errors": [
+        "Forbidden Access"
+    ]
+}
+```
 
 
 ### DELETE /todos/:id
 Delete todo data by ID
 
 _Request Header_
-
+```
 {
   "access_token": "<your access token>"
 }
-
+```
 _Request Body_
-
+```
 not needed
-
+```
 _Response (200 - ok)_
-
+```
 [
   {
     "id": <selected id>,
@@ -196,7 +218,75 @@ _Response (200 - ok)_
     "updatedAt": "2020-03-20T07:15:12.149Z",
   },
 ]
+```
+_Response (403 - Forbidden Access)_
+```
+{
+    "errors": [
+        "Forbidden Access"
+    ]
+}
+```
+### POST /register
+> Create new User
 
-_Response (404 - Data not found)_
+_Request Header_
+```
+not needed
+```
+_Request Body_
+```
+{
+  "username": "<username to get insert into>",
+  "email": "<email to get insert into>",
+  "status": "<password to get insert into>",
+}
+```
+_Response (201 - Ok)_
+```
+[
+  {
+    "id": 1,
+    "username": "<username to get insert into>",
+    "email": "<email to get insert into>",
+  },
+]
+```
+_Response (400 - Bad Request)_
+```
+{
+  "errors": [
+      "Username cannot empty",
+      "Invalid email format",
+      "Pasword min 6 characters max 15 characters"
+  ]
+}
+```
+### POST /login
 
-
+_Request Header_
+```
+not needed
+```
+_Request Body_
+```
+{
+  "email": "<email>",
+  "status": "<password>",
+}
+```
+_Response (200 - Ok)_
+```
+{
+    "access_token": <access_token>,
+    "username": <username>
+}
+```
+_Response (400 - Bad Request)_
+```
+{
+  "errors": [
+      "Invalid username or password"
+  ]
+}
+```

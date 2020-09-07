@@ -10,11 +10,11 @@ const authorization = async ( req, res, next) => {
         if ( todo && todo.UserId === req.userData.id) {
             next()
         } else {
-            return res.status(403).json({message: "Forbidden Access"})
+            throw {message: "Forbidden Access", statusCode: 403}
         }
 
     } catch (err) {
-        return res.status(403).json({message: "Forbidden Access"})
+        return next(err)
     }
 }
 

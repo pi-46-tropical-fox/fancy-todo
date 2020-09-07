@@ -14,6 +14,7 @@ module.exports = {
       },
       email: {
         type: Sequelize.STRING,
+        unique: true ,
         notEmpty: true,
         isEmail: {
           args: true,

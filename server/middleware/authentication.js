@@ -6,12 +6,19 @@ function authentication (req, res, next) {
     
 
     const payload = verifyToken(req.headers.access_token)
-    console.log(payload)
+    // console.log(payload)
     User.findByPk(payload.id)
         .then( user => {
-        if(user.email === payload.email)
-            req.userData = payload
-            next()
+            if(!user){
+                throw {message: "Invalid email or password", statusCode: 401}
+            }
+
+            if(user.email === payload.email){
+                req.userData = payload
+                next()
+            } else {
+                throw {message: "Invalid email or password", statusCode: 401}
+            }
         })
         .catch (err => {
             return next(err)

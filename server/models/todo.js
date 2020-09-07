@@ -15,14 +15,30 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Todo.init({
-    title: DataTypes.STRING,
-    description: DataTypes.STRING,
+    title: {
+      type: DataTypes.STRING,
+      validate : {
+        notEmpty: {
+          args: true,
+          msg: 'Title cannot empty'
+        }
+      }
+    },
+    description: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Description cannot empty'
+        }
+      }
+    },
     status: DataTypes.BOOLEAN,
     due_date: {
       type: DataTypes.DATE,
       validate: {
         isAfter: {
-          args : "2020-09-02",
+          args : `${new Date()}`,
           msg : "Cannot enter date before today"
         }
       }

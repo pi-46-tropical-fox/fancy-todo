@@ -4,7 +4,12 @@ class TodoController {
     static getTodos (req, res, next) {
         Todo.findAll({where : { UserId : req.userData.id, status : false}, order: [['due_date', 'ASC']], include: {model: User}})
             .then(todos => {
-                return res.status(200).json(todos)
+                if(todos.length < 1){
+                    throw { message : "Data not found", statusCode: 404}
+                } else {
+                    return res.status(200).json(todos)
+                }
+                
             })
             .catch(err => {
                 return next(err)

@@ -1,7 +1,7 @@
 
 
 function errHandler ( err, req, res, next) {
-    console.log( err, '<<<<< ini dari error handler')
+    console.log( 'ini dari error handler ---->>>>', err , '<<<<<----- ini dari error handler')
     let statusCode = 500
     let errors = []
 
@@ -17,7 +17,7 @@ function errHandler ( err, req, res, next) {
 
         case 'JsonWebTokenError':
             
-            errors.push(err.message)
+            errors.push("User not authenticated")
             statusCode = 401
             break;
 
@@ -31,7 +31,7 @@ function errHandler ( err, req, res, next) {
 
 
 
-    res.status(statusCode).json({errors})
+    return res.status(statusCode).json({errors})
 }
 
 module.exports = errHandler
