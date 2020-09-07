@@ -36,8 +36,12 @@ https://abdul-fancy-todo.herokuapp.com/ deployed to Heroku
 
 9. buka dashboard heroku
 
-10. masuk ke setting , reveal config vars, lalu isi yg diperlukan (ex SECRET, API_KEY)
+10. masuk ke setting , reveal config vars, lalu isi yg diperlukan (ex SECRET, API_KEY) poko nya samain kyk di .env
 
 11. pindah ke overview, configure add-on, lalu cari heroku postgres
 
 12. masuk ke bash heroku >> heroku run bash
+
+13. npm install -g sequelize-cli
+
+14. sequelize db:migrate
