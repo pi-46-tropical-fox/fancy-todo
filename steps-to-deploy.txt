@@ -3,3 +3,12 @@
 3. Type in "heroku create <app name>"
 4. Type in "git push heroku master" >>> If pwd already looks like server folder"
     - type in "git subtree push --prefix <folder-name> heroku master"
+5. Make your app "heroku friendly"
+    - Dynamic PORT
+    - No Devdependencies
+6. Add heroku postgres: *GUI
+                        *heroku addons:create heroku-postgresql:hobby-dev
+7. Add production config to config.json
+    {
+        "production":{ "use_env_variable": "DATABASE_URL"}
+    }
