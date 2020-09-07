@@ -76,69 +76,94 @@ function editTodo(idTodo) {
             access_token: localStorage.getItem('access_token')
         }
     })
-    .done(response => {
-        console.log(response)
-        $('#edittodoTitle').val(response.data.title)
-        $('#edittodoDescription').val(response.data.description)
-        $('#edittodoDueDate').val(response.data.due_date.split('T')[0])
-        localStorage.setItem('idTodo', idTodo)
-    })
-    .fail(err => {
-        console.log(err.responseJSON)
-    })
+        .done(response => {
+            console.log(response)
+            $('#edittodoTitle').val(response.data.title)
+            $('#edittodoDescription').val(response.data.description)
+            $('#edittodoDueDate').val(response.data.due_date.split('T')[0])
+            localStorage.setItem('idTodo', idTodo)
+        })
+        .fail(err => {
+            console.log(err.responseJSON)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: err.responseJSON
+                })
+        })
 }
 
 function deleteOutstandingTodo(idTodo) {
     $.ajax({
         method: 'DELETE',
-            url: `http://localhost:3000/mytodos/${idTodo}`,
-            headers: {
-                access_token: localStorage.getItem('access_token')
-            }
+        url: `http://localhost:3000/mytodos/${idTodo}`,
+        headers: {
+            access_token: localStorage.getItem('access_token')
+        }
     })
-    .done(response => {
-        console.log(response)
-        afterLogin()
-    })
-    .fail(err => {
-        console.log(err)
-    })
+        .done(response => {
+            console.log(response)
+            afterLogin()
+        })
+        .fail(err => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: err.responseJSON
+                })
+            console.log(err.responseJSON)
+        })
     // event.preventDefault()
 }
 
 function deleteCompletedTodo(idTodo) {
     $.ajax({
         method: 'DELETE',
-            url: `http://localhost:3000/mytodos/${idTodo}`,
-            headers: {
-                access_token: localStorage.getItem('access_token')
-            }
+        url: `http://localhost:3000/mytodos/${idTodo}`,
+        headers: {
+            access_token: localStorage.getItem('access_token')
+        }
     })
-    .done(response => {
-        console.log(response)
-        afterLogin()
-    })
-    .fail(err => {
-        console.log(err)
-    })
+        .done(response => {
+            console.log(response)
+            afterLogin()
+        })
+        .fail(err => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: err.responseJSON
+                })
+            console.log(err.responseJSON)
+        })
     // event.preventDefault()
 }
 
 function completeTodo(idTodo) {
     $.ajax({
         method: 'PUT',
-            url: `http://localhost:3000/mytodos/complete/${idTodo}`,
-            headers: {
-                access_token: localStorage.getItem('access_token')
-            }
+        url: `http://localhost:3000/mytodos/complete/${idTodo}`,
+        headers: {
+            access_token: localStorage.getItem('access_token')
+        }
     })
-    .done(response => {
-        console.log(response)
-        afterLogin()
-    })
-    .fail(err => {
-        console.log(err)
-    })
+        .done(response => {
+            Swal.fire({
+                icon: 'success',
+                title: 'Congratulations',
+                text: 'You have completed one of your todo!'
+                })
+            console.log(response)
+            afterLogin()
+        })
+        .fail(err => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: err.responseJSON
+                })
+            console.log(err.responseJSON)
+        })
     // event.preventDefault()
 }
 
@@ -180,7 +205,12 @@ function todoList() {
             })
         })
         .fail(err => {
-            console.log(err)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: err.responseJSON
+                })
+            console.log(err.responseJSON)
         })
 }
 
@@ -188,11 +218,11 @@ function onSignIn(googleUser) {
     // mengambil akses token google setiap kali sudah sign in
     var google_access_token = googleUser.getAuthResponse().id_token;
     // console.log(google_access_token, '>>> google id token');
-    
+
     $.ajax({
         method: 'POST',
         url: 'http://localhost:3000/user/google-login',
-        headers : {
+        headers: {
             google_access_token
         }
     })
@@ -204,7 +234,12 @@ function onSignIn(googleUser) {
             afterLogin()
         })
         .fail((err) => {
-            console.log(err);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: err.responseJSON
+                })
+            console.log(err.responseJSON);
         })
 }
 
@@ -216,10 +251,10 @@ function weather() {
             access_token: localStorage.getItem('access_token')
         }
     })
-    .done(response => {
-        console.log(response)
-        $('#weather-card').empty()
-        $('#weather-card').append(`
+        .done(response => {
+            console.log(response)
+            $('#weather-card').empty()
+            $('#weather-card').append(`
         <div class="card p-4 rounded-lg" style="width: 18rem;">
         <h3>Today's Weather</h3><br>
             <img src="${response.data.current.weather_icons[0]}" class="card-img-top" style="height:10em">
@@ -228,10 +263,10 @@ function weather() {
                 <p class="card-text">${response.data.location.localtime}</p>
             </div>
         </div>`)
-    })
-    .fail((err) => {
-        console.log(err);
-    })
+        })
+        .fail((err) => {
+            console.log(err);
+        })
 }
 
 $(document).ready(function () {
@@ -259,15 +294,26 @@ $(document).ready(function () {
     $('#navbar-logout').click(event => {
         var auth2 = gapi.auth2.getAuthInstance();
         auth2.signOut().then(function () {
-        console.log('User signed out.');
-    });
+            console.log('User signed out.');
+        });
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            onOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'info',
+            title: 'Signed out successfully'
+        })
         localStorage.clear()
         beforeLogin()
-    })
-
-
-    $('#complete-outstanding-todo').click(event => {
-
     })
 
     $('#edit-outstanding-todo').click(event => {
@@ -292,10 +338,30 @@ $(document).ready(function () {
                 $('#loginPassword').val('')
                 localStorage.setItem('access_token', response.access_token)
                 // console.log(response)
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    onOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Signed in successfully'
+                })
                 afterLogin()
             })
             .fail((err) => {
-                console.log(err.responseJSON)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: err.responseJSON
+                    })
             })
     })
 
@@ -323,7 +389,12 @@ $(document).ready(function () {
                 initContent()
             })
             .fail((err) => {
-                console.log(err)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: err.responseJSON
+                    })
+                console.log(err.responseJSON)
             })
     })
 
@@ -342,17 +413,27 @@ $(document).ready(function () {
             },
             headers: {
                 access_token: localStorage.access_token,
-                
+
             }
         })
             .done(response => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Successfully added new item to your todo list!'
+                    })
                 $('#todoTitle').val('')
                 $('#todoDescription').val('')
                 $('#todoDueDate').val('')
                 afterLogin()
             })
             .fail(err => {
-                console.log(err)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: err.responseJSON
+                    })
+                console.log(err.responseJSON)
             })
     })
 
@@ -382,7 +463,12 @@ $(document).ready(function () {
                 afterLogin()
             })
             .fail(err => {
-                console.log(err)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: err.responseJSON
+                    })
+                console.log(err.responseJSON)
             })
     })
 
