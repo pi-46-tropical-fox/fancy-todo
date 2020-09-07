@@ -15,7 +15,17 @@ const showHome = (event) => {
     $(`#show-register`).hide()
     $(`#show-home`).show()
 
+    $(`#profile-username`).empty()
     $(`#profile-username`).append(`<p>${localStorage.username}</p>`)
+
+    $(`#show-home-list`).empty()
+    if(localStorage.isGoogle){
+        $(`#google-logout-btn`).show()
+        $(`#app-logout-btn`).hide()
+    } else {
+        $(`#google-logout-btn`).hide()
+        $(`#app-logout-btn`).show()
+    }
 
     $.ajax({
         method: `GET`,
@@ -33,7 +43,7 @@ const showHome = (event) => {
             let isFinish;
             datum.status === "true" && (isFinish = `Done`)
             datum.status === "false" && (isFinish = `On Progress`)
-            $("#table-list").append(`
+            $("#show-home-list").append(`
                 <div class="table-list" id="show-home-list">
                 <div class="list-head">
                     <span>${datum.title}</span>
@@ -58,6 +68,7 @@ const showHome = (event) => {
 }
 
 const validateLogin = (event) => {
+    // $(`#app-logout-btn`).show()
     const username = $(`#login-username`).val()
     const password = $(`#login-password`).val()
     $(`#login-username`).val(``)
@@ -126,29 +137,14 @@ const addTodo = () => {
         let isFinish;
         response.data.status === "true" && (isFinish = `Done`)
         response.data.status === "false" && (isFinish = `On Progress`)
-        $("#table-list").append(`
-            <div class="table-list">
-            <div class="list-head">
-                <span>${response.data.title}</span>
-            </div>
-            <div class="list-head">
-                ${response.data.description}
-            </div>
-            <div class="list-head">
-                ${isFinish}
-            </div>
-            <div class="list-head">
-                ${date}
-            </div>
-            <div class="list-head">
-            <a href="#" data-id="${response.data.id}" onClick="editTodo(event)">Edit</a> | <a href="#" data-id="${datum.id}" onClick="deleteTodo(event)">Del</a> 
-            </div>
-        `)
+        showHome()
     })
     .fail(err => console.log(err))
 }
 
 const editTodo = (event) => {
+    event.preventDefault()
+    $(`#edit-form`).empty()
     $.ajax({
         method: `GET`,
         url: `${localHost}/todos/${event.srcElement.dataset.id}`,
@@ -158,13 +154,13 @@ const editTodo = (event) => {
     })
     .done(response => {
         let date = response.data.due_date.split("T")[0]
-        localStorage.setItem(`todoId`, event.srcElement.dataset.id)
+        localStorage.setItem(`todoId`, response.data.id)
         $(`#edit-form`).append(`
             <form id="edit-todo">
                 <input type="text" name="title" value="${response.data.title}" class="add-review-input" id="edit-title"><br>
                 <input type="text" name="description" value="${response.data.description}" class="add-review-input" id="edit-description"><br>
                 <input type="date" name="due_date" value="${date}" class="add-review-textarea" id="edit-due-date"></textarea><br>
-                <button class="btn">Edit Todo</button>
+                <button class="btn" onClick="saveEditTodo(event)">Edit Todo</button>
             </form>
         `)
     })
@@ -180,12 +176,12 @@ const deleteTodo = (event) => {
         }
     })
     .done(response => {
-        console.log(response)
+        showHome()
     })
     .fail(err => console.log(err))
 }
 
-const saveEditTodo = () => {
+const saveEditTodo = (event) => {
     const title = $(`#edit-title`).val()
     const description = $(`#edit-description`).val()
     const due_date = $(`#edit-due-date`).val()
@@ -195,7 +191,7 @@ const saveEditTodo = () => {
 
     $.ajax({
         method: `PUT`,
-        url: `${localHost}/todos/${localStorage.getItem(`todoid`)}`,
+        url: `${localHost}/todos/${localStorage.getItem(`todoId`)}`,
         headers: {
             access_token: localStorage.access_token
         },
@@ -204,7 +200,7 @@ const saveEditTodo = () => {
         }
     })
     .done(response => {
-        console.log(response)
+        console.log(`response`)
         showHome()
     })
     .catch(err => console.log(err))
@@ -213,23 +209,59 @@ const saveEditTodo = () => {
 const showApi = () => {
     $.ajax({
         method: "GET",
-        url: `${localHost}/movies`,
+        url: `http://localhost:3000/movies`,
         headers: {
             access_token: localStorage.access_token
         }
     })
     .done(response => {
-        console.log(response.data)
-        response.data.forEach(datum => {
+        console.log(response.data.Search)
+        response.data.Search.forEach(datum => {
             $(`#cards-movie`).append(`
-                <img src="${datum.url}" alt="ini gambar">
+                <img src="${datum.Poster}" alt="ini gambar">
+                <p>Title: ${datum.Title}</p>
+                <p>Year: ${datum.Year}</p>
             `)    
         })
     })
     .fail(err => console.log(err))
 }
 
+function onSignIn(googleUser) {
+    // $(`#google-logout-btn`).show()
+    // $(`#app-logout-btn`).hide()
+    const google_access_token = googleUser.getAuthResponse().id_token;
+    $.ajax({
+        method: "POST",
+        url: `${localHost}/users/google/login`,
+        headers: {
+            google_access_token
+        }
+    })
+    .done(response => {
+        console.log(response)
+        localStorage.setItem(`access_token`, response.access_token)
+        localStorage.setItem(`username`, response.username)
+        localStorage.setItem(`isGoogle`, true)
+        showHome()
+    })
+    .fail(err => {
+        console.log(err)
+    })
+}
+
+function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+    localStorage.clear()
+    showLogin()
+}
+
 $(document).ready(() => {
+    // $(`#google-logout-btn`).hide()
+    // $(`#app-logout-btn`).hide()
     if(!localStorage.access_token){
         showLogin()
     } else {
@@ -260,12 +292,12 @@ $(document).ready(() => {
         validateRegister()
     })
 
-
     //Home
     //Logout
     $(`#logout-button`).submit(event => {
         event.preventDefault()
         localStorage.clear()
+        
         showLogin()
     })
 
@@ -285,14 +317,8 @@ $(document).ready(() => {
         $(`#show-add-todo`).show()
     })
 
-    //Edit todo
-    $(`#edit-todo`).submit(event => {
-        event.preventDefault()
-        saveEditTodo()
-    })
-
     //Show Api
-    $(`#cards-movie`).click(event => {
+    $(`#movie-api`).click(event => {
         event.preventDefault()
         showApi()
     })

@@ -193,17 +193,3 @@ body{
 .right-content{
     width: 50vw;
 }
-
-tr {
-    border-bottom: 1.5px solid #FF7F50;
-}
-
-table {
-    margin-top: 10px;
-    border-collapse: collapse; 
-    border-bottom: 1.5px solid #FF7F50;
-}
-
-span {
-    height: 100px;
-}
