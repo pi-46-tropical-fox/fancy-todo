@@ -6,7 +6,9 @@ function home (event) {
     $('#todo-add').hide();
     $('#logout-page').hide();
     $('#publicHoliday_list').hide();
+    // $('#publicHoliday_list').empty()
     $('#longWeekend_list').hide();
+    // $('#longWeekend_list').empty();
 }
 
 function login (event) {
@@ -190,7 +192,7 @@ function registerForm (event) {
 
 function onSignIn(googleUser) {
     var google_id_token = googleUser.getAuthResponse().id_token;
-    console.log (google_id_token)
+    // console.log (google_id_token)
 
     $.ajax ({
         method : "POST",
@@ -199,7 +201,7 @@ function onSignIn(googleUser) {
     })
 
     .done (res => {
-        console.log (res)
+        // console.log (res)
         localStorage.setItem ("token", res.token)
         // localStorage.setItem ("usernameAccount", res.given_name)
         // console.log (localStorage.token)
@@ -269,7 +271,7 @@ function publicHoliday_list (event) {
     $('#todo-add').hide();
     $('#logout-page').hide();
     $('#publicHoliday_list').show();
-    $('#publicHoliday_list').empty()
+    $('#publicHoliday').empty()
     $('#longWeekend_list').hide();
 
     $.ajax ({
@@ -278,7 +280,7 @@ function publicHoliday_list (event) {
         
     })
         .done ((res) => {
-            // console.log (res)
+            console.log (res)
             res.forEach (el =>{
                 $("#publicHoliday").append (`
                 <div class="col-3">
@@ -308,7 +310,7 @@ function longWeekend_list (event) {
     $('#logout-page').hide();
     $('#publicHoliday_list').hide();
     $('#longWeekend_list').show();
-    $('#longWeekend_list').empty();
+    $('#longWeekend').empty();
 
     $.ajax ({
         method : "GET",
