@@ -98,12 +98,12 @@ function deleteOutstandingTodo(idTodo) {
     })
     .done(response => {
         console.log(response)
+        afterLogin()
     })
     .fail(err => {
         console.log(err)
     })
-    event.preventDefault()
-    afterLogin()
+    // event.preventDefault()
 }
 
 function deleteCompletedTodo(idTodo) {
@@ -116,12 +116,12 @@ function deleteCompletedTodo(idTodo) {
     })
     .done(response => {
         console.log(response)
+        afterLogin()
     })
     .fail(err => {
         console.log(err)
     })
-    event.preventDefault()
-    afterLogin()
+    // event.preventDefault()
 }
 
 function completeTodo(idTodo) {
@@ -134,12 +134,12 @@ function completeTodo(idTodo) {
     })
     .done(response => {
         console.log(response)
+        afterLogin()
     })
     .fail(err => {
         console.log(err)
     })
-    event.preventDefault()
-    afterLogin()
+    // event.preventDefault()
 }
 
 function todoList() {
