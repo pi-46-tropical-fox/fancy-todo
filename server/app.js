@@ -1,7 +1,7 @@
 if(process.env.NODE_ENV === 'development') require('dotenv').config()
 const express = require('express')
-const cors = require('cors')
 const app = express()
+const cors = require('cors')
 const port = process.env.PORT || 3000
 const routes = require('./routes')
 const errHandler = require('./middleware/errHandler')
@@ -10,9 +10,9 @@ const errHandler = require('./middleware/errHandler')
 
 app
 // first, use needed modules for processing requests
-.use(cors())
 .use(express.urlencoded({ extended: false }))
 .use(express.json())
+.use(cors())
 // ...and then import needed routes
 .use(routes)
 .use(errHandler)
