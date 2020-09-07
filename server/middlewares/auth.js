@@ -5,9 +5,7 @@ module.exports = {
     authentication: async (req, res, next) => {
         try{
             const userData = verify_token(req.headers.access_token)
-
             let user = await User.findOne({where: {username: userData.username}})
-
             if(user){
                 req.userData = userData
                 next()
@@ -40,3 +38,5 @@ module.exports = {
     }
 
 }
+
+

@@ -81,7 +81,7 @@ class Controller{
             })
             .then(user => {
                 const token = access_token(user.username, user.id)
-                return res.status(200).json({access_token: token})
+                return res.status(200).json({access_token: token, username: user.username})
             })
             .catch(err => {
                 next(err)
