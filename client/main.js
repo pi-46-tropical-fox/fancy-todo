@@ -1,142 +1,7 @@
 'use strict'
 
 const baseUrl = 'http://localhost:3000'
-
-$(document).ready(function () {
-  
-  if (localStorage.access_token !== undefined || localStorage.token !== undefined) {
-    afterLogin()
-  } else {
-    beforeLogin()
-  }
-
-  $('#nav-login').click(function () {
-    beforeLogin()
-  })
-
-  $('#nav-register').click(function () {
-    registerForm()
-  })
-
-  $('#nav-logout').click(function (event) {
-    event.preventDefault()
-    optionLogout()
-  })
-
-  $('#register-not-have-button').click(function () {
-    registerForm()
-  })
-
-  $('#login-have-button').click(function () {
-    beforeLogin()
-  })
-
-  $('#login-form').submit(function (event) {
-    event.preventDefault()
-    loginSubmit(event)
-  })
-  
-  $('#register-form').submit(function (event) {
-    event.preventDefault()
-    registerSubmit(event)
-  })
-
-  $('#created-save').click(function () {
-    createTodo()
-  })
-
-})
-
-function beforeLogin () {
-  $('#nav-login').show()
-  $('#nav-register').show()
-  $('#nav-logout').hide()
-  $('#nav-todo-list').hide()
-
-  $('#weather').hide()
-  $('#login-form').show()
-
-  $('#register-form').hide()
-  $('#dashboard').hide()
-}
-
-function afterLogin () {
-  $('#nav-login').hide()
-  $('#nav-register').hide()
-  $('#nav-logout').show()
-  $('#nav-todo-list').show()
-
-  $('#weather').show()
-  $('#login-form').hide()
-  $('#register-form').hide()
-  $('#dashboard').show()
-
-  menus()
-}
-
-function registerForm () {
-  $('#nav-login').show()
-  $('#nav-register').show()
-  $('#nav-logout').hide()
-  $('#nav-todo-list').hide()
-
-  $('#weather').hide()
-  $('#login-form').hide()
-  $('#register-form').show()
-  $('#dashboard').hide()
-}
-
-function loginSubmit (event) {
-  $.ajax({
-    method: 'POST',
-    url: `${baseUrl}/users/login`,
-    data: {
-      email: $('#login-email').val(),
-      password: $('#login-password').val()
-    }
-  })
-  
-  .done(function (response) {
-    $('#login-email').val('')
-    $('#login-password').val('')
-    localStorage.setItem('access_token', response.access_token)
-    $('#modal-welcome').show()
-    afterLogin()
-
-  })
-  .fail(err => {
-    showError(err.responseJSON)
-  })
-}
-
-function registerSubmit (event) {
-  $.ajax({
-    method: 'POST',
-    url: `${baseUrl}/users/register`,
-    data: {
-      username: $('#register-name').val(),
-      email: $('#register-email').val(),
-      password: $('#register-password').val()
-    }
-  })
-  .done(function (response) {
-    $('#register-name').val('')
-    $('#register-email').val('')
-    $('#register-password').val('')
-    localStorage.setItem('access_token', response.access_token)
-    beforeLogin()
-  })
-  .fail(err => {
-    showError(err.responseJSON)
-  })
-}
-
-function optionLogout(event) {
-
-  localStorage.clear()
-  googleSignOut()
-  beforeLogin()
-}
+// const baseUrl = 'https://dry-atoll-36176.herokuapp.com'
 
 function menus() {
 
@@ -150,7 +15,7 @@ function menus() {
     }
   })
   .done((response) => {
-    // event.preventDefault()
+    
     getWeather()
     $('#todo-list').empty()
     let counter = 1
@@ -186,6 +51,101 @@ function menus() {
   .fail((err) => {
     showError(err.responseJSON)
   })
+}
+
+function beforeLogin () {
+  $('#nav-login').show()
+  $('#nav-register').show()
+  $('#nav-logout').hide()
+  $('#nav-todo-list').hide()
+
+  $('#weather').hide()
+  $('#login-form').show()
+
+  $('#register-form').hide()
+  $('#dashboard').hide()
+}
+
+function afterLogin () {
+  $('#nav-login').hide()
+  $('#nav-register').hide()
+  $('#nav-logout').show()
+  $('#nav-todo-list').show()
+
+  
+  $('#weather').show()
+  $('#login-form').hide()
+  $('#register-form').hide()
+  $('#dashboard').show()
+  menus()
+  
+  // event.preventDefault()
+}
+
+function registerForm () {
+  $('#nav-login').show()
+  $('#nav-register').show()
+  $('#nav-logout').hide()
+  $('#nav-todo-list').hide()
+
+  $('#weather').hide()
+  $('#login-form').hide()
+  $('#register-form').show()
+  $('#dashboard').hide()
+}
+
+function loginSubmit (event) {
+  $.ajax({
+    method: 'POST',
+    url: `${baseUrl}/users/login`,
+    data: {
+      email: $('#login-email').val(),
+      password: $('#login-password').val()
+    }
+  })
+  
+  .done(function (response) {
+    $('#login-email').val('')
+    $('#login-password').val('')
+    localStorage.setItem('access_token', response.access_token)
+    // $('#modal-welcome').show()
+    // event.preventDefault()
+    afterLogin()
+
+  })
+  .fail(err => {
+    showError(err.responseJSON)
+  })
+}
+
+function registerSubmit (event) {
+  $.ajax({
+    method: 'POST',
+    url: `${baseUrl}/users/register`,
+    data: {
+      username: $('#register-name').val(),
+      email: $('#register-email').val(),
+      password: $('#register-password').val()
+    }
+  })
+  .done(function (response) {
+    $('#register-name').val('')
+    $('#register-email').val('')
+    $('#register-password').val('')
+    localStorage.setItem('access_token', response.access_token)
+    beforeLogin()
+    // event.preventDefault()
+  })
+  .fail(err => {
+    showError(err.responseJSON)
+  })
+}
+
+function optionLogout(event) {
+
+  localStorage.clear()
+  googleSignOut()
+  beforeLogin()
 }
 
 function showDelete (id) {
@@ -379,18 +339,64 @@ function getWeather(event) {
     $('#weather-desc').text(res.current.weather_descriptions)
     
     $('#weather-location').text(res.location.name)
-    $('#weather-pressure').text('Air Pressure: '+res.current.pressure)
+    $('#weather-pressure').text(`Air Pressure: ${+res.current.pressure}`)
 
     console.log(res.current.weather_descriptions[0],"<<<<<<<<");
     let iconWeather = res.current.weather_descriptions[0]
+
+    if (iconWeather == 'Clear') iconWeather = 'Sun'
     
     $('#weather-image').empty()
     $('#weather-image').append(`
     
-    <img id="weather-image" src="./assets/${iconWeather}.svg" style="max-width: 10%">
+    <img id="weather-image" src="./assets/${iconWeather}.svg" style="width: 220%" style="margin:0; padding:0" >
     `)
     
   })
   .fail(err => console.log(err))
 }
 
+$(document).ready(function () {
+  
+  if (localStorage.access_token !== undefined || localStorage.token !== undefined) {
+    afterLogin()
+  } else {
+    beforeLogin()
+  }
+
+  $('#nav-login').click(function () {
+    beforeLogin()
+  })
+
+  $('#nav-register').click(function () {
+    registerForm()
+  })
+
+  $('#nav-logout').click(function (event) {
+    event.preventDefault()
+    optionLogout()
+  })
+
+  $('#register-not-have-button').click(function () {
+    registerForm()
+  })
+
+  $('#login-have-button').click(function () {
+    beforeLogin()
+  })
+
+  $('#login-form').submit(function (event) {
+    event.preventDefault()
+    loginSubmit(event)
+  })
+  
+  $('#register-form').submit(function (event) {
+    event.preventDefault()
+    registerSubmit(event)
+  })
+
+  $('#created-save').click(function () {
+    createTodo()
+  })
+
+})

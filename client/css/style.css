@@ -17,12 +17,14 @@ h1 {
   padding: 20px;
   max-width: 40%;
   margin-top: 30px;
+  background-color: rgb(252, 249, 246);
 }
 
 #register-form {
   padding: 20px;
   max-width: 40%;
   margin-top: 30px;
+  background-color: rgb(252, 249, 246);
 }
 
 
@@ -78,12 +80,42 @@ h3 {
   width: 100%;
 }
 
-#giphy {
+#img-logo { 
   text-align: center;
 }
 
-/* #weather-image {
-  text-align: left;
-  padding-left: 0px;
-  padding-bottom: 0px;
+.heading {
+  
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  justify-content: space-evenly;
+  /* flex-wrap: wrap; */
+  /* justify-content: flex-end; */
+  /* justify-content: flex-start; */
+}
+
+.weather-body {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0px;
+
+  /* text-align: center; */
+  /* margin : 80px 0px 10px 20px;
+  justify-content: space-between; */
+} 
+
+.card-weather-info {
+  margin: 0px 0px 0px 25px; 
+}
+
+/* .table-responsive {
+  margin: 0px 0px 150px 0px
 } */
+
+.body-dashboard {
+  
+  background-color: rgb(252, 249, 246);
+}
