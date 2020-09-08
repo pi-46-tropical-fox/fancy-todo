@@ -20,6 +20,12 @@
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
       </nav>
     </section>
+           <!--WEATHER-->
+           <div class="jumbotron jumbotron-fluid" style="text-align:center;">
+            <div class="container-weather">
+              
+            </div>
+          </div>
 
 
     <!--logn form-->
@@ -52,9 +58,26 @@
     <div class="home-page-left">
        <!--cards add-->
        <div class="container">
-       
+        <div class="row" id="cards-add">
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title"></h5>
+              <h6 class="card-subtitle mb-2 text-muted"></h6>
+              <p class="card-text"></p>
+              <div class="pencetan">
+              <a href="#" class="card-link">Edit</a>
+              <a href="#" class="card-link">Delete</a>
+            </div>
+            </div>
+          </div>
+          </div>
+        </div>
     </div>
     <div class="home-page-right">
+      <!-- EDIT-->
+      <form id="edit-form">
+       
+      </form>
       <form id="add-form">
         <h1>Add ToDo</h1>
         <hr>
@@ -70,31 +93,19 @@
             <button class="btn btn-dark"  type="submit">Add</button>
         </form>
     </div>
-    <!-- EDIT-->
-      <form id="edit-form">
-       
-        </form>
+    
 
-        <!--WEATHER-->
-        <div class="home-page-bottom">
-        <div class="col">
-          <div class="card">
-              <div class="card-header">
 
-                <div class="columns" id="post-container">
-                </div>
-
-              </div>
-            </div>
-        </div>
-      </div>
+ 
 
   
 </section>
 
+
+
 <!--register-->
 <section id="register-page">
-  <div class="register-page-left">
+  <div class="login-page-left">
       <img src="logo2.png" alt="register page">
   </div>
   <div class="login-page-right">
@@ -104,6 +115,8 @@
           <input type="email" id="email-register" >
           <label>Password</label>
           <input type="password" id="pass-register">
+          <span>Already have an account?</span>
+          <a href="#" id="go-to-login">Login</a>
           <button class="login-btn" id="pass-register" type="submit">Register</button>
       </form>
   </div>

@@ -77,20 +77,7 @@
     overflow: hidden;
 }
 
-.home-page-bottom {
-    width: 80%;
-    background-color: white;
-    height: 100%;
-    display: flex;
-    align-items: bottom;
-    justify-content: center;
-    overflow: hidden;
-}
 
-.home-page-right {
-    align-items: center;
-    justify-content: center;
-}
 
 .login-page-right {
     width: 40%;

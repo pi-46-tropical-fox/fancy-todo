@@ -3,13 +3,21 @@ function beforeLogin(event) {
     $('#register-page').hide();
     $('#navbar-logout').hide();
     $('#home-page').hide();
+    $('.jumbotron').hide();
     $('#go-to-register').on('click', function(event) {
         $('#login-page').hide();
         $('#register-page').show();
         $('#navbar-logout').hide();
         $('#home-page').hide();
     })
+    $('#go-to-login').on('click', function(event) {
+        $('#login-page').show();
+        $('#register-page').hide();
+        $('#navbar-logout').hide();
+        $('#home-page').hide();
+    })
 }
+
 
 function afterRegister(event) {
     $('#login-page').show();
@@ -23,6 +31,7 @@ function afterLogin(event) {
     $('#register-page').hide();
     $('#navbar-logout').show();
     $('#home-page').show();
+    $('.jumbotron').show();
 }
 
 function addForm(event) {
@@ -66,11 +75,10 @@ function todoList(event) {
     })
 
     .done(response => {
-        $('.container').empty()
+        $('#cards-add').empty()
         response.forEach(el => {
-            $('.container').append(
+            $('#cards-add').append(
                 `
-                <div class="row">
                 <div class="card" style="width: 18rem;">
                   <div class="card-body">
                     <h5 class="card-title">${el.title}</h5>
@@ -83,7 +91,7 @@ function todoList(event) {
                   </div>
                 </div>
                 </div>
-                </div>
+               
                 
                 `
             )
@@ -168,6 +176,7 @@ function registerForm(event) {
 }
 
 function getTodo(event){
+    $('#add-form').hide();
     event.preventDefault();
     localStorage.setItem('id', event.srcElement.dataset.id)
     $.ajax({
@@ -246,6 +255,10 @@ function deleteTodo(event) {
 
     .done((response) => {
         console.log(response);
+        Swal.fire(
+            'Success!',
+            'success'
+        )
         todoList();
     })
     .fail((err) => {
@@ -285,7 +298,6 @@ function signOut() {
 }
 
 function weatherpost(){
-
     $.ajax({
         method: 'GET',
         url: 'http://localhost:3000/weather',
@@ -295,21 +307,14 @@ function weatherpost(){
     })
 
     .done(response => {
-
-        $('#post-container').empty();
+        event.preventDefault();
         console.log(response);
-            $('#post-container').append(`
-            <div class="card">
-            <div class="card-content">
-                <div class="content" text-align="center">
-                <h5>${response.location.name}</h5>
-                <img src="${response.current.weather_icons[0]}">
-                <h5>${response.current.temperature} °C</h5>
-                </div>
-            </div>
-        </div>
-    </div>
+            $('.container-weather').append(`
+            <h1 class="display-4">${response.location.name}</h1>
+            <img src="${response.current.weather_icons[0]}">
+            <h3 class="display-4">${response.current.temperature} °C</h3>
             `)
+            todoList();
     })
     .fail(err => {
         console.log(err);
