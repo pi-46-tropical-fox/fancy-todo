@@ -16,40 +16,45 @@
    
 
     <!----------------------------------- Navbar --------------------------------->
-    <nav class="navbar navbar-expand-lg navbar-light" id="navbar" style="background-color: #000000a3">
-		<a class="navbar-brand" href="#"> <img src="./assets/logoApp.png" class="mr-3" style="width:100px;"></a>
-		<span id="username_login" style="color: white !important; font-size: large; font-weight: bold;"></span>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav color-navbar">
-            <li class="nav-item active">
-              <a class="nav-link" href="#" id="nav-home" style="color: white !important; font-size: large; font-weight: bold;">Home <span class="sr-only">(current)</span></a>
-						</li>
-						<li class="nav-item active">
-							<a class="nav-link" href="#" id="nav-login" style="color: white !important; font-size: large; font-weight: bold;">Login</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#" id="nav-register" style="color: white !important; font-size: large; font-weight: bold;">Register</a>
-						</li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" id="nav-mytodos" style="color: white !important; font-size: large; font-weight: bold;">My Todos!</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#" id="nav-create" style="color: white !important; font-size: large; font-weight: bold;">Create</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#" id="nav-logout" style="color: white !important; font-size: large; font-weight: bold;">Logout</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
+	<section id="nav-bar">
+		<nav class="navbar navbar-expand-lg navbar-light" id="navbar" style="background-color: #000000a3">
+			<a class="navbar-brand" href="#"> <img src="./assets/logoApp.png" class="mr-3" style="width:100px;"></a>
+			<span id="username_login" style="color: white !important; font-size: large; font-weight: bold;"></span>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				
+					<ul class="navbar-nav color-navbar">	
+					<li class="nav-item active">
+						<a class="nav-link" href="#" id="nav-login" style="color: white !important; font-size: large; font-weight: bold;">Login</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#" id="nav-register" style="color: white !important; font-size: large; font-weight: bold;">Register</a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link" href="#" id="nav-home" style="color: white !important; font-size: large; font-weight: bold;">Home <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#" id="nav-mytodos" style="color: white !important; font-size: large; font-weight: bold;">My Todos!</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#" id="nav-create" style="color: white !important; font-size: large; font-weight: bold;">Create</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#" id="nav-logout" style="color: white !important; font-size: large; font-weight: bold;">Logout</a>
+					</li>
+				</ul>
+
+			</div>
+		</nav>
+	</section>
           <!----------------------------------- Title --------------------------------->
 
 	 <!----------------------------------- Login --------------------------------->
-	<div class="d-flex justify-content-center">	
-	 <div id="form-login" class="form">
+	<section id="loginMenu">
+	 <div class="d-flex justify-content-center" id="">	
+	 	<div id="form-login" class="form">
 			<h3 style="text-align: center; font-size: 2em ;font-family: 'Trocchi', serif;">Login</h3>
 				<form id="loginForm">
 					<div class="form-group">
@@ -60,10 +65,6 @@
 						<label for="exampleInputPassword1">Password</label>
 						<input type="password" class="form-control" id="loginPassword">
 					</div>
-					<!-- <div class="form-group form-check">
-						<input type="checkbox" class="form-check-input" id="exampleCheck1">
-						<label class="form-check-label" for="exampleCheck1">Check me out</label>
-					</div> -->
 					<div class="nav justify-content-center">
 						<button type="submit" class="btn btn-primary" id="buttonLogin">Submit</button>
 						<div class="g-signin2" data-onsuccess="onSignIn" id="buttonLogin"></div>
@@ -71,10 +72,13 @@
 				</form>
 			</div>
 		</div>
+	</section>
+
 			
 			<!-- <a href="#" onclick="signOut();">Sign out</a> -->
 
       <!----------------------------------- Register --------------------------------->
+	<section id="registerMenu">
 	  <div class="d-flex justify-content-center">			
 	  <div id="form-register"  class="form">
 				<h3 style="text-align: center;font-size: 2em; font-family: 'Trocchi', serif;">Register</h3>
@@ -91,17 +95,14 @@
 						<label for="exampleInputPassword1">Password</label>
 						<input type="password" class="form-control" id="registerPassword">
 					</div>
-					<!-- <div class="form-group form-check">
-						<input type="checkbox" class="form-check-input" id="exampleCheck1">
-						<label class="form-check-label" for="exampleCheck1">Check me out</label>
-					</div> -->
 					<button type="submit" class="btn btn-primary" id="button" >Submit</button>
 				</form>
 			</div>
 		</div>
-      
+	</section> 
 
     <!----------------------------------- Table --------------------------------->
+
 	<div id="todo-list" style="margin: 20px 15px;"> 
    <!-- all user -->
 			<!-- show -->
@@ -115,7 +116,7 @@
 							<th scope="col">Description</th>
 							<th scope="col">Status</th>
 							<th scope="col" >Deadline</th>
-							<th scope="col">Action</th>	
+							<!-- <th scope="col">Action</th>	 -->
 						</tr>
 					</thead>
 					<tbody id="AllTodoList">	
@@ -145,7 +146,6 @@
 
 		
 		<!----------------------------------- Create Todo --------------------------------->
-		<div id="create-todo">
 			<form id="createTodoForm">
 				<h3>Create Todo</h3>
 				<ul class="nav justify-content-center">
@@ -183,7 +183,6 @@
 				<div id="editForm">
 				</div>
 			</form>
-		</div>
 
 		<!-- Modal Search-->
 		<div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -205,7 +204,7 @@
 					<span aria-hidden="true">&times;</span>
 				  </button>
 				</div>
-				<div class="modal-body" id="resultSearching">
+				<div class="modal-body">
 					<ul class="list-unstyled" id="resultSearching">
 		
 					</ul>
@@ -214,6 +213,7 @@
 			  </div>
 			</div>
 		  </div>
+
 
 		  <!-- Modal Error-->
 		  <!-- Button trigger modal -->

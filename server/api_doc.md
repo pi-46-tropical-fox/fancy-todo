@@ -6,15 +6,115 @@ My Fancy Todo App is an application to manage your todos. This app has :
 &nbsp;
 
 ## RESTful endpoints
+* POST /user/register
+* POST /user/login
+* POST /user/googleLogin
 
 * GET /todos
 * POST /todos
 * GET /todos/:id
 * PUT /todos/:id
 * DELETE /todos/:id
-* POST /register
-* POST /login
 
+* GET /todos/myTodos
+* GET /todos/random
+
+* GET /search/anime
+* GET /search/music
+* GET /search/movie
+
+
+
+### POST /user/register
+
+> Create new user
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+{
+    "name": "<user name>",
+    "email": "<user email>",
+    "password": "<user password>",
+}
+```
+
+_Response (201)_
+```
+{
+    "id": <given id by system>,
+    "name": "<posted user name>",
+    "email": "<posted user email>",
+    "password": "<posted hashed user password>",
+    "createdAt": "2020-03-20T07:15:12.149Z",
+    "updatedAt": "2020-03-20T07:15:12.149Z",
+}
+```
+_Response (400 - Bad Request)_
+```
+{
+  "message": "Invalid requests"
+}
+```
+
+_Response (500)_
+```
+{
+  "message": "Internal server error"
+}
+```
+---
+
+### POST /login
+
+> Login to app
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+{
+  "email": "<user email to get insert into>",
+  "password": "<user password to get insert>"
+}
+```
+
+_Response (200)_
+```
+{
+  "id": <id as requested>,
+  "name": "<posted user name>",
+  "email": "<posted user email>",
+  "password": "<posted hashed user password>",
+  "createdAt": "2020-03-20T07:15:12.149Z",
+  "updatedAt": "2020-03-20T07:15:12.149Z"
+}
+```
+
+_Response (404 - Not Found)_
+```
+{
+  "message": "Invalid request"
+}
+```
+
+_Response (500)_
+```
+{
+  "message": "Internal server error"
+}
+```
+---
 
 ### GET /todos
 
@@ -258,93 +358,4 @@ _Response (500 - Bad Request)_
 ```
 ---
 
-### POST /register
 
-> Create new user
-
-_Request Header_
-```
-{
-  "access_token": "<your access token>"
-}
-```
-
-_Request Body_
-```
-{
-    "name": "<user name>",
-    "email": "<user email>",
-    "password": "<user password>",
-}
-```
-
-_Response (201)_
-```
-{
-    "id": <given id by system>,
-    "name": "<posted user name>",
-    "email": "<posted user email>",
-    "password": "<posted hashed user password>",
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
-}
-```
-_Response (400 - Bad Request)_
-```
-{
-  "message": "Invalid requests"
-}
-```
-
-_Response (500)_
-```
-{
-  "message": "Internal server error"
-}
-```
----
-
-### POST /login
-
-> Login to app
-_Request Header_
-```
-{
-  "access_token": "<your access token>"
-}
-```
-
-_Request Body_
-```
-{
-  "email": "<user email to get insert into>",
-  "password": "<user password to get insert>"
-}
-```
-
-_Response (200)_
-```
-{
-  "id": <id as requested>,
-  "name": "<posted user name>",
-  "email": "<posted user email>",
-  "password": "<posted hashed user password>",
-  "createdAt": "2020-03-20T07:15:12.149Z",
-  "updatedAt": "2020-03-20T07:15:12.149Z"
-}
-```
-
-_Response (404 - Not Found)_
-```
-{
-  "message": "Invalid request"
-}
-```
-
-_Response (500)_
-```
-{
-  "message": "Internal server error"
-}
-```
----

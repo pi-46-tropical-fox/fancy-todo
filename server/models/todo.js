@@ -12,6 +12,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Todo.belongsTo(models.User)
+      // Todo.belongsToMany(models.User,{through:models.Project})
+      // Todo.hasMany(models.Project)
+      
     }
   };
   Todo.init({
