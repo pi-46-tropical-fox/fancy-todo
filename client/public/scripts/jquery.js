@@ -1,4 +1,4 @@
-const localHost = `https://fancy-todo-app-juan.herokuapp.com`
+const localHost = `https://fancy-todo-app-juan.herokuapp.com/`
 
 const showLogin = (event) => {
     $(`#show-login`).show()
