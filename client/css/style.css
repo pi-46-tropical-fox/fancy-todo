@@ -1,0 +1,121 @@
+body {
+  
+  color: #ffffff;
+  font-family: Nunito;
+}
+
+.container {
+  color: black;
+  font-family: Nunito;
+}
+
+h1 {
+  font-size: 60px;
+}
+
+#login-form {
+  padding: 20px;
+  max-width: 40%;
+  margin-top: 30px;
+  background-color: rgb(252, 249, 246);
+}
+
+#register-form {
+  padding: 20px;
+  max-width: 40%;
+  margin-top: 30px;
+  background-color: rgb(252, 249, 246);
+}
+
+
+#dashboard-list {
+  padding: 20px;
+  max-width: 80%;
+  margin-top: 30px;
+}
+
+hr {
+  background-color: #ffffff;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+
+.abcRioButtonContents {
+  color: #000000;
+  font-family: Roboto;
+  line-height: 39px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.abcRioButtonSvg {
+  margin-left: 20px;
+}
+
+#gmail {
+  margin-left: 15px;
+}
+
+.table {
+  color: #ffffff;
+  border-collapse: collapse;
+}
+
+.modal {
+  color: #000000;
+}
+
+h3 {
+  font-size: 40px;
+  font-family: Roboto;
+  margin-left: 30px;
+  text-align: center;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+#img-logo { 
+  text-align: center;
+}
+
+.heading {
+  
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  justify-content: space-evenly;
+  /* flex-wrap: wrap; */
+  /* justify-content: flex-end; */
+  /* justify-content: flex-start; */
+}
+
+.weather-body {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0px;
+
+  /* text-align: center; */
+  /* margin : 80px 0px 10px 20px;
+  justify-content: space-between; */
+} 
+
+.card-weather-info {
+  margin: 0px 0px 0px 25px; 
+}
+
+/* .table-responsive {
+  margin: 0px 0px 150px 0px
+} */
+
+.body-dashboard {
+  
+  background-color: rgb(252, 249, 246);
+}
