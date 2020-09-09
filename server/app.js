@@ -5,7 +5,7 @@ const routes = require('./routes')
 const errHandler = require('./middleware/errHandler')
 const app = express()
 const cors = require('cors')
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3457
 
 // Trying the method chaining for the first time...
 
