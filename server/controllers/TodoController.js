@@ -5,11 +5,21 @@ const pasteeApiKey = process.env.PASTEE_API_KEY
 class TodoController {
     static async readAll(req, res, next){
         try {
-            let todos = await Todo.findAll({ where: { UserId: req.userData.id } })
+            let todos = await Todo.findAll({ where: { UserId: req.userData.id }, order: [['id', 'DESC']] })
 
             res.status(200).json(todos)
         } catch (error) {
             return next(err)
+        }
+    }
+
+    static async readOne(req, res, next){
+        try {
+            let todoData = await Todo.findByPk(req.params.id)
+
+            res.status(200).json(todoData)
+        } catch (e) {
+            return next(e)
         }
     }
     
@@ -46,6 +56,7 @@ class TodoController {
             let todo = await Todo.findByPk(req.params.id)
 
             let isAuthorized = req.userData.id === todo.UserId
+            console.log(req.body);
 
             if(isAuthorized){
                 let todo = await Todo.update(req.body, {
@@ -69,7 +80,7 @@ class TodoController {
                 let isAuthorized = req.userData.id === todo.UserId
 
                 if(isAuthorized){
-                    await TodoController.deletePasteeId(todo.PasteeId)
+                    if(todo.PasteeId) await TodoController.deletePasteeId(todo.PasteeId)
 
                     await Todo.destroy({
                         where: { id: req.params.id }
@@ -112,13 +123,13 @@ class TodoController {
         }
     }
 
-    static async deletePasteeId(id, next){
+    static async deletePasteeId(id){
         try {
             let res = await axios.delete(`https://api.paste.ee/v1/pastes/${id}`)
 
             return res
         } catch (err) {
-            next(err)
+            return err
         }
     }
 }
