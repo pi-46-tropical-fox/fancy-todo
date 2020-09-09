@@ -1,6 +1,6 @@
-// const host = 'http://todoers.apps.eas.web.id'
-const host = 'http://localhost'
-const port = 3457
+const host = 'http://todoers.apps.eas.web.id'
+// const host = 'http://localhost'
+const port = null
 const baseUrl = `${host}${ port ? `:${port}` : '' }`
 
 const Toast = Swal.mixin({
@@ -129,15 +129,16 @@ const getTodos = () => {
                 <input type="checkbox" id="statusCheck" data-id="${row.id}" ${ row.status === 'done' ? 'checked' : '' } onclick="changeStatus(event)" data-id="">
             </div>
             <div class="content flex-grow mx-4">
-                <h3 id="todoTitle-1" class="title">${row.title}</h3>
-                <span id="todoDesc-1" class="description">${row.description}</span>
+                <h3 id="todoTitle-${row.id}" class="title mb-2">${row.title}</h3>
+                <span id="todoDueDate-${row.id}" class="due_date block">Due at: ${new Date(row.due_date).toString().split(' ').slice(0,3).join(' ')}</span>
+                <span id="todoDesc-${row.id}" class="description block mb-2">Description: ${row.description}</span>
                 ${row.PasteeId ? `
-                <span class="code">Attached code: <a target="_blank" href="https://paste.ee/p/${row.PasteeId}" class="url" id="pastee-${row.id}">https://paste.ee/p/${row.PasteeId}</span></span>
+                <span class="code block">Attached code: <a target="_blank" href="https://paste.ee/p/${row.PasteeId}" class="url" id="pastee-${row.id}">https://paste.ee/p/${row.PasteeId}</span></span>
                 ` : ''}
             </div>
-            <div class="action">
-                <a href="#" class="block" onclick="editTodo(${row.id}, event)">Edit</a>
-                <a href="#" class="block" onclick="deleteTodo(${row.id})">Delete</a>
+            <div class="action flex flex-col align-middle items-end">
+                <a href="#" class="m-1" onclick="editTodo(${row.id}, event)"><span class="btn info block">Edit</span></a>
+                <a href="#" class="m-1" onclick="deleteTodo(${row.id})"><span class="btn danger block">Delete</span></a>
             </div>
         </div>
         `))
@@ -269,7 +270,7 @@ const updateTodo = (e) => {
     })
 }
 
-const deleteTodo = (todoId) => {
+const deleteTodo = (id) => {
     let { access_token } = getCurrentAuth()
 
     Swal.fire({
@@ -283,8 +284,8 @@ const deleteTodo = (todoId) => {
         if(data.isConfirmed) {
             $.ajax({
                 method: 'DELETE',
-                url: `${baseUrl}/todos/${todoId}`,
-                headers: { access_token },
+                url: `${baseUrl}/todos/${id}`,
+                headers: { access_token, id },
                 data
             })
             .done(() => {
