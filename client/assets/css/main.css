@@ -683,12 +683,6 @@ body {
   background-color: rgba(237, 242, 247, var(--bg-opacity));
 }
 
-.bg-green-100 {
-  --bg-opacity: 1;
-  background-color: #f0fff4;
-  background-color: rgba(240, 255, 244, var(--bg-opacity));
-}
-
 .bg-green-200 {
   --bg-opacity: 1;
   background-color: #c6f6d5;
@@ -727,6 +721,10 @@ body {
 
 .hidden {
   display: none;
+}
+
+.flex-col {
+  flex-direction: column;
 }
 
 .items-start {
@@ -769,6 +767,10 @@ body {
   font-size: 1.5rem;
 }
 
+.m-1 {
+  margin: 0.25rem;
+}
+
 .mx-4 {
   margin-left: 1rem;
   margin-right: 1rem;
@@ -777,6 +779,10 @@ body {
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
 }
 
 .mb-4 {
@@ -836,6 +842,10 @@ body {
   --text-opacity: 1;
   color: #fff;
   color: rgba(255, 255, 255, var(--text-opacity));
+}
+
+.align-middle {
+  vertical-align: middle;
 }
 
 .align-bottom {
