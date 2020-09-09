@@ -1,12 +1,16 @@
 const { verifyToken } = require('../helpers/AuthHelper')
-const { User } = require('../models')
+const { User, Todo } = require('../models')
 
 const authenticate = (req, res, next) => {
     const { access_token } = req.headers
+
+    console.log(req.headers.id);
+    console.log(req.baseUrl.split('/')[1]);
     
     try {
         const userData = verifyToken(access_token)
-        const user = User.findByPk(userData.id)
+
+        const user = User.findOne({ where: { username: userData.username } })
         if(user) {
             req.userData = userData
 
@@ -19,18 +23,30 @@ const authenticate = (req, res, next) => {
     }
 }
 
-// const authorize = (req, res, next) => {
-//     const { access_token } = req.headers
+const authorize = async (req, res, next) => {
+    let baseRoute = req.baseUrl.split('/')[1]
+    let data = null
+
+    console.log(req.userData);
     
-//     try {
-//         // 
-//     } catch (e) {
-//         return errors.throwUnauthorized(res, `You're not allowed to access this area`)
-//         res.status(403).json({ msg: '403 Unauthenticated'})
-//     }
-// }
+    try {
+        switch(baseRoute){
+            case 'todos':
+                data = await Todo.findByPk(req.headers.id)
+            break
+            default:
+                throw { code: 500, msg: `Missing route: ${baseRoute}` }
+            break
+        }
+
+        if(data.UserId == req.userData.id) next()
+        else throw { code: 403, msg: `You're not authorized to access this area.`}
+    } catch (e) {
+        return next(e)
+    }
+}
 
 module.exports = {
     authenticate,
-    // authorize,
+    authorize,
 }
