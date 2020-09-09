@@ -53,20 +53,11 @@ class TodoController {
     
     static async update(req, res, next){
         try {
-            let todo = await Todo.findByPk(req.params.id)
+            let todo = await Todo.update(req.body, {
+                where: { id: req.params.id }
+            })
 
-            let isAuthorized = req.userData.id === todo.UserId
-            console.log(req.body);
-
-            if(isAuthorized){
-                let todo = await Todo.update(req.body, {
-                    where: { id: req.params.id }
-                })
-    
-                res.status(200).json(todo)
-            } else {
-                throw { code: 403, msg: 'Hey, you! The unauthorized thief! What are you doing here?' }
-            }
+            res.status(200).json(todo)
         } catch (err) {   
             return next(err)
         }
@@ -77,19 +68,13 @@ class TodoController {
             let todo = await Todo.findByPk(req.params.id)
             
             if(todo){
-                let isAuthorized = req.userData.id === todo.UserId
+                if(todo.PasteeId) await TodoController.deletePasteeId(todo.PasteeId)
 
-                if(isAuthorized){
-                    if(todo.PasteeId) await TodoController.deletePasteeId(todo.PasteeId)
-
-                    await Todo.destroy({
-                        where: { id: req.params.id }
-                    })
+                await Todo.destroy({
+                    where: { id: req.params.id }
+                })
         
-                    res.status(200).json({msg: `Todo with ID ${req.params.id} was successfully deleted`})
-                } else {
-                    throw { code: 403, msg: 'Hey, you! The unauthorized thief! What are you doing here?' }
-                }
+                res.status(200).json({msg: `Todo with ID ${req.params.id} was successfully deleted`})
             } else {
                 throw { code: 404, msg: `Sorry, but Todo with ID ${req.params.id} was not found.` }
             }
