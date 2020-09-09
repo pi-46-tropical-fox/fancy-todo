@@ -1,4 +1,4 @@
-const host = 'http://todoers.apps.eas.web.id'
+const host = 'https://metaphysical-leek-yyg9tn1jarwwvggqs7umlyvx.herokudns.com'
 // const host = 'http://localhost'
 const port = null
 const baseUrl = `${host}${ port ? `:${port}` : '' }`
