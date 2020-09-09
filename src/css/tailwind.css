@@ -14,6 +14,8 @@ nav {
 
 footer {
     bottom: 0;
+    @apply py-2;
+    @apply text-center;
 }
 
 main {
@@ -60,7 +62,7 @@ body {
 
 @tailwind utilities;
 
-nav, .card {
+nav, .card, footer {
     @apply bg-white;
 }
 
@@ -70,7 +72,7 @@ nav, .card {
 }
 
 nav, footer {
-    @apply shadow-md;
+    @apply shadow-lg;
 }
 
 h1 {
@@ -85,8 +87,45 @@ h3 {
     font-family: 'Pacifico', cursive;
 }
 
+#menu-contents{
+    top: 3em;
+
+    @apply bg-white;
+    @apply z-50;
+}
+
+a {
+    @apply inline-block;
+    @apply transition-all;
+    @apply duration-100;
+}
+
+#menu-contents > a {
+    @apply p-4;
+}
+
+#menu-contents > a:hover {
+    @apply bg-gray-200;
+}
+
 #quote, #quoteAuthor {
     @apply text-gray-600;
+}
+
+#todos > .card > .list:first-child {
+    @apply rounded-t-lg
+}
+
+#greeting {
+    @apply w-full
+}
+
+#greeting.card, #auth > .card {
+    @apply p-8;
+}
+
+.list .description {
+    @apply block
 }
 
 .info{
@@ -125,33 +164,52 @@ h3 {
     @apply opacity-75;
 }
 
+.list .url {
+    @apply text-blue-600;
+}
+
+.list .url:hover {
+    @apply text-blue-800;
+}
+
 .card {
-    @apply p-8;
     @apply shadow-lg;
     @apply w-auto;
     @apply rounded-lg;
 }
 
 .modal {
-    @apply opacity-0;
-    @apply pointer-events-none;
     @apply fixed;
     @apply w-full h-full;
     @apply top-0 left-0;
     @apply flex;
     @apply items-center justify-center;
+
+    @apply transition-opacity duration-200;
 }
 
 .modal-overlay {
     @apply absolute;
     @apply w-full h-full;
     @apply bg-gray-900;
-    @apply opacity-50;
+    @apply opacity-25;
 }
 
+.modal-container {
+    @apply bg-white;
+    @apply w-11/12;
+    @apply mx-auto;
+    @apply card;
+    @apply shadow-lg;
+    @apply z-50;
+    @apply overflow-y-auto;
+}
+
+
 .modal-close {
+    top: 3.5em;
     @apply absolute;
-    @apply top-0 right-0;
+    @apply right-0;
     @apply cursor-pointer;
     @apply flex flex-col;
     @apply items-center;
@@ -159,6 +217,7 @@ h3 {
     @apply text-white text-sm;
     @apply z-50
 }
+
 
 .modal-content {
     @apply py-4 px-6;
@@ -188,6 +247,30 @@ input {
 
 input:not([type=checkbox]):not([type=submit]):not([type=radio]) {
     @apply h-12;
+}
+
+input:not([type=checkbox]):not([type=submit]):not([type=radio]), textarea {
     @apply w-full;
     @apply text-lg;
+}
+
+#code{
+    /*  */
+}
+
+/* 3rd parties */
+
+.swal2-container.swal2-bottom-start {
+    bottom: 2.5em !important;
+}
+
+/* Larger media resolutions */
+
+@screen md {
+    .modal-container {
+        @apply max-w-md;
+    }
+    #greeting {
+        @apply max-w-sm;
+    }
 }
