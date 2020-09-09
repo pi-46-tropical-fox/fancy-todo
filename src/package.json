@@ -6,6 +6,7 @@
   "scripts": {
     "build": "postcss css/tailwind.css -o ../client/assets/css/main.css",
     "watch": "nodemon --watch css -e css -x 'npm run build'",
+    "watch-prod": "nodemon --watch css -e css -x 'npm run build-prod'",
     "build-prod": "NODE_ENV=production npm run build"
   },
   "keywords": [],
