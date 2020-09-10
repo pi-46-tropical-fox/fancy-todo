@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todoers!</title>
+    <meta name="description" content="">
+
+    <meta name="google-signin-client_id" content="58820793100-ld40iv2c2dbem6upd459qrtj0r4hl9c2.apps.googleusercontent.com">
+
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+    <div class="bing-wallpapers fixed"></div>
+    <!-- NAV COMPONENT -->
+    <nav>
+        <div class="container">
+            <div class="flex justify-between items-center py-2">
+                <div class="h-full cursor-pointer text-center" style="width: 52px" id="nav-menu" onclick="toggleMenu(event)">
+                    <i id="menu-btn" class="la la-bars la-lg"></i>
+
+                    <div class="absolute hidden top-0 shadow-lg cursor-pointer text-center z-50" id="nav-menu-active" style="height: 52px; width: 52px">
+                    </div>
+                    <div class="absolute hidden" id="menu-contents">
+                        <a href="#" onclick="signOut(event)"><span>Sign Out</span></a>
+                    </div>
+                </div>
+                <div id="logo">
+                    <h3>Todoers!</h3>
+                </div>
+                <div class="rounded-full h-8 w-8" id="avatar">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- End: NAV COMPONENT -->
+
+    <main>
+        <!-- MAIN COMPONENTS -->
+
+        <!-- AUTH: Login & Register -->
+        <div id="auth">
+            <!-- Logo, Big -->
+            <div class="mb-8" id="logo-login">
+                <h1>Todoers!</h1>
+            </div>
+            <div class="card">
+                <div class="tab-wrapper">
+                    <a href="#" onclick="showLoginForm(event)">
+                        <span class="tab active" id="login-tab">
+                            Login
+                        </span>
+                    </a>
+                    <a href="#" onclick="showRegisterForm(event)">
+                        <span class="tab" id="register-tab">
+                            Register
+                        </span>
+                    </a>
+                </div>
+                <div class="wrapper">
+                    <div id="login">
+                        <form action="" id="loginForm" onsubmit="signIn(event)">
+                            <div class="form-group">
+                                <input type="text" name="username" id="login-username" placeholder="Username" />
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="password" id="login-password" placeholder="Password" />
+                            </div>
+                            <div class="form-group text-center">
+                                <input type="submit" class="btn info" value="Login" />
+                            </div>
+                        </form>
+                    </div>
+                    <div id="register" style="display: none">
+                        <form action="" id="registerForm" onsubmit="register(event)">
+                            <div class="form-group">
+                                <input type="text" name="name" id="reg-name" placeholder="Your full name" />
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="username" id="reg-username" placeholder="Username" />
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="password" id="reg-password" placeholder="Password" />
+                            </div>
+                            <div class="form-group text-center">
+                                <input type="submit" class="btn info" value="Register" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="wrapper text-center">
+                    <span class="block mb-4">Or sign in using your Google account</span>
+                    <div class="g-signin2 flex justify-center" data-onsuccess="googleLogin"></div>
+                    <!-- <a href="#" id="sign-out" onclick="signOut">Sign Out</a> -->
+                </div>
+            </div>
+        </div>
+        <!-- End: AUTH: Login & Register -->
+
+        <!-- MAIN: Todo List -->
+        <div class="pt-16" id="main">
+            <div class="container mx-auto flex justify-between items-start">
+
+                <!-- Greeting Card -->
+                <div id="greeting" class="card grid gap-4" style="flex-basis: auto;">
+                    <!--  -->
+                    <div class="section">
+                        <div class="rounded-full h-24 w-24" id="section-avatar">
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <span class="block">Welcome,</span>
+                        <div class="flex justify-between align-bottom items-start">
+                            <span class="block text-2xl" id="name"></span>
+                            <span class="block">
+                                <a href="#" class="btn info" onclick="toggleModal(event, 'create')">+ Todo</a>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <span class="block" id="quote"></span>
+                        <span class="block" id="quoteAuthor"></span>
+                    </div>
+                </div>
+                <!-- End: Greeting Card -->
+
+                <!-- Todo List Card -->
+                <div id="todos" class="card flex-grow md:ml-4 md:overflow-y-auto" style="max-height: calc(100vh - 8rem)">
+                    <!--  -->
+                </div>
+                <!-- End: Todo List Card -->
+
+            </div>
+
+            <!-- MODAL: Todo Form -->
+            <div class="modal create opacity-0 pointer-events-none">
+                <div class="modal-overlay" onclick="toggleModal(event, 'create')"></div>
+                <div class="modal-container" id="todo-form-wrapper">
+                    <!-- Close -->
+                    <div class="modal-close" onclick="toggleModal(event, 'create')">
+                        <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                            viewBox="0 0 18 18">
+                            <path
+                                d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
+                            </path>
+                        </svg>
+                        <span class="text-sm">(Esc)</span>
+                    </div>
+
+                    <!-- Body -->
+                    <div class="modal-content">
+                        <form id="todo-form" onsubmit="postTodo(event)">
+                            <!-- Title -->
+                            <div class="modal-title">
+                                <span class="title">Create new Todo</span>
+                            </div>
+
+                            <!-- Hidden Content(s) -->
+                            <input type="hidden" name="todoId" class="todoId" value="">
+
+                            <!-- Content -->
+                            <div class="form-group">
+                                <label for="code">Title</label>
+                                <input type="text" name="title" class="title" placeholder="Todo name">
+                            </div>
+                            <div class="form-group">
+                                <label for="code">Description</label>
+                                <textarea name="description" class="description" placeholder="Your todo description"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="code">Due date</label>
+                                <input type="date" name="due_date" class="due_date" placeholder="Due Date">
+                            </div>
+                            <div class="form-group">
+                                <label id="code-label" for="code">The code snippet, if available</label>
+                                <textarea name="code" class="code" placeholder="If you have some code to type, please type it here."></textarea>
+                            </div>
+                            <hr>
+
+                            <!-- Footer -->
+                            <div class="modal-footer">
+                                <input id="submitTodo" class="btn info" type="submit" value="Submit">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- End: MODAL: Todo Form -->
+
+            <!-- MODAL: Todo Edit -->
+            <div class="modal edit opacity-0 pointer-events-none">
+                <div class="modal-overlay" onclick="toggleModal(event, 'edit')"></div>
+                <div class="modal-container" id="todo-form-wrapper">
+                    <!-- Close -->
+                    <div class="modal-close" onclick="toggleModal(event, 'edit')">
+                        <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                            viewBox="0 0 18 18">
+                            <path
+                                d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
+                            </path>
+                        </svg>
+                        <span class="text-sm">(Esc)</span>
+                    </div>
+
+                    <!-- Body -->
+                    <div class="modal-content">
+                        <form id="todo-form" onsubmit="updateTodo(event)">
+                            <!-- Title -->
+                            <div class="modal-title">
+                                <span class="title">Edit Todo</span>
+                            </div>
+
+                            <!-- Hidden Content(s) -->
+                            <input type="hidden" name="todoId" class="todoId" value="">
+
+                            <!-- Content -->
+                            <div class="form-group">
+                                <label for="code">Title</label>
+                                <input type="text" name="title" class="title" placeholder="Todo name">
+                            </div>
+                            <div class="form-group">
+                                <label for="code">Description</label>
+                                <textarea name="description" class="description" placeholder="Your todo description"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="code">Due date</label>
+                                <input type="date" name="due_date" class="due_date" placeholder="Due Date">
+                            </div>
+                            <hr>
+
+                            <!-- Footer -->
+                            <div class="modal-footer">
+                                <input id="submitTodo" class="btn info" type="submit" value="Submit">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- End: MODAL: Todo Edit -->
+        </div>
+        <!-- End: MAIN: Todo List -->
+
+        <!-- End: MAIN COMPONENTS -->
+    </main>
+
+    <!-- 
+    <a href="#" class="btn warning">Click me</a>
+    <a href="#" class="btn success">Click me</a>
+    <a href="#" class="btn danger">Click me</a>
+    <a href="#" class="btn info">Click me</a>
+    -->
+    
+    <!-- FOOTER COMPONENT -->
+    <footer>
+        <div class="container">
+            <span class="block mx-auto" id="about">
+                Made with &hearts; by Eas, for Hacktiv8 project.
+            </span>
+        </div>
+    </footer>
+    <!-- End: FOOTER COMPONENT -->
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://apis.google.com/js/platform.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="/assets/js/main.js"></script>
+</body>
+
+</html>
