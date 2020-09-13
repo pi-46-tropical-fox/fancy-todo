@@ -4,6 +4,9 @@ A web app that helps you to mange your tasks so that you won't miss your deadlin
 ### demo
 - https://youtu.be/uU4X8-IDQWU
 
+### deployed link
+- https://fancy-todo-288317.web.app
+
 ### libraries and frameworks
 - Express for setting up the backend server.
 - jQuery to make SPA on the frontend side.

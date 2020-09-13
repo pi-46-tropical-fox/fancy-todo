@@ -217,6 +217,7 @@ function registerForm(event) {
     }
   })
     .done((response) => {
+      swal("Success!", "You account has been registered!", "success");
       $("#registerUsername").val("");
       $("#registerEmail").val("");
       $("#registerPassword").val("");
@@ -316,7 +317,7 @@ function addTodo() {
   })
     .done((response) => {
       console.log(response);
-
+      swal("Success!", "You todo has been added successfully!", "success");
       $("#addTitle").val("");
       $("#addDescription").val("");
       $("#addDueDate").val("");
@@ -357,7 +358,7 @@ function editTodo() {
   })
     .done((response) => {
       console.log(response);
-
+      swal("Success!", "You todo has been edited successfully!", "success");
       $("#editTitle").val("");
       $("#editDescription").val("");
       $("#editDueDate").val("");
@@ -380,23 +381,37 @@ function deleteTodo(event) {
   const id = event.srcElement.dataset.id;
   event.preventDefault();
 
-  $.ajax({
-    method: "DELETE",
-    url: `http://localhost:3000/todos/${id}`,
-    headers: {
-      access_token: localStorage.getItem("access_token")
-    }
+  swal({
+    title: "Are you sure?",
+    text: "Once deleted, you will not be able to recover this todo!",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
   })
-    .done((response) => {
-      console.log(response);
-
-      listMenu();
-      afterLogin();
-    })
-    .fail((err) => {
-      console.log(err, "<<<< error in deleteTodo");
-      
-    })
+  .then((willDelete) => {
+    if (willDelete) {
+      $.ajax({
+        method: "DELETE",
+        url: `http://localhost:3000/todos/${id}`,
+        headers: {
+          access_token: localStorage.getItem("access_token")
+        }
+      })
+        .done((response) => {
+          console.log(response);
+    
+          listMenu();
+          afterLogin();
+        })
+        .fail((err) => {
+          console.log(err, "<<<< error in deleteTodo");
+          
+        })
+      swal("Poof! Your todo has been deleted!", {
+        icon: "success",
+      });
+    }
+  });
 }
 
 function getQuotes(event) {
