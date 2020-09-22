@@ -7,7 +7,7 @@
 
 .navbar {
     opacity: 97%;
-    box-shadow: 0 20px 30px rgba(0, 0, 0, .4);
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
     display: block;
     margin-bottom: 50px;
 }
@@ -22,11 +22,11 @@
 
 .home {
     border-radius: 20px;
-    box-shadow: -5px 7px 15px 5px rgba(171, 97, 8, 0.5);
+    box-shadow: -5px 7px 15px rgba(255, 255, 255, 0.3), 5px -7px 15px rgba(255, 255, 255, 0.3);
 }
 
 body {
-    background-color: #120136;
+    background-color: #11674C;
     font-family: 'Kufam', cursive;
 }
 
@@ -69,3 +69,6 @@ body {
 .card:hover {
     box-shadow: inset 5px 5px 10px rgba(0, 0, 0, .4), inset -5px -5px 10px rgba(0, 0, 0, .4);
 }
+
+
+/* ====================================================== */

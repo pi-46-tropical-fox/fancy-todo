@@ -1,3 +1,5 @@
+const baseURL = `https://fancytodo-porto.herokuapp.com`
+
 function hideAll() {
     $('#home').hide()
     $('#login-form, .login-form').hide();
@@ -26,15 +28,15 @@ function after() {
 
 function logged_in() {
     $('#username').text(`${localStorage.email}`)
-    $('#todo-card').empty()
     $.ajax({
-            method: 'GET',
-            url: 'http://localhost:3000/todos',
-            headers: {
-                access_token: localStorage.getItem('access_token')
-            }
-        })
-        .done(response => {
+        method: 'GET',
+        url: `${baseURL}/todos`,
+        headers: {
+            access_token: localStorage.getItem('access_token')
+        }
+    })
+    .done(response => {
+        $('#todo-card').empty()
             if (response.length != 0) {
                 $('#nothing').hide();
                 response.forEach(element => {
@@ -72,7 +74,7 @@ function register(event) {
         username = $('#register-username').val()
     $.ajax({
             method: 'POST',
-            url: 'http://localhost:3000/register',
+            url: `${baseURL}/register`,
             data: {
                 email,
                 password,
@@ -109,7 +111,7 @@ function login(event) {
         password = $('#login-password').val();
     $.ajax({
             method: 'POST',
-            url: 'http://localhost:3000/login',
+            url: `${baseURL}/login`,
             data: {
                 email,
                 password
@@ -151,7 +153,7 @@ function onSignIn(googleUser) {
 
     $.ajax({
         method: 'POST',
-        url: 'http://localhost:3000/googleLogin',
+        url: `${baseURL}/googleLogin`,
         headers: { google_access_token }
     }).done(response => {
         console.log(response)
@@ -184,7 +186,7 @@ function deleteCard(event) {
             const id = event.srcElement.dataset.id
             $.ajax({
                     method: 'DELETE',
-                    url: `http://localhost:3000/todos/${id}`,
+                    url: `${baseURL}/todos/${id}`,
                     headers: {
                         access_token: localStorage.getItem('access_token')
                     }
@@ -205,17 +207,30 @@ function deleteCard(event) {
     })
 
 }
+// EDIT
+$('#exampleModal').on('show.bs.modal', function(event) {
+    const button = $(event.relatedTarget)
+    targetId = button.data('id')
+});
+let targetId;
+$('#updateData').click((event) => {
+    editCard(event, targetId)
+})
+// EDIT
 
-function editCard(id) {
+function editCard(event, id) {
+    $('#exampleModal').modal('toggle');
+    event.preventDefault()
     const message = {
         title: $('.modal-body #title').val(),
         description: $('.modal-body #description').val(),
         due_date: $('.modal-body #due_date').val(),
         status: $('.modal-body #status').val()
     }
+    console.log(id)
     $.ajax({
             method: 'PUT',
-            url: `http://localhost:3000/todos/${id}`,
+            url: `${baseURL}/todos/${id}`,
             headers: {
                 access_token: localStorage.getItem('access_token')
             },
@@ -223,11 +238,10 @@ function editCard(id) {
             data: JSON.stringify(message)
         })
         .done(response => {
-            console.log(response)
+            console.log(response, '<<berhasil edit di main.js')
             after()
         })
         .fail(err => {
-            let parsedError = JSON.parse(err.responseText)
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -251,7 +265,7 @@ function addCard() {
     }
     $.ajax({
             method: 'POST',
-            url: `http://localhost:3000/todos`,
+            url: `${baseURL}/todos`,
             headers: {
                 access_token: localStorage.getItem('access_token')
             },
@@ -282,7 +296,7 @@ function seeRelatedArticles(event) {
     const id = event.srcElement.dataset.id
     $.ajax({
             method: 'GET',
-            url: `http://localhost:3000/todos/articles/${id}`,
+            url: `${baseURL}/todos/articles/${id}`,
             headers: {
                 access_token: localStorage.getItem('access_token')
             }
@@ -344,11 +358,6 @@ $(document).ready(() => {
     //CREAD DONE
     //READ DONE
     //DELETE DONE
-    $('#exampleModal').on('show.bs.modal', function(event) {
-        const button = $(event.relatedTarget)
-        const id = button.data('id')
-        $('#updateData').click(() => {
-            editCard(id)
-        })
-    });
+   
+    
 })

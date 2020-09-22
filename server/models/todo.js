@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                isNotEmpty: (value) => {
+                isNotEmpty(value) {
                     if (!value) {
                         throw new Error('Due date is required');
                     } else {
