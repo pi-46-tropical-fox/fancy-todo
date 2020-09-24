@@ -1,22 +1,21 @@
-if(process.env.NODE_ENV === 'development'){
-    require('dotenv').config()
-}
+"use strict"
+require('dotenv').config()
 const express = require('express')
+const cors = require('cors')
+const port = process.env.PORT|| 3001;
 const app = express()
-var cors = require('cors')
-const port = process.env.PORT || 3000
 const routes = require('./routes')
-const errorHandler = require('./middleware/errorHandler')
+const errHandler = require('./midleware/errorHandler')
 
-app.use(express.json())
-app.use(express.urlencoded({ extended : true }));
+
 app.use(cors())
-app.use(routes)
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
 
-app.use(errorHandler)
 
-app.listen(port, () => {
-    console.log(`listening on port`, port)
+app.use('/', routes)
+app.use(errHandler)
+
+app.listen(port, ()=>{
+    console.log(`Listen on PORT ${port}`);
 })
-
-module.exports = app;

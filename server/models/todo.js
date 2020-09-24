@@ -10,49 +10,16 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Todo.belongsTo(models.User, {foreignKey: 'UserId', targetKey: 'id'});
     }
   };
   Todo.init({
-    tittle: {
-      type: DataTypes.STRING,
-      validate: {
-        notEmpty:{
-          msg : 'Title cannot be empty'
-      }
-    }
-  },
-    description: {
-      type: DataTypes.STRING,
-      validate: {
-        notEmpty:{
-          msg : 'Description cannot be empty'
-      }
-    }
-  },
-    status: {
-      type: DataTypes.BOOLEAN,
-      validate: {
-        notEmpty:{
-          msg : 'Status cannot be empty'
-      }
-    }
-  },
-    due_date: {
-      type: DataTypes.DATEONLY,
-      alidate: {
-        isDate:{
-          msg : 'Status cannot be empty'
-      }
-    }
-  },
-  
+    title: DataTypes.STRING,
+    description: DataTypes.STRING,
+    status: DataTypes.STRING,
+    due_date: DataTypes.DATE,
+    UserId: DataTypes.INTEGER
   }, {
-    hooks: {
-      beforeCreate: (user, options) => {
-        user.status = false
-      }
-    },
     sequelize,
     modelName: 'Todo',
   });

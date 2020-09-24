@@ -1,36 +1,24 @@
 {
-  "name": "fancy-todo",
+  "name": "server",
   "version": "1.0.0",
-  "description": "\"list book\"",
+  "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/adiet95/fancy-todo.git"
-  },
-  "keywords": [
-    "express",
-    "pg",
-    "sequelize",
-    "ejs"
-  ],
-  "author": "adiet95",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/adiet95/fancy-todo/issues"
-  },
-  "homepage": "https://github.com/adiet95/fancy-todo#readme",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
+    "axios": "^0.20.0",
+    "bcrypt": "^5.0.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
-    "ejs": "^3.1.5",
+    "env": "0.0.2",
     "express": "^4.17.1",
     "google-auth-library": "^6.0.6",
     "jsonwebtoken": "^8.5.1",
+    "node-calendar": "^0.1.5",
     "pg": "^8.3.3",
     "sequelize": "^6.3.4"
   }

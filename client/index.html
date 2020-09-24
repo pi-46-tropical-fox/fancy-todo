@@ -1,150 +1,202 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
     <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="google-signin-client_id" content="953795490728-jkdf4lqnh16aedmjcm6aoj4te8pssj41.apps.googleusercontent.com">
+    <link rel="icon" type= 'image/png' href="./asset/h8.png">
+    <title>TODOS</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-signin-client_id" content="672395688154-in3s97qpk4k8mrldldft0ocg6f1osc1o.apps.googleusercontent.com">
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Acme|Roboto+Slab&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="./style.css" rel="stylesheet">
+</head>
+<body>
 
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="./style.css">
-        
-        <!-- Navbar -->
-        <title>Home</title>
-    </head>
-    <body>
-        <div id="navbar" style="margin-bottom: 20px; margin-top: 10px;">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#"><h3>Fancy Todo</h3></a>
-                <div class="nav">
-                    <a class="nav-link" href="#" id="nav_todoList">Todo List</a>
-                    <a class="nav-link" href="#" id="nav_addTodo">Add Todo</a>
-                    <a class="nav-link" href="#" id="nav_login">Login</a>
-                    <a class="nav-link" href="#" id="nav_register">Register</a>
-                    <a class="nav-link" href="#" id="nav_logout">Logout</a>
-                </div>
-            </nav>
+    <!--NAVBAR-->
+
+    <nav id="navbar" class="navbar navbar-expand-md  fixed-top ">  
+        <a class="navbar-brand mb-0 h1 text-light"><img height="40px" width="40px" src="https://arnoldtherigan15.github.io/Arnold_Hacktiv8/images/title.png" id="logo"></a>
+        <div class="collapse navbar-collapse " id="navbarSupportedContent">     
+            <ul class="navbar-nav mr-auto">
+                <li id="text">Simple Todo</li>       
+                <li class="nav-item"> 
+                        <a class="btn btn-outline-light mr-sm-2" id="logoutbtn">Logout</a>      
+                </li>
+            </ul> 
         </div>
+    </nav>
+             
+    
+    <!-- LOGIN FORM -->
 
-        <!-- Register -->
-        <main>
-            <div id="form_registration">
-                <div class="col-sm-10">
-                    <h4>Registration</h4>
+    <main class="container overflow-hidden">
+        <div class="content">
+            <div class="row" >
+                <div class="col-sm-4 offset-sm-4">
+                    <div id="loginForm">
+                        <form class="text-center p-5">
+                            <h1 style= "text-align-last: center;"><img src="./asset/h8.png"></h1>
+                            <h2 style="color: #666666;">Fancy Todo App</h2>
+                            <p class="h4 mb-4" style="color: #E89923;">Login</p>
+                            <input type="email" id="email" class="form-control mb-4" placeholder="E-mail">
+                            <input type="password" id="password" class="form-control mb-4" placeholder="Password">
+                            <button class="btn btn-info btn-block my-4 bg-warning text-white" type="submit" id="login">Login</button>
+                            <p style = "color:aliceblue center">Not a member ?
+                                <a href="" id="regisButton" style="color: #E89923;">Register</a>
+                            </p>
+                        
+                            <p style="color: grey;">or sign in with:</p>
+                            <div class="g-signin2 center" data-onsuccess="onSignIn" style="position: relative;"></div>
+                            <br>                            
+                        </form>
+                    </div>
+    
+                    <!--LOGIN FORM 02-->
+
+                    <div id="regisForm">
+                        <form class="text-center border border-light p-5">
+                            <p class="h4 mb-4" style="color: #E89923;">Register</p>
+                            <input type="email" id="Email1" class="form-control mb-4" placeholder="E-mail">
+                            <input type="password" id="Password1" class="form-control mb-4" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock">
+                            <button class="btn btn-info my-4 btn-block bg-warning text-dark" type="submit" id="register">Register</button>
+                            <hr>
+                            <p style = "color:grey">Already Have an Account ??
+                                <a href="" id="loginButton">Login</a>
+                            </p>
+                        </form>
+                    </div>
                 </div>
-                <form id="dataRegister">
-                    <div class="">
-                        <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
-                        <div class="col-sm-10">
-                            <input type="email" class="form-control" id="inputEmail3">
+            </div>
+
+
+            <div class="d-flex flex-row bd-highlight mb-3">
+                <div class="p-2 bd-highlight container-md border border-warning" id="Flex-01">
+                </div>
+                
+                <div class="p-2 bd-highlight container">
+                 <!--ADD TODO-->
+                    <div id="modalCreate" class="row margin-15px">
+                        <div class="col-sm-12">
+                            <button type="button" class="btn btn-warning button-right" data-toggle="modal" data-target="#addTodoModal" data-whatever="@mdo">Create New Todo</button>
                         </div>
                     </div>
-                    <div class="">
-                        <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
-                        <div class="col-sm-10">
-                            <input type="password" class="form-control" id="inputPassword3">
-                        </div>
-                    </div></br>
-                    <div class="col-sm-10">
-                        <button type="submit" class="btn btn-primary">REGISTER</button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Login -->
-            <div id="form_login">
-                <div class="col-sm-10">
-                    <h4>Login</h4>
-                </div>
-                <form id="dataLogin">
-                    <div class="">
-                        <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="emailLogin">
+        
+                    <!--INI LIST TODO ATAU MAIN WEBSITENYA-->
+                    <div clas="row">
+                        <div class="col-sm-12">
+                            <div id="todolist" class="list-group">
+                            </div>
                         </div>
                     </div>
-                    <div class="">
-                        <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
-                        <div class="col-sm-10">
-                            <input type="password" class="form-control" id="passwordLogin">
+                </div>
+            </div>
+            
+        </div>
+    </main>
+
+    <!--INI ADALAH FORM UNTUK ADD TODO-->
+    <div class="modal fade" id="addTodoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">New Todo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formAddToDo">
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Title</label>
+                            <input type="text" class="form-control" id="title" placeholder="title">
                         </div>
-                    </div></br>
-                    <div class="col-sm-10">
-                        <button type="submit" class="btn btn-primary">LOGIN</button>
-                    </div>
-                </form>
-                <div class="col-sm-10" style="margin-top: 10px; margin-bottom: 10px;">
-                    Or Login With Google:
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Description</label>
+                            <textarea class="form-control" id="description" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea">Status</label>
+                            <select class="form-control" id="status" rows="1">
+                                <option value="">--Chose Your Status--</option>
+                                <option value="Complete">Complete</option>
+                                <option value="Uncomplete">Uncomplete</option>
+                                <option value="OnGoing">OnGoing</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                                <label for="exampleFormControlInput1">Due Date</label>
+                                <input type="date" class="form-control" id="duedate">
+                        </div>
+                    </form>
                 </div>
-                <div class="col-sm-10">
-                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-warning" id="submitAdd">Add To Do</button>
                 </div>
-                <div class="col-sm-10" style="margin-top: 10px;" id="registerclick">
-                    <h5>Don't have an account? <a href="#">Register</a></h5>
+            </div>
+        </div>
+    </div>
+
+    <!--REGISTER-->
+    <div class="modal fade" id="editTodoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Todo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="formEditToDo">
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Title</label>
+                            <input type="text" class="form-control" id="title1" placeholder="title">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Description</label>
+                            <textarea class="form-control" id="description1" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Status</label>
+                            <select class="form-control" id="status1" rows="1">
+                                <option value="">--Chose Your Status--</option>
+                                <option value="Complete">Complete</option>
+                                <option value="Uncomplete">Uncomplete</option>
+                                <option value="OnGoing">OnGoing</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                                <label for="exampleFormControlInput1">Due Date</label>
+                                <input type="date" class="form-control" id="duedate1">
+                        </div>
+                        <input type="hidden" class="form-control" id="uid" placeholder="id">
+                    </form>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-warning" id="submitEdit">Change To Do</button>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <!-- todo list -->
-            <div id="todoList">
-                <h3 align='center'>Your Todo List</h3>
-                <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th scope="col">User</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Date (yyyy-mm-dd)</th>
-                        <th scope="col">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody id="listTodo">
-                    </tbody>
-                  </table>
-            </div>
-
-                <!-- add todo -->
-            <div id="addTodo">
-                <form id="dataAddTodo">
-                    <h3 align='center'>Add Your Todo</h3>
-                    <div class="form-row">
-                      <div class="form-group col-md-6">
-                        <label for="title">Title</label>
-                        <input type="text" class="form-control" id="title">
-                      </div>
-                      <div class="form-group col-md-6">
-                        <label for="description">Description</label>
-                        <input type="text" class="form-control" id="description">
-                      </div>
-                    </div>
-                    <div class="form-row">
-                      <div class="form-group col-md-4">
-                        <label for="status">Status</label>
-                        <select id="status" class="form-control">
-                          <option value="" selected>Choose...</option>
-                          <option value="false">Pending</option>
-                          <option value="true">Complete</option>
-                        </select>
-                      </div>
-                      <div class="form-group col-md-2">
-                        <label for="due_date">Date</label>
-                        <input type="date" class="form-control" id="due_date" name="due_date" min="2020-06-08">
-                      </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary" style="margin: 20px;">Add Todo</button>
-                  </form>
-            </div>
-            <div id="card_resto">
-            </div>
-        </main>
-
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-        <script src="https://apis.google.com/js/platform.js" async defer></script>
-        <script src="./main.js"></script>
-    </body>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v8.0&appId=1771526673003967&autoLogAppEvents=1" nonce="0rIpPgS6"></script>
+    <script src="//code.responsivevoice.org/responsivevoice.js?key=GoUVOjjN"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
+    <script src="./index.js"></script>
+</body>
 </html>

@@ -1,14 +1,27 @@
-const router = require('express').Router()
-const UserRoute = require('./UserRoute')
-const TodoRoute = require('./TodoRoute')
-const authorization = require('../middleware/authorization')
-const authentication = require('../middleware/authentication')
+"use strict"
 
-// router.get('/', (req, res, next) => {
-//     res.json({message:'Welcome to My Apps'})
-// })
+const routes = require('express').Router();
+const Controller = require('../controller/UserController')
+// const ThirdParty = require('../controller/thirdPartyController')
+const todoRoutes = require('./todo')
+const QuotesController = require('../controller/QuotesController')
+const {authentication, authoritzation} = require('../midleware/auth')
 
-router.use('/', UserRoute)
-router.use('/todos', authentication, authorization, TodoRoute)
 
-module.exports = router
+routes.get('/', (req, res)=>{
+    return res.status(200).json({msg:"Move On !"})
+    // res.redirect('/login')
+})
+
+routes.post('/register', Controller.register)
+routes.post('/login', Controller.login)
+routes.post('/googlelogin', Controller.googleLogin)
+
+// routes.get('/hero', ThirdParty.getInfo)
+routes.get('/quotes', QuotesController.getQuote)
+routes.use(authentication)
+routes.use('/todos', todoRoutes)
+
+
+
+module.exports = routes

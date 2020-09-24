@@ -8,17 +8,17 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      tittle: {
+      title: {
         type: Sequelize.STRING
       },
       description: {
         type: Sequelize.STRING
       },
       status: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.STRING
       },
       due_date: {
-        type: Sequelize.DATEONLY
+        type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,

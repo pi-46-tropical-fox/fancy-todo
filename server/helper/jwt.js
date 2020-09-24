@@ -1,14 +1,18 @@
+"use strict"
+
+
 const jwt = require('jsonwebtoken')
-let secret = process.env.SECRET
+const secret = process.env.secret
 
-const generateToken = (user) => {
-   const token = jwt.sign({ id: user.id, username: user.email }, secret)
-   return token
+
+function generateToken(user){
+    const access_token = jwt.sign(
+        {email:user.email, id:user.id}, secret);
+        return access_token
 }
 
-const verifyToken = (token)=>{
-    const verified = jwt.verify(token,secret)
-    return verified
+function verifyToken(token){
+    return jwt.verify(token, secret)
 }
 
-module.exports = {generateToken, verifyToken} 
+module.exports= {generateToken, verifyToken}
