@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="google-signin-client_id" content="598154405158-rco5gngr45jcm45fv7uo8q64ecpt15nh.apps.googleusercontent.com">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <title>Fancy Todo</title>
+  </head>
+
+    <body style="background-color: #173F5F;">
+
+        <!-- navbar-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <!-- <div class="cointainer"> -->
+              <div id="nav-logo" class="container" >
+            <a class="navbar-brand" href="#"><img src="LogoMakr_1a9Oox.png" alt=""></a>
+              </div>
+              <div id="logout-nav">
+              <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" width="50px" alt="" class="rounded-circle">
+              <p>username</p>
+              <form class="form-inline my-2 my-lg-0" id="logout">
+                <button id="logout-but" class="btn btn-outline-success my-2 my-sm-0" type="submit" >Logout</button>
+                <!-- <a href="#" onclick="signOut();">Sign out</a> -->
+
+              </form>
+            </div>
+            </div>
+        <!-- </div> -->
+          </nav>
+          <br>
+
+          <!--Todo-->
+          <div id="Todo" class="container text-center" >
+          <div class="row">
+            
+            <div class="card">
+                <div class="card-header">
+                 <h4 style="font-weight: bold;">To Do</h4>
+                </div>
+                <div class="card-header">
+                  <a href="#" class="btn btn-primary" id="addtodo">Add</a>
+                </div>
+                <div id="list-card">
+                
+                </div>
+              </div>
+              
+              
+              <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                      <h4 style="font-weight: bold;">weathers</h4>
+                    </div>
+                    <div class="card-body" id="api">
+                      
+                    </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <br>
+
+        <!--login-->
+        <div class="login" >
+          <div id="login-form"  class="container text-center border 5" style="border-radius: 10px;border-width: thick;" >
+            <br>
+            <div>
+            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" width="60px" alt="" class="rounded-circle">
+            </div>
+            <div>
+              <h4 style="font-size: 25px;">Login Form</h4>
+            </div>
+            <br>
+            <br>
+          <form id="form-login">
+            <div class="form-group" >
+              <label for="exampleInputEmail1" style="font-weight: bold;">Email address</label>
+              <input type="email" class="form-control" id="email-login" aria-describedby="emailHelp" style="transform: rotateY(-50%);color: #777;padding: 2px 15px 2px 35px;border: none;border-radius: 50px;text-align: center;">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1" style="font-weight: bold;">Password</label>
+              <input type="password" class="form-control" id="password-login" style="transform: rotateY(-50%);color: #777;padding: 2px 15px 2px 35px;border: none;border-radius: 50px;text-align: center;">
+            </div>
+            <button id="submit-login" type="submit" class="btn btn-primary" style="border-radius: 50px;">Submit</button>
+          </form>
+          <p>Or sign in with:</p>
+          <button class="g-signin2"; data-onsuccess="onSignIn" style="border-radius: 10px;"></button>
+          <!-- <div class="g-signin2"; data-onsuccess="onSignIn"></div> -->
+          <br>
+          <div id="loginregister">
+            <p>dont have an account?</p>
+            <a href="#" id="login-register">register</a>
+          </div>
+          <br>
+        </div>
+        </div>
+
+      <br>
+
+      <!--register-->
+      <div class="container text-center border 5" style="border-radius: 10px;border-width: thick;" id="register-form">
+        <br>
+        <div>
+        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" width="60px" alt="" class="rounded-circle">
+        </div>
+        <div>
+          <h4 style="font-size: 25px;">Register Form</h4>
+        </div>
+        <br>
+        <br>
+      <form id="register">
+        <div class="form-group">
+          <label for="exampleInputEmail1" style="font-weight: bold;">Username</label>
+          <input type="text" class="form-control" id="username-register" aria-describedby="emailHelp" style="transform: rotateY(-50%);color: #777;padding: 2px 15px 2px 35px;border: none;border-radius: 50px;text-align: center;">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1" style="font-weight: bold;">Email address</label>
+          <input type="email" class="form-control" id="email-register" aria-describedby="emailHelp" style="transform: rotateY(-50%);color: #777;padding: 2px 15px 2px 35px;border: none;border-radius: 50px;text-align: center;">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1" style="font-weight: bold;">Password</label>
+          <input type="password" class="form-control" id="password-register" style="transform: rotateY(-50%);color: #777;padding: 2px 15px 2px 35px;border: none;border-radius: 50px;text-align: center;">
+        </div>
+        <button id="register-button" type="submit" class="btn btn-primary" style="border-radius: 50px;">Register</button>
+      </form>
+      <br>
+    </div>
+    <br>
+    <br>
+
+    <!--add todo-->
+    <div class="container text-center border 5" style="border-radius: 10px;border-width: thick;" id="addtodo-form">
+      <div>
+        <h4>Add Todo</h4>
+      </div>
+      <br>
+    <form id="add">
+      <div class="form-group">
+        <label for="exampleInputEmail1" style="font-weight: bold;">Title</label>
+        <input type="text" class="form-control" id="title-add" aria-describedby="emailHelp" style="transform: rotateY(-50%);color: #777;padding: 2px 15px 2px 35px;border: none;border-radius: 50px;text-align: center;">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1" style="font-weight: bold;">Description</label>
+        <input type="text" class="form-control" id="desc-add" aria-describedby="emailHelp" style="transform: rotateY(-50%);color: #777;padding: 2px 15px 2px 35px;border: none;border-radius: 50px;text-align: center;">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1" style="font-weight: bold;">Due Date</label>
+        <input type="date" class="form-control" id="date-add" style="transform: rotateY(-50%);color: #777;padding: 2px 15px 2px 35px;border: none;border-radius: 50px;text-align: center;">
+      </div>
+      <button id="add-button" type="submit" class="btn btn-primary" style="border-radius: 50px;">Add</button>
+    </form>
+    <br>
+  </div>
+
+
+  <!--add todo-->
+  <div class="container text-center border 5" style="border-radius: 10px;border-width: thick;">
+    <div id="tampung-edit">
+
+    </div>
+    
+  </div>
+  <div class="container text-center border 5" style="border-radius: 10px;border-width: thick;">
+    <div id="tampung">
+
+    </div>
+    
+  </div>
+
+
+
+          <br>
+          <footer class="footer footer-expand-lg footer-light bg-light text-center position-absolut">
+              <h5>created by:Hactiv8 Tropical-fox46</h5>
+          </footer>
+
+          
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
+    <script src="/client/main.js"></script>
+  </body>
+</html>
