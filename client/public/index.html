@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="592230043654-8lgjmpdvn2uecactpvq072lqsmsc31df.apps.googleusercontent.com">
+    <link rel="stylesheet" href="./styles/style.css">
+    <title>Fancy Todo</title>
+</head>
+<body>
+    
+    <!-- LOGIN FORM -->
+    <div class="login-container" id="show-login">
+        <div class="login-form-wrapper">
+            <div class="image-container-login">
+                <img 
+                src="./assets/img/todo1.svg" 
+                alt="login-pic"
+                class="image">
+            </div>
+            <div class="login-form">
+                <h2>Log In</h2>
+                <form id="login-form">
+                    <div class="input-container">
+                        <input type="text" name="username" class="input" placeholder="username" id="login-username">
+                    </div>
+                    <div class="input-container">
+                        <input type="password" name="password" class="input" placeholder="password" id="login-password">
+                    </div>
+                    <button class="btn" id="submit-login">Log In</button>
+                </form>
+                <div class="sosmed-signin">
+                    <p>or Sign In with</p>
+                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                    <div id="fb-root"></div>
+                    <div class="fb-login-button" data-size="medium" data-button-type="login_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false" data-width=""></div>
+                </div>
+                <p class="login-to-register">Don`t have account? <a href="#" id="login-to-register">Click Here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register FORM -->
+    <div class="register-container" id="show-register">
+        <div class="register-form-wrapper">
+            <div class="register-form">
+                <h2>Register</h2>
+                <form id="register-form">
+                    <div class="input-container">
+                        <input type="text" name="username" class="input" placeholder="username" id="register-username">
+                    </div>
+                    <div class="input-container">
+                        <input type="text" name="email" class="input" placeholder="email" id="register-email">
+                    </div>
+                    <div class="input-container">
+                        <input type="password" name="password" class="input" placeholder="password" id="register-password">
+                    </div>
+                    <button class="btn">Register</button>
+                </form>
+                <div class="sosmed-signin">
+                    <p>or Sign In with</p>
+                </div>
+                <p class="register-to-login">Already have account? <a href="#" id="register-to-login">Log In Here</a></p>
+            </div>
+            <div class="image-container-register">
+                <img 
+                src="./assets/img/todo2.svg" 
+                alt="login-pic"
+                class="image">
+            </div>
+        </div>
+    </div>
+
+    <!-- Home -->
+    <div class="home" id="show-home">
+        <div class="logo">
+            <h2>Fancy Todo</h2>
+        </div>
+        <div class="content-container">
+
+            <!-- Left Container -->
+            <div class="left-content-container">
+
+                <!-- Left Content Wrapper -->
+                <div class="left-content-wrapper">
+
+                    <!-- Profile -->
+                    <div class="profile-container">
+                        <div class="profile-logo-container">
+                            <img src="./assets/icon/user.png" alt="ini icon bukan ikan" class="profile-logo">
+                            <div class="profile-content" id="profile-username">
+                            </div>
+                        </div>
+                        <div class="profile-logout-container">
+                            <form id="logout-button">
+                                <div id="google-logout-btn">
+                                    <button class="btn profile-logout" id="google-logout-btn"><a href="#" onclick="signOut();">Google Sign Out</a></button>
+                                </div>
+                                <div id="app-logout-btn">
+                                    <button class="btn profile-logout">Logout</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Add Review -->
+                    <div class="add-review-container">
+                        <form id="add-todo">
+                            <input type="text" name="title" placeholder="title" class="add-review-input" id="add-title"><br>
+                            <input type="text" name="description" placeholder="description" class="add-review-input" id="add-description"><br>
+                            <input type="date" name="due_date" placeholder="due_date" class="add-review-textarea" id="add-due-date"></textarea><br>
+                            <button class="btn">Add Todo</button>
+                        </form>
+                        <a href="#" id="show-add-todo">Add New Todo</a>
+                    </div>
+                    <div class="add-review-container" id="edit-form"></div>
+
+                    <!-- List Content -->
+                    <div class="list-review-container" id="table-list">
+                        <div class="title-list">
+                            <h2>List Todo</h2>
+                        </div>
+                        <div class="table-list">
+                            <div class="list-head">
+                                <span><b>Title</b></span>
+                            </div>
+                            <div class="list-head">
+                                <b>Description</b>
+                            </div>
+                            <div class="list-head">
+                                <b>Status</b>
+                            </div>
+                            <div class="list-head">
+                                <b>Due Date</b>
+                            </div>
+                            <div class="list-head">
+                                <b>Action</b>
+                            </div>
+                        </div>
+                        <div class="list-review-container" id="show-home-list">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Content -->
+            <div class="right-content">
+                <a href="#" id="movie-api">Show Movie</a>
+                <div id="cards-movie">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="./scripts/jquery.js"></script>
+</body>
+</html>
