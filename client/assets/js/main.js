@@ -1,4 +1,4 @@
-const baseUrl = 'https://abdul-fancy-todo.herokuapp.com'
+const baseUrl = 'http://localhost:3000'
 
 logout = () => {
     $('.msg').empty()
@@ -25,10 +25,26 @@ allTodoList = () => {
         }
     })
     .done(res => {
-        if(res.length === 0){
+        if(res.length < 1){
             $('#todo-list .container').empty()
             $('#todo-list .container').append(`<h2>You don't have any todo</h2>`)
         }else{
+            $('#todo-list .container').empty()
+            let table = `<table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Due Date</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Option</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>`
+            $('#todo-list .container').append(table)
             let i = 1
             for(const el of res){                
                 let data = `<tr>
@@ -204,9 +220,10 @@ getResto = e => {
         
     })
     .fail(err => {
-        for(const el of err.responseJSON.errors){
-            $('.msg').append(`<div class="alert alert-danger" role="alert">${el}</div>`)
-        }
+        // for(const el of err.responseJSON.errors){
+        //     $('.msg').append(`<div class="alert alert-danger" role="alert">${el}</div>`)
+        // }
+        console.log(err);
     })
 }
 function onSignIn(googleUser) {

@@ -18,7 +18,7 @@
 ```
 heroku git:remote -a <app name>
 ```
-
+6. npm install -g sequelize-cli
 5. untuk push 1 folder aja , misal server
 ```
 git subtree push --prefix server heroku master
