@@ -5,7 +5,7 @@ Application to manage your Todo list. This app has :
 * JSON formatted response
  
 
-## RESTful endpoints
+# RESTful endpoints
 * POST/register         => Create account
 * POST/login            => Create login 
 * GET/todos             => Get all todos
@@ -14,7 +14,7 @@ Application to manage your Todo list. This app has :
 * DELETE/todos/:id      => Delete one todo
 
 
-### RESTful endpoints
+# RESTful endpoints
 
 I. REGISTER
   * Route

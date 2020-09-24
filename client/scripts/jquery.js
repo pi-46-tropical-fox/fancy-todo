@@ -64,7 +64,13 @@ const showHome = (event) => {
             `)
         });
     })
-    .fail(err => console.log(err))
+    .fail(err => {
+        Swal.fire({
+            icon: "error",
+            titleText: "Validation error",
+            html: err.responseJSON.errors.join("<br/>"),
+        });
+    })
 }
 
 const validateLogin = (event) => {
@@ -88,7 +94,13 @@ const validateLogin = (event) => {
             showHome()
         }
     })
-    .fail(err => console.log(err))
+    .fail(err => {
+        Swal.fire({
+            icon: "error",
+            titleText: "Validation error",
+            html: err.responseJSON.errors.join("<br/>"),
+        });
+    })
 }
 
 const validateRegister = (event) => {
@@ -107,7 +119,13 @@ const validateRegister = (event) => {
     .done(response => {
         showLogin()
     })
-    .fail(err => console.log(err))
+    .fail(err => {
+        Swal.fire({
+            icon: "error",
+            titleText: "Validation error",
+            html: err.responseJSON.errors.join("<br/>"),
+        });
+    })
 }
 
 const addTodo = () => {
@@ -139,7 +157,13 @@ const addTodo = () => {
         response.data.status === "false" && (isFinish = `On Progress`)
         showHome()
     })
-    .fail(err => console.log(err))
+    .fail(err => {
+        Swal.fire({
+            icon: "error",
+            titleText: "Validation error",
+            html: err.responseJSON.errors.join("<br/>"),
+        });
+    })
 }
 
 const editTodo = (event) => {
@@ -164,7 +188,13 @@ const editTodo = (event) => {
             </form>
         `)
     })
-    .fail(err => console.log(err))
+    .fail(err => {
+        Swal.fire({
+            icon: "error",
+            titleText: "Validation error",
+            html: err.responseJSON.errors.join("<br/>"),
+        });
+    })
 }
 
 const deleteTodo = (event) => {
@@ -178,7 +208,13 @@ const deleteTodo = (event) => {
     .done(response => {
         showHome()
     })
-    .fail(err => console.log(err))
+    .fail(err => {
+        Swal.fire({
+            icon: "error",
+            titleText: "Validation error",
+            html: err.responseJSON.errors.join("<br/>"),
+        });
+    })
 }
 
 const saveEditTodo = (event) => {
@@ -203,7 +239,13 @@ const saveEditTodo = (event) => {
         console.log(`response`)
         showHome()
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+        Swal.fire({
+            icon: "error",
+            titleText: "Validation error",
+            html: err.responseJSON.errors.join("<br/>"),
+        });
+    })
 }
 
 const showApi = () => {
@@ -224,7 +266,13 @@ const showApi = () => {
             `)    
         })
     })
-    .fail(err => console.log(err))
+    .fail(err => {
+        Swal.fire({
+            icon: "error",
+            titleText: "Validation error",
+            html: err.responseJSON.errors.join("<br/>"),
+        });
+    })
 }
 
 function onSignIn(googleUser) {
@@ -246,7 +294,11 @@ function onSignIn(googleUser) {
         showHome()
     })
     .fail(err => {
-        console.log(err)
+        Swal.fire({
+            icon: "error",
+            titleText: "Validation error",
+            html: err.responseJSON.errors.join("<br/>"),
+        });
     })
 }
 
