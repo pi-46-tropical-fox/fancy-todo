@@ -1,0 +1,29 @@
+//////////////////DEPLOY SERVER//////////////////////
+1. Install heroku
+2. Type in "heroku login"
+3. Type in "heroku create <app name>"
+4. Type in "git push heroku master" >>> If pwd already looks like server folder"
+    - type in "git subtree push --prefix <folder-name> heroku master"
+5. Make your app "heroku friendly"
+    - Dynamic PORT
+    - No Devdependencies
+6. Add heroku postgres: *GUI
+                        *heroku addons:create heroku-postgresql:hobby-dev
+7. Add production config to config.json
+    {
+        "production":{ "use_env_variable": "DATABASE_URL"}
+    }
+DONT FORGET TO GIT ADD, GIT COMMIT, GIT PUSH
+8. Get inside heroku bash >>> 'heroku run bash'
+9. Install sequelize in heroku bash (npm i -g seqeulize-cli) >>> whenever you get out of heorku bash, it will automatically be uninstalled
+10. Migrate table and seed data (if needed);
+
+//////////////////DEPLOY CLIENT//////////////////////
+
+1. Create project in console.firebase.google.com
+2. Install firebase CLI
+3. Move to client folder in local pwd
+4. Firebase Init:
+    - choose 'Hosting...'
+    - Use an existing project
+    - 
