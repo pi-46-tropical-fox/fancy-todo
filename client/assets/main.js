@@ -35,19 +35,120 @@ function menuHome(event) {
             $('#todos').append(`
             <tr>
                 <td>${i}</td>
-                <td>${el.title}</td>
-                <td>${el.description}</td>
-                <td>${el.status}</td>
-                <td>${el.due_date}</td>
+                <td id="get-title" value="${el.title}">${el.title}</td>
+                <td id="get-description" value="${el.description}">${el.description}</td>
+                <td id="get-status">${el.status}</td>
+                <td id="get-due_date">${el.due_date}</td>
                 <td>
-                    <a id="update-link" value="${el.id}" href="#">Update</a>
-                    <a id="delete-link" href="#">Delete</a>
+                    <a id="update-link" onclick="getId(${el.id})" href="#">Update</a>
+                    <a id="delete-link" onclick="deleteTodo(${el.id})" href="#">Delete</a>
                 </td>
             </tr>${i++}
-                `)
+            `)
         })
     })
     .fail((err)=> {
+        console.log(err)
+    })
+}
+function getId(id, event) {
+    $('#box-register').hide()
+    $('#box-login').hide()
+    $('#box-dashboard').hide()
+    $('#box-movie').hide()
+    $('#box-create').hide()
+    $('#box-update').show()
+    $('#nav-login').hide()
+    $('#nav-register').hide()
+    $('#nav-home').hide()
+    $('#nav-movie').hide()
+    $('#nav-create-todo').hide()
+    $('#nav-logout').hide()
+    $('#update').empty('')
+    $.ajax({
+        method: 'GET',
+        url: `http://localhost:3000/todos/${id}`,
+        headers: {
+            access_token: localStorage.getItem('access_token')
+        }
+    })
+    .done((response)=>{
+        // console.log(response)
+        $('#update').append(`
+        <form id="update-form">
+        <div class="field">
+            <label class="label">Title</label>
+            <div class="control">
+                <input  id="todo-update-title"class="input" type="text" name="title" value="${response.title}">
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">Description</label>
+            <div class="control">
+              <textarea  id="todo-update-description"class="textarea" name="description" value="${response.description}">${response.description}</textarea>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">Status</label>
+            <div class="select">
+              <select id="todo-update-status" selected="${response.status}">
+                <option value="false">False</option>
+                <option value="true">True</option>
+              </select>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">Due Date</label>
+            <div class="control">
+                <input  id="todo-update-due_date"class="input" type="date" name="due_date" placeholder="Coding" value="${new Date(response.due_date).toISOString().split('T')[0]}">
+            </div>
+        </div>
+        <button id="button-update" class="button is-info update-todo" onclick="update(${id})">Update</button>
+    </form>
+    `)
+    })
+    .fail((err)=>{
+        console.log(err)
+    })
+}
+function update(id) {
+    const title = $('#todo-update-title').val()
+    const description = $('#todo-update-description').val()
+    const status = $('#todo-update-status').val()
+    const due_date = $('#todo-update-due_date').val()
+    
+    $.ajax({
+        method: 'PUT',
+        url: `http://localhost:3000/todos/${id}`,
+        headers: {
+            access_token: localStorage.getItem('access_token')
+        },
+        data: {
+            title,
+            description,
+            status,
+            due_date
+        }
+    })
+        .done(response => {
+            afterLogin()
+        })
+        .fail(err => {console.log(err)})
+}
+function deleteTodo(id) {
+    $.ajax({
+        method: 'DELETE',
+        url: `http://localhost:3000/todos/${id}`,
+        headers: {
+            access_token: localStorage.getItem('access_token')
+        }
+    })
+    .done(response => {
+        menuHome()
+        afterLogin()
+    })
+    .fail(err => {
         console.log(err)
     })
 }
@@ -101,7 +202,7 @@ function updateTodoForm(event) {
     $('#box-create').hide()
     $('#box-update').show()
 }
-function loginForm(even) {
+function loginForm(event) {
     event.preventDefault();
     const email = $('#login-email').val()
     const password = $('#login-password').val()
@@ -125,7 +226,7 @@ function loginForm(even) {
         $('#login-err').text(err.responseJSON.errors)
     })
 }
-function registerForm(even) {
+function registerForm(event) {
     event.preventDefault();
     const username = $('#register-username').val()
     const email = $('#register-email').val()
@@ -151,7 +252,7 @@ function registerForm(even) {
         $('#register-err').text(err.responseJSON.errors)
     })
 }
-function createTodoButton(){
+function createTodoButton(event){
     event.preventDefault();
     const title = $('#todo-create-title').val()
     const description = $('#todo-create-description').val()
@@ -222,12 +323,14 @@ function afterLogin() {
     $('#nav-movie').show()
     $('#nav-create-todo').show()
     $('#nav-logout').show()
+    $('#todos').empty('')
     menuHome()
 }
 function menuLogout() {
     beforeLogin()
     localStorage.clear();
     localStorage.removeItem('access_token');
+    $('#todos').empty('')
     signOut();
 }
 function signOut() {

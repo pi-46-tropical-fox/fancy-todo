@@ -32,7 +32,7 @@ class TodoController {
             return next(err)
         }
     }
-    static async updateTodo(req, res) {
+    static async updateTodo(req, res, next) {
         const { id } = req.params
         const { title, description, status, due_date } = req.body
         try {
@@ -47,7 +47,7 @@ class TodoController {
             return next(err)
         }
     }
-    static async deleteTodo(req, res) {
+    static async deleteTodo(req, res, next) {
         const data = await Todo.destroy({where:{id: req.params.id}})
         try {
             return res.status(200).json(data)
