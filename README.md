@@ -1,305 +1,402 @@
-# fancy-todo
-Membuat sebuah website untuk me-manage hal - hal menarik untuk dilakukan
+# FANCY TO DO Server
+Fancy To Do is an application to manage your activity. This app has : 
+* RESTful endpoint for todo's CRUD operation
+* JSON formatted response
 
-
-# My Fancy Todo App Server
+&nbsp;
 
 ## RESTful endpoints
-List of available endpoint:
-
-  - `GET /todos` 
-  - `GET /todos/:id`
-  - `POST /todos` 
-  - `PUT /todos/:id`
-  - `POST /login`
-  - `POST /register`
-  - `DELETE /todos/:id`
-
-
-
-```
-_Response (500 - Internal Server Error)
-{
-  "message": "Internal Server Error"
-}
----
-### GET /todos
-_Response (200 - OK)_
-
-```json
-
-  {
-    "id": 1,
-    "title": "Nunggu makanan",
-    "description": "makan Nasi",
-    "status": "Uncompleted",
-    "Due_date": 2020-11-30,
-    "UsersId": 1
-  },
-  {
-    "id": 2,
-    "title": "belajar",
-    "description": "JQuery",
-    "status": "OnGoing",
-    "Due_date": 2020-11-30,
-    "UsersId": 2
-  },
-  {
-    "id": 3,
-    "title": "Minum",
-    "description": "Bubble tea",
-    "status": "Complete",
-    "Due_date": 2020-11-30,
-    "UsersId": 1
-  }
-
-```
-
-_Response (500 - Internal Server Error)_
-```json
-{
-  "message": "Internal Server Error"
-}
-```
----
-### GET /todos/:id
-_Request Header_
-```json
-[
-{
-  user_token : access_token 
-}
-]
-```
-_Response (200 - OK)_
-```json
-  {
-    "id": 1,
-    "title": "makan",
-    "description": "makan nasi",
-    "status": "belum",
-    "Due_date": 2020-12-12,
-    "UsersId": 1
-  }
-```
-
-_Response (404 - Not Found)_
-```json
-{
-  "message": "error Not Found"
-}
-```
-
-_Response (500 - Internal Server Error)_
-```
-{
-  "message": "Internal Server Error"
-}
-```
----
-### POST /todos
-
-_Request Header_
-```json
-[
-{
-  user_token : access_token 
-}
-]
-```
-_Request Body_
-```json
-  {
-    "title": "string",
-    "description": "string",
-    "status": "string",
-    "due_date": "date",
-    "UsersId": "integer"
-  }
-```
-_Response (201 - Created)_
-  ```json
-  {
-    "id": "integer",
-    "title": "string",
-    "description": "string",
-    "status": "string",
-    "due_date": "date",
-    "UsersId": "integer",
-    "createdAt": "date",
-    "updatedAt": "date"
-  }
-```
-
-_Response (401 - Validation Error)
-```json
-[
-  {
-    "message": "Title is empty"
-  },
-  {
-    "message": "Description is empty"
-  },
-  {
-    "message": "You dont choose the status"
-  },
-  {
-    "message": "You don't pick a Due Date"
-  },
-    "message": "fill Empty slot"
-  }
-]
-```
-### PUT /todos/:id
-_Request Header_
-```json
-[
-{
-  user_token : access_token 
-}
-]
-```
-_Request Body_
-```json
-  {
-    "title": "string",
-    "description": "string",
-    "status": "belum",
-    "Due_date": "date",
-    "UsersId": 1
-  }
-```
-_Response (200 - OK)
-```json
-  {
-    "id": "integer",
-    "title": "string",
-    "description": "string",
-    "status": "belum",
-    "Due_date": "date",
-    "UserId": 1,
-    "createdAt": "date",
-    "updatedAt": "date"
-  }
-```
-_Response (401 - Validation Error)_
-```json
-[
-  {
-    "message": "Title is empty"
-  },
-  {
-    "message": "Description is empty"
-  },
-  {
-    "message": "You dont choose the status"
-  },
-  {
-    "message": "You don't pick a Due Date"
-  }
-]
-```
-_Response (404 - Not Found)_
-```json
-{
-  "message": "error Not Found"
-}
-```
-_Response (500 - Internal Server Error)_
-```json
-{
-  "message": "Internal Server Error"
-}
-```
----
-### DELETE /todos/:id
-_Response_ (200 - OK)_
-```json
-  {
-    "id": "integer",
-    "title": "string",
-    "description": "string",
-    "status": "belum",
-    "Due_date": "date",
-    "UsersId": 1,
-    "createdAt": "date",
-    "updatedAt": "date"
-  }
-```
-_Response_ (404 - Not Found)_
-```json
-{
-  "message": "error Not Found"
-}
-```
-_Response_ (500 - Internal Server Error)_
-```json
-{
-  "message": "Internal Server Error"
-}
-```
----
 ### POST /register
+
+> Create new user
+
+_Request Header_
+```
+not needed
+```
+
 _Request Body_
-```json
-  {
-    "email": "string",
-    "password": "string"
-  }
 ```
+{
+  "name": "Adiet Alimudin",
+  "email": "test123@gmail.com",
+  "password": "1234567"
+}
+```
+
+#### Success Response: ####
 _Response (201 - Created)_
-```json
-  {
-    "id": "integer",
-    "email": "string",
-    "password": "string"
-  }
 ```
-_Response (401 - Validation Error)_
-```json
+{
+  "id": 6,
+  "name": "Adiet Alimudin",
+  "email": "test123@gmail.com",
+  "password": "$2b$10$xfLIEC1yVj5TYtQ3PZw/c.0D97Ij5NOPC4BMOBdA9JSbPC3MAhvue",
+  "updatedAt": "2020-09-06T15:41:15.278Z",
+  "createdAt": "2020-09-06T15:41:15.278Z"
+}
+```
+
+#### Error Response: ####
+_Response (400 - Bad Request)_
+```
 [
-  {
-    "message": "You don't put any password"
-  },
-  {
-    "message": "You don't put any email"
-  }
+  "please enter correct email"
 ]
 ```
+
+_Response (409 - conflict)_
+```
+{
+  "message": "Email Already registered!"
+}
+```
+
 _Response (500 - Internal Server Error)_
-```json
+```
 {
   "message": "Internal Server Error"
 }
 ```
 
 ### POST /login
+
+> Process Login
+
+_Request Header_
+```
+not needed
+```
+
 _Request Body_
-```json
-  {
-    "email": "string",
-    "password": "string"
-  }
 ```
-_Response (201 - Created)_
-```json
-  {
-    acces_token = < Acces_token >
-  }
+{
+  "email": "test123@gmail.com",
+  "password": "1234567"
+}
 ```
+
+#### Success Response: ####
+_Response (200 - Ok)_
+```
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjYsIm5hbWUiOiJNYWxpayIsImVtYWlsIjoibWFsaWtAbWFpbC5jb20iLCJpYXQiOjE1ODYxOTEzNjksImV4cCI6MTU4NjE5NDk2OX0.WNLicaqoVUNPgvqq_5y4bzXy9oflshME6ARWHk1z1Po"
+}
+```
+
+#### Error Response: ####
+
 _Response (400 - Bad Request)_
-```json
+```
+[
+  "message": "Wrong Password!"
+]
+```
+
+_Response (404 - Not Found)_
+```
+{
+  "message": "user not registered!"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "Internal Server Error"
+}
+```
+
+### POST /todos
+
+> Create new todo
+
+_Request Header_
+```
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjYsIm5hbWUiOiJNYWxpayIsImVtYWlsIjoibWFsaWtAbWFpbC5jb20iLCJpYXQiOjE1ODYxOTEzNjksImV4cCI6MTU4NjE5NDk2OX0.WNLicaqoVUNPgvqq_5y4bzXy9oflshME6ARWHk1z1Po"
+}
+```
+
+_Request Body_
+```
+{
+  "title": "belajar nodejs"
+  "description": "belajar nodejs"
+  "status": "incomplete"
+  "due_date": "2020-10-01"
+}
+```
+
+#### Success Response: ####
+_Response (201 - Created)_
+```
+{
+  "id": 13,
+  "title": "belajar nodejs",
+  "description": "belajar nodejs",
+  "status": "Incomplete",
+  "due_date": "2020-10-01T00:00:00.000Z",
+  "UserId": 6,
+  "updatedAt": "2020-09-06T16:53:36.080Z",
+  "createdAt": "2020-09-06T16:53:36.080Z"
+}
+```
+
+#### Error Response: ####
+_Response (400 - Bad Request)_
+```
+[
+  "description can't be empty"
+]
+```
+_Response (401 - Unauthorized)_
+```
+{
+  "message": "Not authenticated!"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "Internal Server Error"
+}
+```
+
+### GET /todos
+
+> Get User's todos
+
+_Request Header_
+```
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjYsIm5hbWUiOiJNYWxpayIsImVtYWlsIjoibWFsaWtAbWFpbC5jb20iLCJpYXQiOjE1ODYxOTEzNjksImV4cCI6MTU4NjE5NDk2OX0.WNLicaqoVUNPgvqq_5y4bzXy9oflshME6ARWHk1z1Po"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+#### Success Response: ####
+_Response (200 - Ok)_
+```
 [
   {
-    "message": "You don't put any password"
+  "id": 14,
+  "title": "belajar nodejs",
+  "description": "belajar nodejs Ampe mahir",
+  "status": "Complete",
+  "due_date": "2020-10-01T00:00:00.000Z",
+  "UserId": 6,
+  "createdAt": "2020-09-06T17:00:37.435Z",
+  "updatedAt": "2020-09-06T17:04:42.252Z"
   },
   {
-    "message": "You don't put any email"
+  "id": 13,
+  "title": "belajar nodejs",
+  "description": "belajar nodejs Ampe mahir",
+  "status": "Complete",
+  "due_date": "2020-10-01T00:00:00.000Z",
+  "UserId": 6,
+  "createdAt": "2020-09-06T16:53:36.080Z",
+  "updatedAt": "2020-09-06T17:05:51.056Z"
   }
 ]
 ```
+
+#### Error Response: ####
+_Response (401 - Unauthorized)_
+```
+{
+  "message": "Not authenticated!"
+}
+```
+
 _Response (500 - Internal Server Error)_
-```json
+```
+{
+  "message": "Internal Server Error"
+}
+```
+
+### GET /todos/:id
+
+> Get todo by todo's id
+
+_Request Header_
+```
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjYsIm5hbWUiOiJNYWxpayIsImVtYWlsIjoibWFsaWtAbWFpbC5jb20iLCJpYXQiOjE1ODYxOTEzNjksImV4cCI6MTU4NjE5NDk2OX0.WNLicaqoVUNPgvqq_5y4bzXy9oflshME6ARWHk1z1Po"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+#### Success Response: ####
+_Response (200 - Ok)_
+```
+{
+  "id": 13,
+  "title": "belajar nodejs",
+  "description": "belajar nodejs Ampe mahir",
+  "status": "Complete",
+  "due_date": "2020-10-01T00:00:00.000Z",
+  "UserId": 6,
+  "createdAt": "2020-09-06T17:00:37.435Z",
+  "updatedAt": "2020-09-06T17:04:42.252Z"
+}
+```
+
+#### Error Response: ####
+_Response (401 - Unauthorized)_
+```
+{
+  "message": "Not authenticated!"
+}
+```
+_Response (403 - Forbidden)_
+```
+{
+  "message": "Forbidden access!"
+}
+```
+_Response (404 - Not Found)_
+```
+{
+  "message": "Todo not found! "
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "Internal Server Error"
+}
+```
+
+
+### PUT /todos/:id
+
+> Update todo
+
+_Request Header_
+```
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjYsIm5hbWUiOiJNYWxpayIsImVtYWlsIjoibWFsaWtAbWFpbC5jb20iLCJpYXQiOjE1ODYxOTEzNjksImV4cCI6MTU4NjE5NDk2OX0.WNLicaqoVUNPgvqq_5y4bzXy9oflshME6ARWHk1z1Po"
+}
+```
+
+_Request Body_
+```
+{
+  "title": "belajar nodejs"
+  "description": "belajar nodejs Ampe mahir"
+  "status": "Complete"
+  "due_date": "2020-10-01"
+}
+```
+
+#### Success Response: ####
+_Response (201 - Created)_
+```
+{
+  "id": 13,
+  "title": "belajar nodejs",
+  "description": "belajar nodejs Ampe mahir",
+  "status": "Complete",
+  "due_date": "2020-10-01T00:00:00.000Z",
+  "UserId": 6,
+  "createdAt": "2020-09-06T17:00:37.435Z",
+  "updatedAt": "2020-09-06T17:04:42.252Z"
+}
+```
+
+#### Error Response: ####
+_Response (401 - Unauthorized)_
+```
+{
+  "message": "Not authenticated!"
+}
+```
+_Response (403 - Forbidden)_
+```
+{
+  "message": "Forbidden access!"
+}
+```
+_Response (404 - Not Found)_
+```
+{
+  "message": "Todo not found! "
+}
+```
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "Internal Server Error"
+}
+```
+
+
+
+### DELETE /todos/:id
+
+> Update todo
+
+_Request Header_
+```
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjYsIm5hbWUiOiJNYWxpayIsImVtYWlsIjoibWFsaWtAbWFpbC5jb20iLCJpYXQiOjE1ODYxOTEzNjksImV4cCI6MTU4NjE5NDk2OX0.WNLicaqoVUNPgvqq_5y4bzXy9oflshME6ARWHk1z1Po"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+#### Success Response: ####
+_Response (200 - Ok)_
+```
+{
+  "id": 15,
+  "title": "belajar nodejs",
+  "description": "belajar nodejs Ampe mahir",
+  "status": "Complete",
+  "due_date": "2020-10-01T00:00:00.000Z",
+  "UserId": 6,
+  "createdAt": "2020-09-06T17:04:12.393Z",
+  "updatedAt": "2020-09-06T17:04:12.393Z"
+}
+```
+
+#### Error Response: ####
+_Response (401 - Unauthorized)_
+```
+{
+  "message": "Not authenticated!"
+}
+```
+_Response (403 - Forbidden)_
+```
+{
+  "message": "Forbidden access!"
+}
+```
+_Response (404 - Not Found)_
+```
+{
+  "message": "Todo not found! "
+}
+```
+_Response (500 - Internal Server Error)_
+```
 {
   "message": "Internal Server Error"
 }

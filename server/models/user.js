@@ -1,45 +1,65 @@
 'use strict';
-const bcrypt = require('bcrypt')
-const {
-  Model
-} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
-  
-    static associate(models) {
-      User.hasMany(models.Todo, {foreignKey: "UserId", targetKey: "id"});
-    }
-  };
+  const { Model } = sequelize.Sequelize
+  const { hash } = require('../helpers/bcrypt')
+  class User extends Model {}
   User.init({
-    email: {
-      type : DataTypes.STRING,
-    validate:{
-      notEmpty:{
-      args : true,
-      msg : "Email Cannot be Empty"
-    }
-   }
-  },
-    password: {
-    type : DataTypes.STRING,
-    validate:{
-      notEmpty:{
-        args : true,
-        msg : "Password Cannot be Empty"
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'name can\'t be null'
+        },
+        notEmpty: {
+          msg: 'name can\'t be empty'
+        }
       }
-    }
-  }
-  }, {
-    sequelize,
-    modelName: 'User',
-  });
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'email can\'t be null'
+        },
+        notEmpty: {
+          msg: 'email can\'t be empty'
+        },
+        isEmail: {
+          msg: 'please enter correct email'
+        }
+      }
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'password can\'t be null'
+        },
+        notEmpty: {
+          msg: 'password can\'t be empty'
+        }
+      }
+    },
+  }, 
+  { 
+    hooks: {
+      beforeSave: (user, options) => {
+        return hash(user.password)
+        .then(hashed => {
+          user.password = hashed
+        })
+      }
+    },
+    sequelize
+  })
 
-  User.addHook('beforeCreate', (user, options) => {
-    const salt = bcrypt.genSaltSync(10);
-    const hash = bcrypt.hashSync(user.password, salt);
-
-    user.password = hash;
-  });
-
+  User.associate = function(models) {
+    // associations can be defined here
+    // User.belongsTo(models.Todo, { through: models.Member })
+    User.hasMany(models.Todo)
+  };
   return User;
 };

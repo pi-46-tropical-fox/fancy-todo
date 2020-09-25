@@ -1,27 +1,28 @@
-"use strict"
-
-const routes = require('express').Router();
-const Controller = require('../controller/UserController')
-// const ThirdParty = require('../controller/thirdPartyController')
-const todoRoutes = require('./todo')
-const QuotesController = require('../controller/QuotesController')
-const {authentication, authoritzation} = require('../midleware/auth')
+const router = require('express').Router()
+const Controller = require('../controllers')
+const authentication = require('../middlewares/authentication')
+const authorization  = require('../middlewares/authorization')
+const QuoteController = require('../controllers/QuotesController')
 
 
-routes.get('/', (req, res)=>{
-    return res.status(200).json({msg:"Move On !"})
-    // res.redirect('/login')
-})
-
-routes.post('/register', Controller.register)
-routes.post('/login', Controller.login)
-routes.post('/googlelogin', Controller.googleLogin)
-
-// routes.get('/hero', ThirdParty.getInfo)
-routes.get('/quotes', QuotesController.getQuote)
-routes.use(authentication)
-routes.use('/todos', todoRoutes)
+router.post('/login', Controller.login)
+router.post('/register', Controller.register)
+router.post('/googleSignIn', Controller.googleSignIn)
 
 
+router.use(authentication)
+router.post('/user', Controller.getUser)
+router.get('/user', Controller.getInfoUser)
+router.post('/members', Controller.addMember)
+router.get('/members', Controller.getAllMember)
 
-module.exports = routes
+router.get('/projects', Controller.getAllProjects)
+
+router.get('/quote', QuoteController.getQuote)
+router.post('/todos', Controller.addTodo)
+router.get('/todos', Controller.getAllTodos)
+router.get('/todos/:id', authorization, Controller.getOneTodo)
+router.put('/todos/:id', authorization, Controller.updateTodo)
+router.delete('/todos/:id', authorization, Controller.deleteTodo)
+
+module.exports = router

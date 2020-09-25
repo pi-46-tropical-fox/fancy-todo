@@ -1,21 +1,17 @@
-"use strict"
-require('dotenv').config()
 const express = require('express')
-const cors = require('cors')
-const port = process.env.PORT|| 3001;
-const app = express()
 const routes = require('./routes')
-const errHandler = require('./midleware/errorHandler')
+const errorHandler = require('./middlewares/errorHandler')
+const cors = require('cors')
 
+const port = process.env.PORT || 3000
+const app = express()
 
-app.use(cors())
 app.use(express.json())
-app.use(express.urlencoded({extended:true}))
-
-
+app.use(express.urlencoded( { extended: false } ))
+app.use(cors())
 app.use('/', routes)
-app.use(errHandler)
+app.use(errorHandler)
 
-app.listen(port, ()=>{
-    console.log(`Listen on PORT ${port}`);
+app.listen(port, () => {
+    console.log("Server running on PORT " + port)
 })

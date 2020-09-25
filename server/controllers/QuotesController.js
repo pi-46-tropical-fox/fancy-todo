@@ -6,7 +6,7 @@ const API_KEY= process.env.Dokumen_Negara
 
 class QuoteController {
     static getQuote(req, res, next){
-        let api = axios({
+         axios({
             "method":"GET",
             "url":"https://andruxnet-random-famous-quotes.p.rapidapi.com/",
             "headers":{
