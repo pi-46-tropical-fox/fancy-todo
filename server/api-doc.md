@@ -12,10 +12,10 @@ Website to manage todo. This app has :
 - POST /todo
 - GET /todo/:id
 - PUT /todo/:id
-- PATCH /todo/:id
 - DELETE /todo/:id
 - POST /user/:register
 - POST /user/:login
+- GET /quotes
 
 ```
 
@@ -258,6 +258,7 @@ _Response (400 - Bad Request)_
   "errors": [
       "Username cannot empty",
       "Invalid email format",
+      "email is already in use"
       "Pasword min 6 characters max 15 characters"
   ]
 }
@@ -272,7 +273,7 @@ _Request Body_
 ```
 {
   "email": "<email>",
-  "status": "<password>",
+  "password": "<password>",
 }
 ```
 _Response (200 - Ok)_
@@ -287,6 +288,38 @@ _Response (400 - Bad Request)_
 {
   "errors": [
       "Invalid username or password"
+  ]
+}
+```
+
+### GET /quotes
+
+_Request Header_
+```
+not needed
+```
+_Request Body_
+```
+not needed
+```
+_Response (200 - Ok)_
+```
+{
+  "statusCode": 200,
+  "quote": {
+    "_id": "5eb17ab1b69dc744b4e7c454",
+    "quoteText": "I've always wanted to be an actress, ever since I was a little girl. I always played the mom and I played my sister as the daughter. I wanted to be an actress on television and movies instead of just around the house.",
+    "quoteAuthor": "Dakota Fanning",
+    "quoteGenre": "mom",
+    "__v": 0
+  }
+}
+```
+_Response (400 - Bad Request)_
+```
+{
+  "errors": [
+      "Internal server error"
   ]
 }
 ```
