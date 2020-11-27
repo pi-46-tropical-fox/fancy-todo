@@ -1,0 +1,19 @@
+#buttonLogin {
+    margin: 0 20px;
+}
+
+
+.form {
+    width: 400px;
+    margin: 30px;
+}
+
+
+#button .buttonLogin{
+    width: 120px;
+    height: 36px;
+}
+
+#color-navbar{
+    color: maroon !important;
+}
