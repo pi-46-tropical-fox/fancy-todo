@@ -1,0 +1,19 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "super123",
+    "database": "todos-app",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "use_env_variable": "postgres://wotufflbpriwij:6aaf9d989c476609cec0edde40aa7f79077ed0852ca25e19b4295e3c25c8f970@ec2-34-232-212-164.compute-1.amazonaws.com:5432/d90len47k6j5vd"
+  }
+}
